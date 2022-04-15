@@ -1,19 +1,12 @@
 ---
 title: "Rで学ぶ『完全独習 統計学入門』"
-# runningheader: "Tufte Handout with R Markdown" # only for pdf output
-# subtitle: "An implementation in R Markdown" # only for html output
 author: "Sampo Suzuki"
 date: "`r Sys.Date()`"
 output:
-  tufte::tufte_html: default
-  # tufte::tufte_handout:
-    # citation_package: natbib
-    # latex_engine: xelatex
-  # tufte::tufte_book:
-    # citation_package: natbib
-    # latex_engine: xelatex
-# bibliography: skeleton.bib
-# link-citations: yes
+  tufte::tufte_html:
+    df_print: paged
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
@@ -41,19 +34,13 @@ histgram_data <- "http://goldenstate.cocolog-nifty.com/blog/files/data.txt"
 
 # 第1章
 
-## 事前処理
-
 ```{r, include=FALSE}
-# x <- df %>% 
-#   dplyr::select(height)
-
 x <- "data/P16_図表1-1 .csv" %>% 
   readr::read_csv(col_names = FALSE) %>% 
-  # tibble::rowid_to_column() %>% 
   tidyr::pivot_longer(cols = starts_with("X")) %>% 
   dplyr::arrange(name) %>% 
-  dplyr::select(height = value)
-
+  dplyr::select(height = value) %>% 
+  dplyr::mutate(height = as.integer(height))
 ```
 
 　対象となるデータはP16 図表1-1で示されているデータですが、Rで処理しやすいように以下のように一列にまとめて`x`というデータフレーム型の変数に格納しておきます。
@@ -63,32 +50,134 @@ x
 ```
 
 ## ヒストグラムを作る
+　Rでヒストグラムを描くには`hist()`関数を使うことで描けます。同時に階級、度数と階級値などを求めることもできます。
+```{r}
+hist <- hist(x$height, include.lowest = FALSE, plot = TRUE)
+hist
+```
 
-### 最大値と最小値を求める
-### 階級をつくる
-### 階級値を決める
+　度数分布表として表にしたい場合は下記のように
+```{r}
+x %>% 
+  # 階級を求めて、データを階級ごとに分ける
+  dplyr::mutate(class = cut(height,
+                            breaks = pretty(height, n = nclass.Sturges(height)),
+                            include.lowest = FALSE, right = TRUE)) %>% 
+  # 階級ごとの度数を求める
+  dplyr::count(class) %>% 
+  # 階級値を求める
+  dplyr::mutate(class_value = as.character(class)) %>% 
+  tidyr::separate(class_value, into = c("l", "h"), sep = ",") %>% 
+  dplyr::mutate(l = as.integer(stringr::str_remove(l, "[[:punct:]]")) + 1L,
+                h = as.integer(stringr::str_remove(h, "[[:punct:]]")),
+                mids = as.integer((l + h) / 2L)) %>% 
+  # 累積度数、相対度数、累積相対度数を求める
+  dplyr::mutate(cumsum_n = cumsum(n),
+                prop = prop.table(n), cumsum_prop = cumsum(prop)) %>% 
+  # 変数名を日本語にする
+  dplyr::select(`階級` = class, `階級値` = mids,
+                `度数` = n, `累積度数` = cumsum_n,
+                `相対度数` = prop, `累積相対度数` = cumsum_prop)
+```
+
+### 階級を求める
+```{r}
+with(x, pretty(height, n = nclass.Sturges(height)))
+```
+
+　`pretty()`関数は`x`引数で指定するデータから階級を求める関数です。`n`引数で階級を区切る数（階級数）を指定します。ここでは、階級数`n`はスタージェスの公式から求めています。指定した階級数でデータの範囲を単純に割っている訳ではないことに注意してください。`x`で指定したデータが階級に収まるように適切な丸め処理を行いますので、指定した階級数どおりの階級が求められるとは限りません。  
+
+　スタージェスの公式とは、階級数を$k$、データのサイズ（数）を$n$とした場合、下式で定義されます。
+
+$$k = \log_2(n) + 1$$
+
+　Rでは`nclass.Sturgess()`関数が用意されています。
+```{r}
+with(x, nclass.Sturges(height))
+```
+　
+　スタージェスの公式以外にもスコットの選択（`nclass.scott()`）やフリードマン=ダイアコニスの選択（`nclass.FD()`）などがあります。
+
+
+### データを各階級に分類する
+```{r}
+with(x, cut(height, breaks = pretty(height, n = nclass.Sturges(height))))
+```
+
+　`cut()`関数はデータがどの階級に入るかを計算する関数です。`breaks`引数に任意の階級を指定することも可能です。
+
+#### 階級の境界値はどちらに含まれるのか？
+　`cut()`関数の出力は、`(140,145] (145,150]`のように階級間で同じ数値が含まれます。`145`はどちらの階級に含まれるかは、添えられている括弧で区別できるようになっています。
+
+> `(140,145]`
+
+は「140を超えて145以下」となりますので、次の
+
+> `(145,150]`
+
+は同様に「145を超えて150以下」となりますので、階級間の境界値である`145`は`(140, 145]`側に入ります。つまり
+
+* `(`は「超えて」、`)`は未満」（境界値を含まない）
+* `[`は「以上」、`]`は「以下」（境界値を含む）
+
+となっています。`cut()`関数の`include.lowest`オプションと`right`オプションを指定すると下表のように計算結果を変えることができます。
+
+option                       | `right = TRUE`          | `right = FALSE` 
+-----------------------------|-------------------------|-------------------
+**`include.lowest = TRUE`**  | **`[`**`l,u] ... (l,u]` | `[l,u) ... [l,u]`
+**`include.lowest = FALSE`** | **`(`**`l,u] ... (l,u]` | `[l,u) ... [l,u)`
+
+　例えば最大値と最小値を境界値として含む階級を指定した場合、`include.lowest = FALSE, right = FALSE`と指定すると最大値が階級に含まれなくなります。
+```{r}
+with(x, cut(height, breaks = c(143, 155, 169),
+            include.lowest = FALSE, right = FALSE))
+```
+
+　逆に`include.lowest = FALSE, right = TRUE`と指定すると最小値が階級に含まれなくなります。
+```{r}
+with(x, cut(height, breaks = c(143, 155, 169),
+            include.lowest = FALSE, right = TRUE))
+```
 
 ### 度数を求める
+　`dplyr::count()`関数は`table()`関数と同様、個数を数える関数です。`table()`関数の計算対象はベクトル型ですが、`dplyr::count()`関数はデータフレーム型が計算対象になります。
+```{r}
+with(x, table(cut(height, breaks = pretty(height, n = nclass.Sturges(height)))))
+```
 
 ```{r}
 x %>% 
-  dplyr::mutate(freq = cut(height,
-                           breaks = pretty(height, n = nclass.Sturges(height)),
-                           include.lowest = TRUE)) %>% 
-  dplyr::count(freq)
+  # 階級を求めて、データを階級ごとに分ける
+  dplyr::mutate(class = cut(height,
+                            breaks = pretty(height, n = nclass.Sturges(height)))) %>% 
+  # 階級ごとの度数を求める
+  dplyr::count(class)
 ```
 
-### 相対度数を累積度数を求める
+### 累積度数、相対度数、累積相対度数を求める
+　`cumsum()`関数は累積和を計算する関数です。
 
 ```{r}
-x %>% 
-  dplyr::mutate(freq = cut(height,
-                           breaks = pretty(height, n = nclass.Sturges(height)),
-                           include.lowest = TRUE)) %>% 
-  dplyr::count(freq) %>% 
-  dplyr::mutate(prop = prop.table(n), cum_prop = cumsum(prop),
-                cumsum = cumsum(n))
+with(x, cumsum(table(cut(height, breaks = pretty(height, n = nclass.Sturges(height))))))
 ```
+
+　`prop.table()`関数は相対度数を計算する関数です。
+```{r}
+with(x, prop.table(table(cut(height, breaks = pretty(height, n = nclass.Sturges(height))))))
+```
+
+　`prop.table()`関数の計算結果を`cumsum()`関数に渡すことで相対度数の累積和（累積相対度数）を求めることができます。
+```{r}
+with(x, cumsum(prop.table(table(cut(height, breaks = pretty(height, n = nclass.Sturges(height)))))))
+```
+
+
+```{r、, eval=FALSE}
+  # 累積度数、相対度数、累積相対度数を求める
+  dplyr::mutate(cumsum_n = cumsum(n),
+                prop = prop.table(n), cumsum_prop = cumsum(prop)) %>% 
+```
+
 
 The Tufte handout style is a style that Edward Tufte uses in his books and handouts. Tufte's style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography. This style has been implemented in LaTeX and HTML/CSS[^1], respectively. We have ported both implementations into the [**tufte** package](https://github.com/rstudio/tufte). If you want LaTeX/PDF output, you may use the `tufte_handout` format for handouts, and `tufte_book` for books. For HTML output, use `tufte_html`. These formats can be either specified in the YAML metadata at the beginning of an R Markdown document (see an example below), or passed to the `rmarkdown::render()` function. See @R-rmarkdown for more information about **rmarkdown**.
 
