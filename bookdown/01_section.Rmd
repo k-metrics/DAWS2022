@@ -1,0 +1,263 @@
+# 度数分布表とヒストグラムでデータの特徴を浮き彫りにする
+
+```{r, include=FALSE}
+x <- "../data/P16_図表1-1 .csv" %>% 
+  readr::read_csv(col_names = FALSE) %>% 
+  tidyr::pivot_longer(cols = starts_with("X")) %>% 
+  dplyr::arrange(name) %>% 
+  dplyr::select(height = value) %>% 
+  dplyr::mutate(height = as.integer(height))
+```
+
+　本講で扱うデータはテキストのP16 図表1-1で示されているデータですが、Rで処理しやすいように以下のように一列にまとめて`x`という**データフレーム型**変数に格納しておきます。
+
+```{r}
+x
+```
+
+　  
+
+## 統計を使う
+
+　  
+
+## ヒストグラムを作る
+　Rでヒストグラムを描くには`hist()`関数を使います。ヒストグラムを描くために計算した階級や度数、階級値などの情報を出力することも可能です。
+```{r}
+hist <- hist(x$height)
+hist
+```
+
+
+　度数分布表を作成する場合は以下のようにします。
+```{r}
+x %>% 
+  # 階級を求めて、データを階級ごとに分ける
+  dplyr::mutate(class = cut(height,
+                            breaks = pretty(height, n = nclass.Sturges(height)),
+                            include.lowest = FALSE, right = TRUE)) %>% 
+  # 階級ごとの度数を求める
+  dplyr::count(class) %>% 
+  # 累積度数、相対度数、累積相対度数を求める
+  dplyr::mutate(cumsum_n = cumsum(n),
+                prop = prop.table(n), cumsum_prop = cumsum(prop)) %>% 
+  # 階級値を求める
+  dplyr::mutate(class_value = as.character(class)) %>%
+  tidyr::separate(class_value, into = c("l", "h"), sep = ",") %>% 
+  dplyr::mutate(l = as.integer(stringr::str_remove(l, "[[:punct:]]")) + 1L,
+                h = as.integer(stringr::str_remove(h, "[[:punct:]]")),
+                mids = (l + h) / 2L) %>%
+  # 変数名を日本語にする
+  dplyr::select(`階級` = class, `階級値` = mids,
+                `度数` = n, `累積度数` = cumsum_n,
+                `相対度数` = prop, `累積相対度数` = cumsum_prop)
+```
+
+　  
+
+### 階級を求める
+> 以降に出てくる`with()`関数は、第一引数で指定するデータフレーム型変数内の変数名を第二引数内で参照演算子（`$`）を用いることなく参照できるようにする関数です。
+
+　階級を求めるには`pretty()`関数を使います。
+```{r}
+with(x, pretty(x = height, n = nclass.Sturges(height)))
+```
+　第一引数`x`には階級を求めたいベクトル型データを第二引数`n`には階級を区切りたい数（階級数）を指定します。ここでは、階級数`n`にはスタージェスの公式から求めた階級数を指定しています。  
+　ただし、必ずしも指定した階級数に分割される訳ではない点に注意してください。`x`で指定したデータが階級に収まるように適切な丸め処理を行いますので、指定した階級数とは異なる階級が求められることもあります。  
+
+　スタージェスの公式は、階級数を$k$、データのサイズ（数）を$n$とした場合、下式で定義されます。
+
+$$k = \log_2(n) + 1$$
+
+　スタージェスの公式は`nclass.Sturgess()`関数として実装されています。
+```{r}
+with(x, nclass.Sturges(height))
+```
+　
+　スタージェスの公式以外にもスコットの選択（`nclass.scott()`）やフリードマン=ダイアコニスの選択（`nclass.FD()`）などがあります。
+
+　  
+
+### データを各階級に分類する
+　データを階級分けするには`cut()`関数を使います。
+```{r}
+with(x, cut(x = height, breaks = pretty(height, n = nclass.Sturges(height))))
+```
+
+　第一引数`x`には階級分けの対象となるベクトル型変数を第二引数`breaks`には上記で求めた階級を指定します。こことでは`pretty()`関数の結果を指定していますが、任意の階級を指定することもできます。
+
+　  
+
+#### 階級の境界値はどちらに含まれるのか？ {.unnumbered}
+　`cut()`関数の出力は、`(140,145] (145,150]`のように階級間で同じ数値、この場合は`145`が含まれます。では、`145`はどちらの階級に含まれるのでしょうか？  
+　答えは、添えられている括弧にあります。
+
+> `(140,145]`
+
+は「140を超えて145以下」となりますので、次の
+
+> `(145,150]`
+
+は同様に「145を超えて150以下」となります。階級間の境界値である`145`は`(140, 145]`側に入ります。  
+　つまり
+
+> `(`は「超えて」（境界値を含まない）、`[`は「以上」（境界値を含む）
+
+となっています。逆向きの括弧も同様で
+
+> `)`は未満」（境界値を含まない）、`]`は「以下」（境界値を含む）
+
+となります。  
+
+　境界値をどちらに含めるかは`include.lowest`引数と`right`引数で指定します。
+
+option                       | `right = TRUE` 　 | `right = FALSE` 
+-----------------------------|-------------------|------------------
+**`include.lowest = TRUE`**  | `[l,u] ... (l,u]` | `[l,u) ... [l,u]`
+**`include.lowest = FALSE`** | `(l,u] ... (l,u]` | `[l,u) ... [l,u)`
+
+　デフォルトは下記の通りです。
+```{r, eval=FALSE}
+cut(x, breaks, include.lowest = FALSE, right = TRUE)
+```
+
+　例えばデータの最大値と最小値を境界値として含む階級を指定した場合、`include.lowest = FALSE, right = FALSE`と指定すると最大値が階級に含まれなくなります。
+```{r}
+with(x, cut(height, breaks = c(143, 155, 169),
+            include.lowest = FALSE, right = FALSE))
+```
+
+　逆に`include.lowest = FALSE, right = TRUE`と指定すると最小値が階級に含まれなくなります。
+```{r}
+with(x, cut(height, breaks = c(143, 155, 169),
+            include.lowest = FALSE, right = TRUE))
+```
+
+　  
+
+### 度数を求める
+　度数を求めるには各階級の数を数えます。数を数えるには`table()`関数や`dplyr::count()`関数を使います。`table()`関数はベクトル型を対象に、`dplyr::count()`関数はデータフレーム型を対象として個数をカウントします。用途によって使い分けてください。
+```{r}
+with(x, table(cut(height, breaks = pretty(height, n = nclass.Sturges(height)))))
+```
+
+　  
+
+```{r}
+x %>% 
+  # 階級を求めて、データを階級ごとに分ける
+  dplyr::mutate(class = cut(height,
+                            breaks = pretty(height, n = nclass.Sturges(height)))) %>% 
+  # 階級ごとの度数を求める
+  dplyr::count(class)
+```
+
+　  
+
+### 累積度数、相対度数、累積相対度数を求める
+　累積度数（度数の累積和）を求めるには`cumsum()`関数を使います。
+```{r}
+with(x, cumsum(table(cut(height, breaks = pretty(height, n = nclass.Sturges(height))))))
+```
+
+　  
+
+　相対度数を求めるには`prop.table()`関数を使います。
+```{r}
+with(x, prop.table(table(cut(height, breaks = pretty(height, n = nclass.Sturges(height))))))
+```
+
+　  
+
+　累積相対度数は相対度数の累積和ですので、`prop.table()`関数の結果を`cumsum()`関数に渡すことで求めることができます。
+```{r}
+with(x, cumsum(prop.table(table(cut(height, breaks = pretty(height, n = nclass.Sturges(height)))))))
+```
+
+　  
+
+### 階級値を求める
+　階級値は階級の文字列から下限と上限の境界値を抜き出し、下式で単純平均として求めています。
+
+$$\frac{(\mbox{下限} + 1) + \mbox{上限}}{2}$$
+
+　手順としては以下のようにしています。
+
+1. `as.character()`関数で 階級（`class`）を文字型に変換し、新しい変数（`class_value`）を作成する  
+1. `tidyr::separate()`関数で文字型の変数（`class_value`）を`,`の前後で二つの変数（`l`, `h`）に分割する  
+1. `stringr::str_remove`関数で二つの変数（`l`, `h`）から`(`や`]`を取り除き`as.numeric()`関数で文字列から数値に変換する  
+1. 数値に変換された二つの変数から（`l`, `h`）平均値を求める  
+
+```{r}
+x %>% 
+  # 階級を求めて、データを階級ごとに分ける
+  dplyr::mutate(class = cut(height,
+                            breaks = pretty(height, n = nclass.Sturges(height)),
+                            include.lowest = FALSE, right = TRUE)) %>% 
+  # 階級ごとの度数を求める
+  dplyr::count(class) %>% 
+  # 階級値を求める
+  dplyr::mutate(class_value = as.character(class)) %>% 
+  tidyr::separate(class_value, into = c("l", "h"), sep = ",") %>% 
+  dplyr::mutate(l = as.numeric(stringr::str_remove(l, "[[:punct:]]")),
+                h = as.numeric(stringr::str_remove(h, "[[:punct:]]"))) %>% 
+  dplyr::mutate(mids = ((l + 1) + h) / 2)
+```
+
+　  
+
+## 練習問題
+　テキストP23にあるデータで度数分布表とヒストグラムを作成する。
+```{r, echo=FALSE, message=FALSE}
+df <- "../data/P23_図表1-4.csv" %>% 
+  readr::read_csv(col_names = FALSE)
+df
+```
+
+### 解答例 {.unnumbered}
+　まず、処理しやすいように下記のように対象データを変形し`df`というデータフレーム型の変数に格納しておきます。
+```{r, echo=FALSE}
+df <- df %>% 
+  tidyr::pivot_longer(cols = starts_with("X")) %>% 
+  dplyr::arrange(name) %>% 
+  dplyr::mutate(weight = as.integer(value)) %>% 
+  dplyr::select(weight)
+```
+```{r}
+df
+```
+
+　度数分布表を身長の場合と同じ要領で作成します。
+```{r}
+df %>% 
+  # 階級を求めて、データを階級ごとに分ける
+  dplyr::mutate(class = cut(weight,
+                            breaks = pretty(weight, n = nclass.Sturges(weight)),
+                            include.lowest = FALSE, right = TRUE)) %>% 
+  # 階級ごとの度数を求める
+  dplyr::count(class) %>% 
+  # 累積度数、相対度数、累積相対度数を求める
+  dplyr::mutate(cumsum_n = cumsum(n),
+                prop = prop.table(n), cumsum_prop = cumsum(prop)) %>% 
+  # 階級値を求める
+  dplyr::mutate(class_value = as.character(class)) %>%
+  tidyr::separate(class_value, into = c("l", "h"), sep = ",") %>% 
+  dplyr::mutate(l = as.integer(stringr::str_remove(l, "[[:punct:]]")) + 1L,
+                h = as.integer(stringr::str_remove(h, "[[:punct:]]")),
+                mids = (l + h) / 2L) %>%
+  # 変数名を日本語にする
+  dplyr::select(`階級` = class, `階級値` = mids,
+                `度数` = n, `累積度数` = cumsum_n,
+                `相対度数` = prop, `累積相対度数` = cumsum_prop)
+```
+
+　  
+
+　ヒストグラムを描きます。
+```{r}
+with(df, hist(weight))
+```
+
+　  
+
+以上
