@@ -16,11 +16,11 @@ bookdown::gitbook:
     toolbar:
       position: fixed # "static" or "fixed""
     edit: null
-    download: ["pdf"]
+    # download: ["pdf"]
     search: yes
     fontsettings:
-      theme: night  # "white" or "sepia" or "night"
-      family: serif # "serif" or "sans"
+      theme: white  # "white" or "sepia" or "night"
+      family: sans # "serif" or "sans"
 
 ## ePUB形式でLaTeX数式が表示されない
 bookdown::epub_book:
