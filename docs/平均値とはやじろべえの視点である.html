@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Rで学ぶ『完全独習 統計学入門』</title>
+  <title>第2講 平均値とはやじろべえの視点である | Rで学ぶ『完全独習 統計学入門』</title>
   <meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Rで学ぶ『完全独習 統計学入門』" />
+  <meta property="og:title" content="第2講 平均値とはやじろべえの視点である | Rで学ぶ『完全独習 統計学入門』" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
   <meta name="github-repo" content="k-metrics/DAWS2022" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Rで学ぶ『完全独習 統計学入門』" />
+  <meta name="twitter:title" content="第2講 平均値とはやじろべえの視点である | Rで学ぶ『完全独習 統計学入門』" />
   
   <meta name="twitter:description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
   
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
+<link rel="prev" href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"/>
 
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -178,18 +178,49 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="平均値とはやじろべえの視点である" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">第2講</span> 平均値とはやじろべえの視点である<a href="平均値とはやじろべえの視点である.html#平均値とはやじろべえの視点である" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="統計量はデータを要約する数値" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> 統計量は、データを要約する数値<a href="平均値とはやじろべえの視点である.html#統計量はデータを要約する数値" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="平均値とは" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> 平均値とは<a href="平均値とはやじろべえの視点である.html#平均値とは" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="度数分布表での平均値" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> 度数分布表での平均値<a href="平均値とはやじろべえの視点である.html#度数分布表での平均値" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="平均値のヒストグラムの中での役割" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> 平均値のヒストグラムの中での役割<a href="平均値とはやじろべえの視点である.html#平均値のヒストグラムの中での役割" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="平均値をどう捉えるべきか" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> 平均値をどう捉えるべきか<a href="平均値とはやじろべえの視点である.html#平均値をどう捉えるべきか" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="練習問題-1" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> 練習問題<a href="平均値とはやじろべえの視点である.html#練習問題-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="コラム平均値のとり方は１つではない" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> 【コラム】平均値のとり方は、１つではない<a href="平均値とはやじろべえの視点である.html#コラム平均値のとり方は１つではない" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>算術平均（Arithmetic Mean）
+幾何平均（Geometric Mean）または相乗平均</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="平均値とはやじろべえの視点である.html#cb29-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">geometric.mean</span>(x)</span></code></pre></div>
+<p>二乗平均（Mean Square）</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="平均値とはやじろべえの視点である.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x <span class="sc">^</span> <span class="dv">2</span>)</span></code></pre></div>
+<p>二乗平均平方根（Root Mean Square）</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="平均値とはやじろべえの視点である.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(x <span class="sc">^</span> <span class="dv">2</span>))</span>
+<span id="cb31-2"><a href="平均値とはやじろべえの視点である.html#cb31-2" aria-hidden="true" tabindex="-1"></a>Metrics<span class="sc">::</span><span class="fu">rmse</span>()  <span class="co"># Root Mean Squared Error</span></span></code></pre></div>
+<p>調和平均（Harmonic Mean）</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="平均値とはやじろべえの視点である.html#cb32-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">harmonic.mean</span>(x)</span></code></pre></div>
+<p>トリム平均</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="平均値とはやじろべえの視点である.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">trim =</span> <span class="fl">0.05</span>)  <span class="co"># データの5%を外側から対象外とする</span></span></code></pre></div>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
+<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>

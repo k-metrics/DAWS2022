@@ -1,0 +1,46 @@
+# 平均値とはやじろべえの視点である
+
+## 統計量は、データを要約する数値
+
+## 平均値とは
+
+## 度数分布表での平均値
+
+## 平均値のヒストグラムの中での役割
+
+## 平均値をどう捉えるべきか
+
+## 練習問題
+
+## 【コラム】平均値のとり方は、１つではない
+
+算術平均（Arithmetic Mean）
+幾何平均（Geometric Mean）または相乗平均
+```{r, eval=FALSE}
+psych::geometric.mean(x)
+```
+
+二乗平均（Mean Square）
+```{r, eval=FALSE}
+mean(x ^ 2)
+```
+
+
+二乗平均平方根（Root Mean Square）
+```{r, eval=FALSE}
+sqrt(mean(x ^ 2))
+Metrics::rmse()  # Root Mean Squared Error
+```
+
+
+調和平均（Harmonic Mean）
+```{r, eval=FALSE}
+psych::harmonic.mean(x)
+```
+
+
+トリム平均
+```{r, eval=FALSE}
+mean(x, trim = 0.05)  # データの5%を外側から対象外とする
+```
+
