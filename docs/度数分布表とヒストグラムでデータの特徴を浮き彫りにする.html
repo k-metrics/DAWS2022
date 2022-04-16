@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>第1講 度数分布表とヒストグラムでデータの特徴を浮き彫りにする | Rで学ぶ『完全独習 統計学入門』</title>
   <meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
-  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="第1講 度数分布表とヒストグラムでデータの特徴を浮き彫りにする | Rで学ぶ『完全独習 統計学入門』" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sampo Suzuki, CC 4.0 BY-NC-SA" />
 
 
-<meta name="date" content="2022-04-16" />
+<meta name="date" content="2022-04-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -131,21 +131,24 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="index.html#はじめに">はじめに<span></span></a></li>
-<li class="chapter" data-level="1" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><i class="fa fa-check"></i><b>1</b> 度数分布表とヒストグラムでデータの特徴を浮き彫りにする<span></span></a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>はじめに</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#生データでは何もわからないから統計を使う"><i class="fa fa-check"></i><b>1.1</b> 生データでは何もわからないから統計を使う<span></span></a></li>
-<li class="chapter" data-level="1.2" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#ヒストグラムを作る"><i class="fa fa-check"></i><b>1.2</b> ヒストグラムを作る<span></span></a>
-<ul>
-<li class="chapter" data-level="1.2.1" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級を求める"><i class="fa fa-check"></i><b>1.2.1</b> 階級を求める<span></span></a></li>
-<li class="chapter" data-level="1.2.2" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#データを各階級に分類する"><i class="fa fa-check"></i><b>1.2.2</b> データを各階級に分類する<span></span></a></li>
-<li class="chapter" data-level="1.2.3" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#度数を求める"><i class="fa fa-check"></i><b>1.2.3</b> 度数を求める<span></span></a></li>
-<li class="chapter" data-level="1.2.4" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#累積度数相対度数累積相対度数を求める"><i class="fa fa-check"></i><b>1.2.4</b> 累積度数、相対度数、累積相対度数を求める<span></span></a></li>
-<li class="chapter" data-level="1.2.5" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級値を求める"><i class="fa fa-check"></i><b>1.2.5</b> 階級値を求める<span></span></a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#想定読者"><i class="fa fa-check"></i>想定読者</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#練習問題"><i class="fa fa-check"></i><b>1.3</b> 練習問題<span></span></a>
+<li class="chapter" data-level="1" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><i class="fa fa-check"></i><b>1</b> 度数分布表とヒストグラムでデータの特徴を浮き彫りにする</a>
 <ul>
-<li><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#解答例">解答例<span></span></a></li>
+<li class="chapter" data-level="1.1" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#生データでは何もわからないから統計を使う"><i class="fa fa-check"></i><b>1.1</b> 生データでは何もわからないから統計を使う</a></li>
+<li class="chapter" data-level="1.2" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#ヒストグラムを作る"><i class="fa fa-check"></i><b>1.2</b> ヒストグラムを作る</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級を求める"><i class="fa fa-check"></i><b>1.2.1</b> 階級を求める</a></li>
+<li class="chapter" data-level="1.2.2" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#データを各階級に分類する"><i class="fa fa-check"></i><b>1.2.2</b> データを各階級に分類する</a></li>
+<li class="chapter" data-level="1.2.3" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#度数を求める"><i class="fa fa-check"></i><b>1.2.3</b> 度数を求める</a></li>
+<li class="chapter" data-level="1.2.4" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#累積度数相対度数累積相対度数を求める"><i class="fa fa-check"></i><b>1.2.4</b> 累積度数、相対度数、累積相対度数を求める</a></li>
+<li class="chapter" data-level="1.2.5" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級値を求める"><i class="fa fa-check"></i><b>1.2.5</b> 階級値を求める</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#練習問題"><i class="fa fa-check"></i><b>1.3</b> 練習問題</a>
+<ul>
+<li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#解答例"><i class="fa fa-check"></i>解答例</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -167,24 +170,56 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
             <section class="normal" id="section-">
 <div id="度数分布表とヒストグラムでデータの特徴を浮き彫りにする" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">第1講</span> 度数分布表とヒストグラムでデータの特徴を浮き彫りにする<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#度数分布表とヒストグラムでデータの特徴を浮き彫りにする" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>　本講で扱うデータはテキストのP16 図表1-1で示されているデータですが、Rで処理しやすいように以下のように一列にまとめて<code>x</code>という<strong>データフレーム型</strong>変数に格納しておきます。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-1" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["height"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"151"},{"1":"154"},{"1":"160"},{"1":"160"},{"1":"163"},{"1":"156"},{"1":"158"},{"1":"156"},{"1":"154"},{"1":"160"},{"1":"154"},{"1":"162"},{"1":"156"},{"1":"162"},{"1":"157"},{"1":"162"},{"1":"162"},{"1":"169"},{"1":"150"},{"1":"162"},{"1":"152"},{"1":"161"},{"1":"159"},{"1":"164"},{"1":"168"},{"1":"153"},{"1":"160"},{"1":"155"},{"1":"160"},{"1":"158"},{"1":"160"},{"1":"150"},{"1":"163"},{"1":"155"},{"1":"157"},{"1":"162"},{"1":"154"},{"1":"161"},{"1":"153"},{"1":"154"},{"1":"151"},{"1":"155"},{"1":"158"},{"1":"146"},{"1":"149"},{"1":"165"},{"1":"169"},{"1":"154"},{"1":"155"},{"1":"166"},{"1":"165"},{"1":"161"},{"1":"148"},{"1":"143"},{"1":"156"},{"1":"162"},{"1":"158"},{"1":"156"},{"1":"159"},{"1":"164"},{"1":"167"},{"1":"159"},{"1":"157"},{"1":"151"},{"1":"159"},{"1":"156"},{"1":"151"},{"1":"160"},{"1":"153"},{"1":"156"},{"1":"146"},{"1":"166"},{"1":"151"},{"1":"159"},{"1":"157"},{"1":"156"},{"1":"162"},{"1":"156"},{"1":"156"},{"1":"161"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-<p>　</p>
 <div id="生データでは何もわからないから統計を使う" class="section level2 hasAnchor" number="1.1">
 <h2><span class="header-section-number">1.1</span> 生データでは何もわからないから統計を使う<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#生データでは何もわからないから統計を使う" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+　テキストの図表1-1のデータは4列20行からなるデータです。
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["X1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["X2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["X3"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["X4"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"151","2":"152","3":"151","4":"167"},{"1":"154","2":"161","3":"155","4":"159"},{"1":"160","2":"159","3":"158","4":"157"},{"1":"160","2":"164","3":"146","4":"151"},{"1":"163","2":"168","3":"149","4":"159"},{"1":"156","2":"153","3":"165","4":"156"},{"1":"158","2":"160","3":"169","4":"151"},{"1":"156","2":"155","3":"154","4":"160"},{"1":"154","2":"160","3":"155","4":"153"},{"1":"160","2":"158","3":"166","4":"156"},{"1":"154","2":"160","3":"165","4":"146"},{"1":"162","2":"150","3":"161","4":"166"},{"1":"156","2":"163","3":"148","4":"151"},{"1":"162","2":"155","3":"143","4":"159"},{"1":"157","2":"157","3":"156","4":"157"},{"1":"162","2":"162","3":"162","4":"156"},{"1":"162","2":"154","3":"158","4":"162"},{"1":"169","2":"161","3":"156","4":"156"},{"1":"150","2":"153","3":"159","4":"156"},{"1":"162","2":"154","3":"164","4":"161"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　Rでは、このような形式のデータ（雑然データ）をそのまま使わずに整然データ（<a href="https://ja.wikipedia.org/wiki/Tidy_data">Tidy Data</a>）と呼ばれる形式に変換した方が効率的に処理できます。変換には<strong><code>tidyverse</code></strong>ファミリーを利用するのが効率的です。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ローカルにあるデータファイルを読み込む</span></span>
+<span id="cb1-4"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">&quot;../data/P16_図表1-1 .csv&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb1-5"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-5" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">col_names =</span> <span class="cn">FALSE</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-6"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 読み込んだデータを縦長形式（Tidy Data）に変換する</span></span>
+<span id="cb1-7"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-7" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb1-8"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">&quot;name&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-9"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># X1, X2, ... , X4, X1 の順で行方向に読み込まれるので列方向で整列する</span></span>
+<span id="cb1-10"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(name) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-11"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 必要なデータ列（value）の列名をheightに変更して取り出す</span></span>
+<span id="cb1-12"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">height =</span> value)</span>
+<span id="cb1-13"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb1-14" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["height"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"151"},{"1":"154"},{"1":"160"},{"1":"160"},{"1":"163"},{"1":"156"},{"1":"158"},{"1":"156"},{"1":"154"},{"1":"160"},{"1":"154"},{"1":"162"},{"1":"156"},{"1":"162"},{"1":"157"},{"1":"162"},{"1":"162"},{"1":"169"},{"1":"150"},{"1":"162"},{"1":"152"},{"1":"161"},{"1":"159"},{"1":"164"},{"1":"168"},{"1":"153"},{"1":"160"},{"1":"155"},{"1":"160"},{"1":"158"},{"1":"160"},{"1":"150"},{"1":"163"},{"1":"155"},{"1":"157"},{"1":"162"},{"1":"154"},{"1":"161"},{"1":"153"},{"1":"154"},{"1":"151"},{"1":"155"},{"1":"158"},{"1":"146"},{"1":"149"},{"1":"165"},{"1":"169"},{"1":"154"},{"1":"155"},{"1":"166"},{"1":"165"},{"1":"161"},{"1":"148"},{"1":"143"},{"1":"156"},{"1":"162"},{"1":"158"},{"1":"156"},{"1":"159"},{"1":"164"},{"1":"167"},{"1":"159"},{"1":"157"},{"1":"151"},{"1":"159"},{"1":"156"},{"1":"151"},{"1":"160"},{"1":"153"},{"1":"156"},{"1":"146"},{"1":"166"},{"1":"151"},{"1":"159"},{"1":"157"},{"1":"156"},{"1":"162"},{"1":"156"},{"1":"156"},{"1":"161"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　このような形式に変換することで、様々な統計量を効率的に求めることができるようになります。</p>
 <p>　</p>
 </div>
 <div id="ヒストグラムを作る" class="section level2 hasAnchor" number="1.2">
 <h2><span class="header-section-number">1.2</span> ヒストグラムを作る<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#ヒストグラムを作る" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>　Rでヒストグラムを描くには<code>hist()</code>関数を使います。ヒストグラムを描くために計算した階級や度数、階級値などの情報を出力することも可能です。</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb2-1" aria-hidden="true" tabindex="-1"></a>hist <span class="ot">&lt;-</span> <span class="fu">hist</span>(x<span class="sc">$</span>height)</span></code></pre></div>
-<p><img src="R_files/figure-html/unnamed-chunk-3-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb3-1" aria-hidden="true" tabindex="-1"></a>hist</span></code></pre></div>
+<p>　テキストでは度数分布表を作成してからヒストグラムを描いています。その手順は</p>
+<ol style="list-style-type: decimal">
+<li>最大・最小値を求める</li>
+<li>階級を決める</li>
+<li>度数をカウントする</li>
+<li>相対度数を求める</li>
+<li>累積度数を求める
+<ul>
+<li>ここまでで度数分布表ができる</li>
+</ul></li>
+<li>度数分布表をもとにヒストグラムを描く</li>
+</ol>
+<p>となっていますが、Rでは<code>hist()</code>関数だけでヒストグラムを描くことができます。<code>hist()</code>関数の引数はベクトル型に限定されますので、データフレーム型の場合は参照演算子（<code>$</code>）などでベクトル型データを取り出す必要があります。</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="at">x =</span> x<span class="sc">$</span>height)</span></code></pre></div>
+<p><img src="R_files/figure-html/unnamed-chunk-3-1.png" width="90%" style="display: block; margin: auto;" />
+　<code>hist()</code>関数はヒストグラムを描くために必要となる階級や度数、階級値などの情報を出力することも可能です。</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="at">x =</span> x<span class="sc">$</span>height, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## $breaks
 ## [1] 140 145 150 155 160 165 170
 ## 
@@ -205,7 +240,40 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;histogram&quot;</code></pre>
-<p>　度数分布表を作成する場合は以下のようにします。</p>
+<table>
+<caption>主な出力の意味</caption>
+<thead>
+<tr class="header">
+<th>出力名</th>
+<th>意味</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>$breaks</code></td>
+<td>階級</td>
+<td>デフォルトはスタージェスの公式<sup>*</sup>にもとづく区切り（幅）</td>
+</tr>
+<tr class="even">
+<td><code>$counts</code></td>
+<td>度数</td>
+<td>各階級に入るデータの個数</td>
+</tr>
+<tr class="odd">
+<td><code>$density</code></td>
+<td>密度</td>
+<td>密度推定値</td>
+</tr>
+<tr class="even">
+<td><code>$mids</code></td>
+<td>階級値</td>
+<td>階級の中央値（階級の単純平均）</td>
+</tr>
+</tbody>
+</table>
+<p><sup>*</sup> 後述</p>
+<p>　表形式の度数分布表を作成する場合は以下のようにコード処理します。</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級を求めて、データを階級ごとに分ける</span></span>
 <span id="cb5-3"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
@@ -231,6 +299,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 {"columns":[{"label":["階級"],"name":[1],"type":["fct"],"align":["left"]},{"label":["階級値"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["度数"],"name":[3],"type":["int"],"align":["right"]},{"label":["累積度数"],"name":[4],"type":["int"],"align":["right"]},{"label":["相対度数"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["累積相対度数"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"(140,145]","2":"143","3":"1","4":"1","5":"0.0125","6":"0.0125"},{"1":"(145,150]","2":"148","3":"6","4":"7","5":"0.0750","6":"0.0875"},{"1":"(150,155]","2":"153","3":"19","4":"26","5":"0.2375","6":"0.3250"},{"1":"(155,160]","2":"158","3":"30","4":"56","5":"0.3750","6":"0.7000"},{"1":"(160,165]","2":"163","3":"18","4":"74","5":"0.2250","6":"0.9250"},{"1":"(165,170]","2":"168","3":"6","4":"80","5":"0.0750","6":"1.0000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<p>　以降の項は度数分布表の作成に必要な関数の使い方を紹介していますので、不要な方は演習問題まで読み飛ばしてください。</p>
 <p>　</p>
 <div id="階級を求める" class="section level3 hasAnchor" number="1.2.1">
 <h3><span class="header-section-number">1.2.1</span> 階級を求める<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級を求める" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -247,8 +316,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <p>　スタージェスの公式は<code>nclass.Sturgess()</code>関数として実装されています。</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">nclass.Sturges</span>(height))</span></code></pre></div>
 <pre><code>## [1] 8</code></pre>
-<p>　
-　スタージェスの公式以外にもスコットの選択（<code>nclass.scott()</code>）やフリードマン=ダイアコニスの選択（<code>nclass.FD()</code>）などがあります。</p>
+<p>　スタージェスの公式はヒストグラムを平滑化し過ぎる傾向があると言われています。気になる場合はスコットの選択（<code>nclass.scott()</code>）やフリードマン=ダイアコニスの選択（<code>nclass.FD()</code>）を試して見てください。</p>
 <p>　</p>
 </div>
 <div id="データを各階級に分類する" class="section level3 hasAnchor" number="1.2.2">
@@ -268,12 +336,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## [71] (145,150] (165,170] (150,155] (155,160] (155,160] (155,160] (160,165]
 ## [78] (155,160] (155,160] (160,165]
 ## Levels: (140,145] (145,150] (150,155] (155,160] (160,165] (165,170]</code></pre>
-<p>　第一引数<code>x</code>には階級分けの対象となるベクトル型変数を第二引数<code>breaks</code>には上記で求めた階級を指定します。こことでは<code>pretty()</code>関数の結果を指定していますが、任意の階級を指定することもできます。</p>
+<p>　第一引数<code>x</code>には階級分けの対象となるベクトル型変数を第二引数<code>breaks</code>には前項で求めた階級を指定します。<code>breaks</code>引数には任意の階級、例えば<code>breaks = c(140, 155, 170)</code>のように指定することも可能です。</p>
 <p>　</p>
 <div id="階級の境界値はどちらに含まれるのか" class="section level4 unnumbered hasAnchor">
 <h4>階級の境界値はどちらに含まれるのか？<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級の境界値はどちらに含まれるのか" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>　<code>cut()</code>関数の出力は、<code>(140,145] (145,150]</code>のように階級間で同じ数値、この場合は<code>145</code>が含まれます。では、<code>145</code>はどちらの階級に含まれるのでしょうか？<br />
-　答えは、添えられている括弧にあります。</p>
+<p>　<code>cut()</code>関数の出力は、<code>(140,145] (145,150]</code>のように階級間で同じ数値、この場合は<code>145</code>が含まれます。では、<code>145</code>はどちらの階級に含まれるのでしょうか？答えは、添えられている括弧にあります。</p>
 <blockquote>
 <p><code>(140,145]</code></p>
 </blockquote>
@@ -281,17 +348,16 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <blockquote>
 <p><code>(145,150]</code></p>
 </blockquote>
-<p>は同様に「145を超えて150以下」となります。階級間の境界値である<code>145</code>は<code>(140, 145]</code>側に入ります。<br />
-　つまり</p>
+<p>は同様に「145を超えて150以下」となります。階級間の境界値である<code>145</code>は<code>(140, 145]</code>側に入ります。</p>
 <blockquote>
-<p><code>(</code>は「超えて」（境界値を含まない）、<code>[</code>は「以上」（境界値を含む）</p>
+<p><code>(</code>は「超えて」（境界値を含まない）、<code>]</code>は「以下」（境界値を含む）</p>
 </blockquote>
-<p>となっています。逆向きの括弧も同様で</p>
+<p>で、逆向きの場合は</p>
 <blockquote>
-<p><code>)</code>は未満」（境界値を含まない）、<code>]</code>は「以下」（境界値を含む）</p>
+<p><code>)</code>は「未満」（境界値を含まない）、<code>[</code>は「以上」（境界値を含む）</p>
 </blockquote>
-<p>となります。</p>
-<p>　境界値をどちらに含めるかは<code>include.lowest</code>引数と<code>right</code>引数で指定します。</p>
+<p>となります。<code>hist()</code>関数の階級も同様です。</p>
+<p>　境界値をどちらに含めるかは<code>include.lowest</code>引数と<code>right</code>引数で指定できます。</p>
 <table>
 <thead>
 <tr class="header">
@@ -308,16 +374,15 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </tr>
 <tr class="even">
 <td><strong><code>include.lowest = FALSE</code></strong></td>
-<td><code>(l,u] ... (l,u]</code></td>
+<td><code>(l,u] ... (l,u]</code><sup>*</sup></td>
 <td><code>[l,u) ... [l,u)</code></td>
 </tr>
 </tbody>
 </table>
-<p>　デフォルトは下記の通りです。</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span>(x, breaks, <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>　<sup>*</sup>デフォルト</p>
 <p>　例えばデータの最大値と最小値を境界値として含む階級を指定した場合、<code>include.lowest = FALSE, right = FALSE</code>と指定すると最大値が階級に含まれなくなります。</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">143</span>, <span class="dv">155</span>, <span class="dv">169</span>),</span>
-<span id="cb13-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb13-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">143</span>, <span class="dv">155</span>, <span class="dv">169</span>),</span>
+<span id="cb12-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb12-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
 <pre><code>##  [1] [143,155) [143,155) [155,169) [155,169) [155,169) [155,169) [155,169)
 ##  [8] [155,169) [143,155) [155,169) [143,155) [155,169) [155,169) [155,169)
 ## [15] [155,169) [155,169) [155,169) &lt;NA&gt;      [143,155) [155,169) [143,155)
@@ -332,8 +397,8 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## [78] [155,169) [155,169) [155,169)
 ## Levels: [143,155) [155,169)</code></pre>
 <p>　逆に<code>include.lowest = FALSE, right = TRUE</code>と指定すると最小値が階級に含まれなくなります。</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">143</span>, <span class="dv">155</span>, <span class="dv">169</span>),</span>
-<span id="cb15-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb15-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">143</span>, <span class="dv">155</span>, <span class="dv">169</span>),</span>
+<span id="cb14-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb14-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>##  [1] (143,155] (143,155] (155,169] (155,169] (155,169] (155,169] (155,169]
 ##  [8] (155,169] (143,155] (155,169] (143,155] (155,169] (155,169] (155,169]
 ## [15] (155,169] (155,169] (155,169] (155,169] (143,155] (155,169] (143,155]
@@ -353,17 +418,17 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <div id="度数を求める" class="section level3 hasAnchor" number="1.2.3">
 <h3><span class="header-section-number">1.2.3</span> 度数を求める<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#度数を求める" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>　度数を求めるには各階級の数を数えます。数を数えるには<code>table()</code>関数や<code>dplyr::count()</code>関数を使います。<code>table()</code>関数はベクトル型を対象に、<code>dplyr::count()</code>関数はデータフレーム型を対象として個数をカウントします。用途によって使い分けてください。</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">table</span>(<span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)))))</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">table</span>(<span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)))))</span></code></pre></div>
 <pre><code>## 
 ## (140,145] (145,150] (150,155] (155,160] (160,165] (165,170] 
 ##         1         6        19        30        18         6</code></pre>
 <p>　</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb19-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級を求めて、データを階級ごとに分ける</span></span>
-<span id="cb19-3"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
-<span id="cb19-4"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb19-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)))) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-5"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級ごとの度数を求める</span></span>
-<span id="cb19-6"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb19-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb18-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級を求めて、データを階級ごとに分ける</span></span>
+<span id="cb18-3"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
+<span id="cb18-4"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb18-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)))) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級ごとの度数を求める</span></span>
+<span id="cb18-6"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb18-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["class"],"name":[1],"type":["fct"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"(140,145]","2":"1"},{"1":"(145,150]","2":"6"},{"1":"(150,155]","2":"19"},{"1":"(155,160]","2":"30"},{"1":"(160,165]","2":"18"},{"1":"(165,170]","2":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -374,18 +439,18 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <div id="累積度数相対度数累積相対度数を求める" class="section level3 hasAnchor" number="1.2.4">
 <h3><span class="header-section-number">1.2.4</span> 累積度数、相対度数、累積相対度数を求める<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#累積度数相対度数累積相対度数を求める" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>　累積度数（度数の累積和）を求めるには<code>cumsum()</code>関数を使います。</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cumsum</span>(<span class="fu">table</span>(<span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height))))))</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cumsum</span>(<span class="fu">table</span>(<span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height))))))</span></code></pre></div>
 <pre><code>## (140,145] (145,150] (150,155] (155,160] (160,165] (165,170] 
 ##         1         7        26        56        74        80</code></pre>
 <p>　</p>
 <p>　相対度数を求めるには<code>prop.table()</code>関数を使います。</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height))))))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height))))))</span></code></pre></div>
 <pre><code>## 
 ## (140,145] (145,150] (150,155] (155,160] (160,165] (165,170] 
 ##    0.0125    0.0750    0.2375    0.3750    0.2250    0.0750</code></pre>
 <p>　</p>
 <p>　累積相対度数は相対度数の累積和ですので、<code>prop.table()</code>関数の結果を<code>cumsum()</code>関数に渡すことで求めることができます。</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cumsum</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)))))))</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cumsum</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)))))))</span></code></pre></div>
 <pre><code>## (140,145] (145,150] (150,155] (155,160] (160,165] (165,170] 
 ##    0.0125    0.0875    0.3250    0.7000    0.9250    1.0000</code></pre>
 <p>　</p>
@@ -404,19 +469,19 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </li>
 <li>数値に変換された二つの変数から（<code>l</code>, <code>h</code>）平均値を求める</li>
 </ol>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級を求めて、データを階級ごとに分ける</span></span>
-<span id="cb26-3"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
-<span id="cb26-4"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)),</span>
-<span id="cb26-5"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-6"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級ごとの度数を求める</span></span>
-<span id="cb26-7"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-8"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級値を求める</span></span>
-<span id="cb26-9"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class_value =</span> <span class="fu">as.character</span>(class)) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-10"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-10" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate</span>(class_value, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;h&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-11"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">l =</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(l, <span class="st">&quot;[[:punct:]]&quot;</span>)),</span>
-<span id="cb26-12"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">h =</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(h, <span class="st">&quot;[[:punct:]]&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-13"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mids =</span> ((l <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span> h) <span class="sc">/</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級を求めて、データを階級ごとに分ける</span></span>
+<span id="cb25-3"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
+<span id="cb25-4"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)),</span>
+<span id="cb25-5"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-6"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級ごとの度数を求める</span></span>
+<span id="cb25-7"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-8"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級値を求める</span></span>
+<span id="cb25-9"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class_value =</span> <span class="fu">as.character</span>(class)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-10"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-10" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate</span>(class_value, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;h&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-11"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">l =</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(l, <span class="st">&quot;[[:punct:]]&quot;</span>)),</span>
+<span id="cb25-12"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">h =</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(h, <span class="st">&quot;[[:punct:]]&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-13"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb25-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mids =</span> ((l <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span> h) <span class="sc">/</span> <span class="dv">2</span>)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["class"],"name":[1],"type":["fct"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["l"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["h"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["mids"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(140,145]","2":"1","3":"140","4":"145","5":"143"},{"1":"(145,150]","2":"6","3":"145","4":"150","5":"148"},{"1":"(150,155]","2":"19","3":"150","4":"155","5":"153"},{"1":"(155,160]","2":"30","3":"155","4":"160","5":"158"},{"1":"(160,165]","2":"18","3":"160","4":"165","5":"163"},{"1":"(165,170]","2":"6","3":"165","4":"170","5":"168"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -427,42 +492,43 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </div>
 <div id="練習問題" class="section level2 hasAnchor" number="1.3">
 <h2><span class="header-section-number">1.3</span> 練習問題<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#練習問題" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-　テキストP23にあるデータで度数分布表とヒストグラムを作成する。
+<p>　テキストP23にあるデータで度数分布表とヒストグラムを作成する。</p>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["X1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["X2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["X3"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["X4"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["X5"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["X6"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["X7"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["X8"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"48","2":"54","3":"47","4":"50","5":"53","6":"43","7":"45","8":"43"},{"1":"44","2":"47","3":"58","4":"46","5":"46","6":"63","7":"49","8":"50"},{"1":"48","2":"43","3":"46","4":"45","5":"50","6":"53","7":"51","8":"58"},{"1":"52","2":"53","3":"47","4":"49","5":"45","6":"42","7":"51","8":"49"},{"1":"58","2":"54","3":"45","4":"53","5":"50","6":"69","7":"44","8":"50"},{"1":"58","2":"64","3":"40","4":"57","5":"51","6":"69","7":"58","8":"47"},{"1":"62","2":"47","3":"40","4":"60","5":"48","6":"47","7":"53","8":"47"},{"1":"52","2":"61","3":"55","4":"55","5":"48","6":"48","7":"46","8":"52"},{"1":"45","2":"38","3":"62","4":"47","5":"55","6":"50","7":"46","8":"47"},{"1":"55","2":"48","3":"50","4":"50","5":"54","6":"55","7":"48","8":"50"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<p>　</p>
 <div id="解答例" class="section level3 unnumbered hasAnchor">
 <h3>解答例<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#解答例" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>　まず、処理しやすいように下記のように対象データを変形し<code>df</code>というデータフレーム型の変数に格納しておきます。</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb26-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["weight"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"48"},{"1":"44"},{"1":"48"},{"1":"52"},{"1":"58"},{"1":"58"},{"1":"62"},{"1":"52"},{"1":"45"},{"1":"55"},{"1":"54"},{"1":"47"},{"1":"43"},{"1":"53"},{"1":"54"},{"1":"64"},{"1":"47"},{"1":"61"},{"1":"38"},{"1":"48"},{"1":"47"},{"1":"58"},{"1":"46"},{"1":"47"},{"1":"45"},{"1":"40"},{"1":"40"},{"1":"55"},{"1":"62"},{"1":"50"},{"1":"50"},{"1":"46"},{"1":"45"},{"1":"49"},{"1":"53"},{"1":"57"},{"1":"60"},{"1":"55"},{"1":"47"},{"1":"50"},{"1":"53"},{"1":"46"},{"1":"50"},{"1":"45"},{"1":"50"},{"1":"51"},{"1":"48"},{"1":"48"},{"1":"55"},{"1":"54"},{"1":"43"},{"1":"63"},{"1":"53"},{"1":"42"},{"1":"69"},{"1":"69"},{"1":"47"},{"1":"48"},{"1":"50"},{"1":"55"},{"1":"45"},{"1":"49"},{"1":"51"},{"1":"51"},{"1":"44"},{"1":"58"},{"1":"53"},{"1":"46"},{"1":"46"},{"1":"48"},{"1":"43"},{"1":"50"},{"1":"58"},{"1":"49"},{"1":"50"},{"1":"47"},{"1":"47"},{"1":"52"},{"1":"47"},{"1":"50"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>　度数分布表を身長の場合と同じ要領で作成します。</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級を求めて、データを階級ごとに分ける</span></span>
-<span id="cb28-3"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(weight,</span>
-<span id="cb28-4"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">pretty</span>(weight, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(weight)),</span>
-<span id="cb28-5"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-6"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級ごとの度数を求める</span></span>
-<span id="cb28-7"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-8"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 累積度数、相対度数、累積相対度数を求める</span></span>
-<span id="cb28-9"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">cumsum_n =</span> <span class="fu">cumsum</span>(n),</span>
-<span id="cb28-10"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">prop =</span> <span class="fu">prop.table</span>(n), <span class="at">cumsum_prop =</span> <span class="fu">cumsum</span>(prop)) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-11"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級値を求める</span></span>
-<span id="cb28-12"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class_value =</span> <span class="fu">as.character</span>(class)) <span class="sc">%&gt;%</span></span>
-<span id="cb28-13"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-13" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate</span>(class_value, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;h&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-14"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">l =</span> <span class="fu">as.integer</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(l, <span class="st">&quot;[[:punct:]]&quot;</span>)) <span class="sc">+</span> 1L,</span>
-<span id="cb28-15"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">h =</span> <span class="fu">as.integer</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(h, <span class="st">&quot;[[:punct:]]&quot;</span>)),</span>
-<span id="cb28-16"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">mids =</span> (l <span class="sc">+</span> h) <span class="sc">/</span> 2L) <span class="sc">%&gt;%</span></span>
-<span id="cb28-17"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 変数名を日本語にする</span></span>
-<span id="cb28-18"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-18" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">`</span><span class="at">階級</span><span class="st">`</span> <span class="ot">=</span> class, <span class="st">`</span><span class="at">階級値</span><span class="st">`</span> <span class="ot">=</span> mids,</span>
-<span id="cb28-19"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-19" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">度数</span><span class="st">`</span> <span class="ot">=</span> n, <span class="st">`</span><span class="at">累積度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_n,</span>
-<span id="cb28-20"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">相対度数</span><span class="st">`</span> <span class="ot">=</span> prop, <span class="st">`</span><span class="at">累積相対度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_prop)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級を求めて、データを階級ごとに分ける</span></span>
+<span id="cb27-3"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(weight,</span>
+<span id="cb27-4"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">pretty</span>(weight, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(weight)),</span>
+<span id="cb27-5"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-6"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級ごとの度数を求める</span></span>
+<span id="cb27-7"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-8"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 累積度数、相対度数、累積相対度数を求める</span></span>
+<span id="cb27-9"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">cumsum_n =</span> <span class="fu">cumsum</span>(n),</span>
+<span id="cb27-10"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">prop =</span> <span class="fu">prop.table</span>(n), <span class="at">cumsum_prop =</span> <span class="fu">cumsum</span>(prop)) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-11"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級値を求める</span></span>
+<span id="cb27-12"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class_value =</span> <span class="fu">as.character</span>(class)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-13"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-13" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate</span>(class_value, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;h&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-14"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">l =</span> <span class="fu">as.integer</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(l, <span class="st">&quot;[[:punct:]]&quot;</span>)) <span class="sc">+</span> 1L,</span>
+<span id="cb27-15"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">h =</span> <span class="fu">as.integer</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(h, <span class="st">&quot;[[:punct:]]&quot;</span>)),</span>
+<span id="cb27-16"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">mids =</span> (l <span class="sc">+</span> h) <span class="sc">/</span> 2L) <span class="sc">%&gt;%</span></span>
+<span id="cb27-17"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 変数名を日本語にする</span></span>
+<span id="cb27-18"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-18" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">`</span><span class="at">階級</span><span class="st">`</span> <span class="ot">=</span> class, <span class="st">`</span><span class="at">階級値</span><span class="st">`</span> <span class="ot">=</span> mids,</span>
+<span id="cb27-19"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-19" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">度数</span><span class="st">`</span> <span class="ot">=</span> n, <span class="st">`</span><span class="at">累積度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_n,</span>
+<span id="cb27-20"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb27-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">相対度数</span><span class="st">`</span> <span class="ot">=</span> prop, <span class="st">`</span><span class="at">累積相対度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_prop)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["階級"],"name":[1],"type":["fct"],"align":["left"]},{"label":["階級値"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["度数"],"name":[3],"type":["int"],"align":["right"]},{"label":["累積度数"],"name":[4],"type":["int"],"align":["right"]},{"label":["相対度数"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["累積相対度数"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"(35,40]","2":"38","3":"3","4":"3","5":"0.0375","6":"0.0375"},{"1":"(40,45]","2":"43","3":"11","4":"14","5":"0.1375","6":"0.1750"},{"1":"(45,50]","2":"48","3":"33","4":"47","5":"0.4125","6":"0.5875"},{"1":"(50,55]","2":"53","3":"19","4":"66","5":"0.2375","6":"0.8250"},{"1":"(55,60]","2":"58","3":"7","4":"73","5":"0.0875","6":"0.9125"},{"1":"(60,65]","2":"63","3":"5","4":"78","5":"0.0625","6":"0.9750"},{"1":"(65,70]","2":"68","3":"2","4":"80","5":"0.0250","6":"1.0000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -470,7 +536,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </div>
 <p>　</p>
 <p>　ヒストグラムを描きます。</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">hist</span>(weight))</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">hist</span>(weight))</span></code></pre></div>
 <p><img src="R_files/figure-html/unnamed-chunk-21-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>　</p>
 <p>以上</p>
