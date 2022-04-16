@@ -15,6 +15,10 @@
 ## 【コラム】平均値のとり方は、１つではない
 
 算術平均（Arithmetic Mean）
+```{r, eval=FALSE}
+maen(x)
+```
+
 幾何平均（Geometric Mean）または相乗平均
 ```{r, eval=FALSE}
 psych::geometric.mean(x)
