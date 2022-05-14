@@ -666,7 +666,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </div>
 <div id="階級の境界の扱い" class="section level3 unnumbered hasAnchor">
 <h3>階級の境界の扱い<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級の境界の扱い" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>　階級は下表のように「下端値〜上端値」の形式で表示されることが多いですが、<span class="math inline">\(140\)</span>は階級に含まれるのか？<span class="math inline">\(145\)</span>はどちらの階級に含まれるのかを決めておかないと意図しない度数になってしまう場合があります。</p>
+<p>　階級は下表のように「下端値〜上端値」の形式で表示されることが多いですが、<span class="math inline">\(140\)</span>は階級に含まれるのか？<span class="math inline">\(145\)</span>はどちらの階級に含まれるのか？を決めておかないと意図しない度数になってしまう場合があります。</p>
 <table>
 <thead>
 <tr class="header">
@@ -697,10 +697,10 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </tr>
 </tbody>
 </table>
-<p>　例えば、階級を「<span class="math inline">\(\mbox{下端値} \lt x_i \leq \mbox{上端値}\)</span>」と定義した場合は、下図のようになります。</p>
+<p>　例えば、階級を「<span class="math inline">\(\mbox{下端値} \lt x \leq \mbox{上端値}\)</span>」と定義した場合は、下図のようになります。</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">right =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <p><img src="R_files/figure-html/unnamed-chunk-29-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<p>階級を「<span class="math inline">\(\mbox{下端値} \leq x_i \lt \mbox{上端値}\)</span>」と定義した場合は、分布形状が異なることが分かります。</p>
+<p>階級を「<span class="math inline">\(\mbox{下端値} \leq x \lt \mbox{上端値}\)</span>」と定義した場合は、分布形状が異なることが分かります。</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">right =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
 <p><img src="R_files/figure-html/unnamed-chunk-30-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>　このように階級によりヒストグラムの形状が変わってくる点には注意が必要です。なお、下端、上端の含め方を<a href="https://k-metrics.netlify.app/post/2018-09/histogram/#/%E5%B7%A6%E9%96%89%E3%81%98%E3%81%A8%E5%8F%B3%E9%96%89%E3%81%98">「左閉じ、右閉じ」と表現</a>することもあります。</p>
