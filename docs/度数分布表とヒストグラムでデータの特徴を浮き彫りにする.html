@@ -152,7 +152,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </ul></li>
 <li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#ヒストグラムを描くポイント"><i class="fa fa-check"></i>ヒストグラムを描くポイント</a>
 <ul>
-<li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級を決め方"><i class="fa fa-check"></i>階級を決め方</a></li>
+<li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級の決め方"><i class="fa fa-check"></i>階級の決め方</a></li>
 <li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級の境界の扱い"><i class="fa fa-check"></i>階級の境界の扱い</a></li>
 </ul></li>
 </ul></li>
@@ -572,12 +572,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <h2>ヒストグラムを描くポイント<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#ヒストグラムを描くポイント" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>　ヒストグラムを描く（度数分布表を作成する）際のポイントは下記の二点があります。</p>
 <ol style="list-style-type: decimal">
-<li>階級を決め方</li>
+<li>階級の決め方</li>
 <li>階級の境界の扱い</li>
 </ol>
 <p>　</p>
-<div id="階級を決め方" class="section level3 unnumbered hasAnchor">
-<h3>階級を決め方<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級を決め方" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="階級の決め方" class="section level3 unnumbered hasAnchor">
+<h3>階級の決め方<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級の決め方" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>　階級を決める方法は特に定められていません。データが取る幅を見て切のよい値にすることが多いようです。ただし、階級のとり方によりヒストグラムの形状が変わる点には注意が必要です。例えば、身長データに対する階級をテキストと同様に<span class="math inline">\(5cm\)</span>幅とした場合は下図のような形状になります。</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">140</span>, <span class="at">to =</span> <span class="dv">170</span>, <span class="at">by =</span> <span class="dv">5</span>)))</span></code></pre></div>
 <p><img src="R_files/figure-html/unnamed-chunk-22-1.png" width="90%" style="display: block; margin: auto;" /></p>
