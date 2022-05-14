@@ -1,0 +1,163 @@
+% --- 参考資料 ----------------------------------------------------------------
+% https://github.com/Gedevan-Aleksizde/Japan.R2019/blob/master/latex/preamble.tex
+% https://teastat.blogspot.com/2019/01/bookdown.html
+
+% --- 未解決事項 --------------------------------------------------------------
+% 1)knitr時に以下のワーニングが出る
+%  警告メッセージ: 
+% Package xeCJK Warning: Redefining CJKfamily `\CJKttdefault'
+% (xeCJK)                (NotoSansCJKjp-Regular). 
+% 
+% 2) Bibliographyページを目次に表示できない
+% 
+% 3) 文頭一文字インデントを有効にできない
+%    \usepackage{indentfirst}   # インストールできない
+% 
+
+% --- Packages ----------------------------------------------------------------
+% 日本語とtufte, kableExtraを使うために必要なTeXパッケージ指定
+%  A4 210mm x 297mm
+%   \usepackage[a4paper, total={6.5in, 9.5in}]{geometry}
+%   \usepackage{indentfirst}   # tinytexのリポジトリには存在しない？
+
+\usepackage[a4paper, total={160mm, 247mm}, left=25mm, top=25mm]{geometry}
+% \usepackage[pdfbox,tombo]{gentombow}  % トンボを設定する場合は有効にする
+\usepackage{ifthen}                     % 条件分岐用 \ifthenelse{条件}{T}{F}
+\usepackage{booktabs}                   % ここからkableExtra用パッケージ
+\usepackage{longtable}                  % 
+\usepackage{array}                      % 
+\usepackage{multirow}                   % 
+\usepackage{wrapfig}                    % 
+\usepackage{float}                      % 
+\usepackage{colortbl}                   % 
+\usepackage{pdflscape}                  % 
+\usepackage{tabu}                       % 
+\usepackage{threeparttable}             % 
+\usepackage{threeparttablex}            % 
+\usepackage[normalem]{ulem}             % 
+\usepackage{inputenc}                   % 
+\usepackage{makecell}                   % 
+\usepackage{xcolor}                     % ここまでkableExtra用
+\usepackage{amsmath}                    % 
+\usepackage{fontawesome5}               % fontawesomeを使うために必要
+\usepackage{subfig}
+\usepackage{xeCJK}                      % 以下、日本語フォント用に必要
+\usepackage{zxjatype}
+\usepackage[noto]{zxjafont}             % Linux環境ではこちを指定
+% \usepackage[haranoaji]{zxjafont}      % Windows環境ではこちらを指定する
+% \usepackage[nopreset]{zxjafont}         % メイン設定を何も行わない場合
+\usepackage{pxrubrica}                  % ルビ用
+\usepackage{hyperref}                   % ハイパーリンク用必要？
+
+% --- Index ------------------------------------------------------------------
+% https://texwiki.texjp.org/?%E7%B4%A2%E5%BC%95%E4%BD%9C%E6%88%90
+\usepackage{makeidx}
+\makeindex
+% \usepackage{showidx}                  % 索引確認用（索引は作成されない）
+% % 別名索引の定義はbefore_body.texにて
+% --- 日本語索引 --------------------------------------------------------------
+% 使い方がよくわからない（makeidxのようにはいかないので何か設定が必要か？）
+% http://tug.ctan.org/info/mendex-doc/mendex.pdf
+% \usepackage{mendex}
+% \mendex
+
+% --- Table of Contentes ------------------------------------------------------
+% TOCにLOT(List of Tables), LOF(List of Figures), Bibliography, Indexを表示
+\usepackage[nottoc]{tocbibind}
+
+% --- Fonts -------------------------------------------------------------------
+% フォントしては index.html でも可能（pandoc用オプションは index.htmlにて）
+\setmonofont{Source Han Code JP}
+\setCJKmonofont{Source Han Code JP}
+% \setjamonofont{Source Han Code JP}
+% \setmonofont{UDEV Gothic JPDOC}  % BIZ UD + JetBrais Mono
+% \setCJKmonofont{UDEV Gothic JPDOC}
+
+% ## 日本語フォントの扱いについてはzxjafontパッケージの解説を参照のこと
+% # https://mirror.las.iastate.edu/tex-archive/language/japanese/zxjafont/zxjafont.pdf
+% #
+% ## Windows環境ではなぜかNotoフォントが認識されないので源ノシリーズベースの
+% ## 原ノ味フォントかIPAexフォントを利用する（原ノ味はtlmgrでインストール可）
+% # \usepackage[haranoaji]{zxjafont}
+% # \usepackage[ipaex]{zxjafont}
+% #
+% ## Windows環境でNotoフォントを指定したい場合は以下のようにheader-includeで
+% ## 個別に指定する（setCJKxxxfotnの指定は必要？）
+% # \setmainfont{NotoSerifCJKjp-Regular.otf}[BoldFont=NotoSerifCJKjp-Bold.otf]
+% # \setsansfont{NotoSansCJKjp-Regular.otf}[BoldFont=NotoSansCJKjp-Bold.otf]
+% # \setmonofont{NotoSansMonoCJKjp-Regular.otf}[BoldFont=NotoSansMonoCJKjp-Bold.otf]
+% ## モノフォントは源ノ角コード(Source Code Proの日本語版)がおすゝめ
+% # \setmonofont{SourceHanCodeJP-Regular.otf}[BoldFont=SourceHanCodeJPS-Bold.otf]
+% BIZ UDフォントを利用したい…
+% \setmainfont{BIZ UDPMincho}
+% \setsansfont{BIZ UDPGothic}
+% \setCJKmainfont{BIZ UDPMincho}      % 現在、Boldは提供されていない
+% \setCJKsansfont{BIZ UDPGothic}      % Bold書体あり
+% BoldFontを指定するとエラーになるためBoldが使えない...
+% \setCJKsansfont{BIZ UDPGothic}[BoldFont=BIZUPDGothic-Bold.ttf]
+% \setCJKmonofont{UDEV Gothic JPDOC}[BoldFont=UDEV Gothic JPDOC]
+
+% --- Fonts -------------------------------------------------------------------
+% https://teastat.blogspot.com/2019/01/bookdown.html
+% 図の位置を固定する
+\floatplacement{figure}{H}    % 図位置を固定する
+\floatplacement{table}{H}     % 表位置を固定する
+
+% 引数の意味
+%   H：絶対に指定箇所に置く（float.sty の効果）
+%   h：できれば指定箇所に置く。少しでも無理ならあきらめて次の候補へ
+%   t：版面上端に置く
+%   b：版面下端に置く
+%   p：単独のページに置く
+
+% --- 色付き囲いの定義 --------------------------------------------------------
+% https://marukunalufd0123.hatenablog.com/entry/2019/03/15/071717
+% https://texmedicine.hatenadiary.jp/entry/2015/12/17/000339
+% https://gedevan-aleksizde.github.io/rmarkdown-cookbook/custom-blocks.html
+\usepackage{tcolorbox}                  % 色付き囲い
+
+% tcolorbox packageのライブラリを呼びだす
+\tcbuselibrary{breakable, theorems, raster, skins}
+
+% Round Box
+\newtcolorbox{info-box}[2][]{colback = cyan!5!white,
+  colframe = cyan!60!black, coltitle = white,
+  fonttitle=\bfseries, title={#2}, #1}
+\newtcolorbox{warning-box}[2][]{colback = orange!5!white,
+  colframe = orange!80!black,
+  fonttitle=\bfseries, title={#2}, #1}
+\newtcolorbox{error-box}[2][]{colback = red!5!white,
+  colframe=red!75!black,
+  fonttitle=\bfseries, title={#2}, #1}
+
+\newtcolorbox{tips-box}[2][]{colback = yellow!10!white,
+  colframe = yellow!20!gray, coltitle = black,
+  fonttitle=\bfseries, title={#2}, #1}
+
+% Square Box
+\newtcolorbox{info-square}[2][]{colback = cyan!5!white,
+  arc = 0pt, outer arc = 0pt,
+  colframe = cyan!60!black, title = {#2}, #1}
+\newtcolorbox{warning-square}[2][]{colback = orange!5!white,
+  arc = 0pt, outer arc = 0pt,
+  colframe = orange!80!black, title = {#2}, #1}
+\newtcolorbox{error-square}[2][]{colback = red!5!white,
+  arc = 0pt, outer arc = 0pt,
+  colframe = red!75!black, title = {#2}, #1}
+
+% Hint Box
+\newtcolorbox{hint-box}[1][]{enhanced,
+  before skip = 2mm, after skip = 3mm,
+  boxrule = 0.4pt, left = 5mm, right = 2mm, top = 1mm, bottom = 1mm,
+  % colback = yellow!50, colframe = yellow!20!black,
+  colback = yellow!20, colframe = yellow!20!gray,
+  sharp corners, rounded corners = southeast, arc is angular, arc=3mm,
+  underlay={
+    \path[fill=tcbcolback!80!black] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+    \path[draw=tcbcolframe,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+    \path[fill=yellow!50!black,draw=none] (interior.south west) rectangle node[white]{\Huge\bfseries !} ([xshift=4mm]interior.north west);
+    % \path[fill=yellow!50!black,draw=none] (interior.south west) rectangle node[white]{\Huge\bfseries i} ([xshift=4mm]interior.north west);
+    },
+  drop fuzzy shadow, #1}
+
+

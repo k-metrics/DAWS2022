@@ -1,0 +1,64 @@
+% --- 空ページにヘッダーを設定する（機能していない） --------------------------
+\makeatletter
+\def\emptypage@emptypage{
+    \hbox{}
+    \thispagestyle{headings}
+    \newpage
+}
+\def\cleardoublepage{
+        \clearpage
+        \if@twoside
+            \ifodd\c@page
+                % do nothing
+            \else
+                \emptypage@emptypage
+            \fi
+        \fi
+    }
+\makeatother
+
+% --- 参考文献一覧を目次に表示させる ------------------------------------------
+\makeatletter
+\renewenvironment{thebibliography}[1]
+{\chapter*{\bibname\@mkboth{\bibname}{\bibname}}
+   \addcontentsline{toc}{chapter}{\bibname}%
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{#1}}%
+         \leftmargin\labelwidth
+         \advance\leftmargin\labelsep
+         \@openbib@code
+         \usecounter{enumiv}%
+         \let\p@enumiv\@empty
+         \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+   \sloppy
+   \clubpenalty4000
+   \@clubpenalty\clubpenalty
+   \widowpenalty4000%
+   \sfcode`\.\@m}
+  {\def\@noitemerr
+    {\@latex@warning{Empty `thebibliography' environment}}%
+   \endlist}
+\makeatother
+
+% --- 別名索引の定義 ----------------------------------------------------------
+% https://texwiki.texjp.org/?%E7%B4%A2%E5%BC%95%E4%BD%9C%E6%88%90#l86bc3d9
+\renewcommand{\seename}{$\rightarrow$}
+% 別名定義
+% \index{A|see{B}} と指定すれば索引にて A→B と表記される
+\index{Colab|see{Google Colaboratory}}
+\index{Google Colab|see{Google Colaboratory}}
+\index{iris|see{iris dataset}}
+\index{Rcmdr|see{R Commander}}
+% - あ 
+% - か 
+% - さ 
+% - た 
+% - な 
+% - は 
+\index{ぶんさん@分散|see{不偏分散}}
+\index{へいきん@平均|see{算術平均}}
+% - ま 
+\index{モード|see{最頻値}}
+% - や 
+% - ら 
+% - わ 
