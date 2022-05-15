@@ -1,3 +1,14 @@
+fig:unnamed-chunk-3
+fig:unnamed-chunk-21
+fig:unnamed-chunk-22
+fig:unnamed-chunk-23
+fig:unnamed-chunk-24
+fig:unnamed-chunk-25
+fig:unnamed-chunk-26
+fig:unnamed-chunk-27
+fig:unnamed-chunk-28
+fig:unnamed-chunk-30
+fig:unnamed-chunk-32
 度数分布表とヒストグラムでデータの特徴を浮き彫りにする
 生データでは何もわからないから統計を使う
 ヒストグラムを作る
