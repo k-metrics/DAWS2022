@@ -23,7 +23,7 @@
 <meta name="author" content="Sampo Suzuki, CC 4.0 BY-NC-SA" />
 
 
-<meta name="date" content="2022-05-14" />
+<meta name="date" content="2022-05-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -155,6 +155,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級の決め方"><i class="fa fa-check"></i>階級の決め方</a></li>
 <li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級の境界の扱い"><i class="fa fa-check"></i>階級の境界の扱い</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#等間隔ではない階級"><i class="fa fa-check"></i>等間隔ではない階級</a></li>
 </ul></li>
 </ul>
 
@@ -222,8 +223,13 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </ol>
 <p>となっていますが、Rでは<code>hist()</code>関数だけでヒストグラムを描くことができます。<code>hist()</code>関数の引数はベクトル型に限定されますので、データフレーム型の場合は参照演算子（<code>$</code>）などでベクトル型データを取り出す必要があります。</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="at">x =</span> x<span class="sc">$</span>height)</span></code></pre></div>
-<p><img src="R_files/figure-html/unnamed-chunk-3-1.png" width="90%" style="display: block; margin: auto;" />
-　<code>hist()</code>関数はヒストグラムを描くために必要となる階級や度数、階級値などの情報を出力することも可能です。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-3"></span>
+<img src="R_files/figure-html/unnamed-chunk-3-1.png" alt="Rのhist()関数" width="90%" />
+<p class="caption">
+Fig. 1.1: Rのhist()関数
+</p>
+</div>
+<p>　<code>hist()</code>関数はヒストグラムを描くために必要となる階級や度数、階級値などの情報を出力することも可能です。</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="at">x =</span> x<span class="sc">$</span>height, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## $breaks
 ## [1] 140 145 150 155 160 165 170
@@ -552,7 +558,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <p>　</p>
 <p>　ヒストグラムを描きます。</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">hist</span>(weight))</span></code></pre></div>
-<p><img src="R_files/figure-html/unnamed-chunk-21-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-21"></span>
+<img src="R_files/figure-html/unnamed-chunk-21-1.png" alt="解答例" width="90%" />
+<p class="caption">
+Fig. 1.2: 解答例
+</p>
+</div>
 <p>　</p>
 <p>以上</p>
 <p>　</p>
@@ -560,7 +571,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </div>
 <div id="ヒストグラムを描くポイント" class="section level2 unnumbered hasAnchor">
 <h2>ヒストグラムを描くポイント<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#ヒストグラムを描くポイント" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>　ヒストグラムを描く（度数分布表を作成する）際のポイントは下記の二点があります。</p>
+<p>　ヒストグラムを描く（度数分布表を作成する）際のポイントは下記の点です。</p>
 <ol style="list-style-type: decimal">
 <li>階級の決め方</li>
 <li>階級の境界の扱い</li>
@@ -570,16 +581,36 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <h3>階級の決め方<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級の決め方" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>　階級を決める方法は特に定められていません。データが取る幅を見て切のよい値にすることが多いようです。ただし、階級のとり方によりヒストグラムの形状が変わる点には注意が必要です。例えば、身長データに対する階級をテキストと同様に<span class="math inline">\(5cm\)</span>幅とした場合は下図のような形状になります。</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">140</span>, <span class="at">to =</span> <span class="dv">170</span>, <span class="at">by =</span> <span class="dv">5</span>)))</span></code></pre></div>
-<p><img src="R_files/figure-html/unnamed-chunk-22-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-22"></span>
+<img src="R_files/figure-html/unnamed-chunk-22-1.png" alt="階級幅5cmの場合" width="90%" />
+<p class="caption">
+Fig. 1.3: 階級幅5cmの場合
+</p>
+</div>
 <p>　階級を倍の<span class="math inline">\(10cm\)</span>幅とすると下図のようになります。</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">140</span>, <span class="at">to =</span> <span class="dv">170</span>, <span class="at">by =</span> <span class="dv">10</span>)))</span></code></pre></div>
-<p><img src="R_files/figure-html/unnamed-chunk-23-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-23"></span>
+<img src="R_files/figure-html/unnamed-chunk-23-1.png" alt="階級幅10cmの場合" width="90%" />
+<p class="caption">
+Fig. 1.4: 階級幅10cmの場合
+</p>
+</div>
 <p>　逆に階級を半分の<span class="math inline">\(2.5cm\)</span>幅とすると下図のようになります。</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">140</span>, <span class="at">to =</span> <span class="dv">170</span>, <span class="at">by =</span> <span class="fl">2.5</span>)))</span></code></pre></div>
-<p><img src="R_files/figure-html/unnamed-chunk-24-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-24"></span>
+<img src="R_files/figure-html/unnamed-chunk-24-1.png" alt="階級幅2.5cmの場合" width="90%" />
+<p class="caption">
+Fig. 1.5: 階級幅2.5cmの場合
+</p>
+</div>
 <p>　更に細かくして<span class="math inline">\(1cm\)</span>幅にすると下図のように歯抜けがある形状になります。</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">140</span>, <span class="at">to =</span> <span class="dv">170</span>, <span class="at">by =</span> <span class="fl">1.0</span>)))</span></code></pre></div>
-<p><img src="R_files/figure-html/unnamed-chunk-25-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-25"></span>
+<img src="R_files/figure-html/unnamed-chunk-25-1.png" alt="階級幅1cmの場合" width="90%" />
+<p class="caption">
+Fig. 1.6: 階級幅1cmの場合
+</p>
+</div>
 <p>　このように階級の決め方次第でヒストグラムの形状が変わってくることが分かります。ヒストグラムはデータの分布をみるために使うグラフですので、過大な階級幅や過小な階級幅で描くことは好ましくありませんので、適切な値を選ぶようにしてください。</p>
 <p>　</p>
 <div id="計算で階級を決める" class="section level4 unnumbered hasAnchor">
@@ -635,21 +666,26 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <h5>スタージェスの公式<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#スタージェスの公式" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <p>　スタージェスの公式は、比較的、よく使われる計算方法です。ただし、データの数が<span class="math inline">\(30\)</span>個未満の場合には適切ではありませんし、データの数が多くなるとヒストグラムを<a href="https://k-metrics.netlify.app/post/2018-09/histogram/#/%E4%BB%BB%E6%84%8F%E3%81%AE%E9%9A%8E%E7%B4%9A%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B">平滑化し過ぎる傾向</a>があると言われています。そのような傾向が見られた場合には、他の計算方法や任意の階級も試してみてください。</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="st">&quot;Sturges&quot;</span>))</span></code></pre></div>
-<p><img src="R_files/figure-html/unnamed-chunk-26-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="R_files/figure-html/%E9%9A%8E%E7%B4%9A%E6%95%B0%E3%82%92%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%B8%E3%82%A7%E3%82%B9%E3%81%AE%E5%85%AC%E5%BC%8F%E3%81%A7%E6%B1%82%E3%82%81%E3%81%9F%E5%A0%B4%E5%90%88-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>　</p>
 </div>
 <div id="スコットの選択" class="section level5 unnumbered hasAnchor">
 <h5>スコットの選択<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#スコットの選択" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <p>　スコットの選択は、データによってはスタージェスの公式と比べて階級数が少なくなる傾向があります。</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="st">&quot;Scott&quot;</span>))</span></code></pre></div>
-<p><img src="R_files/figure-html/unnamed-chunk-27-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="R_files/figure-html/%E3%82%B9%E3%82%B3%E3%83%83%E3%83%88%E3%81%AE%E9%81%B8%E6%8A%9E%E3%81%A7%E6%B1%82%E3%82%81%E3%81%9F%E5%A0%B4%E5%90%88-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>　</p>
 </div>
 <div id="フリードマンダイアコニスの選択" class="section level5 unnumbered hasAnchor">
 <h5>フリードマン・ダイアコニスの選択<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#フリードマンダイアコニスの選択" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <p>　フリードマン・ダイアコニスの法則とも呼ばれます。</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>))</span></code></pre></div>
-<p><img src="R_files/figure-html/unnamed-chunk-28-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-26"></span>
+<img src="R_files/figure-html/unnamed-chunk-26-1.png" alt="階級をフリードマン・ダイアコニスの選択で求めた場合" width="90%" />
+<p class="caption">
+Fig. 1.7: 階級をフリードマン・ダイアコニスの選択で求めた場合
+</p>
+</div>
 <p>　</p>
 </div>
 </div>
@@ -689,13 +725,70 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </table>
 <p>　例えば、階級を「<span class="math inline">\(\mbox{下端値} \lt x \leq \mbox{上端値}\)</span>」と定義した場合は、下図のようになります。</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">right =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<p><img src="R_files/figure-html/unnamed-chunk-29-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-27"></span>
+<img src="R_files/figure-html/unnamed-chunk-27-1.png" alt="上端を含める場合" width="90%" />
+<p class="caption">
+Fig. 1.8: 上端を含める場合
+</p>
+</div>
 <p>階級を「<span class="math inline">\(\mbox{下端値} \leq x \lt \mbox{上端値}\)</span>」と定義した場合は、分布形状が異なることが分かります。</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">right =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
-<p><img src="R_files/figure-html/unnamed-chunk-30-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<p>　このように階級によりヒストグラムの形状が変わってくる点には注意が必要です。なお、下端、上端の含め方を<a href="https://k-metrics.netlify.app/post/2018-09/histogram/#/%E5%B7%A6%E9%96%89%E3%81%98%E3%81%A8%E5%8F%B3%E9%96%89%E3%81%98">「左閉じ、右閉じ」と表現</a>することもあります。</p>
-
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-28"></span>
+<img src="R_files/figure-html/unnamed-chunk-28-1.png" alt="下端を含める場合" width="90%" />
+<p class="caption">
+Fig. 1.9: 下端を含める場合
+</p>
 </div>
+<p>　このように階級によりヒストグラムの形状が変わってくる点には注意が必要です。なお、下端、上端の含め方を<a href="https://k-metrics.netlify.app/post/2018-09/histogram/#/%E5%B7%A6%E9%96%89%E3%81%98%E3%81%A8%E5%8F%B3%E9%96%89%E3%81%98">「左閉じ、右閉じ」と表現</a>することもあります。</p>
+<p>　</p>
+</div>
+</div>
+<div id="等間隔ではない階級" class="section level2 unnumbered hasAnchor">
+<h2>等間隔ではない階級<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#等間隔ではない階級" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　度数分布表の階級は必ずしも等間隔である必要はありません。例えば、下図の世帯貯蓄のように度数の小さい階級をまとめたヒストグラムをしばしば見かけます。等間隔でないは階級は（最小値と最大値で桁が数桁異なるなど）幅が広いデータにおいて、階級を細かくしたい場合や等幅の階級でグラフ化するとデータを読み取りにくい場合などに使われます。</p>
+<div class="figure">
+<img src="https://www.stat.go.jp/naruhodo/img/picture/4_8_10.png" alt="" />
+<p class="caption">貯蓄現在高階級別世帯分布（出典：なるほど統計学園）</p>
+</div>
+<p>　このように階級幅が等間隔でない場合には、柱（棒）の面積が度数に対応するように高さを調整する必要があります。<br />
+　ヒストグラムは棒グラフとは異なり階級ごとの柱（棒）の面積が意味を持っています。高さは一般的に度数として表示されますが、密度として表示することもあります。高さ（密度）と幅（階級幅）を乗じたものが相対度数になります。相対度数は名前の通り度数に比例していますので、柱（棒）の面積が等しければ同じ度数ということを表します。<br />
+　<br />
+　例えば、テキストにある身長のデータの<span class="math inline">\(140cm\)</span>から<span class="math inline">\(150cm\)</span>をひとつの階級にまとめた場合、度数分布表は下表のようになります。</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb38-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
+<span id="cb38-3"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb38-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">140</span>, <span class="dv">150</span>, <span class="dv">155</span>, <span class="dv">160</span>, <span class="dv">165</span>, <span class="dv">170</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-4"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb38-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-5"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb38-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">prop =</span> <span class="fu">prop.table</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-6"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb38-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">`</span><span class="at">階級</span><span class="st">`</span> <span class="ot">=</span> class, <span class="st">`</span><span class="at">度数</span><span class="st">`</span> <span class="ot">=</span> n, <span class="st">`</span><span class="at">相対度数</span><span class="st">`</span> <span class="ot">=</span> prop)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["階級"],"name":[1],"type":["fct"],"align":["left"]},{"label":["度数"],"name":[2],"type":["int"],"align":["right"]},{"label":["相対度数"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"(140,150]","2":"7","3":"0.0875"},{"1":"(150,155]","2":"19","3":"0.2375"},{"1":"(155,160]","2":"30","3":"0.3750"},{"1":"(160,165]","2":"18","3":"0.2250"},{"1":"(165,170]","2":"6","3":"0.0750"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　これをヒストグラムとして描いた場合は、下図のようにならなければなりません。この図では縦軸は度数でなく密度になっています。</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">140</span>, <span class="dv">150</span>, <span class="dv">155</span>, <span class="dv">160</span>, <span class="dv">165</span>, <span class="dv">170</span>)))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-30"></span>
+<img src="R_files/figure-html/unnamed-chunk-30-1.png" alt="正しいヒストグラム" width="90%" />
+<p class="caption">
+Fig. 1.10: 正しいヒストグラム
+</p>
+</div>
+<p>　密度（高さ）は左から<br />
+　　0.00875, 0.0475, 0.075, 0.045, 0.015<br />
+　となっていますので、これに個々の階級幅（幅）<br />
+　　10, 5, 5, 5, 5<br />
+　を乗じると個々の柱（棒）の面積は<br />
+　　0.0875, 0.2375, 0.375, 0.225, 0.075<br />
+　となり、相対度数と等しいことがわかります。　</p>
+<p>　度数を表示させるために下図のようなヒストグラムを描くことは好ましくありません。階級幅が等幅でない場合は度数分布表と共に密度のヒストグラムを示した方がよいでしょう。</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">140</span>, <span class="dv">150</span>, <span class="dv">155</span>, <span class="dv">160</span>, <span class="dv">165</span>, <span class="dv">170</span>), <span class="at">freq =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-32"></span>
+<img src="R_files/figure-html/unnamed-chunk-32-1.png" alt="好ましくないヒストグラム（単なる棒グラフ）" width="90%" />
+<p class="caption">
+Fig. 1.11: 好ましくないヒストグラム（単なる棒グラフ）
+</p>
+</div>
+
 </div>
 </div>
             </section>
