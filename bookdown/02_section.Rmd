@@ -1,3 +1,41 @@
+```{r, include=FALSE, message=FALSE}
+library(tidyverse)
+
+x <- "../data/P16_図表1-1 .csv" %>% 
+  readr::read_csv(col_names = FALSE, show_col_types = FALSE) %>% 
+  # 読み込んだデータを縦長形式（Tidy Data）に変換する
+  tidyr::pivot_longer(cols = dplyr::starts_with("X"),
+                      names_to = "name", values_to = "value") %>% 
+  # X1, X2, ... , X4, X1 の順で行方向に読み込まれるので列方向で整列する
+  dplyr::arrange(name) %>% 
+  # 必要なデータ列（value）の列名をheightに変更して取り出す
+  dplyr::select(height = value)
+
+df <- x %>% 
+  # 階級を求めて、データを階級ごとに分ける
+  dplyr::mutate(class = cut(height,
+                            breaks = pretty(height, n = nclass.Sturges(height)),
+                            include.lowest = FALSE, right = TRUE)) %>% 
+  # 階級ごとの度数を求める
+  dplyr::count(class) %>% 
+  # 階級値を求める
+  dplyr::mutate(class_value = as.character(class)) %>% 
+  tidyr::separate(class_value, into = c("l", "h"), sep = ",") %>% 
+  dplyr::mutate(l = as.numeric(stringr::str_remove(l, "[[:punct:]]")),
+                h = as.numeric(stringr::str_remove(h, "[[:punct:]]"))) %>% 
+  dplyr::mutate(mids = ((l + 1) + h) / 2) %>% 
+  dplyr::mutate(range = h - l, cumsum_n = cumsum(n),
+                prop = prop.table(n), cumsum_prop = cumsum(prop))
+```
+
+```{r}
+df %>% 
+  dplyr::select(`階級` = class, `度数` = n, `階級値` = mids, `階級幅` = range,
+                `累積度数` = cumsum_n, `相対度数` = prop, `累積相対度数` = cumsum_prop)
+
+```
+
+
 # 平均値とはやじろべえの視点である
 
 ## 統計量は、データを要約する数値
@@ -5,6 +43,50 @@
 ## 平均値とは
 
 ## 度数分布表での平均値
+```{r}
+df %>% 
+  dplyr::select(`階級` = class, `度数` = n, `階級値` = mids, `階級幅` = range,
+                `累積度数` = cumsum_n, `相対度数` = prop, `累積相対度数` = cumsum_prop)
+
+```
+
+　（算術）平均は全ての観測値の総和を総データ数で除したものですので、観測値を各階級の代表値である階級値で近似すると下式で求めることができます。
+
+$$\mbox{平均} = \frac{\sum{\mbox{観測値}}}{総データ数} = \frac{\sum{\mbox{観測値}}}{\sum{度数}} \fallingdotseq \frac{\sum{(\mbox{階級値} \times \mbox{度数})}}{\sum{度数}} = \sum{(\mbox{階級値} \times \mbox{相対度数})}$$
+
+```{r}
+df %>% 
+  dplyr::select(A = mids, B = prop) %>% 
+  dplyr::mutate(`A x B` = A * B) %>% 
+  print() %>% 
+  dplyr::summarise(mean = sum(`A x B`))
+```
+
+```{r}
+with(x, mean(height))
+```
+
+### 階級幅が大きくなるとどうなるか？ {.unnumbered}
+```{r}
+x %>% 
+  dplyr::mutate(class = cut(height,
+                            breaks = c(140, 150, 160, 170),
+                            include.lowest = FALSE, right = TRUE)) %>% 
+  dplyr::count(class) %>% 
+  dplyr::mutate(class_value = as.character(class)) %>% 
+  tidyr::separate(class_value, into = c("l", "h"), sep = ",") %>% 
+  dplyr::mutate(l = as.numeric(stringr::str_remove(l, "[[:punct:]]")),
+                h = as.numeric(stringr::str_remove(h, "[[:punct:]]"))) %>% 
+  dplyr::mutate(mids = ((l + 1) + h) / 2) %>% 
+  dplyr::mutate(range = h - l, cumsum_n = cumsum(n),
+                prop = prop.table(n), cumsum_prop = cumsum(prop)) %>% 
+  dplyr::select(A = mids, B = prop) %>% 
+  dplyr::mutate(`A x B` = A * B) %>% 
+  print() %>% 
+  dplyr::summarise(mean = sum(`A x B`))
+
+```
+
 
 ## 平均値のヒストグラムの中での役割
 

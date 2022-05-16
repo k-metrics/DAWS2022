@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Rで学ぶ『完全独習 統計学入門』</title>
+  <meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
+  <meta name="generator" content="bookdown #bookdown:version# and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Rで学ぶ『完全独習 統計学入門』" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
+  <meta name="github-repo" content="k-metrics/DAWS2022" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Rで学ぶ『完全独習 統計学入門』" />
+  
+  <meta name="twitter:description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
+  
+
+<meta name="author" content="Sampo Suzuki, CC 4.0 BY-NC-SA" />
+
+
+<meta name="date" content="2022-05-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<link href="assets/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="assets/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="assets/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="assets/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+<!--bookdown:title:start-->
+<div id="header">
+<h1 class="title">Rで学ぶ『完全独習 統計学入門』</h1>
+<p class="author"><em>Sampo Suzuki, CC 4.0 BY-NC-SA</em></p>
+<p class="date"><em>2022-05-16</em></p>
+</div>
+<!--bookdown:title:end-->
+
+<!--bookdown:toc:start-->
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+<!--bookdown:toc2:start-->
+<ul>
+<li><a href="#はじめに">はじめに<span></span></a>
+<ul>
+<li><a href="#想定読者">想定読者<span></span></a></li>
+</ul></li>
+<li><a href="#度数分布表とヒストグラムでデータの特徴を浮き彫りにする"><span class="toc-section-number">1</span> 度数分布表とヒストグラムでデータの特徴を浮き彫りにする<span></span></a>
+<ul>
+<li><a href="#生データでは何もわからないから統計を使う"><span class="toc-section-number">1.1</span> 生データでは何もわからないから統計を使う<span></span></a></li>
+<li><a href="#ヒストグラムを作る"><span class="toc-section-number">1.2</span> ヒストグラムを作る<span></span></a>
+<ul>
+<li><a href="#階級を求める"><span class="toc-section-number">1.2.1</span> 階級を求める<span></span></a></li>
+<li><a href="#データを各階級に分類する"><span class="toc-section-number">1.2.2</span> データを各階級に分類する<span></span></a></li>
+<li><a href="#度数を求める"><span class="toc-section-number">1.2.3</span> 度数を求める<span></span></a></li>
+<li><a href="#累積度数相対度数累積相対度数を求める"><span class="toc-section-number">1.2.4</span> 累積度数、相対度数、累積相対度数を求める<span></span></a></li>
+<li><a href="#階級値を求める"><span class="toc-section-number">1.2.5</span> 階級値を求める<span></span></a></li>
+</ul></li>
+<li><a href="#練習問題"><span class="toc-section-number">1.3</span> 練習問題<span></span></a>
+<ul>
+<li><a href="#解答例">解答例<span></span></a></li>
+</ul></li>
+<li><a href="#ヒストグラムを描くポイント">ヒストグラムを描くポイント<span></span></a>
+<ul>
+<li><a href="#階級の決め方">階級の決め方<span></span></a></li>
+<li><a href="#階級の境界の扱い">階級の境界の扱い<span></span></a></li>
+</ul></li>
+<li><a href="#等間隔ではない階級">等間隔ではない階級<span></span></a></li>
+</ul></li>
+<li><a href="#平均値とはやじろべえの視点である"><span class="toc-section-number">2</span> 平均値とはやじろべえの視点である<span></span></a>
+<ul>
+<li><a href="#統計量はデータを要約する数値"><span class="toc-section-number">2.1</span> 統計量は、データを要約する数値<span></span></a></li>
+<li><a href="#平均値とは"><span class="toc-section-number">2.2</span> 平均値とは<span></span></a></li>
+<li><a href="#度数分布表での平均値"><span class="toc-section-number">2.3</span> 度数分布表での平均値<span></span></a>
+<ul>
+<li><a href="#階級幅が大きくなるとどうなるか">階級幅が大きくなるとどうなるか？<span></span></a></li>
+</ul></li>
+<li><a href="#平均値のヒストグラムの中での役割"><span class="toc-section-number">2.4</span> 平均値のヒストグラムの中での役割<span></span></a></li>
+<li><a href="#平均値をどう捉えるべきか"><span class="toc-section-number">2.5</span> 平均値をどう捉えるべきか<span></span></a></li>
+<li><a href="#練習問題-1"><span class="toc-section-number">2.6</span> 練習問題<span></span></a></li>
+<li><a href="#コラム平均値のとり方は１つではない"><span class="toc-section-number">2.7</span> 【コラム】平均値のとり方は、１つではない<span></span></a></li>
+</ul></li>
+</ul>
+<!--bookdown:toc2:end-->
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rで学ぶ『完全独習 統計学入門』</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!--bookdown:toc:end-->
+<!--bookdown:body:start-->
+<div id="はじめに" class="section level1 unnumbered hasAnchor">
+<h1 class="unnumbered hasAnchor">はじめに<a href="#はじめに" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>　本資料は<a href="https://www.diamond.co.jp/book/9784478820094.html">『完全独習 統計学入門』小島寛之著</a>（以降、テキスト）の内容をRで計算する方法を紹介しています。基本的な統計量を求める際に必要となる関数などの解説が中心です。 　</p>
+<p>　テキストに記載されているデータの一部をCSVファイルにして利用していますが、データ自体の著作権は原著作者にあります。また、CSVファイルは著作権を侵害する意図で作成したものではありません。</p>
+<p>　</p>
+<div id="想定読者" class="section level2 unnumbered hasAnchor">
+<h2 class="unnumbered hasAnchor">想定読者<a href="#想定読者" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　本書の想定読者は以下に該当する方です。</p>
+<ul>
+<li>Rに関する基本的な知識を有している方
+<ul>
+<li>データフレーム型や因子型などの変数型の知識</li>
+<li>変数の代入・参照方法</li>
+<li><code>tidyverse</code>の基本的な知識</li>
+</ul></li>
+<li>Rで統計量を求めてみたい方</li>
+</ul>
+<p>　本書ではRのインストール方法や基本文法には触れません。</p>
+<!--chapter:end:index.Rmd-->
+</div>
+</div>
+<div id="度数分布表とヒストグラムでデータの特徴を浮き彫りにする" class="section level1 hasAnchor" number="1">
+<h1 class="hasAnchor"><span class="header-section-number">1</span> 度数分布表とヒストグラムでデータの特徴を浮き彫りにする<a href="#度数分布表とヒストグラムでデータの特徴を浮き彫りにする" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="生データでは何もわからないから統計を使う" class="section level2 hasAnchor" number="1.1">
+<h2 class="hasAnchor"><span class="header-section-number">1.1</span> 生データでは何もわからないから統計を使う<a href="#生データでは何もわからないから統計を使う" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+　テキストの図表1-1のデータは4列20行からなるデータです。
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["X1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["X2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["X3"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["X4"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"151","2":"152","3":"151","4":"167"},{"1":"154","2":"161","3":"155","4":"159"},{"1":"160","2":"159","3":"158","4":"157"},{"1":"160","2":"164","3":"146","4":"151"},{"1":"163","2":"168","3":"149","4":"159"},{"1":"156","2":"153","3":"165","4":"156"},{"1":"158","2":"160","3":"169","4":"151"},{"1":"156","2":"155","3":"154","4":"160"},{"1":"154","2":"160","3":"155","4":"153"},{"1":"160","2":"158","3":"166","4":"156"},{"1":"154","2":"160","3":"165","4":"146"},{"1":"162","2":"150","3":"161","4":"166"},{"1":"156","2":"163","3":"148","4":"151"},{"1":"162","2":"155","3":"143","4":"159"},{"1":"157","2":"157","3":"156","4":"157"},{"1":"162","2":"162","3":"162","4":"156"},{"1":"162","2":"154","3":"158","4":"162"},{"1":"169","2":"161","3":"156","4":"156"},{"1":"150","2":"153","3":"159","4":"156"},{"1":"162","2":"154","3":"164","4":"161"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　Rでは、このような形式のデータ（雑然データ）をそのまま使わずに整然データ（<a href="https://ja.wikipedia.org/wiki/Tidy_data">Tidy Data</a>）と呼ばれる形式に変換した方が効率的に処理できます。変換には<strong><code>tidyverse</code></strong>ファミリーを利用するのが効率的です。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ローカルにあるデータファイルを読み込む</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">&quot;../data/P16_図表1-1 .csv&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">col_names =</span> <span class="cn">FALSE</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 読み込んだデータを縦長形式（Tidy Data）に変換する</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">&quot;name&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># X1, X2, ... , X4, X1 の順で行方向に読み込まれるので列方向で整列する</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(name) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 必要なデータ列（value）の列名をheightに変更して取り出す</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">height =</span> value)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["height"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"151"},{"1":"154"},{"1":"160"},{"1":"160"},{"1":"163"},{"1":"156"},{"1":"158"},{"1":"156"},{"1":"154"},{"1":"160"},{"1":"154"},{"1":"162"},{"1":"156"},{"1":"162"},{"1":"157"},{"1":"162"},{"1":"162"},{"1":"169"},{"1":"150"},{"1":"162"},{"1":"152"},{"1":"161"},{"1":"159"},{"1":"164"},{"1":"168"},{"1":"153"},{"1":"160"},{"1":"155"},{"1":"160"},{"1":"158"},{"1":"160"},{"1":"150"},{"1":"163"},{"1":"155"},{"1":"157"},{"1":"162"},{"1":"154"},{"1":"161"},{"1":"153"},{"1":"154"},{"1":"151"},{"1":"155"},{"1":"158"},{"1":"146"},{"1":"149"},{"1":"165"},{"1":"169"},{"1":"154"},{"1":"155"},{"1":"166"},{"1":"165"},{"1":"161"},{"1":"148"},{"1":"143"},{"1":"156"},{"1":"162"},{"1":"158"},{"1":"156"},{"1":"159"},{"1":"164"},{"1":"167"},{"1":"159"},{"1":"157"},{"1":"151"},{"1":"159"},{"1":"156"},{"1":"151"},{"1":"160"},{"1":"153"},{"1":"156"},{"1":"146"},{"1":"166"},{"1":"151"},{"1":"159"},{"1":"157"},{"1":"156"},{"1":"162"},{"1":"156"},{"1":"156"},{"1":"161"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　このような形式に変換することで、様々な統計量を効率的に求めることができるようになります。</p>
+<p>　</p>
+</div>
+<div id="ヒストグラムを作る" class="section level2 hasAnchor" number="1.2">
+<h2 class="hasAnchor"><span class="header-section-number">1.2</span> ヒストグラムを作る<a href="#ヒストグラムを作る" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　テキストでは度数分布表を作成してからヒストグラムを描いています。その手順は</p>
+<ol style="list-style-type: decimal">
+<li>最大・最小値を求める</li>
+<li>階級を決める</li>
+<li>度数をカウントする</li>
+<li>相対度数を求める</li>
+<li>累積度数を求める
+<ul>
+<li>ここまでで度数分布表ができる</li>
+</ul></li>
+<li>度数分布表をもとにヒストグラムを描く</li>
+</ol>
+<p>となっていますが、Rでは<code>hist()</code>関数だけでヒストグラムを描くことができます。<code>hist()</code>関数の引数はベクトル型に限定されますので、データフレーム型の場合は参照演算子（<code>$</code>）などでベクトル型データを取り出す必要があります。</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="at">x =</span> x<span class="sc">$</span>height)</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="R_files/figure-html/unnamed-chunk-3-1.png" alt="Rのhist()関数" width="90%" />
+<p class="caption">
+(#fig:unnamed-chunk-3)Rのhist()関数
+</p>
+</div>
+<p>　<code>hist()</code>関数はヒストグラムを描くために必要となる階級や度数、階級値などの情報を出力することも可能です。</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="at">x =</span> x<span class="sc">$</span>height, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## $breaks
+## [1] 140 145 150 155 160 165 170
+## 
+## $counts
+## [1]  1  6 19 30 18  6
+## 
+## $density
+## [1] 0.0025 0.0150 0.0475 0.0750 0.0450 0.0150
+## 
+## $mids
+## [1] 142.5 147.5 152.5 157.5 162.5 167.5
+## 
+## $xname
+## [1] &quot;x$height&quot;
+## 
+## $equidist
+## [1] TRUE
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;histogram&quot;</code></pre>
+<table>
+<caption>主な出力の意味</caption>
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="72%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>出力名</th>
+<th>意味</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>$breaks</code></td>
+<td>階級</td>
+<td>デフォルトはスタージェスの公式<sup>*</sup>にもとづく区切り（幅）</td>
+</tr>
+<tr class="even">
+<td><code>$counts</code></td>
+<td>度数</td>
+<td>各階級に入るデータの個数</td>
+</tr>
+<tr class="odd">
+<td><code>$density</code></td>
+<td>密度</td>
+<td>密度推定値</td>
+</tr>
+<tr class="even">
+<td><code>$mids</code></td>
+<td>階級値</td>
+<td>階級の中央値（階級の単純平均）</td>
+</tr>
+</tbody>
+</table>
+<p><sup>*</sup> 後述</p>
+<p>　表形式の度数分布表を作成する場合は以下のようにコード処理します。</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級を求めて、データを階級ごとに分ける</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級ごとの度数を求める</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 累積度数、相対度数、累積相対度数を求める</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">cumsum_n =</span> <span class="fu">cumsum</span>(n),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">prop =</span> <span class="fu">prop.table</span>(n), <span class="at">cumsum_prop =</span> <span class="fu">cumsum</span>(prop)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級値を求める</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class_value =</span> <span class="fu">as.character</span>(class)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate</span>(class_value, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;h&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">l =</span> <span class="fu">as.integer</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(l, <span class="st">&quot;[[:punct:]]&quot;</span>)) <span class="sc">+</span> 1L,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">h =</span> <span class="fu">as.integer</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(h, <span class="st">&quot;[[:punct:]]&quot;</span>)),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">mids =</span> (l <span class="sc">+</span> h) <span class="sc">/</span> 2L) <span class="sc">%&gt;%</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 変数名を日本語にする</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">`</span><span class="at">階級</span><span class="st">`</span> <span class="ot">=</span> class, <span class="st">`</span><span class="at">階級値</span><span class="st">`</span> <span class="ot">=</span> mids,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">度数</span><span class="st">`</span> <span class="ot">=</span> n, <span class="st">`</span><span class="at">累積度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_n,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">相対度数</span><span class="st">`</span> <span class="ot">=</span> prop, <span class="st">`</span><span class="at">累積相対度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_prop)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["階級"],"name":[1],"type":["fct"],"align":["left"]},{"label":["階級値"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["度数"],"name":[3],"type":["int"],"align":["right"]},{"label":["累積度数"],"name":[4],"type":["int"],"align":["right"]},{"label":["相対度数"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["累積相対度数"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"(140,145]","2":"143","3":"1","4":"1","5":"0.0125","6":"0.0125"},{"1":"(145,150]","2":"148","3":"6","4":"7","5":"0.0750","6":"0.0875"},{"1":"(150,155]","2":"153","3":"19","4":"26","5":"0.2375","6":"0.3250"},{"1":"(155,160]","2":"158","3":"30","4":"56","5":"0.3750","6":"0.7000"},{"1":"(160,165]","2":"163","3":"18","4":"74","5":"0.2250","6":"0.9250"},{"1":"(165,170]","2":"168","3":"6","4":"80","5":"0.0750","6":"1.0000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　以降の項は度数分布表の作成に必要な関数の使い方を紹介していますので、不要な方は演習問題まで読み飛ばしてください。</p>
+<p>　</p>
+<div id="階級を求める" class="section level3 hasAnchor" number="1.2.1">
+<h3 class="hasAnchor"><span class="header-section-number">1.2.1</span> 階級を求める<a href="#階級を求める" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<blockquote>
+<p>以降に出てくる<code>with()</code>関数は、第一引数で指定するデータフレーム型変数内の変数名を第二引数内で参照演算子（<code>$</code>）を用いることなく参照できるようにする関数です。</p>
+</blockquote>
+<p>　階級を求めるには<code>pretty()</code>関数を使います。</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">pretty</span>(<span class="at">x =</span> height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)))</span></code></pre></div>
+<pre><code>## [1] 140 145 150 155 160 165 170</code></pre>
+<p>　第一引数<code>x</code>には階級を求めたいベクトル型データを第二引数<code>n</code>には階級を区切りたい数（階級数）を指定します。ここでは、階級数<code>n</code>にはスタージェスの公式から求めた階級数を指定しています。<br />
+　ただし、必ずしも指定した階級数に分割される訳ではない点に注意してください。<code>x</code>で指定したデータが階級に収まるように適切な丸め処理を行いますので、指定した階級数とは異なる階級が求められることもあります。</p>
+<p>　スタージェスの公式は、階級数を<span class="math inline">\(k\)</span>、データのサイズ（数）を<span class="math inline">\(n\)</span>とした場合、下式で定義されます。</p>
+<p><span class="math display">\[k = \lceil \log_2n + 1 \rceil\]</span></p>
+<p>　スタージェスの公式は<code>nclass.Sturgess()</code>関数として実装されています。</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">nclass.Sturges</span>(height))</span></code></pre></div>
+<pre><code>## [1] 8</code></pre>
+<p>　スタージェスの公式はヒストグラムを平滑化し過ぎる傾向があると言われています。気になる場合はスコットの選択（<code>nclass.scott()</code>）やフリードマン=ダイアコニスの選択（<code>nclass.FD()</code>）を試して見てください。</p>
+<p>　</p>
+</div>
+<div id="データを各階級に分類する" class="section level3 hasAnchor" number="1.2.2">
+<h3 class="hasAnchor"><span class="header-section-number">1.2.2</span> データを各階級に分類する<a href="#データを各階級に分類する" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>　データを階級分けするには<code>cut()</code>関数を使います。</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cut</span>(<span class="at">x =</span> height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height))))</span></code></pre></div>
+<pre><code>##  [1] (150,155] (150,155] (155,160] (155,160] (160,165] (155,160] (155,160]
+##  [8] (155,160] (150,155] (155,160] (150,155] (160,165] (155,160] (160,165]
+## [15] (155,160] (160,165] (160,165] (165,170] (145,150] (160,165] (150,155]
+## [22] (160,165] (155,160] (160,165] (165,170] (150,155] (155,160] (150,155]
+## [29] (155,160] (155,160] (155,160] (145,150] (160,165] (150,155] (155,160]
+## [36] (160,165] (150,155] (160,165] (150,155] (150,155] (150,155] (150,155]
+## [43] (155,160] (145,150] (145,150] (160,165] (165,170] (150,155] (150,155]
+## [50] (165,170] (160,165] (160,165] (145,150] (140,145] (155,160] (160,165]
+## [57] (155,160] (155,160] (155,160] (160,165] (165,170] (155,160] (155,160]
+## [64] (150,155] (155,160] (155,160] (150,155] (155,160] (150,155] (155,160]
+## [71] (145,150] (165,170] (150,155] (155,160] (155,160] (155,160] (160,165]
+## [78] (155,160] (155,160] (160,165]
+## Levels: (140,145] (145,150] (150,155] (155,160] (160,165] (165,170]</code></pre>
+<p>　第一引数<code>x</code>には階級分けの対象となるベクトル型変数を第二引数<code>breaks</code>には前項で求めた階級を指定します。<code>breaks</code>引数には任意の階級、例えば<code>breaks = c(140, 155, 170)</code>のように指定することも可能です。</p>
+<p>　</p>
+<div id="階級の境界値はどちらに含まれるのか" class="section level4 unnumbered hasAnchor">
+<h4 class="unnumbered hasAnchor">階級の境界値はどちらに含まれるのか？<a href="#階級の境界値はどちらに含まれるのか" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>　<code>cut()</code>関数の出力は、<code>(140,145] (145,150]</code>のように階級間で同じ数値、この場合は<code>145</code>が含まれます。では、<code>145</code>はどちらの階級に含まれるのでしょうか？答えは、添えられている括弧にあります。</p>
+<blockquote>
+<p><code>(140,145]</code></p>
+</blockquote>
+<p>は「140を超えて145以下」となりますので、次の</p>
+<blockquote>
+<p><code>(145,150]</code></p>
+</blockquote>
+<p>は同様に「145を超えて150以下」となります。階級間の境界値である<code>145</code>は<code>(140, 145]</code>側に入ります。</p>
+<blockquote>
+<p><code>(</code>は「超えて」（境界値を含まない）、<code>]</code>は「以下」（境界値を含む）</p>
+</blockquote>
+<p>で、逆向きの場合は</p>
+<blockquote>
+<p><code>)</code>は「未満」（境界値を含まない）、<code>[</code>は「以上」（境界値を含む）</p>
+</blockquote>
+<p>となります。<code>hist()</code>関数の階級も同様です。</p>
+<p>　境界値をどちらに含めるかは<code>include.lowest</code>引数と<code>right</code>引数で指定できます。</p>
+<table>
+<colgroup>
+<col width="41%" />
+<col width="31%" />
+<col width="26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>option</th>
+<th><code>right = TRUE</code> 　</th>
+<th><code>right = FALSE</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><code>include.lowest = TRUE</code></strong></td>
+<td><code>[l,u] ... (l,u]</code></td>
+<td><code>[l,u) ... [l,u]</code></td>
+</tr>
+<tr class="even">
+<td><strong><code>include.lowest = FALSE</code></strong></td>
+<td><code>(l,u] ... (l,u]</code><sup>*</sup></td>
+<td><code>[l,u) ... [l,u)</code></td>
+</tr>
+</tbody>
+</table>
+<p>　<sup>*</sup>デフォルト</p>
+<p>　例えばデータの最大値と最小値を境界値として含む階級を指定した場合、<code>include.lowest = FALSE, right = FALSE</code>と指定すると最大値が階級に含まれなくなります。</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">143</span>, <span class="dv">155</span>, <span class="dv">169</span>),</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<pre><code>##  [1] [143,155) [143,155) [155,169) [155,169) [155,169) [155,169) [155,169)
+##  [8] [155,169) [143,155) [155,169) [143,155) [155,169) [155,169) [155,169)
+## [15] [155,169) [155,169) [155,169) &lt;NA&gt;      [143,155) [155,169) [143,155)
+## [22] [155,169) [155,169) [155,169) [155,169) [143,155) [155,169) [155,169)
+## [29] [155,169) [155,169) [155,169) [143,155) [155,169) [155,169) [155,169)
+## [36] [155,169) [143,155) [155,169) [143,155) [143,155) [143,155) [155,169)
+## [43] [155,169) [143,155) [143,155) [155,169) &lt;NA&gt;      [143,155) [155,169)
+## [50] [155,169) [155,169) [155,169) [143,155) [143,155) [155,169) [155,169)
+## [57] [155,169) [155,169) [155,169) [155,169) [155,169) [155,169) [155,169)
+## [64] [143,155) [155,169) [155,169) [143,155) [155,169) [143,155) [155,169)
+## [71] [143,155) [155,169) [143,155) [155,169) [155,169) [155,169) [155,169)
+## [78] [155,169) [155,169) [155,169)
+## Levels: [143,155) [155,169)</code></pre>
+<p>　逆に<code>include.lowest = FALSE, right = TRUE</code>と指定すると最小値が階級に含まれなくなります。</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">143</span>, <span class="dv">155</span>, <span class="dv">169</span>),</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>##  [1] (143,155] (143,155] (155,169] (155,169] (155,169] (155,169] (155,169]
+##  [8] (155,169] (143,155] (155,169] (143,155] (155,169] (155,169] (155,169]
+## [15] (155,169] (155,169] (155,169] (155,169] (143,155] (155,169] (143,155]
+## [22] (155,169] (155,169] (155,169] (155,169] (143,155] (155,169] (143,155]
+## [29] (155,169] (155,169] (155,169] (143,155] (155,169] (143,155] (155,169]
+## [36] (155,169] (143,155] (155,169] (143,155] (143,155] (143,155] (143,155]
+## [43] (155,169] (143,155] (143,155] (155,169] (155,169] (143,155] (143,155]
+## [50] (155,169] (155,169] (155,169] (143,155] &lt;NA&gt;      (155,169] (155,169]
+## [57] (155,169] (155,169] (155,169] (155,169] (155,169] (155,169] (155,169]
+## [64] (143,155] (155,169] (155,169] (143,155] (155,169] (143,155] (155,169]
+## [71] (143,155] (155,169] (143,155] (155,169] (155,169] (155,169] (155,169]
+## [78] (155,169] (155,169] (155,169]
+## Levels: (143,155] (155,169]</code></pre>
+<p>　</p>
+</div>
+</div>
+<div id="度数を求める" class="section level3 hasAnchor" number="1.2.3">
+<h3 class="hasAnchor"><span class="header-section-number">1.2.3</span> 度数を求める<a href="#度数を求める" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>　度数を求めるには各階級の数を数えます。数を数えるには<code>table()</code>関数や<code>dplyr::count()</code>関数を使います。<code>table()</code>関数はベクトル型を対象に、<code>dplyr::count()</code>関数はデータフレーム型を対象として個数をカウントします。用途によって使い分けてください。</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">table</span>(<span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)))))</span></code></pre></div>
+<pre><code>## 
+## (140,145] (145,150] (150,155] (155,160] (160,165] (165,170] 
+##         1         6        19        30        18         6</code></pre>
+<p>　</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級を求めて、データを階級ごとに分ける</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)))) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級ごとの度数を求める</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["class"],"name":[1],"type":["fct"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"(140,145]","2":"1"},{"1":"(145,150]","2":"6"},{"1":"(150,155]","2":"19"},{"1":"(155,160]","2":"30"},{"1":"(160,165]","2":"18"},{"1":"(165,170]","2":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　</p>
+</div>
+<div id="累積度数相対度数累積相対度数を求める" class="section level3 hasAnchor" number="1.2.4">
+<h3 class="hasAnchor"><span class="header-section-number">1.2.4</span> 累積度数、相対度数、累積相対度数を求める<a href="#累積度数相対度数累積相対度数を求める" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>　累積度数（度数の累積和）を求めるには<code>cumsum()</code>関数を使います。</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cumsum</span>(<span class="fu">table</span>(<span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height))))))</span></code></pre></div>
+<pre><code>## (140,145] (145,150] (150,155] (155,160] (160,165] (165,170] 
+##         1         7        26        56        74        80</code></pre>
+<p>　</p>
+<p>　相対度数を求めるには<code>prop.table()</code>関数を使います。</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height))))))</span></code></pre></div>
+<pre><code>## 
+## (140,145] (145,150] (150,155] (155,160] (160,165] (165,170] 
+##    0.0125    0.0750    0.2375    0.3750    0.2250    0.0750</code></pre>
+<p>　</p>
+<p>　累積相対度数は相対度数の累積和ですので、<code>prop.table()</code>関数の結果を<code>cumsum()</code>関数に渡すことで求めることができます。</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">cumsum</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">cut</span>(height, <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)))))))</span></code></pre></div>
+<pre><code>## (140,145] (145,150] (150,155] (155,160] (160,165] (165,170] 
+##    0.0125    0.0875    0.3250    0.7000    0.9250    1.0000</code></pre>
+<p>　</p>
+</div>
+<div id="階級値を求める" class="section level3 hasAnchor" number="1.2.5">
+<h3 class="hasAnchor"><span class="header-section-number">1.2.5</span> 階級値を求める<a href="#階級値を求める" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>　階級値は階級の文字列から下端と上端の境界値を抜き出し、下式で単純平均として求めています。</p>
+<p><span class="math display">\[\frac{(\mbox{下端} + 1) + \mbox{上端}}{2}\]</span></p>
+<p>　手順としては以下のようにしています。</p>
+<ol style="list-style-type: decimal">
+<li><code>as.character()</code>関数で 階級（<code>class</code>）を文字型に変換し、新しい変数（<code>class_value</code>）を作成する<br />
+</li>
+<li><code>tidyr::separate()</code>関数で文字型の変数（<code>class_value</code>）を<code>,</code>の前後で二つの変数（<code>l</code>, <code>h</code>）に分割する<br />
+</li>
+<li><code>stringr::str_remove</code>関数で二つの変数（<code>l</code>, <code>h</code>）から<code>(</code>や<code>]</code>を取り除き<code>as.numeric()</code>関数で文字列から数値に変換する<br />
+</li>
+<li>数値に変換された二つの変数から（<code>l</code>, <code>h</code>）平均値を求める</li>
+</ol>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級を求めて、データを階級ごとに分ける</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">pretty</span>(height, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(height)),</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級ごとの度数を求める</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級値を求める</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class_value =</span> <span class="fu">as.character</span>(class)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate</span>(class_value, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;h&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">l =</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(l, <span class="st">&quot;[[:punct:]]&quot;</span>)),</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">h =</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(h, <span class="st">&quot;[[:punct:]]&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mids =</span> ((l <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span> h) <span class="sc">/</span> <span class="dv">2</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["class"],"name":[1],"type":["fct"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["l"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["h"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["mids"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(140,145]","2":"1","3":"140","4":"145","5":"143"},{"1":"(145,150]","2":"6","3":"145","4":"150","5":"148"},{"1":"(150,155]","2":"19","3":"150","4":"155","5":"153"},{"1":"(155,160]","2":"30","3":"155","4":"160","5":"158"},{"1":"(160,165]","2":"18","3":"160","4":"165","5":"163"},{"1":"(165,170]","2":"6","3":"165","4":"170","5":"168"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　</p>
+</div>
+</div>
+<div id="練習問題" class="section level2 hasAnchor" number="1.3">
+<h2 class="hasAnchor"><span class="header-section-number">1.3</span> 練習問題<a href="#練習問題" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　テキストP23にあるデータで度数分布表とヒストグラムを作成する。</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["X1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["X2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["X3"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["X4"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["X5"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["X6"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["X7"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["X8"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"48","2":"54","3":"47","4":"50","5":"53","6":"43","7":"45","8":"43"},{"1":"44","2":"47","3":"58","4":"46","5":"46","6":"63","7":"49","8":"50"},{"1":"48","2":"43","3":"46","4":"45","5":"50","6":"53","7":"51","8":"58"},{"1":"52","2":"53","3":"47","4":"49","5":"45","6":"42","7":"51","8":"49"},{"1":"58","2":"54","3":"45","4":"53","5":"50","6":"69","7":"44","8":"50"},{"1":"58","2":"64","3":"40","4":"57","5":"51","6":"69","7":"58","8":"47"},{"1":"62","2":"47","3":"40","4":"60","5":"48","6":"47","7":"53","8":"47"},{"1":"52","2":"61","3":"55","4":"55","5":"48","6":"48","7":"46","8":"52"},{"1":"45","2":"38","3":"62","4":"47","5":"55","6":"50","7":"46","8":"47"},{"1":"55","2":"48","3":"50","4":"50","5":"54","6":"55","7":"48","8":"50"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　</p>
+<div id="解答例" class="section level3 unnumbered hasAnchor">
+<h3 class="unnumbered hasAnchor">解答例<a href="#解答例" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>　まず、処理しやすいように下記のように対象データを変形し<code>df</code>というデータフレーム型の変数に格納しておきます。</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["weight"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"48"},{"1":"44"},{"1":"48"},{"1":"52"},{"1":"58"},{"1":"58"},{"1":"62"},{"1":"52"},{"1":"45"},{"1":"55"},{"1":"54"},{"1":"47"},{"1":"43"},{"1":"53"},{"1":"54"},{"1":"64"},{"1":"47"},{"1":"61"},{"1":"38"},{"1":"48"},{"1":"47"},{"1":"58"},{"1":"46"},{"1":"47"},{"1":"45"},{"1":"40"},{"1":"40"},{"1":"55"},{"1":"62"},{"1":"50"},{"1":"50"},{"1":"46"},{"1":"45"},{"1":"49"},{"1":"53"},{"1":"57"},{"1":"60"},{"1":"55"},{"1":"47"},{"1":"50"},{"1":"53"},{"1":"46"},{"1":"50"},{"1":"45"},{"1":"50"},{"1":"51"},{"1":"48"},{"1":"48"},{"1":"55"},{"1":"54"},{"1":"43"},{"1":"63"},{"1":"53"},{"1":"42"},{"1":"69"},{"1":"69"},{"1":"47"},{"1":"48"},{"1":"50"},{"1":"55"},{"1":"45"},{"1":"49"},{"1":"51"},{"1":"51"},{"1":"44"},{"1":"58"},{"1":"53"},{"1":"46"},{"1":"46"},{"1":"48"},{"1":"43"},{"1":"50"},{"1":"58"},{"1":"49"},{"1":"50"},{"1":"47"},{"1":"47"},{"1":"52"},{"1":"47"},{"1":"50"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　度数分布表を身長の場合と同じ要領で作成します。</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級を求めて、データを階級ごとに分ける</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(weight,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">pretty</span>(weight, <span class="at">n =</span> <span class="fu">nclass.Sturges</span>(weight)),</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級ごとの度数を求める</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 累積度数、相対度数、累積相対度数を求める</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">cumsum_n =</span> <span class="fu">cumsum</span>(n),</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">prop =</span> <span class="fu">prop.table</span>(n), <span class="at">cumsum_prop =</span> <span class="fu">cumsum</span>(prop)) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 階級値を求める</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class_value =</span> <span class="fu">as.character</span>(class)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate</span>(class_value, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;h&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">l =</span> <span class="fu">as.integer</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(l, <span class="st">&quot;[[:punct:]]&quot;</span>)) <span class="sc">+</span> 1L,</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">h =</span> <span class="fu">as.integer</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(h, <span class="st">&quot;[[:punct:]]&quot;</span>)),</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">mids =</span> (l <span class="sc">+</span> h) <span class="sc">/</span> 2L) <span class="sc">%&gt;%</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 変数名を日本語にする</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">`</span><span class="at">階級</span><span class="st">`</span> <span class="ot">=</span> class, <span class="st">`</span><span class="at">階級値</span><span class="st">`</span> <span class="ot">=</span> mids,</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">度数</span><span class="st">`</span> <span class="ot">=</span> n, <span class="st">`</span><span class="at">累積度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_n,</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">相対度数</span><span class="st">`</span> <span class="ot">=</span> prop, <span class="st">`</span><span class="at">累積相対度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_prop)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["階級"],"name":[1],"type":["fct"],"align":["left"]},{"label":["階級値"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["度数"],"name":[3],"type":["int"],"align":["right"]},{"label":["累積度数"],"name":[4],"type":["int"],"align":["right"]},{"label":["相対度数"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["累積相対度数"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"(35,40]","2":"38","3":"3","4":"3","5":"0.0375","6":"0.0375"},{"1":"(40,45]","2":"43","3":"11","4":"14","5":"0.1375","6":"0.1750"},{"1":"(45,50]","2":"48","3":"33","4":"47","5":"0.4125","6":"0.5875"},{"1":"(50,55]","2":"53","3":"19","4":"66","5":"0.2375","6":"0.8250"},{"1":"(55,60]","2":"58","3":"7","4":"73","5":"0.0875","6":"0.9125"},{"1":"(60,65]","2":"63","3":"5","4":"78","5":"0.0625","6":"0.9750"},{"1":"(65,70]","2":"68","3":"2","4":"80","5":"0.0250","6":"1.0000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　</p>
+<p>　ヒストグラムを描きます。</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">hist</span>(weight))</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="R_files/figure-html/unnamed-chunk-21-1.png" alt="解答例" width="90%" />
+<p class="caption">
+(#fig:unnamed-chunk-21)解答例
+</p>
+</div>
+<p>　</p>
+<p>以上</p>
+<p>　</p>
+</div>
+</div>
+<div id="ヒストグラムを描くポイント" class="section level2 unnumbered hasAnchor">
+<h2 class="unnumbered hasAnchor">ヒストグラムを描くポイント<a href="#ヒストグラムを描くポイント" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　ヒストグラムを描く（度数分布表を作成する）際のポイントは下記の点です。</p>
+<ol style="list-style-type: decimal">
+<li>階級の決め方</li>
+<li>階級の境界の扱い</li>
+</ol>
+<p>　</p>
+<div id="階級の決め方" class="section level3 unnumbered hasAnchor">
+<h3 class="unnumbered hasAnchor">階級の決め方<a href="#階級の決め方" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>　階級を決める方法は特に定められていません。データが取る幅を見て切のよい値にすることが多いようです。ただし、階級のとり方によりヒストグラムの形状が変わる点には注意が必要です。例えば、身長データに対する階級をテキストと同様に<span class="math inline">\(5cm\)</span>幅とした場合は下図のような形状になります。</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">140</span>, <span class="at">to =</span> <span class="dv">170</span>, <span class="at">by =</span> <span class="dv">5</span>)))</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="R_files/figure-html/unnamed-chunk-22-1.png" alt="階級幅5cmの場合" width="90%" />
+<p class="caption">
+(#fig:unnamed-chunk-22)階級幅5cmの場合
+</p>
+</div>
+<p>　階級を倍の<span class="math inline">\(10cm\)</span>幅とすると下図のようになります。</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">140</span>, <span class="at">to =</span> <span class="dv">170</span>, <span class="at">by =</span> <span class="dv">10</span>)))</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="R_files/figure-html/unnamed-chunk-23-1.png" alt="階級幅10cmの場合" width="90%" />
+<p class="caption">
+(#fig:unnamed-chunk-23)階級幅10cmの場合
+</p>
+</div>
+<p>　逆に階級を半分の<span class="math inline">\(2.5cm\)</span>幅とすると下図のようになります。</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">140</span>, <span class="at">to =</span> <span class="dv">170</span>, <span class="at">by =</span> <span class="fl">2.5</span>)))</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="R_files/figure-html/unnamed-chunk-24-1.png" alt="階級幅2.5cmの場合" width="90%" />
+<p class="caption">
+(#fig:unnamed-chunk-24)階級幅2.5cmの場合
+</p>
+</div>
+<p>　更に細かくして<span class="math inline">\(1cm\)</span>幅にすると下図のように歯抜けがある形状になります。</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">140</span>, <span class="at">to =</span> <span class="dv">170</span>, <span class="at">by =</span> <span class="fl">1.0</span>)))</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="R_files/figure-html/unnamed-chunk-25-1.png" alt="階級幅1cmの場合" width="90%" />
+<p class="caption">
+(#fig:unnamed-chunk-25)階級幅1cmの場合
+</p>
+</div>
+<p>　このように階級の決め方次第でヒストグラムの形状が変わってくることが分かります。ヒストグラムはデータの分布をみるために使うグラフですので、過大な階級幅や過小な階級幅で描くことは好ましくありませんので、適切な値を選ぶようにしてください。</p>
+<p>　</p>
+<div id="計算で階級を決める" class="section level4 unnumbered hasAnchor">
+<h4 class="unnumbered hasAnchor">計算で階級を決める<a href="#計算で階級を決める" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>　適切な階級をどのように決めれば良いか迷う場合には、下表のような計算方法が提案されていますのでこれらを試してみてください。</p>
+<table>
+<colgroup>
+<col width="43%" />
+<col width="43%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>階級の求め方</th>
+<th>階級数（<span class="math inline">\(k\)</span>）・階級幅（<span class="math inline">\(h\)</span>）</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>平方根選択（Square-root choice）</td>
+<td><span class="math inline">\(k = \sqrt{n}\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>スタージェスの公式（Sturges’s formula）</td>
+<td><span class="math inline">\(k = \lceil \log_2n + 1 \rceil\)</span></td>
+<td><span class="math inline">\(n \geq 30\)</span>が前提</td>
+</tr>
+<tr class="odd">
+<td>スコットの選択（Scott’s choice）</td>
+<td><span class="math inline">\(h = \frac{3.5\sigma}{n^{1/3}}\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>フリードマン・ダイアコニスの選択（F-D’s choice）</td>
+<td><span class="math inline">\(h = 2\frac{IQR(x)}{n^{1/3}}\)</span></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>階級数（<span class="math inline">\(k\)</span>）から階級幅（<span class="math inline">\(h\)</span>）を求める場合は下式を使います。
+<span class="math display">\[h = \lceil \frac{max(x) - min(x)}{k} \rceil\]</span>
+<span class="math inline">\(k\)</span> :階級の数<br />
+<span class="math inline">\(h\)</span> :階級の幅<br />
+<span class="math inline">\(n\)</span> :データの個数<br />
+<span class="math inline">\(\lceil x \rceil\)</span> :天井関数（実数<span class="math inline">\(x\)</span>に対して<span class="math inline">\(x\)</span>以上の最小の整数を返す関数）<br />
+<span class="math inline">\(\sigma\)</span> :標準偏差<br />
+<span class="math inline">\(IQR\)</span> :四分位範囲</p>
+<p>数式出典：<a href="https://ja.wikipedia.org/wiki/%E3%83%92%E3%82%B9%E3%83%88%E3%82%B0%E3%83%A9%E3%83%A0#%E9%9A%8E%E7%B4%9A%E3%81%AE%E5%80%8B%E6%95%B0%E3%81%A8%E5%B9%85">Wikipedia</a></p>
+<p>　</p>
+<div id="スタージェスの公式" class="section level5 unnumbered hasAnchor">
+<h5 class="unnumbered hasAnchor">スタージェスの公式<a href="#スタージェスの公式" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>　スタージェスの公式は、比較的、よく使われる計算方法です。ただし、データの数が<span class="math inline">\(30\)</span>個未満の場合には適切ではありませんし、データの数が多くなるとヒストグラムを<a href="https://k-metrics.netlify.app/post/2018-09/histogram/#/%E4%BB%BB%E6%84%8F%E3%81%AE%E9%9A%8E%E7%B4%9A%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B">平滑化し過ぎる傾向</a>があると言われています。そのような傾向が見られた場合には、他の計算方法や任意の階級も試してみてください。</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="st">&quot;Sturges&quot;</span>))</span></code></pre></div>
+<p><img src="R_files/figure-html/階級数をスタージェスの公式で求めた場合-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>　</p>
+</div>
+<div id="スコットの選択" class="section level5 unnumbered hasAnchor">
+<h5 class="unnumbered hasAnchor">スコットの選択<a href="#スコットの選択" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>　スコットの選択は、データによってはスタージェスの公式と比べて階級数が少なくなる傾向があります。</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="st">&quot;Scott&quot;</span>))</span></code></pre></div>
+<p><img src="R_files/figure-html/スコットの選択で求めた場合-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>　</p>
+</div>
+<div id="フリードマンダイアコニスの選択" class="section level5 unnumbered hasAnchor">
+<h5 class="unnumbered hasAnchor">フリードマン・ダイアコニスの選択<a href="#フリードマンダイアコニスの選択" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>　フリードマン・ダイアコニスの法則とも呼ばれます。</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="R_files/figure-html/unnamed-chunk-26-1.png" alt="階級をフリードマン・ダイアコニスの選択で求めた場合" width="90%" />
+<p class="caption">
+(#fig:unnamed-chunk-26)階級をフリードマン・ダイアコニスの選択で求めた場合
+</p>
+</div>
+<p>　</p>
+</div>
+</div>
+</div>
+<div id="階級の境界の扱い" class="section level3 unnumbered hasAnchor">
+<h3 class="unnumbered hasAnchor">階級の境界の扱い<a href="#階級の境界の扱い" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>　階級は下表のように「下端値〜上端値」の形式で表示されることが多いですが、<span class="math inline">\(140\)</span>は階級に含まれるのか？<span class="math inline">\(145\)</span>はどちらの階級に含まれるのか？を決めておかないと意図しない度数になってしまう場合があります。</p>
+<table>
+<thead>
+<tr class="header">
+<th>階級</th>
+<th align="right">度数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>140〜145</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td>145〜150</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td align="right">…</td>
+</tr>
+<tr class="even">
+<td>160〜165</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td>165〜170</td>
+<td align="right">6</td>
+</tr>
+</tbody>
+</table>
+<p>　例えば、階級を「<span class="math inline">\(\mbox{下端値} \lt x \leq \mbox{上端値}\)</span>」と定義した場合は、下図のようになります。</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">right =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="R_files/figure-html/unnamed-chunk-27-1.png" alt="上端を含める場合" width="90%" />
+<p class="caption">
+(#fig:unnamed-chunk-27)上端を含める場合
+</p>
+</div>
+<p>階級を「<span class="math inline">\(\mbox{下端値} \leq x \lt \mbox{上端値}\)</span>」と定義した場合は、分布形状が異なることが分かります。</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">right =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="R_files/figure-html/unnamed-chunk-28-1.png" alt="下端を含める場合" width="90%" />
+<p class="caption">
+(#fig:unnamed-chunk-28)下端を含める場合
+</p>
+</div>
+<p>　このように階級によりヒストグラムの形状が変わってくる点には注意が必要です。なお、下端、上端の含め方を<a href="https://k-metrics.netlify.app/post/2018-09/histogram/#/%E5%B7%A6%E9%96%89%E3%81%98%E3%81%A8%E5%8F%B3%E9%96%89%E3%81%98">「左閉じ、右閉じ」と表現</a>することもあります。</p>
+<p>　</p>
+</div>
+</div>
+<div id="等間隔ではない階級" class="section level2 unnumbered hasAnchor">
+<h2 class="unnumbered hasAnchor">等間隔ではない階級<a href="#等間隔ではない階級" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　度数分布表の階級は必ずしも等間隔である必要はありません。例えば、下図の世帯貯蓄のように度数の小さい階級をまとめたヒストグラムをしばしば見かけます。等間隔でないは階級は（最小値と最大値で桁が数桁異なるなど）幅が広いデータにおいて、階級を細かくしたい場合や等幅の階級でグラフ化するとデータを読み取りにくい場合などに使われます。</p>
+<div class="figure">
+<img src="https://www.stat.go.jp/naruhodo/img/picture/4_8_10.png" alt="" />
+<p class="caption">貯蓄現在高階級別世帯分布（出典：なるほど統計学園）</p>
+</div>
+<p>　このように階級幅が等間隔でない場合には、柱（棒）の面積が度数に対応するように高さを調整する必要があります。<br />
+　ヒストグラムは棒グラフとは異なり階級ごとの柱（棒）の面積が意味を持っています。高さは一般的に度数として表示されますが、密度として表示することもあります。高さ（密度）と幅（階級幅）を乗じたものが相対度数になります。相対度数は名前の通り度数に比例していますので、柱（棒）の面積が等しければ同じ度数ということを表します。<br />
+　<br />
+　例えば、テキストにある身長のデータの<span class="math inline">\(140cm\)</span>から<span class="math inline">\(150cm\)</span>をひとつの階級にまとめた場合、度数分布表は下表のようになります。</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">140</span>, <span class="dv">150</span>, <span class="dv">155</span>, <span class="dv">160</span>, <span class="dv">165</span>, <span class="dv">170</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">prop =</span> <span class="fu">prop.table</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">`</span><span class="at">階級</span><span class="st">`</span> <span class="ot">=</span> class, <span class="st">`</span><span class="at">度数</span><span class="st">`</span> <span class="ot">=</span> n, <span class="st">`</span><span class="at">相対度数</span><span class="st">`</span> <span class="ot">=</span> prop)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["階級"],"name":[1],"type":["fct"],"align":["left"]},{"label":["度数"],"name":[2],"type":["int"],"align":["right"]},{"label":["相対度数"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"(140,150]","2":"7","3":"0.0875"},{"1":"(150,155]","2":"19","3":"0.2375"},{"1":"(155,160]","2":"30","3":"0.3750"},{"1":"(160,165]","2":"18","3":"0.2250"},{"1":"(165,170]","2":"6","3":"0.0750"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　これをヒストグラムとして描いた場合は、下図のようにならなければなりません。この図では縦軸は度数でなく密度になっています。</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">140</span>, <span class="dv">150</span>, <span class="dv">155</span>, <span class="dv">160</span>, <span class="dv">165</span>, <span class="dv">170</span>)))</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="R_files/figure-html/unnamed-chunk-30-1.png" alt="正しいヒストグラム" width="90%" />
+<p class="caption">
+(#fig:unnamed-chunk-30)正しいヒストグラム
+</p>
+</div>
+<p>　密度（高さ）は左から<br />
+　　0.00875, 0.0475, 0.075, 0.045, 0.015<br />
+　となっていますので、これに個々の階級幅（幅）<br />
+　　10, 5, 5, 5, 5<br />
+　を乗じると個々の柱（棒）の面積は<br />
+　　0.0875, 0.2375, 0.375, 0.225, 0.075<br />
+　となり、相対度数と等しいことがわかります。　</p>
+<p>　度数を表示させるために下図のようなヒストグラムを描くことは好ましくありません。階級幅が等幅でない場合は度数分布表と共に密度のヒストグラムを示した方がよいでしょう。</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">140</span>, <span class="dv">150</span>, <span class="dv">155</span>, <span class="dv">160</span>, <span class="dv">165</span>, <span class="dv">170</span>), <span class="at">freq =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="R_files/figure-html/unnamed-chunk-32-1.png" alt="好ましくないヒストグラム（単なる棒グラフ）" width="90%" />
+<p class="caption">
+(#fig:unnamed-chunk-32)好ましくないヒストグラム（単なる棒グラフ）
+</p>
+</div>
+<!--chapter:end:01_section.Rmd-->
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">`</span><span class="at">階級</span><span class="st">`</span> <span class="ot">=</span> class, <span class="st">`</span><span class="at">度数</span><span class="st">`</span> <span class="ot">=</span> n, <span class="st">`</span><span class="at">階級値</span><span class="st">`</span> <span class="ot">=</span> mids, <span class="st">`</span><span class="at">階級幅</span><span class="st">`</span> <span class="ot">=</span> range,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">累積度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_n, <span class="st">`</span><span class="at">相対度数</span><span class="st">`</span> <span class="ot">=</span> prop, <span class="st">`</span><span class="at">累積相対度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_prop)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["階級"],"name":[1],"type":["fct"],"align":["left"]},{"label":["度数"],"name":[2],"type":["int"],"align":["right"]},{"label":["階級値"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["階級幅"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["累積度数"],"name":[5],"type":["int"],"align":["right"]},{"label":["相対度数"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["累積相対度数"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"(140,145]","2":"1","3":"143","4":"5","5":"1","6":"0.0125","7":"0.0125"},{"1":"(145,150]","2":"6","3":"148","4":"5","5":"7","6":"0.0750","7":"0.0875"},{"1":"(150,155]","2":"19","3":"153","4":"5","5":"26","6":"0.2375","7":"0.3250"},{"1":"(155,160]","2":"30","3":"158","4":"5","5":"56","6":"0.3750","7":"0.7000"},{"1":"(160,165]","2":"18","3":"163","4":"5","5":"74","6":"0.2250","7":"0.9250"},{"1":"(165,170]","2":"6","3":"168","4":"5","5":"80","6":"0.0750","7":"1.0000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="平均値とはやじろべえの視点である" class="section level1 hasAnchor" number="2">
+<h1 class="hasAnchor"><span class="header-section-number">2</span> 平均値とはやじろべえの視点である<a href="#平均値とはやじろべえの視点である" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="統計量はデータを要約する数値" class="section level2 hasAnchor" number="2.1">
+<h2 class="hasAnchor"><span class="header-section-number">2.1</span> 統計量は、データを要約する数値<a href="#統計量はデータを要約する数値" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="平均値とは" class="section level2 hasAnchor" number="2.2">
+<h2 class="hasAnchor"><span class="header-section-number">2.2</span> 平均値とは<a href="#平均値とは" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="度数分布表での平均値" class="section level2 hasAnchor" number="2.3">
+<h2 class="hasAnchor"><span class="header-section-number">2.3</span> 度数分布表での平均値<a href="#度数分布表での平均値" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">`</span><span class="at">階級</span><span class="st">`</span> <span class="ot">=</span> class, <span class="st">`</span><span class="at">度数</span><span class="st">`</span> <span class="ot">=</span> n, <span class="st">`</span><span class="at">階級値</span><span class="st">`</span> <span class="ot">=</span> mids, <span class="st">`</span><span class="at">階級幅</span><span class="st">`</span> <span class="ot">=</span> range,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">累積度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_n, <span class="st">`</span><span class="at">相対度数</span><span class="st">`</span> <span class="ot">=</span> prop, <span class="st">`</span><span class="at">累積相対度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_prop)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["階級"],"name":[1],"type":["fct"],"align":["left"]},{"label":["度数"],"name":[2],"type":["int"],"align":["right"]},{"label":["階級値"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["階級幅"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["累積度数"],"name":[5],"type":["int"],"align":["right"]},{"label":["相対度数"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["累積相対度数"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"(140,145]","2":"1","3":"143","4":"5","5":"1","6":"0.0125","7":"0.0125"},{"1":"(145,150]","2":"6","3":"148","4":"5","5":"7","6":"0.0750","7":"0.0875"},{"1":"(150,155]","2":"19","3":"153","4":"5","5":"26","6":"0.2375","7":"0.3250"},{"1":"(155,160]","2":"30","3":"158","4":"5","5":"56","6":"0.3750","7":"0.7000"},{"1":"(160,165]","2":"18","3":"163","4":"5","5":"74","6":"0.2250","7":"0.9250"},{"1":"(165,170]","2":"6","3":"168","4":"5","5":"80","6":"0.0750","7":"1.0000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　（算術）平均は全ての観測値の総和を総データ数で除したものですので、観測値を各階級の代表値である階級値で近似すると下式で求めることができます。</p>
+<p><span class="math display">\[\mbox{平均} = \frac{\sum{\mbox{観測値}}}{総データ数} = \frac{\sum{\mbox{観測値}}}{\sum{度数}} \fallingdotseq \frac{\sum{(\mbox{階級値} \times \mbox{度数})}}{\sum{度数}} = \sum{(\mbox{階級値} \times \mbox{相対度数})}\]</span></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">A =</span> mids, <span class="at">B =</span> prop) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">A x B</span><span class="st">`</span> <span class="ot">=</span> A <span class="sc">*</span> B) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">A x B</span><span class="st">`</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##       A      B `A x B`
+##   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1   143 0.0125    1.79
+## 2   148 0.075    11.1 
+## 3   153 0.238    36.3 
+## 4   158 0.375    59.2 
+## 5   163 0.225    36.7 
+## 6   168 0.075    12.6</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.75"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">mean</span>(height))</span></code></pre></div>
+<pre><code>## [1] 157.575</code></pre>
+<div id="階級幅が大きくなるとどうなるか" class="section level3 unnumbered hasAnchor">
+<h3 class="unnumbered hasAnchor">階級幅が大きくなるとどうなるか？<a href="#階級幅が大きくなるとどうなるか" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">140</span>, <span class="dv">150</span>, <span class="dv">160</span>, <span class="dv">170</span>),</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class_value =</span> <span class="fu">as.character</span>(class)) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate</span>(class_value, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;h&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">l =</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(l, <span class="st">&quot;[[:punct:]]&quot;</span>)),</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">h =</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(h, <span class="st">&quot;[[:punct:]]&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mids =</span> ((l <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span> h) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">range =</span> h <span class="sc">-</span> l, <span class="at">cumsum_n =</span> <span class="fu">cumsum</span>(n),</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">prop =</span> <span class="fu">prop.table</span>(n), <span class="at">cumsum_prop =</span> <span class="fu">cumsum</span>(prop)) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">A =</span> mids, <span class="at">B =</span> prop) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">A x B</span><span class="st">`</span> <span class="ot">=</span> A <span class="sc">*</span> B) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">A x B</span><span class="st">`</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##       A      B `A x B`
+##   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1  146. 0.0875    12.7
+## 2  156. 0.612     95.2
+## 3  166. 0.3       49.6</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.625"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="平均値のヒストグラムの中での役割" class="section level2 hasAnchor" number="2.4">
+<h2 class="hasAnchor"><span class="header-section-number">2.4</span> 平均値のヒストグラムの中での役割<a href="#平均値のヒストグラムの中での役割" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="平均値をどう捉えるべきか" class="section level2 hasAnchor" number="2.5">
+<h2 class="hasAnchor"><span class="header-section-number">2.5</span> 平均値をどう捉えるべきか<a href="#平均値をどう捉えるべきか" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="練習問題-1" class="section level2 hasAnchor" number="2.6">
+<h2 class="hasAnchor"><span class="header-section-number">2.6</span> 練習問題<a href="#練習問題-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="コラム平均値のとり方は１つではない" class="section level2 hasAnchor" number="2.7">
+<h2 class="hasAnchor"><span class="header-section-number">2.7</span> 【コラム】平均値のとり方は、１つではない<a href="#コラム平均値のとり方は１つではない" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>算術平均（Arithmetic Mean）</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">maen</span>(x)</span></code></pre></div>
+<p>幾何平均（Geometric Mean）または相乗平均</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">geometric.mean</span>(x)</span></code></pre></div>
+<p>二乗平均（Mean Square）</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x <span class="sc">^</span> <span class="dv">2</span>)</span></code></pre></div>
+<p>二乗平均平方根（Root Mean Square）</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(x <span class="sc">^</span> <span class="dv">2</span>))</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>Metrics<span class="sc">::</span><span class="fu">rmse</span>()  <span class="co"># Root Mean Squared Error</span></span></code></pre></div>
+<p>調和平均（Harmonic Mean）</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">harmonic.mean</span>(x)</span></code></pre></div>
+<p>トリム平均</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">trim =</span> <span class="fl">0.05</span>)  <span class="co"># データの5%を外側から対象外とする</span></span></code></pre></div>
+<!--chapter:end:02_section.Rmd-->
+</div>
+</div>
+<!--bookdown:body:end-->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+    </div>
+  </div>
+<!--bookdown:config-->
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
