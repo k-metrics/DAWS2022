@@ -23,7 +23,7 @@
 <meta name="author" content="Sampo Suzuki, CC 4.0 BY-NC-SA" />
 
 
-<meta name="date" content="2022-05-14" />
+<meta name="date" content="2022-05-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -152,9 +152,10 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </ul></li>
 <li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#ヒストグラムを描くポイント"><i class="fa fa-check"></i>ヒストグラムを描くポイント</a>
 <ul>
-<li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級を決め方"><i class="fa fa-check"></i>階級を決め方</a></li>
+<li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級の決め方"><i class="fa fa-check"></i>階級の決め方</a></li>
 <li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級の境界の扱い"><i class="fa fa-check"></i>階級の境界の扱い</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#等間隔ではない階級"><i class="fa fa-check"></i>等間隔ではない階級</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html"><i class="fa fa-check"></i><b>2</b> 平均値とはやじろべえの視点である</a>
 <ul>
@@ -163,8 +164,16 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <li class="chapter" data-level="2.3" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#度数分布表での平均値"><i class="fa fa-check"></i><b>2.3</b> 度数分布表での平均値</a></li>
 <li class="chapter" data-level="2.4" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#平均値のヒストグラムの中での役割"><i class="fa fa-check"></i><b>2.4</b> 平均値のヒストグラムの中での役割</a></li>
 <li class="chapter" data-level="2.5" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#平均値をどう捉えるべきか"><i class="fa fa-check"></i><b>2.5</b> 平均値をどう捉えるべきか</a></li>
-<li class="chapter" data-level="2.6" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#練習問題-1"><i class="fa fa-check"></i><b>2.6</b> 練習問題</a></li>
-<li class="chapter" data-level="2.7" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#コラム平均値のとり方は１つではない"><i class="fa fa-check"></i><b>2.7</b> 【コラム】平均値のとり方は、１つではない</a></li>
+<li class="chapter" data-level="2.6" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#練習問題-1"><i class="fa fa-check"></i><b>2.6</b> 練習問題</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#解答例-1"><i class="fa fa-check"></i><b>2.6.1</b> 解答例</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#コラム平均値のとり方は１つではない"><i class="fa fa-check"></i>【コラム】平均値のとり方は、１つではない</a></li>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#階級幅が変わると平均値はどうなるか"><i class="fa fa-check"></i>階級幅が変わると平均値はどうなるか？</a>
+<ul>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#階級幅が倍になった場合"><i class="fa fa-check"></i>階級幅が倍になった場合</a></li>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#階級幅が半分になった場合"><i class="fa fa-check"></i>階級幅が半分になった場合</a></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -185,40 +194,186 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
             <section class="normal" id="section-">
 <div id="平均値とはやじろべえの視点である" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">第2講</span> 平均値とはやじろべえの視点である<a href="平均値とはやじろべえの視点である.html#平均値とはやじろべえの視点である" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>　本講では以下のデータフレームを利用しています。</p>
+<div id="身長データ" class="section level4 unnumbered hasAnchor">
+<h4>身長データ<a href="平均値とはやじろべえの視点である.html#身長データ" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="平均値とはやじろべえの視点である.html#cb41-1" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["height"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"151"},{"1":"154"},{"1":"160"},{"1":"160"},{"1":"163"},{"1":"156"},{"1":"158"},{"1":"156"},{"1":"154"},{"1":"160"},{"1":"154"},{"1":"162"},{"1":"156"},{"1":"162"},{"1":"157"},{"1":"162"},{"1":"162"},{"1":"169"},{"1":"150"},{"1":"162"},{"1":"152"},{"1":"161"},{"1":"159"},{"1":"164"},{"1":"168"},{"1":"153"},{"1":"160"},{"1":"155"},{"1":"160"},{"1":"158"},{"1":"160"},{"1":"150"},{"1":"163"},{"1":"155"},{"1":"157"},{"1":"162"},{"1":"154"},{"1":"161"},{"1":"153"},{"1":"154"},{"1":"151"},{"1":"155"},{"1":"158"},{"1":"146"},{"1":"149"},{"1":"165"},{"1":"169"},{"1":"154"},{"1":"155"},{"1":"166"},{"1":"165"},{"1":"161"},{"1":"148"},{"1":"143"},{"1":"156"},{"1":"162"},{"1":"158"},{"1":"156"},{"1":"159"},{"1":"164"},{"1":"167"},{"1":"159"},{"1":"157"},{"1":"151"},{"1":"159"},{"1":"156"},{"1":"151"},{"1":"160"},{"1":"153"},{"1":"156"},{"1":"146"},{"1":"166"},{"1":"151"},{"1":"159"},{"1":"157"},{"1":"156"},{"1":"162"},{"1":"156"},{"1":"156"},{"1":"161"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="度数分布表" class="section level4 unnumbered hasAnchor">
+<h4>度数分布表<a href="平均値とはやじろべえの視点である.html#度数分布表" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="平均値とはやじろべえの視点である.html#cb42-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["class"],"name":[1],"type":["fct"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["l"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["h"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["mids"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["range"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["cumsum_n"],"name":[7],"type":["int"],"align":["right"]},{"label":["prop"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["cumsum_prop"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"(140,145]","2":"1","3":"140","4":"145","5":"143","6":"5","7":"1","8":"0.0125","9":"0.0125"},{"1":"(145,150]","2":"6","3":"145","4":"150","5":"148","6":"5","7":"7","8":"0.0750","9":"0.0875"},{"1":"(150,155]","2":"19","3":"150","4":"155","5":"153","6":"5","7":"26","8":"0.2375","9":"0.3250"},{"1":"(155,160]","2":"30","3":"155","4":"160","5":"158","6":"5","7":"56","8":"0.3750","9":"0.7000"},{"1":"(160,165]","2":"18","3":"160","4":"165","5":"163","6":"5","7":"74","8":"0.2250","9":"0.9250"},{"1":"(165,170]","2":"6","3":"165","4":"170","5":"168","6":"5","7":"80","8":"0.0750","9":"1.0000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　</p>
+</div>
 <div id="統計量はデータを要約する数値" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> 統計量は、データを要約する数値<a href="平均値とはやじろべえの視点である.html#統計量はデータを要約する数値" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　本稿で扱っている統計量（要約統計量）は平均のみです。</p>
+<p>　</p>
 </div>
 <div id="平均値とは" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> 平均値とは<a href="平均値とはやじろべえの視点である.html#平均値とは" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　本稿の平均値とは算術平均を意味しています。身長データ（<span class="math inline">\(x\)</span>）の平均値は157.575です。</p>
+<p>　</p>
 </div>
 <div id="度数分布表での平均値" class="section level2 hasAnchor" number="2.3">
 <h2><span class="header-section-number">2.3</span> 度数分布表での平均値<a href="平均値とはやじろべえの視点である.html#度数分布表での平均値" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="平均値とはやじろべえの視点である.html#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="平均値とはやじろべえの視点である.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">`</span><span class="at">階級</span><span class="st">`</span> <span class="ot">=</span> class, <span class="st">`</span><span class="at">度数</span><span class="st">`</span> <span class="ot">=</span> n, <span class="st">`</span><span class="at">階級値</span><span class="st">`</span> <span class="ot">=</span> mids, <span class="st">`</span><span class="at">階級幅</span><span class="st">`</span> <span class="ot">=</span> range,</span>
+<span id="cb43-3"><a href="平均値とはやじろべえの視点である.html#cb43-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">`</span><span class="at">累積度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_n, <span class="st">`</span><span class="at">相対度数</span><span class="st">`</span> <span class="ot">=</span> prop, <span class="st">`</span><span class="at">累積相対度数</span><span class="st">`</span> <span class="ot">=</span> cumsum_prop)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["階級"],"name":[1],"type":["fct"],"align":["left"]},{"label":["度数"],"name":[2],"type":["int"],"align":["right"]},{"label":["階級値"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["階級幅"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["累積度数"],"name":[5],"type":["int"],"align":["right"]},{"label":["相対度数"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["累積相対度数"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"(140,145]","2":"1","3":"143","4":"5","5":"1","6":"0.0125","7":"0.0125"},{"1":"(145,150]","2":"6","3":"148","4":"5","5":"7","6":"0.0750","7":"0.0875"},{"1":"(150,155]","2":"19","3":"153","4":"5","5":"26","6":"0.2375","7":"0.3250"},{"1":"(155,160]","2":"30","3":"158","4":"5","5":"56","6":"0.3750","7":"0.7000"},{"1":"(160,165]","2":"18","3":"163","4":"5","5":"74","6":"0.2250","7":"0.9250"},{"1":"(165,170]","2":"6","3":"168","4":"5","5":"80","6":"0.0750","7":"1.0000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　（算術）平均は全ての観測値の総和を総データ数で除したものですので、観測値を各階級の代表値である階級値で近似すると下式が成り立つことが分かります。</p>
+<p><span class="math display">\[\mbox{平均} = \frac{\sum{\mbox{観測値}_i}}{総データ数} = \frac{\sum{\mbox{観測値}_i}}{\sum{度数}_i} \fallingdotseq \frac{\sum{(\mbox{階級値}_i \times \mbox{度数}_i)}}{\sum{度数}_i} = \sum{(\mbox{階級値}_i \times \mbox{相対度数}_i)}\]</span></p>
+<p>　なぜなら
+<span class="math display">\[\frac{\mbox{度数}_i}{\sum{\mbox{度数}_i}} = \mbox{相対度数}_i\]</span></p>
+<p><span class="math display">\[i = 1, 2, ... , n\]</span></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="平均値とはやじろべえの視点である.html#cb44-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href="平均値とはやじろべえの視点である.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">A =</span> mids, <span class="at">B =</span> prop) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href="平均値とはやじろべえの視点である.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">A x B</span><span class="st">`</span> <span class="ot">=</span> A <span class="sc">*</span> B) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-4"><a href="平均値とはやじろべえの視点である.html#cb44-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">`</span><span class="at">A 階級値</span><span class="st">`</span> <span class="ot">=</span> A, <span class="st">`</span><span class="at">B 相対度数</span><span class="st">`</span> <span class="ot">=</span> B, <span class="st">`</span><span class="at">A x B</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">A x B</span><span class="st">`</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["A 階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["B 相対度数"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["A x B"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"143","2":"0.0125","3":"1.7875"},{"1":"148","2":"0.0750","3":"11.1000"},{"1":"153","2":"0.2375","3":"36.3375"},{"1":"158","2":"0.3750","3":"59.2500"},{"1":"163","2":"0.2250","3":"36.6750"},{"1":"168","2":"0.0750","3":"12.6000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="平均値とはやじろべえの視点である.html#cb45-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href="平均値とはやじろべえの視点である.html#cb45-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">A =</span> mids, <span class="at">B =</span> prop) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href="平均値とはやじろべえの視点である.html#cb45-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">A x B</span><span class="st">`</span> <span class="ot">=</span> A <span class="sc">*</span> B) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-4"><a href="平均値とはやじろべえの視点である.html#cb45-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="st">`</span><span class="at">平均値</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">A x B</span><span class="st">`</span>))</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["平均値"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.75"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　実データで求めた平均値は157.575ですので、階級値から求めた平均値との差は-0.175となり、度数分布表を作ることは平均値に大きな影響を与えないことが分かります。</p>
+<p>　</p>
 </div>
 <div id="平均値のヒストグラムの中での役割" class="section level2 hasAnchor" number="2.4">
 <h2><span class="header-section-number">2.4</span> 平均値のヒストグラムの中での役割<a href="平均値とはやじろべえの視点である.html#平均値のヒストグラムの中での役割" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　階級値から求めた平均値をヒストグラム上にプロットすると下図のようになります。</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="平均値とはやじろべえの視点である.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(x, <span class="fu">hist</span>(height))</span>
+<span id="cb46-2"><a href="平均値とはやじろべえの視点である.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">157.75</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="R_files/figure-html/unnamed-chunk-38-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>　</p>
 </div>
 <div id="平均値をどう捉えるべきか" class="section level2 hasAnchor" number="2.5">
 <h2><span class="header-section-number">2.5</span> 平均値をどう捉えるべきか<a href="平均値とはやじろべえの視点である.html#平均値をどう捉えるべきか" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　平均値の捉え方は様々考えられますが、テキストでは下記のようにまとめています。</p>
+<ul>
+<li>全データ（値）を代表する値（点）</li>
+<li>データは平均値の周辺に分布する</li>
+<li>数多く現れるデータは平均値への影響が大きい</li>
+<li>データの分布が対象の場合、平均値は対象軸</li>
+</ul>
+<p>　</p>
 </div>
 <div id="練習問題-1" class="section level2 hasAnchor" number="2.6">
 <h2><span class="header-section-number">2.6</span> 練習問題<a href="平均値とはやじろべえの視点である.html#練習問題-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="解答例-1" class="section level3 hasAnchor" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> 解答例<a href="平均値とはやじろべえの視点である.html#解答例-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="平均値とはやじろべえの視点である.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">mids =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">50</span>, <span class="dv">70</span>, <span class="dv">90</span>, <span class="dv">110</span>, <span class="dv">130</span>), <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">40</span>, <span class="dv">20</span>, <span class="dv">10</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href="平均値とはやじろべえの視点である.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">prop =</span> <span class="fu">prop.table</span>(n), <span class="at">cm =</span> mids <span class="sc">*</span> prop) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-3"><a href="平均値とはやじろべえの視点である.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">`</span><span class="at">階級値</span><span class="st">`</span> <span class="ot">=</span> mids, <span class="st">`</span><span class="at">度数</span><span class="st">`</span> <span class="ot">=</span> n, <span class="st">`</span><span class="at">相対度数</span><span class="st">`</span> <span class="ot">=</span> prop, <span class="st">`</span><span class="at">階級値×相対度数</span><span class="st">`</span> <span class="ot">=</span> cm)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["度数"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["相対度数"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["階級値×相対度数"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"30","2":"5","3":"0.05","4":"1.5"},{"1":"50","2":"10","3":"0.10","4":"5.0"},{"1":"70","2":"15","3":"0.15","4":"10.5"},{"1":"90","2":"40","3":"0.40","4":"36.0"},{"1":"110","2":"20","3":"0.20","4":"22.0"},{"1":"130","2":"10","3":"0.10","4":"13.0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
-<div id="コラム平均値のとり方は１つではない" class="section level2 hasAnchor" number="2.7">
-<h2><span class="header-section-number">2.7</span> 【コラム】平均値のとり方は、１つではない<a href="平均値とはやじろべえの視点である.html#コラム平均値のとり方は１つではない" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>算術平均（Arithmetic Mean）</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="平均値とはやじろべえの視点である.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">maen</span>(x)</span></code></pre></div>
-<p>幾何平均（Geometric Mean）または相乗平均</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="平均値とはやじろべえの視点である.html#cb39-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">geometric.mean</span>(x)</span></code></pre></div>
-<p>二乗平均（Mean Square）</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="平均値とはやじろべえの視点である.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x <span class="sc">^</span> <span class="dv">2</span>)</span></code></pre></div>
-<p>二乗平均平方根（Root Mean Square）</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="平均値とはやじろべえの視点である.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(x <span class="sc">^</span> <span class="dv">2</span>))</span>
-<span id="cb41-2"><a href="平均値とはやじろべえの視点である.html#cb41-2" aria-hidden="true" tabindex="-1"></a>Metrics<span class="sc">::</span><span class="fu">rmse</span>()  <span class="co"># Root Mean Squared Error</span></span></code></pre></div>
-<p>調和平均（Harmonic Mean）</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="平均値とはやじろべえの視点である.html#cb42-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">harmonic.mean</span>(x)</span></code></pre></div>
-<p>トリム平均</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="平均値とはやじろべえの視点である.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">trim =</span> <span class="fl">0.05</span>)  <span class="co"># データの5%を外側から対象外とする</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="平均値とはやじろべえの視点である.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">mids =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">50</span>, <span class="dv">70</span>, <span class="dv">90</span>, <span class="dv">110</span>, <span class="dv">130</span>), <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">40</span>, <span class="dv">20</span>, <span class="dv">10</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-2"><a href="平均値とはやじろべえの視点である.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">prop =</span> <span class="fu">prop.table</span>(n), <span class="at">cm =</span> mids <span class="sc">*</span> prop) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-3"><a href="平均値とはやじろべえの視点である.html#cb48-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="st">`</span><span class="at">平均値</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(cm))</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["平均値"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"88"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="コラム平均値のとり方は１つではない" class="section level2 unnumbered hasAnchor">
+<h2>【コラム】平均値のとり方は、１つではない<a href="平均値とはやじろべえの視点である.html#コラム平均値のとり方は１つではない" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　算術平均（Arithmetic Mean）</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="平均値とはやじろべえの視点である.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">90</span>))</span></code></pre></div>
+<pre><code>## [1] 50</code></pre>
+<p>　幾何平均（Geometric Mean）または相乗平均</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="平均値とはやじろべえの視点である.html#cb51-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">geometric.mean</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">90</span>))</span></code></pre></div>
+<pre><code>## [1] 30</code></pre>
+<p>　二乗平均平方根（Root Mean Square）または二乗平均</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="平均値とはやじろべえの視点である.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">90</span>) <span class="sc">^</span> <span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## [1] 64.03124</code></pre>
+<p>　調和平均（Harmonic Mean）</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="平均値とはやじろべえの視点である.html#cb55-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">harmonic.mean</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">90</span>))</span></code></pre></div>
+<pre><code>## [1] 18</code></pre>
+<p>　トリム平均は体操競技の評点などで使われる平均値の計算方法で、値を小さい方から順に並べ、上位側と下位側から一定の割合で値を除き算術平均を求めます。外れ値や異常値などを影響を排除するために使われることが多いです。</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="平均値とはやじろべえの視点である.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="dv">30</span>))</span></code></pre></div>
+<pre><code>## [1] 6.6</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="平均値とはやじろべえの視点である.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="dv">30</span>), <span class="at">trim =</span> <span class="fl">0.25</span>)  <span class="co"># データの両側2.5%を対象外とする</span></span></code></pre></div>
+<pre><code>## [1] 4.5</code></pre>
+<p>　</p>
+</div>
+<div id="階級幅が変わると平均値はどうなるか" class="section level2 unnumbered hasAnchor">
+<h2>階級幅が変わると平均値はどうなるか？<a href="平均値とはやじろべえの視点である.html#階級幅が変わると平均値はどうなるか" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　では、階級幅が変わると度数分布表から求める平均値はどのようになるか確認してみましょう。</p>
+<div id="階級幅が倍になった場合" class="section level3 unnumbered hasAnchor">
+<h3>階級幅が倍になった場合<a href="平均値とはやじろべえの視点である.html#階級幅が倍になった場合" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="平均値とはやじろべえの視点である.html#cb61-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="平均値とはやじろべえの視点である.html#cb61-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
+<span id="cb61-3"><a href="平均値とはやじろべえの視点である.html#cb61-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">140</span>, <span class="dv">150</span>, <span class="dv">160</span>, <span class="dv">170</span>),</span>
+<span id="cb61-4"><a href="平均値とはやじろべえの視点である.html#cb61-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-5"><a href="平均値とはやじろべえの視点である.html#cb61-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-6"><a href="平均値とはやじろべえの視点である.html#cb61-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class_value =</span> <span class="fu">as.character</span>(class)) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-7"><a href="平均値とはやじろべえの視点である.html#cb61-7" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate</span>(class_value, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;h&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-8"><a href="平均値とはやじろべえの視点である.html#cb61-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">l =</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(l, <span class="st">&quot;[[:punct:]]&quot;</span>)),</span>
+<span id="cb61-9"><a href="平均値とはやじろべえの視点である.html#cb61-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">h =</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(h, <span class="st">&quot;[[:punct:]]&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-10"><a href="平均値とはやじろべえの視点である.html#cb61-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mids =</span> ((l <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span> h) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-11"><a href="平均値とはやじろべえの視点である.html#cb61-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">range =</span> h <span class="sc">-</span> l, <span class="at">cumsum_n =</span> <span class="fu">cumsum</span>(n),</span>
+<span id="cb61-12"><a href="平均値とはやじろべえの視点である.html#cb61-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">prop =</span> <span class="fu">prop.table</span>(n), <span class="at">cumsum_prop =</span> <span class="fu">cumsum</span>(prop)) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-13"><a href="平均値とはやじろべえの視点である.html#cb61-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">A =</span> mids, <span class="at">B =</span> prop) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-14"><a href="平均値とはやじろべえの視点である.html#cb61-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">A x B</span><span class="st">`</span> <span class="ot">=</span> A <span class="sc">*</span> B) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-15"><a href="平均値とはやじろべえの視点である.html#cb61-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="st">`</span><span class="at">階級値による平均値</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">A x B</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-16"><a href="平均値とはやじろべえの視点である.html#cb61-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">算術平均</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(x<span class="sc">$</span>height), <span class="st">`</span><span class="at">差</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">算術平均</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">階級値による平均値</span><span class="st">`</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["階級値による平均値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["算術平均"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.625","2":"157.575","3":"-0.05"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="階級幅が半分になった場合" class="section level3 unnumbered hasAnchor">
+<h3>階級幅が半分になった場合<a href="平均値とはやじろべえの視点である.html#階級幅が半分になった場合" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="平均値とはやじろべえの視点である.html#cb62-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb62-2"><a href="平均値とはやじろべえの視点である.html#cb62-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">cut</span>(height,</span>
+<span id="cb62-3"><a href="平均値とはやじろべえの視点である.html#cb62-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">140</span>, <span class="at">to =</span> <span class="dv">170</span>, <span class="at">by =</span> <span class="fl">2.5</span>),</span>
+<span id="cb62-4"><a href="平均値とはやじろべえの視点である.html#cb62-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">FALSE</span>, <span class="at">right =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-5"><a href="平均値とはやじろべえの視点である.html#cb62-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(class) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-6"><a href="平均値とはやじろべえの視点である.html#cb62-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">class_value =</span> <span class="fu">as.character</span>(class)) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-7"><a href="平均値とはやじろべえの視点である.html#cb62-7" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate</span>(class_value, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;h&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-8"><a href="平均値とはやじろべえの視点である.html#cb62-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">l =</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(l, <span class="st">&quot;[[:punct:]]&quot;</span>)),</span>
+<span id="cb62-9"><a href="平均値とはやじろべえの視点である.html#cb62-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">h =</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(h, <span class="st">&quot;[[:punct:]]&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-10"><a href="平均値とはやじろべえの視点である.html#cb62-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mids =</span> ((l <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span> h) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-11"><a href="平均値とはやじろべえの視点である.html#cb62-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">range =</span> h <span class="sc">-</span> l, <span class="at">cumsum_n =</span> <span class="fu">cumsum</span>(n),</span>
+<span id="cb62-12"><a href="平均値とはやじろべえの視点である.html#cb62-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">prop =</span> <span class="fu">prop.table</span>(n), <span class="at">cumsum_prop =</span> <span class="fu">cumsum</span>(prop)) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-13"><a href="平均値とはやじろべえの視点である.html#cb62-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">A =</span> mids, <span class="at">B =</span> prop) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-14"><a href="平均値とはやじろべえの視点である.html#cb62-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">A x B</span><span class="st">`</span> <span class="ot">=</span> A <span class="sc">*</span> B) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-15"><a href="平均値とはやじろべえの視点である.html#cb62-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="st">`</span><span class="at">階級値による平均値</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">A x B</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-16"><a href="平均値とはやじろべえの視点である.html#cb62-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">算術平均</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(x<span class="sc">$</span>height), <span class="st">`</span><span class="at">差</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">算術平均</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">階級値による平均値</span><span class="st">`</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["階級値による平均値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["算術平均"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.8562","2":"157.575","3":"-0.28125"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
+</div>
 </div>
 </div>
             </section>
