@@ -126,29 +126,40 @@ data.frame(mids = c(30, 50, 70, 90, 110, 130), n = c(5, 10, 15, 40, 20, 10)) %>%
 
 ## 【コラム】平均値のとり方は、１つではない {.unnumbered}
 
-　算術平均（Arithmetic Mean）
+### 算術平均（Arithmetic Mean） {.unnumbered}
+$$\frac{\sum_{i=1}^n{x_i}}{n}$$
 ```{r}
+sum(c(10, 90)) / length(c(10, 90))
 mean(c(10, 90))
 ```
 
-　幾何平均（Geometric Mean）または相乗平均
+　  
+
+### 幾何平均（Geometric Mean）または相乗平均 {.unnumbered}
+$$\sqrt{\prod_{i=1}^n{x_i}}$$
 ```{r}
 psych::geometric.mean(c(10, 90))
 ```
 
+　  
 
-　二乗平均平方根（Root Mean Square）または二乗平均
+### 二乗平均平方根（Root Mean Square）または二乗平均 {.unnumbered}
+$$\sqrt{\frac{\sum_{i=1}^n{x_i^2}}{n}}$$
 ```{r}
 sqrt(mean(c(10, 90) ^ 2))
 ```
 
+　  
 
-　調和平均（Harmonic Mean）
+### 調和平均（Harmonic Mean）  {.unnumbered}
+$$\frac{n}{\sum_{i=1}^n{\frac{1}{x_i}}}$$
 ```{r}
 psych::harmonic.mean(c(10, 90))
 ```
 
+　  
 
+### トリム平均  {.unnumbered}
 　トリム平均は体操競技の評点などで使われる平均値の計算方法で、値を小さい方から順に並べ、上位側と下位側から一定の割合で値を除き算術平均を求めます。外れ値や異常値などを影響を排除するために使われることが多いです。
 ```{r}
 mean(c(0, 1:8, 30))
