@@ -16,7 +16,7 @@ bookdown::gitbook:
     toolbar:
       position: fixed # "static" or "fixed""
     edit: null
-    # download: ["pdf"]
+    download: ["pdf"]
     search: yes
     fontsettings:
       theme: white  # "white" or "sepia" or "night"

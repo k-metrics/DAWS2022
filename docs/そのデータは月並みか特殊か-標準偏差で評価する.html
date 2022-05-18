@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Rで学ぶ『完全独習 統計学入門』</title>
+  <title>第4講 そのデータは「月並み」か「特殊」か？ 標準偏差で評価する | Rで学ぶ『完全独習 統計学入門』</title>
   <meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Rで学ぶ『完全独習 統計学入門』" />
+  <meta property="og:title" content="第4講 そのデータは「月並み」か「特殊」か？ 標準偏差で評価する | Rで学ぶ『完全独習 統計学入門』" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
   <meta name="github-repo" content="k-metrics/DAWS2022" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Rで学ぶ『完全独習 統計学入門』" />
+  <meta name="twitter:title" content="第4講 そのデータは「月並み」か「特殊」か？ 標準偏差で評価する | Rで学ぶ『完全独習 統計学入門』" />
   
   <meta name="twitter:description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="データの散らばり具合を見積もる統計量.html"/>
 
-<link rel="next" href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -226,29 +226,28 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Rで学ぶ『完全独習 統計学入門』</h1>
-<p class="author"><em>Sampo Suzuki, CC 4.0 BY-NC-SA</em></p>
-<p class="date"><em>2022-05-18</em></p>
+<div id="そのデータは月並みか特殊か-標準偏差で評価する" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">第4講</span> そのデータは「月並み」か「特殊」か？ 標準偏差で評価する<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#そのデータは月並みか特殊か-標準偏差で評価する" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="標準偏差は波の激しさ" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> 標準偏差は波の「激しさ」<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#標準偏差は波の激しさ" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="はじめに" class="section level1 unnumbered hasAnchor">
-<h1>はじめに<a href="index.html#はじめに" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>　本資料は<a href="https://www.diamond.co.jp/book/9784478820094.html">『完全独習 統計学入門』小島寛之著</a>（以降、テキスト）の内容をRで計算する方法を紹介しています。基本的な統計量を求める際に必要となる関数などの解説が中心です。 　</p>
-<p>　テキストに記載されているデータの一部をCSVファイルにして利用していますが、データ自体の著作権は原著作者にあります。また、CSVファイルは著作権を侵害する意図で作成したものではありません。</p>
-<p>　</p>
-<div id="想定読者" class="section level2 unnumbered hasAnchor">
-<h2>想定読者<a href="index.html#想定読者" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>　本書の想定読者は以下に該当する方です。</p>
-<ul>
-<li>Rに関する基本的な知識を有している方
-<ul>
-<li>データフレーム型や因子型などの変数型の知識</li>
-<li>変数の代入・参照方法</li>
-<li><code>tidyverse</code>の基本的な知識</li>
-</ul></li>
-<li>Rで統計量を求めてみたい方</li>
-</ul>
-<p>　本書ではRのインストール方法や基本文法には触れません。</p>
+<div id="s.d.がわかるとデータの特殊性を評価できる" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> S.D.がわかるとデータの特殊性を評価できる<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#s.d.がわかるとデータの特殊性を評価できる" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="複数のデータセットの比較" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> 複数のデータセットの比較<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#複数のデータセットの比較" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="加工されたデータの平均値と標準偏差" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> 加工されたデータの平均値と標準偏差<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#加工されたデータの平均値と標準偏差" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="練習問題-3" class="section level2 unnumbered hasAnchor">
+<h2>練習問題<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#練習問題-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="解答例-4" class="section level3 unnumbered hasAnchor">
+<h3>解答例<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#解答例-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="コラム偏差値で嫌な思いをしたことのあるあなたに" class="section level2 unnumbered hasAnchor">
+<h2>【コラム】偏差値で嫌な思いをしたことのあるあなたに<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#コラム偏差値で嫌な思いをしたことのあるあなたに" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 </div>
 </div>
@@ -257,8 +256,8 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
           </div>
         </div>
       </div>
+<a href="データの散らばり具合を見積もる統計量.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

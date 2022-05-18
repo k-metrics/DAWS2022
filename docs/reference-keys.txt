@@ -7,8 +7,8 @@ fig:unnamed-chunk-25
 fig:unnamed-chunk-26
 fig:unnamed-chunk-27
 fig:unnamed-chunk-28
-fig:unnamed-chunk-30
-fig:unnamed-chunk-32
+fig:unnamed-chunk-31
+fig:unnamed-chunk-33
 度数分布表とヒストグラムでデータの特徴を浮き彫りにする
 生データでは何もわからないから統計を使う
 ヒストグラムを作る
@@ -31,3 +31,8 @@ fig:unnamed-chunk-32
 バスの到着時刻の例で分散を理解する
 標準偏差の意味
 度数分布表から標準偏差を求める
+そのデータは月並みか特殊か-標準偏差で評価する
+標準偏差は波の激しさ
+s.d.がわかるとデータの特殊性を評価できる
+複数のデータセットの比較
+加工されたデータの平均値と標準偏差
