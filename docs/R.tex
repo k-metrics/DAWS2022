@@ -2321,13 +2321,189 @@ option
 \hypertarget{ux52a0ux5de5ux3055ux308cux305fux30c7ux30fcux30bfux306eux5e73ux5747ux5024ux3068ux6a19ux6e96ux504fux5dee}{%
 \section{加工されたデータの平均値と標準偏差}\label{ux52a0ux5de5ux3055ux308cux305fux30c7ux30fcux30bfux306eux5e73ux5747ux5024ux3068ux6a19ux6e96ux504fux5dee}}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\AttributeTok{file =} \StringTok{"../data/P49\_図表4{-}5.csv"}\NormalTok{)}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X
+## 1 1
+## 2 3
+## 3 4
+## 4 5
+## 5 7
+\end{verbatim}
+
+　それぞれに\(4\)を加える。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{Y =}\NormalTok{ X }\SpecialCharTok{+} \DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X  Y
+## 1 1  5
+## 2 3  7
+## 3 4  8
+## 4 5  9
+## 5 7 11
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{Y =}\NormalTok{ X }\SpecialCharTok{+} \DecValTok{4}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{X =} \FunctionTok{mean}\NormalTok{(X), }\AttributeTok{Y =} \FunctionTok{mean}\NormalTok{(Y))}
+\NormalTok{mean}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X Y
+## 1 4 8
+\end{verbatim}
+
+　偏差
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dev }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{Y =}\NormalTok{ X }\SpecialCharTok{+} \DecValTok{4}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{X =}\NormalTok{ X }\SpecialCharTok{{-}}\NormalTok{ mean}\SpecialCharTok{$}\NormalTok{X, }\AttributeTok{Y =}\NormalTok{ Y }\SpecialCharTok{{-}}\NormalTok{ mean}\SpecialCharTok{$}\NormalTok{Y)}
+\NormalTok{dev}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    X  Y
+## 1 -3 -3
+## 2 -1 -1
+## 3  0  0
+## 4  1  1
+## 5  3  3
+\end{verbatim}
+
+　分散
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var }\OtherTok{\textless{}{-}}\NormalTok{ dev }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarize}\NormalTok{(}\AttributeTok{X =} \FunctionTok{sum}\NormalTok{(X }\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(X), }\AttributeTok{Y =} \FunctionTok{sum}\NormalTok{(Y }\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(Y))}
+\NormalTok{var}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X Y
+## 1 4 4
+\end{verbatim}
+
+　標準偏差
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(var)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X Y
+## 1 2 2
+\end{verbatim}
+
+　それぞれに\(2\)を乗ずる。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{Y =}\NormalTok{ X }\SpecialCharTok{*} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X  Y
+## 1 1  2
+## 2 3  6
+## 3 4  8
+## 4 5 10
+## 5 7 14
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{Y =}\NormalTok{ X }\SpecialCharTok{*} \DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{X =} \FunctionTok{mean}\NormalTok{(X), }\AttributeTok{Y =} \FunctionTok{mean}\NormalTok{(Y))}
+\NormalTok{mean}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X Y
+## 1 4 8
+\end{verbatim}
+
+　偏差
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dev }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{Y =}\NormalTok{ X }\SpecialCharTok{*} \DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{X =}\NormalTok{ X }\SpecialCharTok{{-}}\NormalTok{ mean}\SpecialCharTok{$}\NormalTok{X, }\AttributeTok{Y =}\NormalTok{ Y }\SpecialCharTok{{-}}\NormalTok{ mean}\SpecialCharTok{$}\NormalTok{Y)}
+\NormalTok{dev}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    X  Y
+## 1 -3 -6
+## 2 -1 -2
+## 3  0  0
+## 4  1  2
+## 5  3  6
+\end{verbatim}
+
+　分散
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var }\OtherTok{\textless{}{-}}\NormalTok{ dev }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarize}\NormalTok{(}\AttributeTok{X =} \FunctionTok{sum}\NormalTok{(X }\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(X), }\AttributeTok{Y =} \FunctionTok{sum}\NormalTok{(Y }\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(Y))}
+\NormalTok{var}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X  Y
+## 1 4 16
+\end{verbatim}
+
+　標準偏差
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(var)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X Y
+## 1 2 4
+\end{verbatim}
+
 \hypertarget{ux7df4ux7fd2ux554fux984c-3}{%
 \section*{練習問題}\label{ux7df4ux7fd2ux554fux984c-3}}
 \addcontentsline{toc}{section}{練習問題}
 
-\hypertarget{ux89e3ux7b54ux4f8b-4}{%
-\subsection*{解答例}\label{ux89e3ux7b54ux4f8b-4}}
-\addcontentsline{toc}{subsection}{解答例}
+　（省略）
+
+　
 
 \hypertarget{ux30b3ux30e9ux30e0ux504fux5deeux5024ux3067ux5accux306aux601dux3044ux3092ux3057ux305fux3053ux3068ux306eux3042ux308bux3042ux306aux305fux306b}{%
 \section*{【コラム】偏差値で嫌な思いをしたことのあるあなたに}\label{ux30b3ux30e9ux30e0ux504fux5deeux5024ux3067ux5accux306aux601dux3044ux3092ux3057ux305fux3053ux3068ux306eux3042ux308bux3042ux306aux305fux306b}}

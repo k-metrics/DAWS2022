@@ -16,11 +16,80 @@ require(tidyverse)
 
 ## 加工されたデータの平均値と標準偏差
 
+```{r}
+x <- read.csv(file = "../data/P49_図表4-5.csv")
+x
+```
+
+　それぞれに$4$を加える。
+```{r}
+x %>% 
+  dplyr::mutate(Y = X + 4)
+```
+
+```{r}
+mean <- x %>% 
+  dplyr::mutate(Y = X + 4) %>% 
+  dplyr::summarise(X = mean(X), Y = mean(Y))
+mean
+```
+　偏差
+```{r}
+dev <- x %>% 
+  dplyr::mutate(Y = X + 4) %>% 
+  dplyr::mutate(X = X - mean$X, Y = Y - mean$Y)
+dev
+```
+
+　分散
+```{r}
+var <- dev %>% 
+  dplyr::summarize(X = sum(X ^ 2) / length(X), Y = sum(Y ^ 2) / length(Y))
+var
+```
+　標準偏差
+```{r}
+sqrt(var)
+```
+
+　それぞれに$2$を乗ずる。
+```{r}
+x %>% 
+  dplyr::mutate(Y = X * 2)
+```
+
+```{r}
+mean <- x %>% 
+  dplyr::mutate(Y = X * 2) %>% 
+  dplyr::summarise(X = mean(X), Y = mean(Y))
+mean
+```
+　偏差
+```{r}
+dev <- x %>% 
+  dplyr::mutate(Y = X * 2) %>% 
+  dplyr::mutate(X = X - mean$X, Y = Y - mean$Y)
+dev
+```
+
+　分散
+```{r}
+var <- dev %>% 
+  dplyr::summarize(X = sum(X ^ 2) / length(X), Y = sum(Y ^ 2) / length(Y))
+var
+```
+
+　標準偏差
+```{r}
+sqrt(var)
+```
+
 
 ## 練習問題 {.unnumbered}
 
-### 解答例 {.unnumbered}
+　（省略）
 
+　  
 
 ## 【コラム】偏差値で嫌な思いをしたことのあるあなたに {.unnumbered}
 
