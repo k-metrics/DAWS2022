@@ -143,7 +143,7 @@ psych::geometric.mean(c(10, 90))
 
 　  
 
-### 二乗平均平方根（Root Mean Square）または二乗平均 {.unnumbered}
+### 二乗平均（Root Mean Square） {.unnumbered}
 $$\sqrt{\frac{\sum_{i=1}^n{x_i^2}}{n}}$$
 ```{r}
 sqrt(mean(c(10, 90) ^ 2))
