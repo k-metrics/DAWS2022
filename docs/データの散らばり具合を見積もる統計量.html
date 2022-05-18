@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第3講 データの散らばり具合を見積もる統計量 | Rで学ぶ『完全独習 統計学入門』</title>
+  <meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第3講 データの散らばり具合を見積もる統計量 | Rで学ぶ『完全独習 統計学入門』" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
+  <meta name="github-repo" content="k-metrics/DAWS2022" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第3講 データの散らばり具合を見積もる統計量 | Rで学ぶ『完全独習 統計学入門』" />
+  
+  <meta name="twitter:description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです" />
+  
+
+<meta name="author" content="Sampo Suzuki, CC 4.0 BY-NC-SA" />
+
+
+<meta name="date" content="2022-05-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="平均値とはやじろべえの視点である.html"/>
+
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="assets/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="assets/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="assets/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>はじめに</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#想定読者"><i class="fa fa-check"></i>想定読者</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><i class="fa fa-check"></i><b>1</b> 度数分布表とヒストグラムでデータの特徴を浮き彫りにする</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#生データでは何もわからないから統計を使う"><i class="fa fa-check"></i><b>1.1</b> 生データでは何もわからないから統計を使う</a></li>
+<li class="chapter" data-level="1.2" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#ヒストグラムを作る"><i class="fa fa-check"></i><b>1.2</b> ヒストグラムを作る</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級を求める"><i class="fa fa-check"></i><b>1.2.1</b> 階級を求める</a></li>
+<li class="chapter" data-level="1.2.2" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#データを各階級に分類する"><i class="fa fa-check"></i><b>1.2.2</b> データを各階級に分類する</a></li>
+<li class="chapter" data-level="1.2.3" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#度数を求める"><i class="fa fa-check"></i><b>1.2.3</b> 度数を求める</a></li>
+<li class="chapter" data-level="1.2.4" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#累積度数相対度数累積相対度数を求める"><i class="fa fa-check"></i><b>1.2.4</b> 累積度数、相対度数、累積相対度数を求める</a></li>
+<li class="chapter" data-level="1.2.5" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級値を求める"><i class="fa fa-check"></i><b>1.2.5</b> 階級値を求める</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#練習問題"><i class="fa fa-check"></i><b>1.3</b> 練習問題</a>
+<ul>
+<li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#解答例"><i class="fa fa-check"></i>解答例</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#ヒストグラムを描くポイント"><i class="fa fa-check"></i>ヒストグラムを描くポイント</a>
+<ul>
+<li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級の決め方"><i class="fa fa-check"></i>階級の決め方</a></li>
+<li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#階級の境界の扱い"><i class="fa fa-check"></i>階級の境界の扱い</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html"><a href="度数分布表とヒストグラムでデータの特徴を浮き彫りにする.html#等間隔ではない階級"><i class="fa fa-check"></i>等間隔ではない階級</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html"><i class="fa fa-check"></i><b>2</b> 平均値とはやじろべえの視点である</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#統計量はデータを要約する数値"><i class="fa fa-check"></i><b>2.1</b> 統計量は、データを要約する数値</a></li>
+<li class="chapter" data-level="2.2" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#平均値とは"><i class="fa fa-check"></i><b>2.2</b> 平均値とは</a></li>
+<li class="chapter" data-level="2.3" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#度数分布表での平均値-2-3"><i class="fa fa-check"></i><b>2.3</b> 度数分布表での平均値 {#2-3＃}</a></li>
+<li class="chapter" data-level="2.4" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#平均値のヒストグラムの中での役割"><i class="fa fa-check"></i><b>2.4</b> 平均値のヒストグラムの中での役割</a></li>
+<li class="chapter" data-level="2.5" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#平均値をどう捉えるべきか"><i class="fa fa-check"></i><b>2.5</b> 平均値をどう捉えるべきか</a></li>
+<li class="chapter" data-level="2.6" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#練習問題-1"><i class="fa fa-check"></i><b>2.6</b> 練習問題</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#解答例-1"><i class="fa fa-check"></i><b>2.6.1</b> 解答例</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#コラム平均値のとり方は１つではない"><i class="fa fa-check"></i>【コラム】平均値のとり方は、１つではない</a>
+<ul>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#算術平均arithmetic-mean"><i class="fa fa-check"></i>算術平均（Arithmetic Mean）</a></li>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#幾何平均geometric-meanまたは相乗平均"><i class="fa fa-check"></i>幾何平均（Geometric Mean）または相乗平均</a></li>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#二乗平均平方根root-mean-squareまたは二乗平均"><i class="fa fa-check"></i>二乗平均平方根（Root Mean Square）または二乗平均</a></li>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#調和平均harmonic-mean"><i class="fa fa-check"></i>調和平均（Harmonic Mean）</a></li>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#トリム平均"><i class="fa fa-check"></i>トリム平均</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#階級幅が変わると平均値はどうなるか"><i class="fa fa-check"></i>階級幅が変わると平均値はどうなるか？</a>
+<ul>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#階級幅が倍になった場合"><i class="fa fa-check"></i>階級幅が倍になった場合</a></li>
+<li class="chapter" data-level="" data-path="平均値とはやじろべえの視点である.html"><a href="平均値とはやじろべえの視点である.html#階級幅が半分になった場合"><i class="fa fa-check"></i>階級幅が半分になった場合</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="データの散らばり具合を見積もる統計量.html"><a href="データの散らばり具合を見積もる統計量.html"><i class="fa fa-check"></i><b>3</b> データの散らばり具合を見積もる統計量</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="データの散らばり具合を見積もる統計量.html"><a href="データの散らばり具合を見積もる統計量.html#データの散らばりやバラツキを知りたい"><i class="fa fa-check"></i><b>3.1</b> データの散らばりやバラツキを知りたい</a></li>
+<li class="chapter" data-level="3.2" data-path="データの散らばり具合を見積もる統計量.html"><a href="データの散らばり具合を見積もる統計量.html#バスの到着時刻の例で分散を理解する"><i class="fa fa-check"></i><b>3.2</b> バスの到着時刻の例で分散を理解する</a></li>
+<li class="chapter" data-level="3.3" data-path="データの散らばり具合を見積もる統計量.html"><a href="データの散らばり具合を見積もる統計量.html#標準偏差の意味"><i class="fa fa-check"></i><b>3.3</b> 標準偏差の意味</a></li>
+<li class="chapter" data-level="3.4" data-path="データの散らばり具合を見積もる統計量.html"><a href="データの散らばり具合を見積もる統計量.html#度数分布表から標準偏差を求める"><i class="fa fa-check"></i><b>3.4</b> 度数分布表から標準偏差を求める</a></li>
+<li class="chapter" data-level="" data-path="データの散らばり具合を見積もる統計量.html"><a href="データの散らばり具合を見積もる統計量.html#練習問題-2"><i class="fa fa-check"></i>練習問題</a>
+<ul>
+<li class="chapter" data-level="" data-path="データの散らばり具合を見積もる統計量.html"><a href="データの散らばり具合を見積もる統計量.html#解答例-2"><i class="fa fa-check"></i>解答例</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="データの散らばり具合を見積もる統計量.html"><a href="データの散らばり具合を見積もる統計量.html#身長データの度数分布表から分散と標準偏差を求める"><i class="fa fa-check"></i>身長データの度数分布表から分散と標準偏差を求める</a>
+<ul>
+<li class="chapter" data-level="" data-path="データの散らばり具合を見積もる統計量.html"><a href="データの散らばり具合を見積もる統計量.html#解答例-3"><i class="fa fa-check"></i>解答例</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rで学ぶ『完全独習 統計学入門』</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="データの散らばり具合を見積もる統計量" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">第3講</span> データの散らばり具合を見積もる統計量<a href="データの散らばり具合を見積もる統計量.html#データの散らばり具合を見積もる統計量" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="データの散らばりやバラツキを知りたい" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> データの散らばりやバラツキを知りたい<a href="データの散らばり具合を見積もる統計量.html#データの散らばりやバラツキを知りたい" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　第2講で学んだ平均値（算術平均）は、データを代表する統計量で、ある一点（支点・重心）を示しているに過ぎません。データが平均値の周辺にどのように分布しているかはヒストグラムを使うことで視覚的には確認できますが、統計量として数値的に扱えた方がなにかと便利なはずです。</p>
+<p>　</p>
+</div>
+<div id="バスの到着時刻の例で分散を理解する" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> バスの到着時刻の例で分散を理解する<a href="データの散らばり具合を見積もる統計量.html#バスの到着時刻の例で分散を理解する" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　蛇足ですが実際の路線バスでは予定時刻より早く到着しないように調整運転がなされていますので、時刻より大幅に早着することは稀です。</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="データの散らばり具合を見積もる統計量.html#cb65-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">scan</span>(<span class="at">file =</span> <span class="st">&quot;../data/P36_図表3-1.csv&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb65-2"><a href="データの散らばり具合を見積もる統計量.html#cb65-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>## [1] 32 27 29 34 33</code></pre>
+<p>　平均値を求める<code>mean()</code>関数がありますが、ここでは平均値の計算式通りの計算を行っています。</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="データの散らばり具合を見積もる統計量.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">平均値</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">sum</span>(x) <span class="sc">/</span> <span class="fu">length</span>(x)</span>
+<span id="cb67-2"><a href="データの散らばり具合を見積もる統計量.html#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">平均値</span><span class="st">`</span></span></code></pre></div>
+<pre><code>## [1] 31</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="データの散らばり具合を見積もる統計量.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">偏差</span><span class="st">`</span> <span class="ot">=</span> x <span class="sc">-</span> <span class="st">`</span><span class="at">平均値</span><span class="st">`</span></span>
+<span id="cb69-2"><a href="データの散らばり具合を見積もる統計量.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">偏差</span><span class="st">`</span></span></code></pre></div>
+<pre><code>## [1]  1 -4 -2  3  2</code></pre>
+<p>　偏差の総和は必ずゼロ（<span class="math inline">\(0\)</span>）になります。</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="データの散らばり具合を見積もる統計量.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="st">`</span><span class="at">偏差</span><span class="st">`</span>)</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>　偏差の二乗和をデータの個数で割ったものは、（標本）分散と呼ばれます。不偏分散と呼ばれる分散は計算式が異なります。Rで分散を計算する<code>var()</code>関数は不偏分散を求める関数です。</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="データの散らばり具合を見積もる統計量.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="st">`</span><span class="at">偏差</span><span class="st">`</span> <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(x)</span></code></pre></div>
+<pre><code>## [1] 6.8</code></pre>
+<p>　偏差の二乗平均値（$ = $）は標準偏差と呼ばれます。Rで標準偏差を計算する<code>sd()</code>関数は不偏分散のルートを取ったものです。</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="データの散らばり具合を見積もる統計量.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(<span class="st">`</span><span class="at">偏差</span><span class="st">`</span> <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(x))</span></code></pre></div>
+<pre><code>## [1] 2.607681</code></pre>
+<p>　</p>
+</div>
+<div id="標準偏差の意味" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> 標準偏差の意味<a href="データの散らばり具合を見積もる統計量.html#標準偏差の意味" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="データの散らばり具合を見積もる統計量.html#cb77-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;../data/P39_図表3-4.csv&quot;</span>) </span>
+<span id="cb77-2"><a href="データの散らばり具合を見積もる統計量.html#cb77-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]},{"label":["Y"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"4","2":"1"},{"1":"4","2":"2"},{"1":"5","2":"6"},{"1":"6","2":"7"},{"1":"6","2":"9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>ｘ</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="データの散らばり具合を見積もる統計量.html#cb78-1" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> </span>
+<span id="cb78-2"><a href="データの散らばり具合を見積もる統計量.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="st">`</span><span class="at">X平均値</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(X), <span class="st">`</span><span class="at">Y平均値</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(Y))</span>
+<span id="cb78-3"><a href="データの散らばり具合を見積もる統計量.html#cb78-3" aria-hidden="true" tabindex="-1"></a>mean</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["X平均値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y平均値"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"5","2":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="データの散らばり具合を見積もる統計量.html#cb79-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb79-2"><a href="データの散らばり具合を見積もる統計量.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">X偏差</span><span class="st">`</span> <span class="ot">=</span> X <span class="sc">-</span> mean<span class="sc">$</span><span class="st">`</span><span class="at">X平均値</span><span class="st">`</span>, <span class="st">`</span><span class="at">Y偏差</span><span class="st">`</span> <span class="ot">=</span> Y <span class="sc">-</span> mean<span class="sc">$</span><span class="st">`</span><span class="at">Y平均値</span><span class="st">`</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]},{"label":["Y"],"name":[2],"type":["int"],"align":["right"]},{"label":["X偏差"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Y偏差"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"1","3":"-1","4":"-4"},{"1":"4","2":"2","3":"-1","4":"-3"},{"1":"5","2":"6","3":"0","4":"1"},{"1":"6","2":"7","3":"1","4":"2"},{"1":"6","2":"9","3":"1","4":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="データの散らばり具合を見積もる統計量.html#cb80-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb80-2"><a href="データの散らばり具合を見積もる統計量.html#cb80-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">X偏差</span><span class="st">`</span> <span class="ot">=</span> X <span class="sc">-</span> mean<span class="sc">$</span><span class="st">`</span><span class="at">X平均値</span><span class="st">`</span>, <span class="st">`</span><span class="at">Y偏差</span><span class="st">`</span> <span class="ot">=</span> Y <span class="sc">-</span> mean<span class="sc">$</span><span class="st">`</span><span class="at">Y平均値</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb80-3"><a href="データの散らばり具合を見積もる統計量.html#cb80-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="st">`</span><span class="at">X標準偏差</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(<span class="st">`</span><span class="at">X偏差</span><span class="st">`</span> <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(X)),</span>
+<span id="cb80-4"><a href="データの散らばり具合を見積もる統計量.html#cb80-4" aria-hidden="true" tabindex="-1"></a>                   <span class="st">`</span><span class="at">Y標準偏差</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(<span class="st">`</span><span class="at">Y偏差</span><span class="st">`</span> <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(Y)))</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["X標準偏差"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y標準偏差"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.8944272","2":"3.03315"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　偏差と標準偏差を可視化すると下図のようになり、XよりYの方が広範囲に分布していることが分かります。</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="データの散らばり具合を見積もる統計量.html#cb81-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb81-2"><a href="データの散らばり具合を見積もる統計量.html#cb81-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">X偏差</span><span class="st">`</span> <span class="ot">=</span> X <span class="sc">-</span> mean<span class="sc">$</span><span class="st">`</span><span class="at">X平均値</span><span class="st">`</span>, <span class="st">`</span><span class="at">Y偏差</span><span class="st">`</span> <span class="ot">=</span> Y <span class="sc">-</span> mean<span class="sc">$</span><span class="st">`</span><span class="at">Y平均値</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb81-3"><a href="データの散らばり具合を見積もる統計量.html#cb81-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>X, <span class="sc">-</span>Y) <span class="sc">%&gt;%</span> </span>
+<span id="cb81-4"><a href="データの散らばり具合を見積もる統計量.html#cb81-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stripchart</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>))</span>
+<span id="cb81-5"><a href="データの散らばり具合を見積もる統計量.html#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.89</span>, <span class="fl">0.89</span>), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb81-6"><a href="データの散らばり具合を見積もる統計量.html#cb81-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">3.03</span>, <span class="fl">3.03</span>), <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="R_files/figure-html/unnamed-chunk-59-1.png" width="90%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="度数分布表から標準偏差を求める" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> 度数分布表から標準偏差を求める<a href="データの散らばり具合を見積もる統計量.html#度数分布表から標準偏差を求める" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="データの散らばり具合を見積もる統計量.html#cb82-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;../data/P40_図表3-6.csv&quot;</span>)</span>
+<span id="cb82-2"><a href="データの散らばり具合を見積もる統計量.html#cb82-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["A階級値"],"name":[1],"type":["int"],"align":["right"]},{"label":["B相対度数"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0.3"},{"1":"2","2":"0.5"},{"1":"3","2":"0.1"},{"1":"4","2":"0.1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　第2講の「2−3 度数分布表での平均値」で学んだように度数分布表から平均値（の近似値）は
+<span class="math display">\[\mbox{平均値} \fallingdotseq \sum{(\mbox{階級値} \times \mbox{相対度数})}\]</span>
+　で求めることができます。</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="データの散らばり具合を見積もる統計量.html#cb83-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb83-2"><a href="データの散らばり具合を見積もる統計量.html#cb83-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">AxB</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">A階級値</span><span class="st">`</span> <span class="sc">*</span> <span class="st">`</span><span class="at">B相対度数</span><span class="st">`</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["A階級値"],"name":[1],"type":["int"],"align":["right"]},{"label":["B相対度数"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AxB"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0.3","3":"0.3"},{"1":"2","2":"0.5","3":"1.0"},{"1":"3","2":"0.1","3":"0.3"},{"1":"4","2":"0.1","3":"0.4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="データの散らばり具合を見積もる統計量.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">平均値</span><span class="st">`</span> <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> </span>
+<span id="cb84-2"><a href="データの散らばり具合を見積もる統計量.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">AxB</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">A階級値</span><span class="st">`</span> <span class="sc">*</span> <span class="st">`</span><span class="at">B相対度数</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb84-3"><a href="データの散らばり具合を見積もる統計量.html#cb84-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="st">`</span><span class="at">平均値</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">AxB</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb84-4"><a href="データの散らばり具合を見積もる統計量.html#cb84-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(<span class="st">`</span><span class="at">平均値</span><span class="st">`</span>)</span>
+<span id="cb84-5"><a href="データの散らばり具合を見積もる統計量.html#cb84-5" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">平均値</span><span class="st">`</span></span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<p>　平均値を求められたので
+<span class="math display">\[\mbox{階級の偏差（C階級値-平均値）} = \mbox{階級値} - \mbox{平均値}\]</span>
+　とすると度数分布表の計算値と同じ考え方を適用し
+<span class="math display">\[\mbox{階級の偏差の二乗平均} = \sum{(\mbox{階級の偏差}^2 \times \mbox{相対度数})} = \mbox{分散}\]</span>
+　となります。</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="データの散らばり具合を見積もる統計量.html#cb86-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb86-2"><a href="データの散らばり具合を見積もる統計量.html#cb86-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">C</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">A階級値</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">平均値</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-3"><a href="データの散らばり具合を見積もる統計量.html#cb86-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">C^2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">C</span><span class="st">`</span> <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-4"><a href="データの散らばり具合を見積もる統計量.html#cb86-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">C^2xB</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">C^2</span><span class="st">`</span> <span class="sc">*</span> <span class="st">`</span><span class="at">B相対度数</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-5"><a href="データの散らばり具合を見積もる統計量.html#cb86-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">`</span><span class="at">A階級値</span><span class="st">`</span>, <span class="st">`</span><span class="at">C階級値-平均値</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">C</span><span class="st">`</span>, <span class="st">`</span><span class="at">C^2</span><span class="st">`</span>, <span class="st">`</span><span class="at">B相対度数</span><span class="st">`</span>, <span class="st">`</span><span class="at">C^2xB</span><span class="st">`</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["A階級値"],"name":[1],"type":["int"],"align":["right"]},{"label":["C階級値-平均値"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["C^2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["B相対度数"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["C^2xB"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"-1","3":"1","4":"0.3","5":"0.3"},{"1":"2","2":"0","3":"0","4":"0.5","5":"0.0"},{"1":"3","2":"1","3":"1","4":"0.1","5":"0.1"},{"1":"4","2":"2","3":"4","4":"0.1","5":"0.4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="データの散らばり具合を見積もる統計量.html#cb87-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb87-2"><a href="データの散らばり具合を見積もる統計量.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">C</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">A階級値</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">平均値</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb87-3"><a href="データの散らばり具合を見積もる統計量.html#cb87-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">C^2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">C</span><span class="st">`</span> <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb87-4"><a href="データの散らばり具合を見積もる統計量.html#cb87-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">C^2xB</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">C^2</span><span class="st">`</span> <span class="sc">*</span> <span class="st">`</span><span class="at">B相対度数</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb87-5"><a href="データの散らばり具合を見積もる統計量.html#cb87-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">`</span><span class="at">A階級値</span><span class="st">`</span>, <span class="st">`</span><span class="at">C階級値-平均値</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">C</span><span class="st">`</span>, <span class="st">`</span><span class="at">C^2</span><span class="st">`</span>, <span class="st">`</span><span class="at">B相対度数</span><span class="st">`</span>, <span class="st">`</span><span class="at">C^2xB</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb87-6"><a href="データの散らばり具合を見積もる統計量.html#cb87-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="st">`</span><span class="at">分散</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">C^2xB</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb87-7"><a href="データの散らばり具合を見積もる統計量.html#cb87-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">標準偏差</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="st">`</span><span class="at">分散</span><span class="st">`</span>))</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["分散"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["標準偏差"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.8","2":"0.8944272"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="練習問題-2" class="section level2 unnumbered hasAnchor">
+<h2>練習問題<a href="データの散らばり具合を見積もる統計量.html#練習問題-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　次の架空のデータの標準偏差を次のステップで計算してみよ。</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="データの散らばり具合を見積もる統計量.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">データ</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">scan</span>(<span class="at">file =</span> <span class="st">&quot;../data/P42_練習問題_v.csv&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb88-2"><a href="データの散らばり具合を見積もる統計量.html#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">データ</span><span class="st">`</span></span></code></pre></div>
+<pre><code>##  [1] 6 4 6 6 6 3 7 2 2 8</code></pre>
+<div id="解答例-2" class="section level3 unnumbered hasAnchor">
+<h3>解答例<a href="データの散らばり具合を見積もる統計量.html#解答例-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="データの散らばり具合を見積もる統計量.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">平均値</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">データ</span><span class="st">`</span>) <span class="sc">/</span> <span class="fu">length</span>(<span class="st">`</span><span class="at">データ</span><span class="st">`</span>)</span>
+<span id="cb90-2"><a href="データの散らばり具合を見積もる統計量.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">平均値</span><span class="st">`</span></span></code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="データの散らばり具合を見積もる統計量.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">偏差</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="st">`</span><span class="at">データ</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">平均値</span><span class="st">`</span></span>
+<span id="cb92-2"><a href="データの散らばり具合を見積もる統計量.html#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">偏差</span><span class="st">`</span></span></code></pre></div>
+<pre><code>##  [1]  1 -1  1  1  1 -2  2 -3 -3  3</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="データの散らばり具合を見積もる統計量.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">二乗偏差</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="st">`</span><span class="at">偏差</span><span class="st">`</span> <span class="sc">^</span> <span class="dv">2</span></span>
+<span id="cb94-2"><a href="データの散らばり具合を見積もる統計量.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">二乗偏差</span><span class="st">`</span></span></code></pre></div>
+<pre><code>##  [1] 1 1 1 1 1 4 4 9 9 9</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="データの散らばり具合を見積もる統計量.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">分散</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">二乗偏差</span><span class="st">`</span>) <span class="sc">/</span> <span class="fu">length</span>(<span class="st">`</span><span class="at">二乗偏差</span><span class="st">`</span>)</span>
+<span id="cb96-2"><a href="データの散らばり具合を見積もる統計量.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">分散</span><span class="st">`</span></span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="データの散らばり具合を見積もる統計量.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">標準偏差</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="st">`</span><span class="at">分散</span><span class="st">`</span>)</span>
+<span id="cb98-2"><a href="データの散らばり具合を見積もる統計量.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">標準偏差</span><span class="st">`</span></span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+</div>
+</div>
+<div id="身長データの度数分布表から分散と標準偏差を求める" class="section level2 unnumbered hasAnchor">
+<h2>身長データの度数分布表から分散と標準偏差を求める<a href="データの散らばり具合を見積もる統計量.html#身長データの度数分布表から分散と標準偏差を求める" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["A階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["B相対度数"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"145.0","2":"0.0375"},{"1":"148.5","2":"0.0250"},{"1":"152.0","2":"0.1000"},{"1":"155.0","2":"0.2875"},{"1":"158.0","2":"0.1625"},{"1":"161.0","2":"0.2375"},{"1":"164.5","2":"0.0750"},{"1":"168.0","2":"0.0750"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div id="解答例-3" class="section level3 unnumbered hasAnchor">
+<h3>解答例<a href="データの散らばり具合を見積もる統計量.html#解答例-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="データの散らばり具合を見積もる統計量.html#cb100-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb100-2"><a href="データの散らばり具合を見積もる統計量.html#cb100-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">AxB</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">A階級値</span><span class="st">`</span> <span class="sc">*</span> <span class="st">`</span><span class="at">B相対度数</span><span class="st">`</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["A階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["B相対度数"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AxB"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"145.0","2":"0.0375","3":"5.4375"},{"1":"148.5","2":"0.0250","3":"3.7125"},{"1":"152.0","2":"0.1000","3":"15.2000"},{"1":"155.0","2":"0.2875","3":"44.5625"},{"1":"158.0","2":"0.1625","3":"25.6750"},{"1":"161.0","2":"0.2375","3":"38.2375"},{"1":"164.5","2":"0.0750","3":"12.3375"},{"1":"168.0","2":"0.0750","3":"12.6000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="データの散らばり具合を見積もる統計量.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">平均値</span><span class="st">`</span> <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> </span>
+<span id="cb101-2"><a href="データの散らばり具合を見積もる統計量.html#cb101-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">AxB</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">A階級値</span><span class="st">`</span> <span class="sc">*</span> <span class="st">`</span><span class="at">B相対度数</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb101-3"><a href="データの散らばり具合を見積もる統計量.html#cb101-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="st">`</span><span class="at">平均値</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">AxB</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb101-4"><a href="データの散らばり具合を見積もる統計量.html#cb101-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(<span class="st">`</span><span class="at">平均値</span><span class="st">`</span>)</span>
+<span id="cb101-5"><a href="データの散らばり具合を見積もる統計量.html#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">平均値</span><span class="st">`</span></span></code></pre></div>
+<pre><code>## [1] 157.7625</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="データの散らばり具合を見積もる統計量.html#cb103-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb103-2"><a href="データの散らばり具合を見積もる統計量.html#cb103-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">C</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">A階級値</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">平均値</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb103-3"><a href="データの散らばり具合を見積もる統計量.html#cb103-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">C^2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">C</span><span class="st">`</span> <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb103-4"><a href="データの散らばり具合を見積もる統計量.html#cb103-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">C^2xB</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">C^2</span><span class="st">`</span> <span class="sc">*</span> <span class="st">`</span><span class="at">B相対度数</span><span class="st">`</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["A階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["B相対度数"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["C"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["C^2"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["C^2xB"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"145.0","2":"0.0375","3":"-12.7625","4":"162.88140625","5":"6.108052734"},{"1":"148.5","2":"0.0250","3":"-9.2625","4":"85.79390625","5":"2.144847656"},{"1":"152.0","2":"0.1000","3":"-5.7625","4":"33.20640625","5":"3.320640625"},{"1":"155.0","2":"0.2875","3":"-2.7625","4":"7.63140625","5":"2.194029297"},{"1":"158.0","2":"0.1625","3":"0.2375","4":"0.05640625","5":"0.009166016"},{"1":"161.0","2":"0.2375","3":"3.2375","4":"10.48140625","5":"2.489333984"},{"1":"164.5","2":"0.0750","3":"6.7375","4":"45.39390625","5":"3.404542969"},{"1":"168.0","2":"0.0750","3":"10.2375","4":"104.80640625","5":"7.860480469"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="データの散らばり具合を見積もる統計量.html#cb104-1" aria-hidden="true" tabindex="-1"></a>freq_summary <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> </span>
+<span id="cb104-2"><a href="データの散らばり具合を見積もる統計量.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">C</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">A階級値</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">平均値</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb104-3"><a href="データの散らばり具合を見積もる統計量.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">C^2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">C</span><span class="st">`</span> <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb104-4"><a href="データの散らばり具合を見積もる統計量.html#cb104-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">C^2xB</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">C^2</span><span class="st">`</span> <span class="sc">*</span> <span class="st">`</span><span class="at">B相対度数</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb104-5"><a href="データの散らばり具合を見積もる統計量.html#cb104-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="st">`</span><span class="at">平均</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">A階級値</span><span class="st">`</span> <span class="sc">*</span> <span class="st">`</span><span class="at">B相対度数</span><span class="st">`</span>),</span>
+<span id="cb104-6"><a href="データの散らばり具合を見積もる統計量.html#cb104-6" aria-hidden="true" tabindex="-1"></a>                   <span class="st">`</span><span class="at">分散</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">C^2xB</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb104-7"><a href="データの散らばり具合を見積もる統計量.html#cb104-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">標準偏差</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="st">`</span><span class="at">分散</span><span class="st">`</span>))</span>
+<span id="cb104-8"><a href="データの散らばり具合を見積もる統計量.html#cb104-8" aria-hidden="true" tabindex="-1"></a>freq_summary</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["平均"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["分散"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["標準偏差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.7625","2":"27.53109","3":"5.247008"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　生データで計算した場合</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="データの散らばり具合を見積もる統計量.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;../data/P16_図表1-1 .csv&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb105-2"><a href="データの散らばり具合を見積もる統計量.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">col_names =</span> <span class="cn">FALSE</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb105-3"><a href="データの散らばり具合を見積もる統計量.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb105-4"><a href="データの散らばり具合を見積もる統計量.html#cb105-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">&quot;name&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb105-5"><a href="データの散らばり具合を見積もる統計量.html#cb105-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(name) <span class="sc">%&gt;%</span> </span>
+<span id="cb105-6"><a href="データの散らばり具合を見積もる統計量.html#cb105-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">height =</span> value) <span class="sc">%&gt;%</span> </span>
+<span id="cb105-7"><a href="データの散らばり具合を見積もる統計量.html#cb105-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">偏差</span><span class="st">`</span> <span class="ot">=</span> height <span class="sc">-</span> <span class="fu">mean</span>(height)) <span class="sc">%&gt;%</span> </span>
+<span id="cb105-8"><a href="データの散らばり具合を見積もる統計量.html#cb105-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">偏差^2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">偏差</span><span class="st">`</span> <span class="sc">^</span> <span class="dv">2</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["height"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["偏差"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["偏差^2"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"151","2":"-6.575","3":"43.230625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"163","2":"5.425","3":"29.430625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"158","2":"0.425","3":"0.180625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"157","2":"-0.575","3":"0.330625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"169","2":"11.425","3":"130.530625"},{"1":"150","2":"-7.575","3":"57.380625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"152","2":"-5.575","3":"31.080625"},{"1":"161","2":"3.425","3":"11.730625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"164","2":"6.425","3":"41.280625"},{"1":"168","2":"10.425","3":"108.680625"},{"1":"153","2":"-4.575","3":"20.930625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"155","2":"-2.575","3":"6.630625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"158","2":"0.425","3":"0.180625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"150","2":"-7.575","3":"57.380625"},{"1":"163","2":"5.425","3":"29.430625"},{"1":"155","2":"-2.575","3":"6.630625"},{"1":"157","2":"-0.575","3":"0.330625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"161","2":"3.425","3":"11.730625"},{"1":"153","2":"-4.575","3":"20.930625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"151","2":"-6.575","3":"43.230625"},{"1":"155","2":"-2.575","3":"6.630625"},{"1":"158","2":"0.425","3":"0.180625"},{"1":"146","2":"-11.575","3":"133.980625"},{"1":"149","2":"-8.575","3":"73.530625"},{"1":"165","2":"7.425","3":"55.130625"},{"1":"169","2":"11.425","3":"130.530625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"155","2":"-2.575","3":"6.630625"},{"1":"166","2":"8.425","3":"70.980625"},{"1":"165","2":"7.425","3":"55.130625"},{"1":"161","2":"3.425","3":"11.730625"},{"1":"148","2":"-9.575","3":"91.680625"},{"1":"143","2":"-14.575","3":"212.430625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"158","2":"0.425","3":"0.180625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"164","2":"6.425","3":"41.280625"},{"1":"167","2":"9.425","3":"88.830625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"157","2":"-0.575","3":"0.330625"},{"1":"151","2":"-6.575","3":"43.230625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"151","2":"-6.575","3":"43.230625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"153","2":"-4.575","3":"20.930625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"146","2":"-11.575","3":"133.980625"},{"1":"166","2":"8.425","3":"70.980625"},{"1":"151","2":"-6.575","3":"43.230625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"157","2":"-0.575","3":"0.330625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"161","2":"3.425","3":"11.730625"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="データの散らばり具合を見積もる統計量.html#cb106-1" aria-hidden="true" tabindex="-1"></a>raw_summary <span class="ot">&lt;-</span> <span class="st">&quot;../data/P16_図表1-1 .csv&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb106-2"><a href="データの散らばり具合を見積もる統計量.html#cb106-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">col_names =</span> <span class="cn">FALSE</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb106-3"><a href="データの散らばり具合を見積もる統計量.html#cb106-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb106-4"><a href="データの散らばり具合を見積もる統計量.html#cb106-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">&quot;name&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb106-5"><a href="データの散らばり具合を見積もる統計量.html#cb106-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(name) <span class="sc">%&gt;%</span> </span>
+<span id="cb106-6"><a href="データの散らばり具合を見積もる統計量.html#cb106-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">height =</span> value) <span class="sc">%&gt;%</span> </span>
+<span id="cb106-7"><a href="データの散らばり具合を見積もる統計量.html#cb106-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">偏差</span><span class="st">`</span> <span class="ot">=</span> height <span class="sc">-</span> <span class="fu">mean</span>(height)) <span class="sc">%&gt;%</span> </span>
+<span id="cb106-8"><a href="データの散らばり具合を見積もる統計量.html#cb106-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">偏差^2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">偏差</span><span class="st">`</span> <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb106-9"><a href="データの散らばり具合を見積もる統計量.html#cb106-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="st">`</span><span class="at">平均</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(height) <span class="sc">/</span> <span class="fu">length</span>(height),</span>
+<span id="cb106-10"><a href="データの散らばり具合を見積もる統計量.html#cb106-10" aria-hidden="true" tabindex="-1"></a>                   <span class="st">`</span><span class="at">分散</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">偏差^2</span><span class="st">`</span>) <span class="sc">/</span> <span class="fu">length</span>(height),</span>
+<span id="cb106-11"><a href="データの散らばり具合を見積もる統計量.html#cb106-11" aria-hidden="true" tabindex="-1"></a>                   <span class="st">`</span><span class="at">標準偏差</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="st">`</span><span class="at">分散</span><span class="st">`</span>))</span>
+<span id="cb106-12"><a href="データの散らばり具合を見積もる統計量.html#cb106-12" aria-hidden="true" tabindex="-1"></a>raw_summary</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["平均"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["分散"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["標準偏差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.575","2":"28.84438","3":"5.370696"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　要約統計量を比べてみると以下のようになります。</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="データの散らばり具合を見積もる統計量.html#cb107-1" aria-hidden="true" tabindex="-1"></a>freq_summary <span class="co"># 度数分布表からの要約統計量</span></span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["平均"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["分散"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["標準偏差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.7625","2":"27.53109","3":"5.247008"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="データの散らばり具合を見積もる統計量.html#cb108-1" aria-hidden="true" tabindex="-1"></a>raw_summary  <span class="co"># 生データからの要約統計量</span></span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["平均"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["分散"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["標準偏差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.575","2":"28.84438","3":"5.370696"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="データの散らばり具合を見積もる統計量.html#cb109-1" aria-hidden="true" tabindex="-1"></a>freq_summary <span class="sc">-</span> raw_summary <span class="co"># 両者の差</span></span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["平均"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["分散"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["標準偏差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.1875","2":"-1.313281","3":"-0.1236879"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="平均値とはやじろべえの視点である.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
