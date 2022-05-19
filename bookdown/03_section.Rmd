@@ -77,8 +77,8 @@ x %>%
   dplyr::mutate(`X偏差` = X - mean$`X平均値`, `Y偏差` = Y - mean$`Y平均値`) %>% 
   dplyr::select(-X, -Y) %>% 
   stripchart(xlim = c(-5, 5))
-abline(v = c(-0.89, 0.89), lty = 2)
-abline(v = c(-3.03, 3.03), lty = 3, col = 2)
+abline(v = c(-0.89, 0.89), lty = 3)  # X標準偏差／ドット（点線）
+abline(v = c(-3.03, 3.03), lty = 2)  # Y標準偏差／ダッシュ（鎖線）
 ```
 
 

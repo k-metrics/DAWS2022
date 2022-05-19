@@ -23,7 +23,7 @@
 <meta name="author" content="Sampo Suzuki, CC 4.0 BY-NC-SA" />
 
 
-<meta name="date" content="2022-05-18" />
+<meta name="date" content="2022-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -202,9 +202,15 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <li class="chapter" data-level="4.1" data-path="そのデータは月並みか特殊か-標準偏差で評価する.html"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#標準偏差は波の激しさ"><i class="fa fa-check"></i><b>4.1</b> 標準偏差は波の「激しさ」</a></li>
 <li class="chapter" data-level="4.2" data-path="そのデータは月並みか特殊か-標準偏差で評価する.html"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#s.d.がわかるとデータの特殊性を評価できる"><i class="fa fa-check"></i><b>4.2</b> S.D.がわかるとデータの特殊性を評価できる</a></li>
 <li class="chapter" data-level="4.3" data-path="そのデータは月並みか特殊か-標準偏差で評価する.html"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#複数のデータセットの比較"><i class="fa fa-check"></i><b>4.3</b> 複数のデータセットの比較</a></li>
-<li class="chapter" data-level="4.4" data-path="そのデータは月並みか特殊か-標準偏差で評価する.html"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#加工されたデータの平均値と標準偏差"><i class="fa fa-check"></i><b>4.4</b> 加工されたデータの平均値と標準偏差</a></li>
+<li class="chapter" data-level="4.4" data-path="そのデータは月並みか特殊か-標準偏差で評価する.html"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#加工されたデータの平均値と標準偏差"><i class="fa fa-check"></i><b>4.4</b> 加工されたデータの平均値と標準偏差</a>
+<ul>
+<li class="chapter" data-level="" data-path="そのデータは月並みか特殊か-標準偏差で評価する.html"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#データに一定数を加えた場合"><i class="fa fa-check"></i>データに一定数を加えた場合</a></li>
+<li class="chapter" data-level="" data-path="そのデータは月並みか特殊か-標準偏差で評価する.html"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#データに一定数を乗じた場合"><i class="fa fa-check"></i>データに一定数を乗じた場合</a></li>
+<li class="chapter" data-level="4.4.1" data-path="そのデータは月並みか特殊か-標準偏差で評価する.html"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#標準偏差何個分となるようにデータを加工する効果"><i class="fa fa-check"></i><b>4.4.1</b> 標準偏差何個分となるようにデータを加工する効果</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="そのデータは月並みか特殊か-標準偏差で評価する.html"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#練習問題-3"><i class="fa fa-check"></i>練習問題</a></li>
 <li class="chapter" data-level="" data-path="そのデータは月並みか特殊か-標準偏差で評価する.html"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#コラム偏差値で嫌な思いをしたことのあるあなたに"><i class="fa fa-check"></i>【コラム】偏差値で嫌な思いをしたことのあるあなたに</a></li>
+<li class="chapter" data-level="" data-path="そのデータは月並みか特殊か-標準偏差で評価する.html"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#追加問題"><i class="fa fa-check"></i>追加問題</a></li>
 </ul></li>
 </ul>
 
@@ -243,6 +249,8 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 {"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"1"},{"1":"3"},{"1":"4"},{"1":"5"},{"1":"7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<div id="データに一定数を加えた場合" class="section level3 unnumbered hasAnchor">
+<h3>データに一定数を加えた場合<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#データに一定数を加えた場合" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>　それぞれに<span class="math inline">\(4\)</span>を加える。</p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb112-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
 <span id="cb112-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb112-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Y =</span> X <span class="sc">+</span> <span class="dv">4</span>)</span></code></pre></div>
@@ -286,48 +294,100 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 {"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<p>　以上のようにデータに一定数を加えると平均値は加えた一定値の分だけ大きくなりますが、他の統計量は変化していないことが分かります。これを正規分布で図示すると下図のようになります。</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">4</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="sc">-</span><span class="dv">3</span>, <span class="dv">15</span>, <span class="at">lty =</span> <span class="dv">3</span>,</span>
+<span id="cb117-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb117-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb117-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb117-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">4</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb117-4"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb117-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">8</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="sc">-</span><span class="dv">3</span>, <span class="dv">15</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">lty =</span> <span class="dv">2</span>,</span>
+<span id="cb117-5"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb117-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb117-6"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb117-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">8</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="R_files/figure-html/unnamed-chunk-86-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>　</p>
+</div>
+<div id="データに一定数を乗じた場合" class="section level3 unnumbered hasAnchor">
+<h3>データに一定数を乗じた場合<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#データに一定数を乗じた場合" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>　それぞれに<span class="math inline">\(2\)</span>を乗ずる。</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb117-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
-<span id="cb117-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb117-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Y =</span> X <span class="sc">*</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb118-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb118-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb118-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Y =</span> X <span class="sc">*</span> <span class="dv">2</span>)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"2"},{"1":"3","2":"6"},{"1":"4","2":"8"},{"1":"5","2":"10"},{"1":"7","2":"14"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb118-1" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> </span>
-<span id="cb118-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb118-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Y =</span> X <span class="sc">*</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb118-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb118-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">X =</span> <span class="fu">mean</span>(X), <span class="at">Y =</span> <span class="fu">mean</span>(Y))</span>
-<span id="cb118-4"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb118-4" aria-hidden="true" tabindex="-1"></a>mean</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb119-1" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> </span>
+<span id="cb119-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb119-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Y =</span> X <span class="sc">*</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb119-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb119-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">X =</span> <span class="fu">mean</span>(X), <span class="at">Y =</span> <span class="fu">mean</span>(Y))</span>
+<span id="cb119-4"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb119-4" aria-hidden="true" tabindex="-1"></a>mean</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>　偏差</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb119-1" aria-hidden="true" tabindex="-1"></a>dev <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> </span>
-<span id="cb119-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb119-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Y =</span> X <span class="sc">*</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb119-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb119-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">X =</span> X <span class="sc">-</span> mean<span class="sc">$</span>X, <span class="at">Y =</span> Y <span class="sc">-</span> mean<span class="sc">$</span>Y)</span>
-<span id="cb119-4"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb119-4" aria-hidden="true" tabindex="-1"></a>dev</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb120-1" aria-hidden="true" tabindex="-1"></a>dev <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> </span>
+<span id="cb120-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb120-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Y =</span> X <span class="sc">*</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb120-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb120-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">X =</span> X <span class="sc">-</span> mean<span class="sc">$</span>X, <span class="at">Y =</span> Y <span class="sc">-</span> mean<span class="sc">$</span>Y)</span>
+<span id="cb120-4"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb120-4" aria-hidden="true" tabindex="-1"></a>dev</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"-3","2":"-6"},{"1":"-1","2":"-2"},{"1":"0","2":"0"},{"1":"1","2":"2"},{"1":"3","2":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>　分散</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb120-1" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> dev <span class="sc">%&gt;%</span> </span>
-<span id="cb120-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb120-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">X =</span> <span class="fu">sum</span>(X <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(X), <span class="at">Y =</span> <span class="fu">sum</span>(Y <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(Y))</span>
-<span id="cb120-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb120-3" aria-hidden="true" tabindex="-1"></a>var</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb121-1" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> dev <span class="sc">%&gt;%</span> </span>
+<span id="cb121-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">X =</span> <span class="fu">sum</span>(X <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(X), <span class="at">Y =</span> <span class="fu">sum</span>(Y <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(Y))</span>
+<span id="cb121-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb121-3" aria-hidden="true" tabindex="-1"></a>var</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"16"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>　標準偏差</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(var)</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(var)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
+</div>
+<p>　以上のようにデータに一定数を乗じると平均値は乗じた一定値の分だけ大きくなり、他の統計量も乗じた一定値の分だけ大きくなっていることが分かります。これを正規分布で図示すると下図のようになります。</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">4</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="sc">-</span><span class="fl">2.581</span>, <span class="fl">14.581</span>, <span class="at">lty =</span> <span class="dv">3</span>,</span>
+<span id="cb123-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb123-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb123-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">4</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb123-4"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb123-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">8</span>, <span class="at">sd =</span> <span class="dv">4</span>), <span class="sc">-</span><span class="fl">2.581</span>, <span class="fl">14.581</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">lty =</span> <span class="dv">2</span>,</span>
+<span id="cb123-5"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb123-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb123-6"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb123-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">8</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="R_files/figure-html/unnamed-chunk-92-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>　</p>
+</div>
+<div id="標準偏差何個分となるようにデータを加工する効果" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> 標準偏差何個分となるようにデータを加工する効果<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#標準偏差何個分となるようにデータを加工する効果" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>　ここで説明されているのは「正規化」です。</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb124-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;../data/P49_図表4-5.csv&quot;</span>)</span>
+<span id="cb124-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb124-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"1"},{"1":"3"},{"1":"4"},{"1":"5"},{"1":"7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　上記のP49のデータは、平均値<span class="math inline">\(4\)</span>、標準偏差<span class="math inline">\(2\)</span>ですので、<span class="math inline">\((データ - 平均値) \div 標準偏差\)</span>を計算数と下記のようになります。</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb125-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb125-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb125-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">dev =</span> (X <span class="sc">-</span> (<span class="fu">sum</span>(X) <span class="sc">/</span> <span class="fu">length</span>(X))),            <span class="co"># 偏差</span></span>
+<span id="cb125-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb125-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">nX =</span> dev <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(dev <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(dev))) <span class="co"># 正規化値</span></span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]},{"label":["dev"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["nX"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"-3","3":"-1.5"},{"1":"3","2":"-1","3":"-0.5"},{"1":"4","2":"0","3":"0.0"},{"1":"5","2":"1","3":"0.5"},{"1":"7","2":"3","3":"1.5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　<code>nX</code>の平均値と標準偏差は以下のように<span class="math inline">\(0\)</span>と<span class="math inline">\(1\)</span>になることが分かります。</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb126-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb126-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb126-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">nX =</span> (X <span class="sc">-</span> <span class="dv">4</span>) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb126-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb126-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">sum</span>(nX) <span class="sc">/</span> <span class="fu">length</span>(nX),</span>
+<span id="cb126-4"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb126-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((nX <span class="sc">-</span> mean) <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(nX)))</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"0","2":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <div id="練習問題-3" class="section level2 unnumbered hasAnchor">
@@ -337,6 +397,41 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </div>
 <div id="コラム偏差値で嫌な思いをしたことのあるあなたに" class="section level2 unnumbered hasAnchor">
 <h2>【コラム】偏差値で嫌な思いをしたことのあるあなたに<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#コラム偏差値で嫌な思いをしたことのあるあなたに" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　</p>
+</div>
+<div id="追加問題" class="section level2 unnumbered hasAnchor">
+<h2>追加問題<a href="そのデータは月並みか特殊か-標準偏差で評価する.html#追加問題" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>　P16の身長データを正規化（<span class="math inline">\((\mbox{データ} - \mbox{平均値} \div \mbox{標準偏差})\)</span>）してみましょう。</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb127-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">&quot;../data/P16_図表1-1 .csv&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb127-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb127-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">col_names =</span> <span class="cn">FALSE</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb127-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb127-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb127-4"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb127-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">&quot;name&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb127-5"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb127-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(name) <span class="sc">%&gt;%</span> </span>
+<span id="cb127-6"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb127-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">height =</span> value) <span class="sc">%&gt;%</span> </span>
+<span id="cb127-7"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb127-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">normalized =</span> <span class="fu">scale</span>(height))</span>
+<span id="cb127-8"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb127-8" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["height"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["normalized"],"name":[2],"type":["dbl[,1]"],"align":["right"]}],"data":[{"1":"151","2":"-1.2165606"},{"1":"154","2":"-0.6614759"},{"1":"160","2":"0.4486934"},{"1":"160","2":"0.4486934"},{"1":"163","2":"1.0037781"},{"1":"156","2":"-0.2914195"},{"1":"158","2":"0.0786370"},{"1":"156","2":"-0.2914195"},{"1":"154","2":"-0.6614759"},{"1":"160","2":"0.4486934"},{"1":"154","2":"-0.6614759"},{"1":"162","2":"0.8187499"},{"1":"156","2":"-0.2914195"},{"1":"162","2":"0.8187499"},{"1":"157","2":"-0.1063912"},{"1":"162","2":"0.8187499"},{"1":"162","2":"0.8187499"},{"1":"169","2":"2.1139475"},{"1":"150","2":"-1.4015888"},{"1":"162","2":"0.8187499"},{"1":"152","2":"-1.0315324"},{"1":"161","2":"0.6337217"},{"1":"159","2":"0.2636652"},{"1":"164","2":"1.1888064"},{"1":"168","2":"1.9289193"},{"1":"153","2":"-0.8465041"},{"1":"160","2":"0.4486934"},{"1":"155","2":"-0.4764477"},{"1":"160","2":"0.4486934"},{"1":"158","2":"0.0786370"},{"1":"160","2":"0.4486934"},{"1":"150","2":"-1.4015888"},{"1":"163","2":"1.0037781"},{"1":"155","2":"-0.4764477"},{"1":"157","2":"-0.1063912"},{"1":"162","2":"0.8187499"},{"1":"154","2":"-0.6614759"},{"1":"161","2":"0.6337217"},{"1":"153","2":"-0.8465041"},{"1":"154","2":"-0.6614759"},{"1":"151","2":"-1.2165606"},{"1":"155","2":"-0.4764477"},{"1":"158","2":"0.0786370"},{"1":"146","2":"-2.1417017"},{"1":"149","2":"-1.5866170"},{"1":"165","2":"1.3738346"},{"1":"169","2":"2.1139475"},{"1":"154","2":"-0.6614759"},{"1":"155","2":"-0.4764477"},{"1":"166","2":"1.5588628"},{"1":"165","2":"1.3738346"},{"1":"161","2":"0.6337217"},{"1":"148","2":"-1.7716453"},{"1":"143","2":"-2.6967864"},{"1":"156","2":"-0.2914195"},{"1":"162","2":"0.8187499"},{"1":"158","2":"0.0786370"},{"1":"156","2":"-0.2914195"},{"1":"159","2":"0.2636652"},{"1":"164","2":"1.1888064"},{"1":"167","2":"1.7438910"},{"1":"159","2":"0.2636652"},{"1":"157","2":"-0.1063912"},{"1":"151","2":"-1.2165606"},{"1":"159","2":"0.2636652"},{"1":"156","2":"-0.2914195"},{"1":"151","2":"-1.2165606"},{"1":"160","2":"0.4486934"},{"1":"153","2":"-0.8465041"},{"1":"156","2":"-0.2914195"},{"1":"146","2":"-2.1417017"},{"1":"166","2":"1.5588628"},{"1":"151","2":"-1.2165606"},{"1":"159","2":"0.2636652"},{"1":"157","2":"-0.1063912"},{"1":"156","2":"-0.2914195"},{"1":"162","2":"0.8187499"},{"1":"156","2":"-0.2914195"},{"1":"156","2":"-0.2914195"},{"1":"161","2":"0.6337217"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>　正規化前後の平均値と標準偏差を比べると下記のようになります。</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb128-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb128-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb128-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">sum</span>(height) <span class="sc">/</span> <span class="fu">length</span>(height),</span>
+<span id="cb128-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb128-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((height <span class="sc">-</span> mean)<span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(height)))</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.575","2":"5.370696"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb129-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> </span>
+<span id="cb129-2"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb129-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">sum</span>(normalized) <span class="sc">/</span> <span class="fu">length</span>(normalized),</span>
+<span id="cb129-3"><a href="そのデータは月並みか特殊か-標準偏差で評価する.html#cb129-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((normalized <span class="sc">-</span> mean)<span class="sc">^</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">length</span>(normalized)))</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2.082362e-15","2":"0.9937303"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
 </div>
 </div>

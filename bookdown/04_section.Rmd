@@ -21,6 +21,8 @@ x <- read.csv(file = "../data/P49_図表4-5.csv")
 x
 ```
 
+
+### データに一定数を加えた場合 {.unnumbered}
 　それぞれに$4$を加える。
 ```{r}
 x %>% 
@@ -52,6 +54,19 @@ var
 sqrt(var)
 ```
 
+　以上のようにデータに一定数を加えると平均値は加えた一定値の分だけ大きくなりますが、他の統計量は変化していないことが分かります。これを正規分布で図示すると下図のようになります。
+```{r}
+curve(dnorm(x, mean = 4, sd = 2), -3, 15, lty = 3,
+      xlab = "", ylab = "")
+abline(v = 4, lty = 3)
+curve(dnorm(x, mean = 8, sd = 2), -3, 15, add = TRUE, lty = 2,
+      xlab = "", ylab = "")
+abline(v = 8, lty = 2)
+```
+
+　  
+
+### データに一定数を乗じた場合 {.unnumbered}
 　それぞれに$2$を乗ずる。
 ```{r}
 x %>% 
@@ -84,6 +99,40 @@ var
 sqrt(var)
 ```
 
+　以上のようにデータに一定数を乗じると平均値は乗じた一定値の分だけ大きくなり、他の統計量も乗じた一定値の分だけ大きくなっていることが分かります。これを正規分布で図示すると下図のようになります。
+```{r}
+curve(dnorm(x, mean = 4, sd = 2), -2.581, 14.581, lty = 3,
+      xlab = "", ylab = "")
+abline(v = 4, lty = 3)
+curve(dnorm(x, mean = 8, sd = 4), -2.581, 14.581, add = TRUE, lty = 2,
+      xlab = "", ylab = "")
+abline(v = 8, lty = 2)
+```
+
+　  
+
+### 標準偏差何個分となるようにデータを加工する効果
+　ここで説明されているのは「正規化」です。
+```{r}
+x <- read.csv(file = "../data/P49_図表4-5.csv")
+x
+```
+
+　上記のP49のデータは、平均値$4$、標準偏差$2$ですので、$(データ - 平均値) \div 標準偏差$を計算数と下記のようになります。
+```{r}
+x %>% 
+  dplyr::mutate(dev = (X - (sum(X) / length(X))),            # 偏差
+                nX = dev / sqrt(sum(dev ^ 2) / length(dev))) # 正規化値
+```
+
+　`nX`の平均値と標準偏差は以下のように$0$と$1$になることが分かります。
+```{r}
+x %>% 
+  dplyr::mutate(nX = (X - 4) / 2) %>% 
+  dplyr::summarise(mean = sum(nX) / length(nX),
+                   sd = sqrt(sum((nX - mean) ^ 2) / length(nX)))
+```
+
 
 ## 練習問題 {.unnumbered}
 
@@ -93,4 +142,29 @@ sqrt(var)
 
 ## 【コラム】偏差値で嫌な思いをしたことのあるあなたに {.unnumbered}
 
+　  
+
+## 追加問題 {.unnumbered}
+　P16の身長データを正規化（$(\mbox{データ} - \mbox{平均値} \div \mbox{標準偏差})$）してみましょう。
+```{r}
+x <- "../data/P16_図表1-1 .csv" %>% 
+  readr::read_csv(col_names = FALSE, show_col_types = FALSE) %>% 
+  tidyr::pivot_longer(cols = dplyr::starts_with("X"),
+                      names_to = "name", values_to = "value") %>% 
+  dplyr::arrange(name) %>% 
+  dplyr::select(height = value) %>% 
+  dplyr::mutate(normalized = scale(height))
+x
+```
+
+　正規化前後の平均値と標準偏差を比べると下記のようになります。
+```{r}
+x %>% 
+  dplyr::summarise(mean = sum(height) / length(height),
+                   sd = sqrt(sum((height - mean)^ 2) / length(height)))
+
+x %>% 
+  dplyr::summarise(mean = sum(normalized) / length(normalized),
+                   sd = sqrt(sum((normalized - mean)^ 2) / length(normalized)))
+```
 

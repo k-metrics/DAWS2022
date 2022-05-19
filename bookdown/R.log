@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.5.18)  18 MAY 2022 22:19
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.5.18)  19 MAY 2022 16:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1828,18 +1828,34 @@ Underfull \vbox (badness 1953) has occurred while \output is active []
 Chapter 4.
 [53
 
-] [54] [55] [56] (./R.aux)
+] [54]
+File: R_files/figure-latex/unnamed-chunk-86-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-86-1.pdf>
+[55] [56]
+File: R_files/figure-latex/unnamed-chunk-92-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-92-1.pdf>
+Missing character: There is no デ ("30C7) in font lmmi12!
+Missing character: There is no ー ("30FC) in font lmmi12!
+Missing character: There is no タ ("30BF) in font lmmi12!
+Missing character: There is no 平 (U+5E73) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 均 (U+5747) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 値 (U+5024) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 標 (U+6A19) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 準 (U+6E96) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 偏 (U+504F) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 差 (U+5DEE) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+[57] [58] [59] (./R.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 40528 strings out of 478132
- 852121 string characters out of 5853261
- 1298469 words of memory out of 5000000
- 60478 multiletter control sequences out of 15000+600000
+ 40556 strings out of 478132
+ 853399 string characters out of 5853261
+ 1298647 words of memory out of 5000000
+ 60504 multiletter control sequences out of 15000+600000
  477743 words of font info for 141 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  86i,10n,145p,702b,948s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on R.pdf (56 pages).
+Output written on R.pdf (59 pages).

@@ -275,7 +275,7 @@
 
 \title{Rで学ぶ『完全独習 統計学入門』}
 \author{Sampo Suzuki, CC 4.0 BY-NC-SA}
-\date{2022-05-18}
+\date{2022-05-19}
 
 \begin{document}
 \maketitle
@@ -1942,8 +1942,8 @@ option
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{X偏差}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ X }\SpecialCharTok{{-}}\NormalTok{ mean}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{X平均値}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{Y偏差}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ Y }\SpecialCharTok{{-}}\NormalTok{ mean}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Y平均値}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{X, }\SpecialCharTok{{-}}\NormalTok{Y) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{stripchart}\NormalTok{(}\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{))}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.89}\NormalTok{, }\FloatTok{0.89}\NormalTok{), }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{3.03}\NormalTok{, }\FloatTok{3.03}\NormalTok{), }\AttributeTok{lty =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.89}\NormalTok{, }\FloatTok{0.89}\NormalTok{), }\AttributeTok{lty =} \DecValTok{3}\NormalTok{)  }\CommentTok{\# X標準偏差／ドット（点線）}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{3.03}\NormalTok{, }\FloatTok{3.03}\NormalTok{), }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)  }\CommentTok{\# Y標準偏差／ダッシュ（鎖線）}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2337,6 +2337,10 @@ option
 ## 5 7
 \end{verbatim}
 
+\hypertarget{ux30c7ux30fcux30bfux306bux4e00ux5b9aux6570ux3092ux52a0ux3048ux305fux5834ux5408}{%
+\subsection*{データに一定数を加えた場合}\label{ux30c7ux30fcux30bfux306bux4e00ux5b9aux6570ux3092ux52a0ux3048ux305fux5834ux5408}}
+\addcontentsline{toc}{subsection}{データに一定数を加えた場合}
+
 　それぞれに\(4\)を加える。
 
 \begin{Shaded}
@@ -2416,6 +2420,27 @@ option
 ##   X Y
 ## 1 2 2
 \end{verbatim}
+
+　以上のようにデータに一定数を加えると平均値は加えた一定値の分だけ大きくなりますが、他の統計量は変化していないことが分かります。これを正規分布で図示すると下図のようになります。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(x, }\AttributeTok{mean =} \DecValTok{4}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{), }\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{15}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{,}
+      \AttributeTok{xlab =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{""}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \DecValTok{4}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{)}
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(x, }\AttributeTok{mean =} \DecValTok{8}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{), }\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{15}\NormalTok{, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{,}
+      \AttributeTok{xlab =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{""}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \DecValTok{8}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{R_files/figure-latex/unnamed-chunk-86-1} \end{center}
+
+　
+
+\hypertarget{ux30c7ux30fcux30bfux306bux4e00ux5b9aux6570ux3092ux4e57ux3058ux305fux5834ux5408}{%
+\subsection*{データに一定数を乗じた場合}\label{ux30c7ux30fcux30bfux306bux4e00ux5b9aux6570ux3092ux4e57ux3058ux305fux5834ux5408}}
+\addcontentsline{toc}{subsection}{データに一定数を乗じた場合}
 
 　それぞれに\(2\)を乗ずる。
 
@@ -2497,6 +2522,79 @@ option
 ## 1 2 4
 \end{verbatim}
 
+　以上のようにデータに一定数を乗じると平均値は乗じた一定値の分だけ大きくなり、他の統計量も乗じた一定値の分だけ大きくなっていることが分かります。これを正規分布で図示すると下図のようになります。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(x, }\AttributeTok{mean =} \DecValTok{4}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{), }\SpecialCharTok{{-}}\FloatTok{2.581}\NormalTok{, }\FloatTok{14.581}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{,}
+      \AttributeTok{xlab =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{""}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \DecValTok{4}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{)}
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(x, }\AttributeTok{mean =} \DecValTok{8}\NormalTok{, }\AttributeTok{sd =} \DecValTok{4}\NormalTok{), }\SpecialCharTok{{-}}\FloatTok{2.581}\NormalTok{, }\FloatTok{14.581}\NormalTok{, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{,}
+      \AttributeTok{xlab =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{""}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \DecValTok{8}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{R_files/figure-latex/unnamed-chunk-92-1} \end{center}
+
+　
+
+\hypertarget{ux6a19ux6e96ux504fux5deeux4f55ux500bux5206ux3068ux306aux308bux3088ux3046ux306bux30c7ux30fcux30bfux3092ux52a0ux5de5ux3059ux308bux52b9ux679c}{%
+\subsection{標準偏差何個分となるようにデータを加工する効果}\label{ux6a19ux6e96ux504fux5deeux4f55ux500bux5206ux3068ux306aux308bux3088ux3046ux306bux30c7ux30fcux30bfux3092ux52a0ux5de5ux3059ux308bux52b9ux679c}}
+
+　ここで説明されているのは「正規化」です。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\AttributeTok{file =} \StringTok{"../data/P49\_図表4{-}5.csv"}\NormalTok{)}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X
+## 1 1
+## 2 3
+## 3 4
+## 4 5
+## 5 7
+\end{verbatim}
+
+　上記のP49のデータは、平均値\(4\)、標準偏差\(2\)ですので、\((データ - 平均値) \div 標準偏差\)を計算数と下記のようになります。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{dev =}\NormalTok{ (X }\SpecialCharTok{{-}}\NormalTok{ (}\FunctionTok{sum}\NormalTok{(X) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(X))),            }\CommentTok{\# 偏差}
+                \AttributeTok{nX =}\NormalTok{ dev }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{sum}\NormalTok{(dev }\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(dev))) }\CommentTok{\# 正規化値}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X dev   nX
+## 1 1  -3 -1.5
+## 2 3  -1 -0.5
+## 3 4   0  0.0
+## 4 5   1  0.5
+## 5 7   3  1.5
+\end{verbatim}
+
+　\texttt{nX}の平均値と標準偏差は以下のように\(0\)と\(1\)になることが分かります。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{nX =}\NormalTok{ (X }\SpecialCharTok{{-}} \DecValTok{4}\NormalTok{) }\SpecialCharTok{/} \DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean =} \FunctionTok{sum}\NormalTok{(nX) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(nX),}
+                   \AttributeTok{sd =} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{sum}\NormalTok{((nX }\SpecialCharTok{{-}}\NormalTok{ mean) }\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(nX)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   mean sd
+## 1    0  1
+\end{verbatim}
+
 \hypertarget{ux7df4ux7fd2ux554fux984c-3}{%
 \section*{練習問題}\label{ux7df4ux7fd2ux554fux984c-3}}
 \addcontentsline{toc}{section}{練習問題}
@@ -2508,6 +2606,76 @@ option
 \hypertarget{ux30b3ux30e9ux30e0ux504fux5deeux5024ux3067ux5accux306aux601dux3044ux3092ux3057ux305fux3053ux3068ux306eux3042ux308bux3042ux306aux305fux306b}{%
 \section*{【コラム】偏差値で嫌な思いをしたことのあるあなたに}\label{ux30b3ux30e9ux30e0ux504fux5deeux5024ux3067ux5accux306aux601dux3044ux3092ux3057ux305fux3053ux3068ux306eux3042ux308bux3042ux306aux305fux306b}}
 \addcontentsline{toc}{section}{【コラム】偏差値で嫌な思いをしたことのあるあなたに}
+
+　
+
+\hypertarget{ux8ffdux52a0ux554fux984c}{%
+\section*{追加問題}\label{ux8ffdux52a0ux554fux984c}}
+\addcontentsline{toc}{section}{追加問題}
+
+　P16の身長データを正規化（\((\mbox{データ} - \mbox{平均値} \div \mbox{標準偏差})\)）してみましょう。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \StringTok{"../data/P16\_図表1{-}1 .csv"} \SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  readr}\SpecialCharTok{::}\FunctionTok{read\_csv}\NormalTok{(}\AttributeTok{col\_names =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{show\_col\_types =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"X"}\NormalTok{),}
+                      \AttributeTok{names\_to =} \StringTok{"name"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"value"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(name) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\AttributeTok{height =}\NormalTok{ value) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{normalized =} \FunctionTok{scale}\NormalTok{(height))}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 80 x 2
+##    height normalized[,1]
+##     <dbl>          <dbl>
+##  1    151        -1.22  
+##  2    154        -0.661 
+##  3    160         0.449 
+##  4    160         0.449 
+##  5    163         1.00  
+##  6    156        -0.291 
+##  7    158         0.0786
+##  8    156        -0.291 
+##  9    154        -0.661 
+## 10    160         0.449 
+## # ... with 70 more rows
+\end{verbatim}
+
+　正規化前後の平均値と標準偏差を比べると下記のようになります。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean =} \FunctionTok{sum}\NormalTok{(height) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(height),}
+                   \AttributeTok{sd =} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{sum}\NormalTok{((height }\SpecialCharTok{{-}}\NormalTok{ mean)}\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(height)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 2
+##    mean    sd
+##   <dbl> <dbl>
+## 1  158.  5.37
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean =} \FunctionTok{sum}\NormalTok{(normalized) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(normalized),}
+                   \AttributeTok{sd =} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{sum}\NormalTok{((normalized }\SpecialCharTok{{-}}\NormalTok{ mean)}\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(normalized)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 2
+##       mean    sd
+##      <dbl> <dbl>
+## 1 2.08e-15 0.994
+\end{verbatim}
 
 % --- Index(索引一覧)を作成する（ページがずれるバグあり）
 % \cleardoublepage
