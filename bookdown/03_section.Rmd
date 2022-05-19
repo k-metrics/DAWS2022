@@ -163,7 +163,8 @@ x %>%
 ```
 
 
-## 身長データの度数分布表から分散と標準偏差を求める {.unnumbered}
+## 追加問題 {.unnumbered}
+　P16にある身長データの度数分布表を作り、分散と標準偏差を求めてみましょう。
 ```{r, echo=FALSE}
 x <- "../data/P16_図表1-1 .csv" %>% 
   readr::read_csv(col_names = FALSE, show_col_types = FALSE) %>% 
