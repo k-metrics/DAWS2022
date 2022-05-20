@@ -1,0 +1,1862 @@
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.5.18)  20 MAY 2022 21:53
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**R.tex
+(./R.tex
+LaTeX2e <2021-11-15> patch level 1
+L3 programming layer <2022-05-04> (/home/sampo/.TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2021/10/04 v1.4n Standard LaTeX document class
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/base/bk12.clo
+File: bk12.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count181
+\c@chapter=\count182
+\c@section=\count183
+\c@subsection=\count184
+\c@subsubsection=\count185
+\c@paragraph=\count186
+\c@subparagraph=\count187
+\c@figure=\count188
+\c@table=\count189
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2021/10/15 v2.17l AMS math features
+\@mathmargin=\skip49
+For additional information on amsmath, use the `?' option.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks16
+\ex@=\dimen139
+)) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen140
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2021/08/26 v2.02 operator names
+)
+\inf@bad=\count190
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count191
+\leftroot@=\count192
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count193
+\DOTSCASE@=\count194
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box50
+\strutbox@=\box51
+\big@size=\dimen141
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count195
+\c@MaxMatrixCols=\count196
+\dotsspace@=\muskip16
+\c@parentequation=\count197
+\dspbrk@lvl=\count198
+\tag@help=\toks17
+\row@=\count199
+\column@=\count266
+\maxfields@=\count267
+\andhelp@=\toks18
+\eqnshift@=\dimen142
+\alignsep@=\dimen143
+\tagshift@=\dimen144
+\tagwidth@=\dimen145
+\totwidth@=\dimen146
+\lineht@=\dimen147
+\@envbody=\toks19
+\multlinegap=\skip50
+\multlinetaggap=\skip51
+\mathdisplay@stack=\toks20
+LaTeX Info: Redefining \[ on input line 2938.
+LaTeX Info: Redefining \] on input line 2939.
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
+Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math.sty (/home/sampo/.TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2022-05-04 L3 programming layer (loader) 
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
+File: l3backend-xetex.def 2022-04-20 L3 backend support: XeTeX
+\g__graphics_track_int=\count268
+\l__pdf_internal_box=\box52
+\g__pdf_backend_object_int=\count269
+\g__pdf_backend_annotation_int=\count270
+\g__pdf_backend_link_int=\count271
+))
+Package: unicode-math 2020/01/31 v0.8q Unicode maths in XeLaTeX and LuaLaTeX
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math-xetex.sty
+Package: unicode-math-xetex 2020/01/31 v0.8q Unicode maths in XeLaTeX and LuaLaTeX
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+Package: xparse 2022-01-12 L3 Experimental document command parser
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+Package: l3keys2e 2022-01-12 LaTeX2e option processing using LaTeX3 keys
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.sty
+Package: fontspec 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
+Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
+\l__fontspec_script_int=\count272
+\l__fontspec_language_int=\count273
+\l__fontspec_strnum_int=\count274
+\l__fontspec_tmp_int=\count275
+\l__fontspec_tmpa_int=\count276
+\l__fontspec_tmpb_int=\count277
+\l__fontspec_tmpc_int=\count278
+\l__fontspec_em_int=\count279
+\l__fontspec_emdef_int=\count280
+\l__fontspec_strong_int=\count281
+\l__fontspec_strongdef_int=\count282
+\l__fontspec_tmpa_dim=\dimen148
+\l__fontspec_tmpb_dim=\dimen149
+\l__fontspec_tmpc_dim=\dimen150
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.cfg))) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/base/fix-cm.sty
+Package: fix-cm 2020/11/24 v1.1t fixes to LaTeX
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
+))
+\g__um_fam_int=\count283
+\g__um_fonts_used_int=\count284
+\l__um_primecount_int=\count285
+\g__um_primekern_muskip=\muskip17
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math-table.tex))) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/upquote/upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+)) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: xetex.def on input line 227.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/graphics-def/xetex.def
+File: xetex.def 2022/04/16 v5.0m Graphics/color driver for xetex
+)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1368.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/xcolor/svgnam.def
+File: svgnam.def 2021/10/31 v2.13 Predefined colors according to SVG 1.1 (UK)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/xcolor/x11nam.def
+File: x11nam.def 2021/10/31 v2.13 Predefined colors according to Unix/X11 (UK)
+)) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/bookmark/bookmark.sty
+Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2022-05-17 v7.00q Hypertext links for LaTeX
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode not found.
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks21
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2022-05-17 v2.50 Cross-referencing by name of section
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+))
+\c@section@level=\count286
+)
+\@linkdim=\dimen151
+\Hy@linkcounter=\count287
+\Hy@pagecounter=\count288
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2022-05-17 v7.00q Hyperref: PDFDocEncoding definition (HO)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count289
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2022-05-17 v7.00q Hyperref: PDF Unicode definition (HO)
+)
+Package hyperref Info: Option `unicode' set `true' on input line 4020.
+Package hyperref Info: Hyper figures OFF on input line 4139.
+Package hyperref Info: Link nesting OFF on input line 4144.
+Package hyperref Info: Hyper index ON on input line 4147.
+Package hyperref Info: Plain pages OFF on input line 4154.
+Package hyperref Info: Backreferencing OFF on input line 4159.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4385.
+\c@Hy@tempcnt=\count290
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip18
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4723.
+\XeTeXLinkMargin=\dimen152
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+))
+\Fld@menulength=\count291
+\Field@Width=\dimen153
+\Fld@charsize=\dimen154
+Package hyperref Info: Hyper figures OFF on input line 6001.
+Package hyperref Info: Link nesting OFF on input line 6006.
+Package hyperref Info: Hyper index ON on input line 6009.
+Package hyperref Info: backreferencing OFF on input line 6016.
+Package hyperref Info: Link coloring OFF on input line 6021.
+Package hyperref Info: Link coloring with OCG OFF on input line 6026.
+Package hyperref Info: PDF/A mode OFF on input line 6031.
+LaTeX Info: Redefining \ref on input line 6078.
+LaTeX Info: Redefining \pageref on input line 6078.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count292
+\c@Item=\count293
+\c@Hfootnote=\count294
+)
+Package hyperref Info: Driver (autodetected): hxetex.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
+File: hxetex.def 2022-05-17 v7.00q Hyperref driver for XeTeX
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+)
+\pdfm@box=\box53
+\c@Hy@AnnotLevel=\count295
+\HyField@AnnotCount=\count296
+\Fld@listcount=\count297
+\c@bookmark@seq@number=\count298
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
+with kernel methods
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 286.
+)
+\Hy@SectionHShift=\skip52
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/bookmark/bkm-dvipdfm.def
+File: bkm-dvipdfm.def 2020-11-06 v1.29 bookmark driver for dvipdfm (HO)
+\BKM@id=\count299
+))
+Package hyperref Info: Option `colorlinks' set `true' on input line 49.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2022/04/12 4.2 verbatim text (tvz,hv)
+\FV@CodeLineNo=\count300
+\FV@InFile=\read2
+\FV@TabBox=\box54
+\c@FancyVerbLine=\count301
+\FV@StepNumber=\count302
+\FV@OutFile=\write3
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/framed/framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip53
+\fb@frw=\dimen155
+\fb@frh=\dimen156
+\FrameRule=\dimen157
+\FrameSep=\dimen158
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
+\LTleft=\skip54
+\LTright=\skip55
+\LTpre=\skip56
+\LTpost=\skip57
+\LTchunksize=\count303
+\LTcapwidth=\dimen159
+\LT@head=\box55
+\LT@firsthead=\box56
+\LT@foot=\box57
+\LT@lastfoot=\box58
+\LT@gbox=\box59
+\LT@cols=\count304
+\LT@rows=\count305
+\c@LT@tables=\count306
+\c@LT@chunks=\count307
+\LT@p@ftn=\toks22
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen160
+\lightrulewidth=\dimen161
+\cmidrulewidth=\dimen162
+\belowrulesep=\dimen163
+\belowbottomsep=\dimen164
+\aboverulesep=\dimen165
+\abovetopsep=\dimen166
+\cmidrulesep=\dimen167
+\cmidrulekern=\dimen168
+\defaultaddspace=\dimen169
+\@cmidla=\count308
+\@cmidlb=\count309
+\@aboverulesep=\dimen170
+\@belowrulesep=\dimen171
+\@thisruleclass=\count310
+\@lastruleclass=\count311
+\@thisrulewidth=\dimen172
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
+\col@sep=\dimen173
+\ar@mcellbox=\box60
+\extrarowheight=\dimen174
+\NC@list=\toks23
+\extratabsurround=\skip58
+\backup@length=\skip59
+\ar@cellbox=\box61
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count312
+\calc@Bcount=\count313
+\calc@Adimen=\dimen175
+\calc@Bdimen=\dimen176
+\calc@Askip=\skip60
+\calc@Bskip=\skip61
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count314
+\calc@Cskip=\skip62
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count315
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/mdwtools/footnote.sty
+Package: footnote 1997/01/28 1.13 Save footnotes around boxes
+\fn@notes=\box62
+\fn@width=\dimen177
+)
+LaTeX Info: Redefining \href on input line 102.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count316
+\Gm@cntv=\count317
+\c@Gm@tempcnt=\count318
+\Gm@bindingoffset=\dimen178
+\Gm@wd@mp=\dimen179
+\Gm@odd@mp=\dimen180
+\Gm@even@mp=\dimen181
+\Gm@layoutwidth=\dimen182
+\Gm@layoutheight=\dimen183
+\Gm@layouthoffset=\dimen184
+\Gm@layoutvoffset=\dimen185
+\Gm@dimlist=\toks24
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip63
+\multirow@cntb=\count319
+\multirow@dima=\skip64
+\bigstrutjot=\dimen186
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen187
+\WF@size=\dimen188
+\c@WF@wrappedlines=\count320
+\WF@box=\box63
+\WF@everypar=\toks25
+Package: wrapfig 2003/01/31  v 3.6
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count321
+\float@exts=\toks26
+\float@box=\box64
+\@float@everytoks=\toks27
+\@floatcapt=\box65
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
+\everycr=\toks28
+\minrowclearance=\skip65
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: xetex.def on input line 107.
+))
+Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/tabu/tabu.sty
+Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box66
+\sift@deathcycles=\count322
+\@vwid@loff=\dimen189
+\@vwid@roff=\dimen190
+)
+\c@taburow=\count323
+\tabu@nbcols=\count324
+\tabu@cnt=\count325
+\tabu@Xcol=\count326
+\tabu@alloc=\count327
+\tabu@nested=\count328
+\tabu@target=\dimen191
+\tabu@spreadtarget=\dimen192
+\tabu@naturalX=\dimen193
+\tabucolX=\dimen194
+\tabu@Xsum=\dimen195
+\extrarowdepth=\dimen196
+\abovetabulinesep=\dimen197
+\belowtabulinesep=\dimen198
+\tabustrutrule=\dimen199
+\tabu@thebody=\toks29
+\tabu@footnotes=\toks30
+\tabu@box=\box67
+\tabu@arstrutbox=\box68
+\tabu@hleads=\box69
+\tabu@vleads=\box70
+\tabu@cellskip=\skip66
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/threeparttable/threeparttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box71
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/threeparttablex/threeparttablex.sty
+Package: threeparttablex 2013/07/23 v0.3 by daleif
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\TPTL@width=\skip67
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box72
+\UL@hyphenbox=\box73
+\UL@skip=\skip68
+\UL@hook=\toks31
+\UL@height=\dimen256
+\UL@pe=\count329
+\UL@pixel=\dimen257
+\ULC@box=\box74
+Package: ulem 2019/11/18
+\ULdepth=\dimen258
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks32
+\inpenc@posthook=\toks33
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/makecell/makecell.sty
+Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
+\rotheadsize=\dimen259
+\c@nlinenum=\count330
+\TeXr@lab=\toks34
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/fontawesome5/fontawesome5.sty
+Package: fontawesome5 2022/05/02 v5.15.4 Font Awesome 5
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/fontawesome5/fontawesome5-utex-helper.sty
+Package: fontawesome5-utex-helper 2022/05/02 v5.15.4 uTeX helper for fontawesome5
+LaTeX Font Info:    Trying to load font information for TU+fontawesomefree on input line 69.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/fontawesome5/tufontawesomefree.fd)
+LaTeX Font Info:    Trying to load font information for TU+fontawesomebrands on input line 70.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/fontawesome5/tufontawesomebrands.fd))) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2022/03/01 v3.6b Customizing captions (AR)
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2022/03/17 v2.3b caption3 kernel (AR)
+\caption@tempdima=\dimen260
+\captionmargin=\dimen261
+\caption@leftmargin=\dimen262
+\caption@rightmargin=\dimen263
+\caption@width=\dimen264
+\caption@indent=\dimen265
+\caption@parindent=\dimen266
+\caption@hangindent=\dimen267
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count331
+\c@continuedfloat=\count332
+Package caption Info: float package is loaded.
+Package caption Info: hyperref package is loaded.
+Package caption Info: longtable package is loaded.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
+)
+Package caption Info: threeparttable package is loaded.
+Package caption Info: wrapfig package is loaded.
+)
+\c@KVtest=\count333
+\sf@farskip=\skip69
+\sf@captopadj=\dimen268
+\sf@capskip=\skip70
+\sf@nearskip=\skip71
+\c@subfigure=\count334
+\c@subfigure@save=\count335
+\c@lofdepth=\count336
+\c@subtable=\count337
+\c@subtable@save=\count338
+\c@lotdepth=\count339
+\sf@top=\skip72
+\sf@bottom=\skip73
+) (/home/sampo/.TinyTeX/texmf-dist/tex/xelatex/xecjk/xeCJK.sty
+Package: xeCJK 2021/12/12 v3.8.8 Typesetting CJK scripts with XeLaTeX
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/ctex/ctexhook.sty
+Package: ctexhook 2021/12/12 v2.5.8 Document and package hooks (CTEX)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/l3packages/xtemplate/xtemplate.sty
+Package: xtemplate 2022-01-12 L3 Experimental prototype document functions
+\l__xtemplate_tmp_dim=\dimen269
+\l__xtemplate_tmp_int=\count340
+\l__xtemplate_tmp_muskip=\muskip19
+\l__xtemplate_tmp_skip=\skip74
+)
+\l__xeCJK_tmp_int=\count341
+\l__xeCJK_tmp_box=\box75
+\l__xeCJK_tmp_dim=\dimen270
+\l__xeCJK_tmp_skip=\skip75
+\g__xeCJK_space_factor_int=\count342
+\l__xeCJK_begin_int=\count343
+\l__xeCJK_end_int=\count344
+\c__xeCJK_CJK_class_int=\XeTeXcharclass1
+\c__xeCJK_FullLeft_class_int=\XeTeXcharclass2
+\c__xeCJK_FullRight_class_int=\XeTeXcharclass3
+\c__xeCJK_HalfLeft_class_int=\XeTeXcharclass4
+\c__xeCJK_HalfRight_class_int=\XeTeXcharclass5
+\c__xeCJK_NormalSpace_class_int=\XeTeXcharclass6
+\c__xeCJK_CM_class_int=\XeTeXcharclass7
+\c__xeCJK_HangulJamo_class_int=\XeTeXcharclass8
+\l__xeCJK_last_skip=\skip76
+\g__xeCJK_node_int=\count345
+\c__xeCJK_CJK_node_dim=\dimen271
+\c__xeCJK_CJK-space_node_dim=\dimen272
+\c__xeCJK_default_node_dim=\dimen273
+\c__xeCJK_default-space_node_dim=\dimen274
+\c__xeCJK_CJK-widow_node_dim=\dimen275
+\c__xeCJK_normalspace_node_dim=\dimen276
+\l__xeCJK_ccglue_skip=\skip77
+\l__xeCJK_ecglue_skip=\skip78
+\l__xeCJK_punct_kern_skip=\skip79
+\l__xeCJK_last_penalty_int=\count346
+\l__xeCJK_last_bound_dim=\dimen277
+\l__xeCJK_last_kern_dim=\dimen278
+\l__xeCJK_widow_penalty_int=\count347
+
+Package xtemplate Info: Declaring object type 'xeCJK/punctuation' taking 0
+(xtemplate)             argument(s) on line 2337.
+
+\l__xeCJK_fixed_punct_width_dim=\dimen279
+\l__xeCJK_mixed_punct_width_dim=\dimen280
+\l__xeCJK_middle_punct_width_dim=\dimen281
+\l__xeCJK_fixed_margin_width_dim=\dimen282
+\l__xeCJK_mixed_margin_width_dim=\dimen283
+\l__xeCJK_middle_margin_width_dim=\dimen284
+\l__xeCJK_bound_punct_width_dim=\dimen285
+\l__xeCJK_bound_margin_width_dim=\dimen286
+\l__xeCJK_margin_minimum_dim=\dimen287
+\l__xeCJK_kerning_total_width_dim=\dimen288
+\l__xeCJK_same_align_margin_dim=\dimen289
+\l__xeCJK_different_align_margin_dim=\dimen290
+\l__xeCJK_kerning_margin_width_dim=\dimen291
+\l__xeCJK_kerning_margin_minimum_dim=\dimen292
+\l__xeCJK_bound_dim=\dimen293
+\l__xeCJK_reverse_bound_dim=\dimen294
+\l__xeCJK_margin_dim=\dimen295
+\l__xeCJK_minimum_bound_dim=\dimen296
+\l__xeCJK_kerning_margin_dim=\dimen297
+\g__xeCJK_family_int=\count348
+\l__xeCJK_fam_int=\count349
+\g__xeCJK_fam_allocation_int=\count350
+\l__xeCJK_verb_case_int=\count351
+\l__xeCJK_verb_exspace_skip=\skip80
+(/home/sampo/.TinyTeX/texmf-dist/tex/xelatex/xecjk/xeCJK.cfg
+File: xeCJK.cfg 2021/12/12 v3.8.8 Configuration file for xeCJK package
+)) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/zxjatype/zxjatype.sty
+Package: zxjatype 2020/01/22 v0.7 ZX Japanese typeset
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/iftex/ifxetex.sty
+Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
+)
+\l__zxjt_tmpa_dim=\dimen298
+\g__zxjt_tmpa_box=\box76
+\l__zxjt_leftglue_skip=\skip81
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/zxjafont/zxjafont.sty
+Package: zxjafont 2022/03/21 v1.3
+
+Package fontspec Info: NotoSerifCJKjp-Regular scale = 0.8385189509854611.
+
+
+Package fontspec Info: Could not resolve font "NotoSerifCJKjp-Bold/I" (it
+(fontspec)             probably doesn't exist).
+
+
+Package fontspec Info: Could not resolve font "NotoSerifCJKjp-Regular/I" (it
+(fontspec)             probably doesn't exist).
+
+
+Package fontspec Info: NotoSerifCJKjp-Bold scale = 0.8385189509854611.
+
+
+Package fontspec Info: NotoSerifCJKjp-Light scale = 0.8385189509854611.
+
+
+Package fontspec Info: NotoSerifCJKjp-Regular scale = 0.8385189509854611.
+
+
+Package fontspec Info: NotoSerifCJKjp-Bold scale = 0.8385189509854611.
+
+
+Package fontspec Info: NotoSerifCJKjp-Regular/BI scale = 0.8385189509854611.
+
+
+Package fontspec Info: Font family 'NotoSerifCJKjp-Regular(0)' created for
+(fontspec)             font 'NotoSerifCJKjp-Regular' with options
+(fontspec)             [Scale=MatchLowercase,Script={CJK},Scale={1},RawFeature={-palt;-kern},FontFace={{bx}{n}{NotoSerifCJKjp-Bold}},FontFace={{l}{n}{NotoSerifCJKjp-Light}},BoldFont={NotoSerifCJKjp-Bold}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - (bx/n) with NFSS spec.:
+(fontspec)             <->s*[1]"NotoSerifCJKjp-Bold/OT:script=hani;language=dflt;-palt;-kern;"
+(fontspec)             -  (bx/sc) with NFSS spec.: 
+(fontspec)             - (l/n) with NFSS spec.:
+(fontspec)             <->s*[1]"NotoSerifCJKjp-Light/OT:script=hani;language=dflt;-palt;-kern;"
+(fontspec)             -  (l/sc) with NFSS spec.: 
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[1]"NotoSerifCJKjp-Regular/OT:script=hani;language=dflt;-palt;-kern;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[1]"NotoSerifCJKjp-Bold/OT:script=hani;language=dflt;-palt;-kern;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[1]"NotoSerifCJKjp-Regular/BI/OT:script=hani;language=dflt;-palt;-kern;"
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
+
+) (/home/sampo/.TinyTeX/texmf-dist/tex/platex/pxrubrica/pxrubrica.sty
+Package: pxrubrica 2021/03/06 v1.3d PX Japanese-style ruby
+\pxrr@cnta=\count352
+\pxrr@cntr=\count353
+\pxrr@dima=\dimen299
+\pxrr@boxa=\box77
+\pxrr@boxb=\box78
+\pxrr@boxr=\box79
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2021/10/04 v1.0m Standard LaTeX package
+)
+\@indexfile=\write4
+\openout4 = `R.idx'.
+
+Writing index file R.idx
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/tocbibind/tocbibind.sty
+Package: tocbibind 2010/10/13 v1.5k extra ToC listings
+Package tocbibind Info: The document has chapter divisions on input line 50.
+
+Package tocbibind Note: Using chapter style headings, unless overridden.
+
+)
+
+Package fontspec Info: Source Han Code JP scale = 0.7981463428418034.
+
+
+Package fontspec Info: Source Han Code JP scale = 0.7981463428418034.
+
+
+Package fontspec Info: Source Han Code JP/B scale = 0.7981463428418034.
+
+
+Package fontspec Info: Source Han Code JP/I scale = 0.7981463428418034.
+
+
+Package fontspec Info: Source Han Code JP/BI scale = 0.7981463428418034.
+
+
+Package fontspec Info: Font family 'SourceHanCodeJP(0)' created for font
+(fontspec)             'Source Han Code JP' with options
+(fontspec)             [Scale=MatchLowercase,WordSpace={1,0,0},HyphenChar=None,PunctuationSpace=WordSpace].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[0.7981463428418034]"Source Han Code
+(fontspec)             JP/OT:script=latn;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.7981463428418034]"Source Han Code
+(fontspec)             JP/B/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->s*[0.7981463428418034]"Source Han Code
+(fontspec)             JP/I/OT:script=latn;language=dflt;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[0.7981463428418034]"Source Han Code
+(fontspec)             JP/BI/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+
+
+Package fontspec Info: Source Han Code JP scale = 0.7981463428418034.
+
+
+Package fontspec Info: Source Han Code JP scale = 0.7981463428418034.
+
+
+Package fontspec Info: Source Han Code JP/B scale = 0.7981463428418034.
+
+
+Package fontspec Info: Source Han Code JP/I scale = 0.7981463428418034.
+
+
+Package fontspec Info: Source Han Code JP/BI scale = 0.7981463428418034.
+
+
+Package fontspec Info: Font family 'SourceHanCodeJP(1)' created for font
+(fontspec)             'Source Han Code JP' with options
+(fontspec)             [Scale=MatchLowercase].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[0.7981463428418034]"Source Han Code
+(fontspec)             JP/OT:script=latn;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.7981463428418034]"Source Han Code
+(fontspec)             JP/B/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->s*[0.7981463428418034]"Source Han Code
+(fontspec)             JP/I/OT:script=latn;language=dflt;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[0.7981463428418034]"Source Han Code
+(fontspec)             JP/BI/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
+
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/lmtt/m/n --> TU/SourceHanCodeJP(1)/m/n on input line 177.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/lmtt/m/n --> TU/SourceHanCodeJP(1)/bx/n on input line 177.
+
+Package xeCJK Warning: Redefining CJKfamily `\CJKttdefault'
+(xeCJK)                (NotoSansCJKjp-Regular).
+
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
+Package: tcolorbox 2022/01/07 version 5.0.2 text color boxes
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty (/home/sampo/.TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks35
+\pgfutil@tempdima=\dimen300
+\pgfutil@tempdimb=\dimen301
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-lists.tex)) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box80
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2021/05/15 v3.1.9a (3.1.9a)
+))
+Package: pgf 2021/05/15 v3.1.9a (3.1.9a)
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty (/home/sampo/.TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+\Gin@req@height=\dimen302
+\Gin@req@width=\dimen303
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks36
+\pgfkeys@temptoks=\toks37
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.tex
+\pgfkeys@tmptoks=\toks38
+))
+\pgf@x=\dimen304
+\pgf@y=\dimen305
+\pgf@xa=\dimen306
+\pgf@ya=\dimen307
+\pgf@xb=\dimen308
+\pgf@yb=\dimen309
+\pgf@xc=\dimen310
+\pgf@yc=\dimen311
+\pgf@xd=\dimen312
+\pgf@yd=\dimen313
+\w@pgf@writea=\write5
+\r@pgf@reada=\read3
+\c@pgf@counta=\count354
+\c@pgf@countb=\count355
+\c@pgf@countc=\count356
+\c@pgf@countd=\count357
+\t@pgf@toka=\toks39
+\t@pgf@tokb=\toks40
+\t@pgf@tokc=\toks41
+\pgf@sys@id@count=\count358
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2021/05/15 v3.1.9a (3.1.9a)
+)
+Driver file for pgf: pgfsys-xetex.def
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-xetex.def
+File: pgfsys-xetex.def 2021/05/15 v3.1.9a (3.1.9a)
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-dvipdfmx.def
+File: pgfsys-dvipdfmx.def 2021/05/15 v3.1.9a (3.1.9a)
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2021/05/15 v3.1.9a (3.1.9a)
+)
+\pgfsys@objnum=\count359
+))) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfsyssoftpath@smallbuffer@items=\count360
+\pgfsyssoftpath@bigbuffer@items=\count361
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2021/05/15 v3.1.9a (3.1.9a)
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen314
+\pgfmath@count=\count362
+\pgfmath@box=\box81
+\pgfmath@toks=\toks42
+\pgfmath@stack@operand=\toks43
+\pgfmath@stack@operation=\toks44
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric.code.tex) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.tex) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.code.tex) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.tex) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics.code.tex))) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count363
+)) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfint.code.tex) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@picminx=\dimen315
+\pgf@picmaxx=\dimen316
+\pgf@picminy=\dimen317
+\pgf@picmaxy=\dimen318
+\pgf@pathminx=\dimen319
+\pgf@pathmaxx=\dimen320
+\pgf@pathminy=\dimen321
+\pgf@pathmaxy=\dimen322
+\pgf@xx=\dimen323
+\pgf@xy=\dimen324
+\pgf@yx=\dimen325
+\pgf@yy=\dimen326
+\pgf@zx=\dimen327
+\pgf@zy=\dimen328
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@path@lastx=\dimen329
+\pgf@path@lasty=\dimen330
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@shorten@end@additional=\dimen331
+\pgf@shorten@start@additional=\dimen332
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfpic=\box82
+\pgf@hbox=\box83
+\pgf@layerbox@main=\box84
+\pgf@picture@serial@count=\count364
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgflinewidth=\dimen333
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex
+File: pgfcoretransformations.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@pt@x=\dimen334
+\pgf@pt@y=\dimen335
+\pgf@pt@temp=\dimen336
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfarrowsep=\dimen337
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@max=\dimen338
+\pgf@sys@shading@range@num=\count365
+\pgf@shadingcount=\count366
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfexternal@startupbox=\box85
+)) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+))) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfnodeparttextbox=\box86
+) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@nodesepstart=\dimen339
+\pgf@nodesepend=\dimen340
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2021/05/15 v3.1.9a (3.1.9a)
+)) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks45
+\verbatim@line=\toks46
+\verbatim@in@stream=\read4
+)
+\tcb@titlebox=\box87
+\tcb@upperbox=\box88
+\tcb@lowerbox=\box89
+\tcb@phantombox=\box90
+\c@tcbbreakpart=\count367
+\c@tcblayer=\count368
+\c@tcolorbox@number=\count369
+\tcb@temp=\box91
+\tcb@temp=\box92
+\tcb@temp=\box93
+\tcb@temp=\box94
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbbreakable.code.tex
+Library (tcolorbox): 'tcbbreakable.code.tex' version '5.0.2'
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/oberdiek/pdfcol.sty
+Package: pdfcol 2019/12/29 v1.6 Handle new color stacks for pdfTeX (HO)
+Package pdfcol Info: Interface disabled because of missing PDF mode of pdfTeX.
+)
+Package pdfcol Info: pdfTeX's color stacks are not available.
+\tcb@testbox=\box95
+\tcb@totalupperbox=\box96
+\tcb@totallowerbox=\box97
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbtheorems.code.tex
+Library (tcolorbox): 'tcbtheorems.code.tex' version '5.0.2'
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbraster.code.tex
+Library (tcolorbox): 'tcbraster.code.tex' version '5.0.2'
+\c@tcbrastercolumn=\count370
+\c@tcbrasterrow=\count371
+\c@tcbrasternum=\count372
+\c@tcbraster=\count373
+) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbskins.code.tex
+Library (tcolorbox): 'tcbskins.code.tex' version '5.0.2'
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (/home/sampo/.TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgffor.sty (/home/sampo/.TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex)) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/pgf/math/pgfmath.sty (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2021/05/15 v3.1.9a (3.1.9a)
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
+\pgffor@iter=\dimen341
+\pgffor@skip=\dimen342
+\pgffor@stack=\toks47
+\pgffor@toks=\toks48
+)) (/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2021/05/15 v3.1.9a (3.1.9a)
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@plot@mark@count=\count374
+\pgfplotmarksize=\dimen343
+)
+\tikz@lastx=\dimen344
+\tikz@lasty=\dimen345
+\tikz@lastxsaved=\dimen346
+\tikz@lastysaved=\dimen347
+\tikz@lastmovetox=\dimen348
+\tikz@lastmovetoy=\dimen349
+\tikzleveldistance=\dimen350
+\tikzsiblingdistance=\dimen351
+\tikz@figbox=\box98
+\tikz@figbox@bg=\box99
+\tikz@tempbox=\box100
+\tikz@tempbox@bg=\box101
+\tikztreelevel=\count375
+\tikznumberofchildren=\count376
+\tikznumberofcurrentchild=\count377
+\tikz@fig@count=\count378
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfmatrixcurrentrow=\count379
+\pgfmatrixcurrentcolumn=\count380
+\pgf@matrix@numberofcolumns=\count381
+)
+\tikz@expandcount=\count382
+(/home/sampo/.TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)))
+\tcb@waterbox=\box102
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbskinsjigsaw.code.tex
+Library (tcolorbox): 'tcbskinsjigsaw.code.tex' version '5.0.2'
+)) (/home/sampo/.TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip82
+\bibsep=\skip83
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count383
+) (./R.aux)
+\openout1 = `R.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 280.
+LaTeX Font Info:    ... okay on input line 280.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 280.
+LaTeX Font Info:    ... okay on input line 280.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 280.
+LaTeX Font Info:    ... okay on input line 280.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 280.
+LaTeX Font Info:    ... okay on input line 280.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 280.
+LaTeX Font Info:    ... okay on input line 280.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 280.
+LaTeX Font Info:    ... okay on input line 280.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 280.
+LaTeX Font Info:    ... okay on input line 280.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 280.
+LaTeX Font Info:    ... okay on input line 280.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 280.
+LaTeX Font Info:    ... okay on input line 280.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 280.
+LaTeX Font Info:    ... okay on input line 280.
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 280.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 280.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 280.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 280.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 280.
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(0)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,BoldFont={latinmodern-math.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 280.
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(1)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.2-10.2,Font=latinmodern-math.otf,Style=MathScript},{Size=-7.2,Font=latinmodern-math.otf,Style=MathScriptScript}},BoldFont={latinmodern-math.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.2->s*[0.9999970497384594]"[latinmodern-math.otf]/OT:script=math;language=dflt;"<7.2-10.2>s*[0.9999970497384594]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-7.2>s*[0.9999970497384594]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 280.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `normal' on input line 280.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 280.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `bold' on input line 280.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 280.
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000097049443433.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000097049443433.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000097049443433.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000097049443433.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000097049443433.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(2)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.2-10.2,Font=latinmodern-math.otf,Style=MathScript},{Size=-7.2,Font=latinmodern-math.otf,Style=MathScriptScript}},BoldFont={latinmodern-math.otf},ScaleAgain=1.0001,FontAdjustment={\fontdimen
+(fontspec)             8\font =8.124pt\relax \fontdimen 9\font =4.728pt\relax
+(fontspec)             \fontdimen 10\font =5.328pt\relax \fontdimen 11\font
+(fontspec)             =8.232pt\relax \fontdimen 12\font =4.14pt\relax
+(fontspec)             \fontdimen 13\font =4.356pt\relax \fontdimen 14\font
+(fontspec)             =4.356pt\relax \fontdimen 15\font =3.468pt\relax
+(fontspec)             \fontdimen 16\font =2.964pt\relax \fontdimen 17\font
+(fontspec)             =2.964pt\relax \fontdimen 18\font =3.0pt\relax
+(fontspec)             \fontdimen 19\font =2.4pt\relax \fontdimen 22\font
+(fontspec)             =3.0pt\relax \fontdimen 20\font =0pt\relax \fontdimen
+(fontspec)             21\font =0pt\relax }].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.2->s*[1.000097049443433]"[latinmodern-math.otf]/OT:script=math;language=dflt;"<7.2-10.2>s*[1.000097049443433]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-7.2>s*[1.000097049443433]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 8\font =8.124pt\relax \fontdimen 9\font
+(fontspec)             =4.728pt\relax \fontdimen 10\font =5.328pt\relax
+(fontspec)             \fontdimen 11\font =8.232pt\relax \fontdimen 12\font
+(fontspec)             =4.14pt\relax \fontdimen 13\font =4.356pt\relax
+(fontspec)             \fontdimen 14\font =4.356pt\relax \fontdimen 15\font
+(fontspec)             =3.468pt\relax \fontdimen 16\font =2.964pt\relax
+(fontspec)             \fontdimen 17\font =2.964pt\relax \fontdimen 18\font
+(fontspec)             =3.0pt\relax \fontdimen 19\font =2.4pt\relax \fontdimen
+(fontspec)             22\font =3.0pt\relax \fontdimen 20\font =0pt\relax
+(fontspec)             \fontdimen 21\font =0pt\relax 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[1.000097049443433]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 8\font =8.124pt\relax \fontdimen 9\font
+(fontspec)             =4.728pt\relax \fontdimen 10\font =5.328pt\relax
+(fontspec)             \fontdimen 11\font =8.232pt\relax \fontdimen 12\font
+(fontspec)             =4.14pt\relax \fontdimen 13\font =4.356pt\relax
+(fontspec)             \fontdimen 14\font =4.356pt\relax \fontdimen 15\font
+(fontspec)             =3.468pt\relax \fontdimen 16\font =2.964pt\relax
+(fontspec)             \fontdimen 17\font =2.964pt\relax \fontdimen 18\font
+(fontspec)             =3.0pt\relax \fontdimen 19\font =2.4pt\relax \fontdimen
+(fontspec)             22\font =3.0pt\relax \fontdimen 20\font =0pt\relax
+(fontspec)             \fontdimen 21\font =0pt\relax 
+
+LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
+(Font)              `symbols' in the math version `normal' on input line 280.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 280.
+LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
+(Font)              `symbols' in the math version `bold' on input line 280.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 280.
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998970500334856.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998970500334856.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998970500334856.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998970500334856.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998970500334856.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(3)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.2-10.2,Font=latinmodern-math.otf,Style=MathScript},{Size=-7.2,Font=latinmodern-math.otf,Style=MathScriptScript}},BoldFont={latinmodern-math.otf},ScaleAgain=0.9999,FontAdjustment={\fontdimen
+(fontspec)             8\font =0.48pt\relax \fontdimen 9\font =2.4pt\relax
+(fontspec)             \fontdimen 10\font =2.004pt\relax \fontdimen 11\font
+(fontspec)             =1.332pt\relax \fontdimen 12\font =7.2pt\relax
+(fontspec)             \fontdimen 13\font =0pt\relax }].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.2->s*[0.9998970500334856]"[latinmodern-math.otf]/OT:script=math;language=dflt;"<7.2-10.2>s*[0.9998970500334856]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-7.2>s*[0.9998970500334856]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 8\font =0.48pt\relax \fontdimen 9\font
+(fontspec)             =2.4pt\relax \fontdimen 10\font =2.004pt\relax
+(fontspec)             \fontdimen 11\font =1.332pt\relax \fontdimen 12\font
+(fontspec)             =7.2pt\relax \fontdimen 13\font =0pt\relax 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9998970500334856]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 8\font =0.48pt\relax \fontdimen 9\font
+(fontspec)             =2.4pt\relax \fontdimen 10\font =2.004pt\relax
+(fontspec)             \fontdimen 11\font =1.332pt\relax \fontdimen 12\font
+(fontspec)             =7.2pt\relax \fontdimen 13\font =0pt\relax 
+
+LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
+(Font)              `largesymbols' in the math version `normal' on input line 280.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 280.
+LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
+(Font)              `largesymbols' in the math version `bold' on input line 280.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 280.
+Package hyperref Info: Link coloring ON on input line 280.
+*geometry* driver: auto-detecting
+*geometry* detected driver: xetex
+*geometry* verbose mode - [ preamble ] result:
+* driver: xetex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(71.13188pt, 455.24408pt, 71.13191pt)
+* v-part:(T,H,B)=(71.13188pt, 702.78307pt, 71.1319pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=455.24408pt
+* \textheight=702.78307pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.13808pt
+* \topmargin=-33.0119pt
+* \headheight=12.0pt
+* \headsep=19.8738pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=98.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Font shape `TU/NotoSerifCJKjp-Regular(0)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 280.
+
+Package fontspec Info: NotoSansCJKjp-Regular scale = 0.7937353934347148.
+
+
+Package fontspec Info: Could not resolve font "NotoSansCJKjp-Bold/I" (it
+(fontspec)             probably doesn't exist).
+
+
+Package fontspec Info: Could not resolve font "NotoSansCJKjp-Regular/I" (it
+(fontspec)             probably doesn't exist).
+
+
+Package fontspec Info: NotoSansCJKjp-Bold scale = 0.7937353934347148.
+
+
+Package fontspec Info: NotoSansCJKjp-Black scale = 0.7937353934347148.
+
+
+Package fontspec Info: NotoSansCJKjp-Regular scale = 0.7937353934347148.
+
+
+Package fontspec Info: NotoSansCJKjp-Bold scale = 0.7937353934347148.
+
+
+Package fontspec Info: NotoSansCJKjp-Regular/BI scale = 0.7937353934347148.
+
+
+Package fontspec Info: Font family 'NotoSansCJKjp-Regular(0)' created for font
+(fontspec)             'NotoSansCJKjp-Regular' with options
+(fontspec)             [Scale=MatchLowercase,Script={CJK},Scale={1},RawFeature={-palt;-kern},FontFace={{bx}{n}{NotoSansCJKjp-Bold}},FontFace={{eb}{n}{NotoSansCJKjp-Black}},BoldFont={NotoSansCJKjp-Bold}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - (bx/n) with NFSS spec.:
+(fontspec)             <->s*[1]"NotoSansCJKjp-Bold/OT:script=hani;language=dflt;-palt;-kern;"
+(fontspec)             -  (bx/sc) with NFSS spec.: 
+(fontspec)             - (eb/n) with NFSS spec.:
+(fontspec)             <->s*[1]"NotoSansCJKjp-Black/OT:script=hani;language=dflt;-palt;-kern;"
+(fontspec)             -  (eb/sc) with NFSS spec.: 
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[1]"NotoSansCJKjp-Regular/OT:script=hani;language=dflt;-palt;-kern;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[1]"NotoSansCJKjp-Bold/OT:script=hani;language=dflt;-palt;-kern;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[1]"NotoSansCJKjp-Regular/BI/OT:script=hani;language=dflt;-palt;-kern;"
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
+
+LaTeX Font Info:    Font shape `TU/NotoSansCJKjp-Regular(0)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 280.
+
+Package fontspec Info: Source Han Code JP scale = 0.7981463428418034.
+
+
+Package fontspec Info: Source Han Code JP scale = 0.7981463428418034.
+
+
+Package fontspec Info: Source Han Code JP/B scale = 0.7981463428418034.
+
+
+Package fontspec Info: Source Han Code JP/I scale = 0.7981463428418034.
+
+
+Package fontspec Info: Source Han Code JP/BI scale = 0.7981463428418034.
+
+
+Package fontspec Info: Font family 'SourceHanCodeJP(2)' created for font
+(fontspec)             'Source Han Code JP' with options
+(fontspec)             [Scale=MatchLowercase,Script={CJK}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[0.7981463428418034]"Source Han Code
+(fontspec)             JP/OT:script=hani;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.7981463428418034]"Source Han Code
+(fontspec)             JP/B/OT:script=hani;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->s*[0.7981463428418034]"Source Han Code
+(fontspec)             JP/I/OT:script=hani;language=dflt;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[0.7981463428418034]"Source Han Code
+(fontspec)             JP/BI/OT:script=hani;language=dflt;"
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
+
+LaTeX Font Info:    Font shape `TU/SourceHanCodeJP(2)/m/n' will be
+(Font)              scaled to size 9.5777pt on input line 280.
+LaTeX Font Info:    Font shape `TU/NotoSerifCJKjp-Regular(0)/m/n' will be
+(Font)              scaled to size 20.74pt on input line 282.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 14.4pt on input line 282.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 10.0pt on input line 282.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 7.0pt on input line 282.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 282.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 14.4013pt on input line 282.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 10.00092pt on input line 282.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 7.00064pt on input line 282.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 14.39845pt on input line 282.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 9.99893pt on input line 282.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 6.99925pt on input line 282.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 282.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 282.
+(/home/sampo/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1
+
+
+] [2
+
+] (./R.toc
+LaTeX Font Info:    Font shape `TU/NotoSerifCJKjp-Regular(0)/b/n' will be
+(Font)              scaled to size 12.0pt on input line 3.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 8.4pt on input line 4.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 4.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 12.0011pt on input line 4.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 8.40076pt on input line 4.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 6.00055pt on input line 4.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 11.99872pt on input line 4.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 8.3991pt on input line 4.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 5.99936pt on input line 4.
+[3])
+\tf@toc=\write6
+\openout6 = `R.toc'.
+
+[4] [5] [6
+
+] (./R.lof)
+\tf@lof=\write7
+\openout7 = `R.lof'.
+
+[7] [8
+
+] (./R.lot)
+\tf@lot=\write8
+\openout8 = `R.lot'.
+
+[9] [10
+
+]
+LaTeX Font Info:    Font shape `TU/NotoSerifCJKjp-Regular(0)/b/n' will be
+(Font)              scaled to size 24.88pt on input line 357.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.0pt on input line 360.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.00046pt on input line 360.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 360.
+LaTeX Font Info:    Font shape `TU/NotoSerifCJKjp-Regular(0)/b/n' will be
+(Font)              scaled to size 17.28pt on input line 367.
+LaTeX Font Info:    Font shape `TU/SourceHanCodeJP(0)/m/n' will be
+(Font)              scaled to size 9.5777pt on input line 384.
+[11] [12
+
+]
+Chapter 1.
+LaTeX Font Info:    Font shape `TU/SourceHanCodeJP(0)/b/n' will be
+(Font)              scaled to size 9.5777pt on input line 426.
+[13]
+LaTeX Font Info:    Font shape `TU/SourceHanCodeJP(0)/m/it' will be
+(Font)              scaled to size 9.5777pt on input line 432.
+LaTeX Font Info:    Font shape `TU/SourceHanCodeJP(2)/m/it' will be
+(Font)              scaled to size 9.5777pt on input line 432.
+
+LaTeX Font Warning: Font shape `TU/NotoSerifCJKjp-Regular(0)/m/sl' undefined
+(Font)              using `TU/NotoSerifCJKjp-Regular(0)/m/n' instead on input line 481.
+
+[14]
+File: R_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-3-1.pdf>
+[15] [16]
+LaTeX Font Info:    Font shape `TU/NotoSerifCJKjp-Regular(0)/b/n' will be
+(Font)              scaled to size 14.4pt on input line 622.
+[17]
+Overfull \hbox (17.4919pt too wide) in paragraph at lines 675--675
+[]\TU/SourceHanCodeJP(0)/m/n/12 ##  [1] (150,155] (150,155] (155,160] (155,160] (160,165] (155,160] (155,160] 
+ []
+
+
+Overfull \hbox (17.4919pt too wide) in paragraph at lines 676--676
+[]\TU/SourceHanCodeJP(0)/m/n/12 ##  [8] (155,160] (150,155] (155,160] (150,155] (160,165] (155,160] (160,165][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 677--677
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [15] (155,160] (160,165] (160,165] (165,170] (145,150] (160,165] (150,155][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 678--678
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [22] (160,165] (155,160] (160,165] (165,170] (150,155] (155,160] (150,155][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 679--679
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [29] (155,160] (155,160] (155,160] (145,150] (160,165] (150,155] (155,160][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 680--680
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [36] (160,165] (150,155] (160,165] (150,155] (150,155] (150,155] (150,155][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 681--681
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [43] (155,160] (145,150] (145,150] (160,165] (165,170] (150,155] (150,155][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 682--682
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [50] (165,170] (160,165] (160,165] (145,150] (140,145] (155,160] (160,165][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 683--683
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [57] (155,160] (155,160] (155,160] (160,165] (165,170] (155,160] (155,160][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 684--684
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [64] (150,155] (155,160] (155,160] (150,155] (155,160] (150,155] (155,160][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 685--685
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [71] (145,150] (165,170] (150,155] (155,160] (155,160] (155,160] (160,165][] 
+ []
+
+[18]
+Overfull \hbox (17.4919pt too wide) in paragraph at lines 757--757
+[]\TU/SourceHanCodeJP(0)/m/n/12 ##  [1] [143,155) [143,155) [155,169) [155,169) [155,169) [155,169) [155,169) 
+ []
+
+
+Overfull \hbox (17.4919pt too wide) in paragraph at lines 758--758
+[]\TU/SourceHanCodeJP(0)/m/n/12 ##  [8] [155,169) [143,155) [155,169) [143,155) [155,169) [155,169) [155,169)[] 
+ []
+
+
+Overfull \hbox (8.97412pt too wide) in paragraph at lines 759--759
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [15] [155,169) [155,169) [155,169) <NA>      [143,155) [155,169) [143,155)[] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 760--760
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [22] [155,169) [155,169) [155,169) [155,169) [143,155) [155,169) [155,169)[] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 761--761
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [29] [155,169) [155,169) [155,169) [143,155) [155,169) [155,169) [155,169)[] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 762--762
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [36] [155,169) [143,155) [155,169) [143,155) [143,155) [143,155) [155,169)[] 
+ []
+
+
+Overfull \hbox (8.97412pt too wide) in paragraph at lines 763--763
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [43] [155,169) [143,155) [143,155) [155,169) <NA>      [143,155) [155,169)[] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 764--764
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [50] [155,169) [155,169) [155,169) [143,155) [143,155) [155,169) [155,169)[] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 765--765
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [57] [155,169) [155,169) [155,169) [155,169) [155,169) [155,169) [155,169)[] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 766--766
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [64] [143,155) [155,169) [155,169) [143,155) [155,169) [143,155) [155,169)[] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 767--767
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [71] [143,155) [155,169) [143,155) [155,169) [155,169) [155,169) [155,169)[] 
+ []
+
+[19]
+Overfull \hbox (17.4919pt too wide) in paragraph at lines 782--782
+[]\TU/SourceHanCodeJP(0)/m/n/12 ##  [1] (143,155] (143,155] (155,169] (155,169] (155,169] (155,169] (155,169] 
+ []
+
+
+Overfull \hbox (17.4919pt too wide) in paragraph at lines 783--783
+[]\TU/SourceHanCodeJP(0)/m/n/12 ##  [8] (155,169] (143,155] (155,169] (143,155] (155,169] (155,169] (155,169][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 784--784
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [15] (155,169] (155,169] (155,169] (155,169] (143,155] (155,169] (143,155][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 785--785
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [22] (155,169] (155,169] (155,169] (155,169] (143,155] (155,169] (143,155][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 786--786
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [29] (155,169] (155,169] (155,169] (143,155] (155,169] (143,155] (155,169][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 787--787
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [36] (155,169] (143,155] (155,169] (143,155] (143,155] (143,155] (143,155][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 788--788
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [43] (155,169] (143,155] (143,155] (155,169] (155,169] (143,155] (143,155][] 
+ []
+
+
+Overfull \hbox (8.97412pt too wide) in paragraph at lines 789--789
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [50] (155,169] (155,169] (155,169] (143,155] <NA>      (155,169] (155,169][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 790--790
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [57] (155,169] (155,169] (155,169] (155,169] (155,169] (155,169] (155,169][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 791--791
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [64] (143,155] (155,169] (155,169] (143,155] (155,169] (143,155] (155,169][] 
+ []
+
+
+Overfull \hbox (19.62134pt too wide) in paragraph at lines 792--792
+[]\TU/SourceHanCodeJP(0)/m/n/12 ## [71] (143,155] (155,169] (143,155] (155,169] (155,169] (155,169] (155,169][] 
+ []
+
+[20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 905--907
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 907--909
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 909--911
+
+ []
+
+[22] [23] [24]
+File: R_files/figure-latex/unnamed-chunk-21-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-21-1.pdf>
+[25]
+File: R_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-22-1.pdf>
+File: R_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-23-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[26]
+File: R_files/figure-latex/unnamed-chunk-24-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-24-1.pdf>
+[27]
+File: R_files/figure-latex/unnamed-chunk-25-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-25-1.pdf>
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 1190--1190
+[][][][][]$[][][][][] [] [] [] [][] [] [][][][][][][][][] [] [][][] [] [][][][] [] [][][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1190--1190
+[][] [] [][] [] [][] [] [][][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1198--1198
+[][][][][]$[][][][][] [] [] [] [] [][] [][][][][][][] [] [][][][][][][] [] [][][] [] [][][][] [] [][][][] [][] [][] [] [][][][][][][][][] [] [] [] [][][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] []
+ []
+
+File: R_files/figure-latex/階級数をスタージェスの公式で求めた場合-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/階級数をスタージェスの公式で求めた場合-1.pdf>
+[29]
+File: R_files/figure-latex/スコットの選択で求めた場合-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/スコットの選択で求めた場合-1.pdf>
+File: R_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-26-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[30]
+File: R_files/figure-latex/unnamed-chunk-27-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-27-1.pdf>
+
+Underfull \vbox (badness 1571) has occurred while \output is active []
+
+[31]
+File: R_files/figure-latex/unnamed-chunk-28-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-28-1.pdf>
+
+Underfull \hbox (badness 10000) in paragraph at lines 1302--1302
+[][][][][]$[][][][][] [] [] [] [] [][] [][][][][][][] [] [][][][][][][] [] [][][] [] [][][][] [] [][][][] [][] [][] [] [][][][][][][][][] [] [] [] [][][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] [] [][] []
+ []
+
+[32] [33]
+File: R_files/figure-latex/unnamed-chunk-31-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-31-1.pdf>
+File: R_files/figure-latex/unnamed-chunk-33-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-33-1.pdf>
+
+Underfull \vbox (badness 6658) has occurred while \output is active []
+
+[34] [35] [36
+
+]
+Chapter 2.
+[37]
+Missing character: There is no 総 (U+7DCF) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no デ ("30C7) in font lmmi12!
+Missing character: There is no ー ("30FC) in font lmmi12!
+Missing character: There is no タ ("30BF) in font lmmi12!
+Missing character: There is no 数 (U+6570) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 度 (U+5EA6) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 数 (U+6570) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 度 (U+5EA6) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 数 (U+6570) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+[38] [39]
+File: R_files/figure-latex/unnamed-chunk-39-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-39-1.pdf>
+[40] [41] [42] [43] [44]
+Chapter 3.
+[45
+
+] [46]
+File: R_files/figure-latex/unnamed-chunk-60-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-60-1.pdf>
+
+Underfull \vbox (badness 1953) has occurred while \output is active []
+
+[47] [48] [49] [50] [51] [52] [53] [54]
+Chapter 4.
+[55
+
+] [56]
+File: R_files/figure-latex/unnamed-chunk-86-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-86-1.pdf>
+[57] [58]
+File: R_files/figure-latex/unnamed-chunk-92-1.pdf Graphic file (type pdf)
+<use R_files/figure-latex/unnamed-chunk-92-1.pdf>
+[59]
+Missing character: There is no デ ("30C7) in font lmmi12!
+Missing character: There is no ー ("30FC) in font lmmi12!
+Missing character: There is no タ ("30BF) in font lmmi12!
+Missing character: There is no 平 (U+5E73) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 均 (U+5747) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 値 (U+5024) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 標 (U+6A19) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 準 (U+6E96) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 偏 (U+504F) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+Missing character: There is no 差 (U+5DEE) in font [latinmodern-math.otf]/OT:script=math;language=dflt;!
+[60] [61] [62] (./R.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 40548 strings out of 478132
+ 852364 string characters out of 5853261
+ 1298694 words of memory out of 5000000
+ 60496 multiletter control sequences out of 15000+600000
+ 477743 words of font info for 141 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 86i,10n,145p,702b,948s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on R.pdf (62 pages).

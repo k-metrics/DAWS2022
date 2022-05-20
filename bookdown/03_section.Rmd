@@ -39,7 +39,7 @@ sum(`偏差`)
 sum(`偏差` ^ 2) / length(x)
 ```
 
-　偏差の二乗平均値（$ = \sqrt{\mbox{分散}}$）は標準偏差と呼ばれます。Rで標準偏差を計算する`sd()`関数は不偏分散のルートを取ったものです。
+　偏差の二乗平均値（$= \sqrt{\mbox{分散}}$）は標準偏差と呼ばれます。Rで標準偏差を計算する`sd()`関数は不偏分散のルートを取ったものです。
 ```{r}
 sqrt(sum(`偏差` ^ 2) / length(x))
 ```
@@ -77,8 +77,8 @@ x %>%
   dplyr::mutate(`X偏差` = X - mean$`X平均値`, `Y偏差` = Y - mean$`Y平均値`) %>% 
   dplyr::select(-X, -Y) %>% 
   stripchart(xlim = c(-5, 5))
-abline(v = c(-0.89, 0.89), lty = 2)
-abline(v = c(-3.03, 3.03), lty = 3, col = 2)
+abline(v = c(-0.89, 0.89), lty = 3)  # X標準偏差／ドット（点線）
+abline(v = c(-3.03, 3.03), lty = 2)  # Y標準偏差／ダッシュ（鎖線）
 ```
 
 
@@ -86,7 +86,7 @@ abline(v = c(-3.03, 3.03), lty = 3, col = 2)
 ## 度数分布表から標準偏差を求める
 
 ```{r}
-x <- read.csv(file = "../data/P40_図表3-6.csv")
+x <- read.csv(file = "../data/P40_図表3-6.csv", fileEncoding = "UTF-8")
 x
 ```
 　第2講の「2−3 度数分布表での平均値」で学んだように度数分布表から平均値（の近似値）は
@@ -163,7 +163,8 @@ x %>%
 ```
 
 
-## 身長データの度数分布表から分散と標準偏差を求める {.unnumbered}
+## 追加問題 {.unnumbered}
+　P16にある身長データの度数分布表を作り、分散と標準偏差を求めてみましょう。
 ```{r, echo=FALSE}
 x <- "../data/P16_図表1-1 .csv" %>% 
   readr::read_csv(col_names = FALSE, show_col_types = FALSE) %>% 

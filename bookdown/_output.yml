@@ -10,24 +10,31 @@ bookdown::gitbook:
   config:
     toc:
       collapse: section  # Select one of "subsection", "section", "none"
-      scroll_highlight: yes
+      scroll_highlight: true
       before: null
       after: null
     toolbar:
       position: fixed # "static" or "fixed""
     edit: null
-    # download: ["pdf"]
-    search: yes
+    download: ["pdf"]
+    search:
+      engine: fuse # lunr or fuse
+      options: null
+    sharing:
+      facebook: true
+      github: true
+      twitter: true
     fontsettings:
-      theme: white  # "white" or "sepia" or "night"
-      family: sans # "serif" or "sans"
+      theme: white    # "white" or "sepia" or "night"
+      family: sans    # "serif" or "sans"
+      # size: 2       # 1, 2(default), 3, or 4
 
 ## ePUB形式でLaTeX数式が表示されない
-bookdown::epub_book:
-  dev: svglite                       # 有効になっていない？
-  epub_version: epub3
-  md_extensions: -ascii_identifiers  # 目次で日本語を有効にする
-  pandoc_args: [--mathml]            # 有効になっていない
+# bookdown::epub_book:
+#   dev: svglite                       # 有効になっていない？
+#   epub_version: epub3
+#   md_extensions: -ascii_identifiers  # 目次で日本語を有効にする
+#   pandoc_args: [--mathml]            # 有効になっていない
 
 bookdown::pdf_book:
   includes:
