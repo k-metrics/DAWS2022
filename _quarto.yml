@@ -1,5 +1,6 @@
 project:
   type: book
+  output-dir: docs
 
 book:
   title: "Rで学ぶ『完全独習 統計学入門』"
