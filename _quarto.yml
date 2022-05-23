@@ -9,7 +9,7 @@ book:
   # title: "quarto_book"
   # author: "Jane Doe"
   # date: "2022/5/23"
-  description: "本書はデータ分析勉強会で学んだ成果をまとめたものです。"
+  # description: "本書はデータ分析勉強会で学んだ成果をまとめたものです。"
   chapters:
     - index.qmd
     - chapter01.qmd
@@ -29,8 +29,6 @@ format:
     # slate, solar, spacelab, superhero, united, vapor, yeti, zephyr
     code-copy: true
     code-link: true
-  # pdf:
-  #   documentclass: scrreprt
-  # 
+
 editor: source
 
