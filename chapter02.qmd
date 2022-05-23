@@ -1,0 +1,257 @@
+# 平均値とはやじろべえの視点である
+
+　本講では以下のデータフレームを利用しています。
+```{r}
+#| label: setup
+#| echo: false
+#| warning: false
+#| message: false
+source("./R/setup.R")
+```
+
+```{r}
+#| include: false
+#| waring: false
+#| message: false
+
+x <- "./data/P16_図表1-1 .csv" %>% 
+  readr::read_csv(col_names = FALSE, show_col_types = FALSE) %>% 
+  # 読み込んだデータを縦長形式（Tidy Data）に変換する
+  tidyr::pivot_longer(cols = dplyr::starts_with("X"),
+                      names_to = "name", values_to = "value") %>% 
+  # X1, X2, ... , X4, X1 の順で行方向に読み込まれるので列方向で整列する
+  dplyr::arrange(name) %>% 
+  # 必要なデータ列（value）の列名をheightに変更して取り出す
+  dplyr::select(height = value)
+
+df <- x %>% 
+  # 階級を求めて、データを階級ごとに分ける
+  dplyr::mutate(class = cut(height,
+                            breaks = pretty(height, n = nclass.Sturges(height)),
+                            include.lowest = FALSE, right = TRUE)) %>% 
+  # 階級ごとの度数を求める
+  dplyr::count(class) %>% 
+  # 階級値を求める
+  dplyr::mutate(class_value = as.character(class)) %>% 
+  tidyr::separate(class_value, into = c("l", "h"), sep = ",") %>% 
+  dplyr::mutate(l = as.numeric(stringr::str_remove(l, "[[:punct:]]")),
+                h = as.numeric(stringr::str_remove(h, "[[:punct:]]"))) %>% 
+  dplyr::mutate(mids = ((l + 1) + h) / 2) %>% 
+  dplyr::mutate(range = h - l, cumsum_n = cumsum(n),
+                prop = prop.table(n), cumsum_prop = cumsum(prop))
+```
+
+
+#### 身長データ {.unnumbered}
+
+```{r}
+x %>% 
+  df_print()
+```
+
+#### 度数分布表 {.unnumbered}
+
+```{r}
+df %>% 
+  df_print()
+```
+
+　
+
+## 統計量は、データを要約する数値
+
+　本講で扱っている統計量（要約統計量）は平均のみです。
+
+　
+
+## 平均値とは
+
+　本講の平均値とは算術平均を意味しています。身長データ（$x$）の平均値は`r with(x, mean(height))`です。
+
+　
+
+## 度数分布表での平均値
+
+```{r}
+df %>% 
+  dplyr::select(`階級` = class, `度数` = n, `階級値` = mids,
+                `階級幅` = range, `累積度数` = cumsum_n,
+                `相対度数` = prop, `累積相対度数` = cumsum_prop) %>% 
+  df_print()
+```
+
+　（算術）平均は全ての観測値の総和を総データ数で除したものですので、観測値を各階級の代表値である階級値で近似すると下式が成り立つことが分かります。
+
+$$\mbox{平均} = \frac{\sum{\mbox{観測値}_i}}{総データ数} = \frac{\sum{\mbox{観測値}_i}}{\sum{度数}_i} \fallingdotseq \frac{\sum{(\mbox{階級値}_i \times \mbox{度数}_i)}}{\sum{度数}_i} = \sum{(\mbox{階級値}_i \times \mbox{相対度数}_i)}$$
+
+　なぜなら $$\frac{\mbox{度数}_i}{\sum{\mbox{度数}_i}} = \mbox{相対度数}_i$$
+
+$$i = 1, 2, ... , n$$
+
+```{r}
+df %>% 
+  dplyr::select(A = mids, B = prop) %>% 
+  dplyr::mutate(`A x B` = A * B) %>% 
+  dplyr::rename(`A 階級値` = A, `B 相対度数` = B,
+                `A x B` = `A x B`) %>% 
+  df_print()
+
+df %>% 
+  dplyr::select(A = mids, B = prop) %>% 
+  dplyr::mutate(`A x B` = A * B) %>% 
+  dplyr::summarise(`平均値` = sum(`A x B`)) %>% 
+ df_print()
+```
+
+　実データで求めた平均値は`r with(x, mean(height))`ですので、階級値から求めた平均値との差は`r with(x, mean(height)) - 157.75`となり、度数分布表を作ることは平均値に大きな影響を与えないことが分かります。
+
+　
+
+## 平均値のヒストグラムの中での役割
+
+　階級値から求めた平均値をヒストグラム上にプロットすると下図のようになります。
+
+```{r}
+with(x, hist(height))
+abline(v = 157.75, lty = 2)
+```
+
+　
+
+## 平均値をどう捉えるべきか
+
+　平均値の捉え方は様々考えられますが、テキストでは下記のようにまとめています。
+
+-   全データ（値）を代表する値（点）
+-   データは平均値の周辺に分布する
+-   数多く現れるデータは平均値への影響が大きい
+-   データの分布が対象の場合、平均値は対象軸
+
+　
+
+## 練習問題
+
+### 解答例
+
+```{r}
+data.frame(mids = c(30, 50, 70, 90, 110, 130),
+           n = c(5, 10, 15, 40, 20, 10)) %>% 
+  dplyr::mutate(prop = prop.table(n), cm = mids * prop) %>% 
+  dplyr::rename(`階級値` = mids, `度数` = n, `相対度数` = prop,
+                `階級値×相対度数` = cm) %>% 
+  df_print()
+```
+
+```{r}
+data.frame(mids = c(30, 50, 70, 90, 110, 130),
+           n = c(5, 10, 15, 40, 20, 10)) %>% 
+  dplyr::mutate(prop = prop.table(n), cm = mids * prop) %>% 
+  dplyr::summarise(`平均値` = sum(cm)) %>% 
+  df_print()
+```
+
+## 【コラム】平均値のとり方は、１つではない {.unnumbered}
+
+### 算術平均（Arithmetic Mean） {.unnumbered}
+
+$$\frac{\sum_{i=1}^n{x_i}}{n}$$
+
+```{r}
+sum(c(10, 90)) / length(c(10, 90))
+mean(c(10, 90))
+```
+
+　
+
+### 幾何平均（Geometric Mean）または相乗平均 {.unnumbered}
+
+$$\sqrt{\prod_{i=1}^n{x_i}}$$
+
+```{r}
+psych::geometric.mean(c(10, 90))
+```
+
+　
+
+### 二乗平均（Root Mean Square） {.unnumbered}
+
+$$\sqrt{\frac{\sum_{i=1}^n{x_i^2}}{n}}$$
+
+```{r}
+sqrt(mean(c(10, 90) ^ 2))
+```
+
+　
+
+### 調和平均（Harmonic Mean） {.unnumbered}
+
+$$\frac{n}{\sum_{i=1}^n{\frac{1}{x_i}}}$$
+
+```{r}
+psych::harmonic.mean(c(10, 90))
+```
+
+　
+
+### トリム平均 {.unnumbered}
+
+　トリム平均は体操競技の評点などで使われる平均値の計算方法で、値を小さい方から順に並べ、上位側と下位側から一定の割合で値を除き算術平均を求めます。外れ値や異常値などを影響を排除するために使われることが多いです。
+
+```{r}
+mean(c(0, 1:8, 30))
+mean(c(0, 1:8, 30), trim = 0.25)  # データの両側2.5%を対象外とする
+```
+
+　
+
+## 追加問題 {.unnumbered}
+
+　身長のデータを用いて階級幅が変わると度数分布表から求める平均値がどのように変化するか確認してみましょう。
+
+### 階級幅が倍になった場合 {.unnumbered}
+
+```{r}
+x %>% 
+  dplyr::mutate(class = cut(height,
+                            breaks = c(140, 150, 160, 170),
+                            include.lowest = FALSE, right = TRUE)) %>% 
+  dplyr::count(class) %>% 
+  dplyr::mutate(class_value = as.character(class)) %>% 
+  tidyr::separate(class_value, into = c("l", "h"), sep = ",") %>% 
+  dplyr::mutate(l = as.numeric(stringr::str_remove(l, "[[:punct:]]")),
+                h = as.numeric(stringr::str_remove(h, "[[:punct:]]"))) %>% 
+  dplyr::mutate(mids = ((l + 1) + h) / 2) %>% 
+  dplyr::mutate(range = h - l, cumsum_n = cumsum(n),
+                prop = prop.table(n), cumsum_prop = cumsum(prop)) %>% 
+  dplyr::select(A = mids, B = prop) %>% 
+  dplyr::mutate(`A x B` = A * B) %>% 
+  dplyr::summarise(`階級値による平均値` = sum(`A x B`)) %>% 
+  dplyr::mutate(`算術平均` = mean(x$height),
+                `差` = `算術平均` - `階級値による平均値`) %>% 
+  df_print()
+```
+
+### 階級幅が半分になった場合 {.unnumbered}
+
+```{r}
+x %>% 
+  dplyr::mutate(class = cut(height,
+                            breaks = seq(from = 140, to = 170, by = 2.5),
+                            include.lowest = FALSE, right = TRUE)) %>% 
+  dplyr::count(class) %>% 
+  dplyr::mutate(class_value = as.character(class)) %>% 
+  tidyr::separate(class_value, into = c("l", "h"), sep = ",") %>% 
+  dplyr::mutate(l = as.numeric(stringr::str_remove(l, "[[:punct:]]")),
+                h = as.numeric(stringr::str_remove(h, "[[:punct:]]"))) %>% 
+  dplyr::mutate(mids = ((l + 1) + h) / 2) %>% 
+  dplyr::mutate(range = h - l, cumsum_n = cumsum(n),
+                prop = prop.table(n), cumsum_prop = cumsum(prop)) %>% 
+  dplyr::select(A = mids, B = prop) %>% 
+  dplyr::mutate(`A x B` = A * B) %>% 
+  dplyr::summarise(`階級値による平均値` = sum(`A x B`)) %>% 
+  dplyr::mutate(`算術平均` = mean(x$height),
+                `差` = `算術平均` - `階級値による平均値`) %>% 
+  df_print()
+```
+
+---

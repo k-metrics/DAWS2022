@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.440">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Rで学ぶ『完全独習 統計学入門』 - 4&nbsp; そのデータは「月並み」か「特殊」か？ 標準偏差で評価する</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<script src="site_libs/quarto-nav/quarto-nav.js"></script><script src="site_libs/quarto-nav/headroom.min.js"></script><script src="site_libs/clipboard/clipboard.min.js"></script><meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><link href="./chapter03.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script><script src="site_libs/quarto-html/popper.min.js"></script><script src="site_libs/quarto-html/tippy.umd.min.js"></script><script src="site_libs/quarto-html/anchor.min.js"></script><link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script><link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">そのデータは「月並み」か「特殊」か？ 標準偏差で評価する</span>
+</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Rで学ぶ『完全独習 統計学入門』</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">はじめに</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter01.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">度数分布表とヒストグラムでデータの特徴を浮き彫りにする</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter02.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">平均値とはやじろべえの視点である</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter03.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの散らばり具合を見積もる統計量</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter04.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">そのデータは「月並み」か「特殊」か？ 標準偏差で評価する</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#%E6%A8%99%E6%BA%96%E5%81%8F%E5%B7%AE%E3%81%AF%E6%B3%A2%E3%81%AE%E6%BF%80%E3%81%97%E3%81%95" id="toc-標準偏差は波の激しさ" class="nav-link active" data-scroll-target="#%E6%A8%99%E6%BA%96%E5%81%8F%E5%B7%AE%E3%81%AF%E6%B3%A2%E3%81%AE%E6%BF%80%E3%81%97%E3%81%95"> <span class="header-section-number">4.1</span> 標準偏差は波の「激しさ」</a></li>
+  <li><a href="#%E6%A8%99%E6%BA%96%E5%81%8F%E5%B7%AE%E3%81%8C%E3%82%8F%E3%81%8B%E3%82%8B%E3%81%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E7%89%B9%E6%AE%8A%E6%80%A7%E3%82%92%E8%A9%95%E4%BE%A1%E3%81%A7%E3%81%8D%E3%82%8B" id="toc-標準偏差がわかるとデータの特殊性を評価できる" class="nav-link" data-scroll-target="#%E6%A8%99%E6%BA%96%E5%81%8F%E5%B7%AE%E3%81%8C%E3%82%8F%E3%81%8B%E3%82%8B%E3%81%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E7%89%B9%E6%AE%8A%E6%80%A7%E3%82%92%E8%A9%95%E4%BE%A1%E3%81%A7%E3%81%8D%E3%82%8B"> <span class="header-section-number">4.2</span> 標準偏差がわかるとデータの特殊性を評価できる</a></li>
+  <li><a href="#%E8%A4%87%E6%95%B0%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%82%BB%E3%83%83%E3%83%88%E3%81%AE%E6%AF%94%E8%BC%83" id="toc-複数のデータセットの比較" class="nav-link" data-scroll-target="#%E8%A4%87%E6%95%B0%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%82%BB%E3%83%83%E3%83%88%E3%81%AE%E6%AF%94%E8%BC%83"> <span class="header-section-number">4.3</span> 複数のデータセットの比較</a></li>
+  <li>
+<a href="#%E5%8A%A0%E5%B7%A5%E3%81%95%E3%82%8C%E3%81%9F%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%B9%B3%E5%9D%87%E5%80%A4%E3%81%A8%E6%A8%99%E6%BA%96%E5%81%8F%E5%B7%AE" id="toc-加工されたデータの平均値と標準偏差" class="nav-link" data-scroll-target="#%E5%8A%A0%E5%B7%A5%E3%81%95%E3%82%8C%E3%81%9F%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%B9%B3%E5%9D%87%E5%80%A4%E3%81%A8%E6%A8%99%E6%BA%96%E5%81%8F%E5%B7%AE"> <span class="header-section-number">4.4</span> 加工されたデータの平均値と標準偏差</a>
+  <ul class="collapse">
+<li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AB%E4%B8%80%E5%AE%9A%E6%95%B0%E3%82%92%E5%8A%A0%E3%81%88%E3%81%9F%E5%A0%B4%E5%90%88" id="toc-データに一定数を加えた場合" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AB%E4%B8%80%E5%AE%9A%E6%95%B0%E3%82%92%E5%8A%A0%E3%81%88%E3%81%9F%E5%A0%B4%E5%90%88">データに一定数を加えた場合</a></li>
+  <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AB%E4%B8%80%E5%AE%9A%E6%95%B0%E3%82%92%E4%B9%97%E3%81%98%E3%81%9F%E5%A0%B4%E5%90%88" id="toc-データに一定数を乗じた場合" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AB%E4%B8%80%E5%AE%9A%E6%95%B0%E3%82%92%E4%B9%97%E3%81%98%E3%81%9F%E5%A0%B4%E5%90%88">データに一定数を乗じた場合</a></li>
+  <li><a href="#%E6%A8%99%E6%BA%96%E5%81%8F%E5%B7%AE%E4%BD%95%E5%80%8B%E5%88%86%E3%81%A8%E3%81%AA%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%8A%A0%E5%B7%A5%E3%81%99%E3%82%8B%E5%8A%B9%E6%9E%9C" id="toc-標準偏差何個分となるようにデータを加工する効果" class="nav-link" data-scroll-target="#%E6%A8%99%E6%BA%96%E5%81%8F%E5%B7%AE%E4%BD%95%E5%80%8B%E5%88%86%E3%81%A8%E3%81%AA%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%8A%A0%E5%B7%A5%E3%81%99%E3%82%8B%E5%8A%B9%E6%9E%9C">標準偏差何個分となるようにデータを加工する効果</a></li>
+  </ul>
+</li>
+  <li><a href="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C" id="toc-練習問題" class="nav-link" data-scroll-target="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C">練習問題</a></li>
+  <li><a href="#%E3%82%B3%E3%83%A9%E3%83%A0%E5%81%8F%E5%B7%AE%E5%80%A4%E3%81%A7%E5%AB%8C%E3%81%AA%E6%80%9D%E3%81%84%E3%82%92%E3%81%97%E3%81%9F%E3%81%93%E3%81%A8%E3%81%AE%E3%81%82%E3%82%8B%E3%81%82%E3%81%AA%E3%81%9F%E3%81%AB" id="toc-コラム偏差値で嫌な思いをしたことのあるあなたに" class="nav-link" data-scroll-target="#%E3%82%B3%E3%83%A9%E3%83%A0%E5%81%8F%E5%B7%AE%E5%80%A4%E3%81%A7%E5%AB%8C%E3%81%AA%E6%80%9D%E3%81%84%E3%82%92%E3%81%97%E3%81%9F%E3%81%93%E3%81%A8%E3%81%AE%E3%81%82%E3%82%8B%E3%81%82%E3%81%AA%E3%81%9F%E3%81%AB">【コラム】偏差値で嫌な思いをしたことのあるあなたに</a></li>
+  <li>
+<a href="#%E8%BF%BD%E5%8A%A0%E5%95%8F%E9%A1%8C" id="toc-追加問題" class="nav-link" data-scroll-target="#%E8%BF%BD%E5%8A%A0%E5%95%8F%E9%A1%8C">追加問題</a>
+  <ul class="collapse">
+<li><a href="#%E8%A7%A3%E7%AD%94%E4%BE%8B" id="toc-解答例" class="nav-link" data-scroll-target="#%E8%A7%A3%E7%AD%94%E4%BE%8B">解答例</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title d-none d-lg-block">
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">そのデータは「月並み」か「特殊」か？ 標準偏差で評価する</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header><div class="cell">
+
+</div>
+<section id="標準偏差は波の激しさ" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="標準偏差は波の激しさ">
+<span class="header-section-number">4.1</span> 標準偏差は波の「激しさ」</h2>
+<p>　標準偏差は平均値からどの程度データがばらついているかを表しています。テキストではこのばらつきを「波打ちの激しさ」と表現しています。</p>
+<p>　</p>
+</section><section id="標準偏差がわかるとデータの特殊性を評価できる" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="標準偏差がわかるとデータの特殊性を評価できる">
+<span class="header-section-number">4.2</span> 標準偏差がわかるとデータの特殊性を評価できる</h2>
+<p>　標準偏差がわかるということは、以下がわかるということになります。</p>
+<ul>
+<li>一つのデータ（セット）の中にある任意の値の持つ意味</li>
+<li>複数のデータ（セット）の違い</li>
+</ul>
+<p>　</p>
+</section><section id="複数のデータセットの比較" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="複数のデータセットの比較">
+<span class="header-section-number">4.3</span> 複数のデータセットの比較</h2>
+<p>　（省略）</p>
+<p>　</p>
+</section><section id="加工されたデータの平均値と標準偏差" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="加工されたデータの平均値と標準偏差">
+<span class="header-section-number">4.4</span> 加工されたデータの平均値と標準偏差</h2>
+<p>　以下のデータに一定の加工を加えた際に平均値や標準偏差がどのように変化するかを見てみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"./data/P49_図表4-5.csv"</span><span class="op">)</span>
+
+<span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"1"},{"1":"3"},{"1":"4"},{"1":"5"},{"1":"7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<section id="データに一定数を加えた場合" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="データに一定数を加えた場合">データに一定数を加えた場合</h3>
+<p>　それぞれに<span class="math inline">\(4\)</span>を加える。</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Y <span class="op">=</span> <span class="va">X</span> <span class="op">+</span> <span class="fl">4</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"5"},{"1":"3","2":"7"},{"1":"4","2":"8"},{"1":"5","2":"9"},{"1":"7","2":"11"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">mean</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Y <span class="op">=</span> <span class="va">X</span> <span class="op">+</span> <span class="fl">4</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">mean</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　偏差</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">dev</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Y <span class="op">=</span> <span class="va">X</span> <span class="op">+</span> <span class="fl">4</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span>
+
+<span class="va">dev</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"-3","2":"-3"},{"1":"-1","2":"-1"},{"1":"0","2":"0"},{"1":"1","2":"1"},{"1":"3","2":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　分散</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">var</span> <span class="op">&lt;-</span> <span class="va">dev</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">X</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>,
+                   Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">var</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　標準偏差</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  X Y
+1 2 2</code></pre>
+</div>
+</div>
+<p>　以上のようにデータに一定数を加えると平均値は加えた一定値の分だけ大きくなりますが、他の統計量は変化していないことが分かります。これを正規分布で図示すると下図のようになります。</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="fl">4</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="op">-</span><span class="fl">3</span>, <span class="fl">15</span>,
+      lty <span class="op">=</span> <span class="fl">3</span>, xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">4</span>, lty <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="fl">8</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="op">-</span><span class="fl">3</span>, <span class="fl">15</span>, add <span class="op">=</span> <span class="cn">TRUE</span>,
+      lty <span class="op">=</span> <span class="fl">2</span>, xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">8</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="chapter04_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">元データ（点線：左）と加算データ（破線：右）</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>　</p>
+</section><section id="データに一定数を乗じた場合" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="データに一定数を乗じた場合">データに一定数を乗じた場合</h3>
+<p>　それぞれに<span class="math inline">\(2\)</span>を乗ずる。</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Y <span class="op">=</span> <span class="va">X</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"2"},{"1":"3","2":"6"},{"1":"4","2":"8"},{"1":"5","2":"10"},{"1":"7","2":"14"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">mean</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Y <span class="op">=</span> <span class="va">X</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">mean</span> <span class="op">%&gt;%</span> <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　偏差</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">dev</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Y <span class="op">=</span> <span class="va">X</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span>
+
+<span class="va">dev</span> <span class="op">%&gt;%</span> <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"-3","2":"-6"},{"1":"-1","2":"-2"},{"1":"0","2":"0"},{"1":"1","2":"2"},{"1":"3","2":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　分散</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">var</span> <span class="op">&lt;-</span> <span class="va">dev</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">X</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>,
+                   Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">var</span> <span class="op">%&gt;%</span> <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"16"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　標準偏差</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  X Y
+1 2 4</code></pre>
+</div>
+</div>
+<p>　以上のようにデータに一定数を乗じると平均値は乗じた一定値の分だけ大きくなり、他の統計量も乗じた一定値の分だけ大きくなっていることが分かります。これを正規分布で図示すると下図のようになります。</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="fl">4</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="op">-</span><span class="fl">3</span>, <span class="fl">15</span>,
+      lty <span class="op">=</span> <span class="fl">3</span>, xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">4</span>, lty <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="fl">8</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,
+      <span class="op">-</span><span class="fl">3</span>, <span class="fl">15</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, lty <span class="op">=</span> <span class="fl">2</span>,
+      xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">8</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="chapter04_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">元データ（点線：左）と乗算データ（破線：右）</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>　</p>
+<table class="table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead><tr class="header">
+<th>加工方法</th>
+<th style="text-align: center;">平均値</th>
+<th style="text-align: center;">標準偏差</th>
+<th style="text-align: left;">備考</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>無加工（元データ<span class="math inline">\(x\)</span>）</td>
+<td style="text-align: center;"><span class="math inline">\(\bar{x}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(SD\)</span></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td>定数の加算(<span class="math inline">\(x + k\)</span>)</td>
+<td style="text-align: center;"><span class="math inline">\(\bar{x} + k\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(SD\)</span></td>
+<td style="text-align: left;">変化するのは平均値のみ</td>
+</tr>
+<tr class="odd">
+<td>定数の乗算(<span class="math inline">\(x \times k\)</span>)</td>
+<td style="text-align: center;"><span class="math inline">\(\bar{x} \times k\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(SD \times k\)</span></td>
+<td style="text-align: left;">平均値・標準偏差ともに変化</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(k\)</span>: 任意の実数</p>
+<p>　</p>
+</section><section id="標準偏差何個分となるようにデータを加工する効果" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="標準偏差何個分となるようにデータを加工する効果">標準偏差何個分となるようにデータを加工する効果</h3>
+<p>　ここで説明されているのは「正規化」です。</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"./data/P49_図表4-5.csv"</span><span class="op">)</span>
+
+<span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"1"},{"1":"3"},{"1":"4"},{"1":"5"},{"1":"7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　上記のP49のデータは、平均値<span class="math inline">\(4\)</span>、標準偏差<span class="math inline">\(2\)</span>ですので、<span class="math inline">\((データ - 平均値) \div 標準偏差\)</span>を計算すると下記のようになります。</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dev <span class="op">=</span> <span class="op">(</span><span class="va">X</span> <span class="op">-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+                nX <span class="op">=</span> <span class="va">dev</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">dev</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">dev</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]},{"label":["dev"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["nX"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"-3","3":"-1.5"},{"1":"3","2":"-1","3":"-0.5"},{"1":"4","2":"0","3":"0.0"},{"1":"5","2":"1","3":"0.5"},{"1":"7","2":"3","3":"1.5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　<code>nX</code>の平均値と標準偏差は以下のように<span class="math inline">\(0\)</span>と<span class="math inline">\(1\)</span>になることが分かります。</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>nX <span class="op">=</span> <span class="op">(</span><span class="va">X</span> <span class="op">-</span> <span class="fl">4</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">nX</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">nX</span><span class="op">)</span>,
+                   sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">nX</span> <span class="op">-</span> <span class="va">mean</span><span class="op">)</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">nX</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"0","2":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section></section><section id="練習問題" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="練習問題">練習問題</h2>
+<p>　（省略）</p>
+<p>　</p>
+</section><section id="コラム偏差値で嫌な思いをしたことのあるあなたに" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="コラム偏差値で嫌な思いをしたことのあるあなたに">【コラム】偏差値で嫌な思いをしたことのあるあなたに</h2>
+<p>　</p>
+</section><section id="追加問題" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="追加問題">追加問題</h2>
+<p>　P16の身長データを正規化（<span class="math inline">\((\mbox{データ} - \mbox{平均値}) \div \mbox{標準偏差}\)</span>）してみましょう。</p>
+<section id="解答例" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="解答例">解答例</h3>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="st">"./data/P16_図表1-1 .csv"</span> <span class="op">%&gt;%</span> 
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>col_names <span class="op">=</span> <span class="cn">FALSE</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span>,
+                      names_to <span class="op">=</span> <span class="st">"name"</span>, values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>height <span class="op">=</span> <span class="va">value</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>normalized <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["height"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["normalized"],"name":[2],"type":["dbl[,1]"],"align":["right"]}],"data":[{"1":"151","2":"-1.2165606"},{"1":"154","2":"-0.6614759"},{"1":"160","2":"0.4486934"},{"1":"160","2":"0.4486934"},{"1":"163","2":"1.0037781"},{"1":"156","2":"-0.2914195"},{"1":"158","2":"0.0786370"},{"1":"156","2":"-0.2914195"},{"1":"154","2":"-0.6614759"},{"1":"160","2":"0.4486934"},{"1":"154","2":"-0.6614759"},{"1":"162","2":"0.8187499"},{"1":"156","2":"-0.2914195"},{"1":"162","2":"0.8187499"},{"1":"157","2":"-0.1063912"},{"1":"162","2":"0.8187499"},{"1":"162","2":"0.8187499"},{"1":"169","2":"2.1139475"},{"1":"150","2":"-1.4015888"},{"1":"162","2":"0.8187499"},{"1":"152","2":"-1.0315324"},{"1":"161","2":"0.6337217"},{"1":"159","2":"0.2636652"},{"1":"164","2":"1.1888064"},{"1":"168","2":"1.9289193"},{"1":"153","2":"-0.8465041"},{"1":"160","2":"0.4486934"},{"1":"155","2":"-0.4764477"},{"1":"160","2":"0.4486934"},{"1":"158","2":"0.0786370"},{"1":"160","2":"0.4486934"},{"1":"150","2":"-1.4015888"},{"1":"163","2":"1.0037781"},{"1":"155","2":"-0.4764477"},{"1":"157","2":"-0.1063912"},{"1":"162","2":"0.8187499"},{"1":"154","2":"-0.6614759"},{"1":"161","2":"0.6337217"},{"1":"153","2":"-0.8465041"},{"1":"154","2":"-0.6614759"},{"1":"151","2":"-1.2165606"},{"1":"155","2":"-0.4764477"},{"1":"158","2":"0.0786370"},{"1":"146","2":"-2.1417017"},{"1":"149","2":"-1.5866170"},{"1":"165","2":"1.3738346"},{"1":"169","2":"2.1139475"},{"1":"154","2":"-0.6614759"},{"1":"155","2":"-0.4764477"},{"1":"166","2":"1.5588628"},{"1":"165","2":"1.3738346"},{"1":"161","2":"0.6337217"},{"1":"148","2":"-1.7716453"},{"1":"143","2":"-2.6967864"},{"1":"156","2":"-0.2914195"},{"1":"162","2":"0.8187499"},{"1":"158","2":"0.0786370"},{"1":"156","2":"-0.2914195"},{"1":"159","2":"0.2636652"},{"1":"164","2":"1.1888064"},{"1":"167","2":"1.7438910"},{"1":"159","2":"0.2636652"},{"1":"157","2":"-0.1063912"},{"1":"151","2":"-1.2165606"},{"1":"159","2":"0.2636652"},{"1":"156","2":"-0.2914195"},{"1":"151","2":"-1.2165606"},{"1":"160","2":"0.4486934"},{"1":"153","2":"-0.8465041"},{"1":"156","2":"-0.2914195"},{"1":"146","2":"-2.1417017"},{"1":"166","2":"1.5588628"},{"1":"151","2":"-1.2165606"},{"1":"159","2":"0.2636652"},{"1":"157","2":"-0.1063912"},{"1":"156","2":"-0.2914195"},{"1":"162","2":"0.8187499"},{"1":"156","2":"-0.2914195"},{"1":"156","2":"-0.2914195"},{"1":"161","2":"0.6337217"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　正規化前後の平均値と標準偏差を比べると下記のようになります。</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span>,
+                   sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">height</span> <span class="op">-</span> <span class="va">mean</span><span class="op">)</span><span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.575","2":"5.370696"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">normalized</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">normalized</span><span class="op">)</span>,
+                   sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">normalized</span> <span class="op">-</span> <span class="va">mean</span><span class="op">)</span><span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">normalized</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2.082362e-15","2":"0.9937303"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<hr>
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./chapter03.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの散らばり具合を見積もる統計量</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
