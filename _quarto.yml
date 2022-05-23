@@ -1,0 +1,36 @@
+project:
+  type: book
+
+book:
+  title: "Rで学ぶ『完全独習 統計学入門』"
+  author: "Sampo Suzuki, CC 4.0 BY-NC-SA"
+  date: "2022/5/23"
+  # date: "`r format(Sys.Date(), format = '%Y-%m-%d')`"
+  # title: "quarto_book"
+  # author: "Jane Doe"
+  # date: "2022/5/23"
+  description: "本書はデータ分析勉強会で学んだ成果をまとめたものです。"
+  chapters:
+    - index.qmd
+    - chapter01.qmd
+    - chapter02.qmd
+    - chapter03.qmd
+    - chapter04.qmd
+
+# bibliography: references.bib
+
+format:
+  html:
+    theme: minty # cosmo 
+    # theme - Boothswatch 
+    #         https://quarto.org/docs/output-formats/html-themes.html
+    # default, cerulean, cosmo, cyborg, darkly, flatly, journal, litera, lumen,
+    # lux, materia, minty, morph, pulse, quartz, sandstone, simplex, sketchy,
+    # slate, solar, spacelab, superhero, united, vapor, yeti, zephyr
+    code-copy: true
+    code-link: true
+  # pdf:
+  #   documentclass: scrreprt
+  # 
+editor: source
+

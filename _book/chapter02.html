@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.440">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです。">
+<title>Rで学ぶ『完全独習 統計学入門』 - 2&nbsp; 平均値とはやじろべえの視点である</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<script src="site_libs/quarto-nav/quarto-nav.js"></script><script src="site_libs/quarto-nav/headroom.min.js"></script><script src="site_libs/clipboard/clipboard.min.js"></script><meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><link href="./chapter03.html" rel="next">
+<link href="./chapter01.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script><script src="site_libs/quarto-html/popper.min.js"></script><script src="site_libs/quarto-html/tippy.umd.min.js"></script><script src="site_libs/quarto-html/anchor.min.js"></script><link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script><link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">平均値とはやじろべえの視点である</span>
+</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Rで学ぶ『完全独習 統計学入門』</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">はじめに</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter01.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">度数分布表とヒストグラムでデータの特徴を浮き彫りにする</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter02.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">平均値とはやじろべえの視点である</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter03.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの散らばり具合を見積もる統計量</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter04.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">そのデータは「月並み」か「特殊」か？ 標準偏差で評価する</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#%E7%B5%B1%E8%A8%88%E9%87%8F%E3%81%AF%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E8%A6%81%E7%B4%84%E3%81%99%E3%82%8B%E6%95%B0%E5%80%A4" id="toc-統計量はデータを要約する数値" class="nav-link active" data-scroll-target="#%E7%B5%B1%E8%A8%88%E9%87%8F%E3%81%AF%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E8%A6%81%E7%B4%84%E3%81%99%E3%82%8B%E6%95%B0%E5%80%A4"> <span class="header-section-number">2.1</span> 統計量は、データを要約する数値</a></li>
+  <li><a href="#%E5%B9%B3%E5%9D%87%E5%80%A4%E3%81%A8%E3%81%AF" id="toc-平均値とは" class="nav-link" data-scroll-target="#%E5%B9%B3%E5%9D%87%E5%80%A4%E3%81%A8%E3%81%AF"> <span class="header-section-number">2.2</span> 平均値とは</a></li>
+  <li><a href="#%E5%BA%A6%E6%95%B0%E5%88%86%E5%B8%83%E8%A1%A8%E3%81%A7%E3%81%AE%E5%B9%B3%E5%9D%87%E5%80%A4" id="toc-度数分布表での平均値" class="nav-link" data-scroll-target="#%E5%BA%A6%E6%95%B0%E5%88%86%E5%B8%83%E8%A1%A8%E3%81%A7%E3%81%AE%E5%B9%B3%E5%9D%87%E5%80%A4"> <span class="header-section-number">2.3</span> 度数分布表での平均値</a></li>
+  <li><a href="#%E5%B9%B3%E5%9D%87%E5%80%A4%E3%81%AE%E3%83%92%E3%82%B9%E3%83%88%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%AE%E4%B8%AD%E3%81%A7%E3%81%AE%E5%BD%B9%E5%89%B2" id="toc-平均値のヒストグラムの中での役割" class="nav-link" data-scroll-target="#%E5%B9%B3%E5%9D%87%E5%80%A4%E3%81%AE%E3%83%92%E3%82%B9%E3%83%88%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%AE%E4%B8%AD%E3%81%A7%E3%81%AE%E5%BD%B9%E5%89%B2"> <span class="header-section-number">2.4</span> 平均値のヒストグラムの中での役割</a></li>
+  <li><a href="#%E5%B9%B3%E5%9D%87%E5%80%A4%E3%82%92%E3%81%A9%E3%81%86%E6%8D%89%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8D%E3%81%8B" id="toc-平均値をどう捉えるべきか" class="nav-link" data-scroll-target="#%E5%B9%B3%E5%9D%87%E5%80%A4%E3%82%92%E3%81%A9%E3%81%86%E6%8D%89%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8D%E3%81%8B"> <span class="header-section-number">2.5</span> 平均値をどう捉えるべきか</a></li>
+  <li>
+<a href="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C" id="toc-練習問題" class="nav-link" data-scroll-target="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C"> <span class="header-section-number">2.6</span> 練習問題</a>
+  <ul class="collapse">
+<li><a href="#%E8%A7%A3%E7%AD%94%E4%BE%8B" id="toc-解答例" class="nav-link" data-scroll-target="#%E8%A7%A3%E7%AD%94%E4%BE%8B"> <span class="header-section-number">2.6.1</span> 解答例</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#%E3%82%B3%E3%83%A9%E3%83%A0%E5%B9%B3%E5%9D%87%E5%80%A4%E3%81%AE%E3%81%A8%E3%82%8A%E6%96%B9%E3%81%AF%EF%BC%91%E3%81%A4%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84" id="toc-コラム平均値のとり方は１つではない" class="nav-link" data-scroll-target="#%E3%82%B3%E3%83%A9%E3%83%A0%E5%B9%B3%E5%9D%87%E5%80%A4%E3%81%AE%E3%81%A8%E3%82%8A%E6%96%B9%E3%81%AF%EF%BC%91%E3%81%A4%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84">【コラム】平均値のとり方は、１つではない</a>
+  <ul class="collapse">
+<li><a href="#%E7%AE%97%E8%A1%93%E5%B9%B3%E5%9D%87arithmetic-mean" id="toc-算術平均arithmetic-mean" class="nav-link" data-scroll-target="#%E7%AE%97%E8%A1%93%E5%B9%B3%E5%9D%87arithmetic-mean">算術平均（Arithmetic Mean）</a></li>
+  <li><a href="#%E5%B9%BE%E4%BD%95%E5%B9%B3%E5%9D%87geometric-mean%E3%81%BE%E3%81%9F%E3%81%AF%E7%9B%B8%E4%B9%97%E5%B9%B3%E5%9D%87" id="toc-幾何平均geometric-meanまたは相乗平均" class="nav-link" data-scroll-target="#%E5%B9%BE%E4%BD%95%E5%B9%B3%E5%9D%87geometric-mean%E3%81%BE%E3%81%9F%E3%81%AF%E7%9B%B8%E4%B9%97%E5%B9%B3%E5%9D%87">幾何平均（Geometric Mean）または相乗平均</a></li>
+  <li><a href="#%E4%BA%8C%E4%B9%97%E5%B9%B3%E5%9D%87root-mean-square" id="toc-二乗平均root-mean-square" class="nav-link" data-scroll-target="#%E4%BA%8C%E4%B9%97%E5%B9%B3%E5%9D%87root-mean-square">二乗平均（Root Mean Square）</a></li>
+  <li><a href="#%E8%AA%BF%E5%92%8C%E5%B9%B3%E5%9D%87harmonic-mean" id="toc-調和平均harmonic-mean" class="nav-link" data-scroll-target="#%E8%AA%BF%E5%92%8C%E5%B9%B3%E5%9D%87harmonic-mean">調和平均（Harmonic Mean）</a></li>
+  <li><a href="#%E3%83%88%E3%83%AA%E3%83%A0%E5%B9%B3%E5%9D%87" id="toc-トリム平均" class="nav-link" data-scroll-target="#%E3%83%88%E3%83%AA%E3%83%A0%E5%B9%B3%E5%9D%87">トリム平均</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#%E8%BF%BD%E5%8A%A0%E5%95%8F%E9%A1%8C" id="toc-追加問題" class="nav-link" data-scroll-target="#%E8%BF%BD%E5%8A%A0%E5%95%8F%E9%A1%8C">追加問題</a>
+  <ul class="collapse">
+<li><a href="#%E9%9A%8E%E7%B4%9A%E5%B9%85%E3%81%8C%E5%80%8D%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%9F%E5%A0%B4%E5%90%88" id="toc-階級幅が倍になった場合" class="nav-link" data-scroll-target="#%E9%9A%8E%E7%B4%9A%E5%B9%85%E3%81%8C%E5%80%8D%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%9F%E5%A0%B4%E5%90%88">階級幅が倍になった場合</a></li>
+  <li><a href="#%E9%9A%8E%E7%B4%9A%E5%B9%85%E3%81%8C%E5%8D%8A%E5%88%86%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%9F%E5%A0%B4%E5%90%88" id="toc-階級幅が半分になった場合" class="nav-link" data-scroll-target="#%E9%9A%8E%E7%B4%9A%E5%B9%85%E3%81%8C%E5%8D%8A%E5%88%86%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%9F%E5%A0%B4%E5%90%88">階級幅が半分になった場合</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title d-none d-lg-block">
+<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">平均値とはやじろべえの視点である</span>
+</h1>
+</div>
+
+<div>
+  <div class="description">
+    本書はデータ分析勉強会で学んだ成果をまとめたものです。
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header><p>　本講では以下のデータフレームを利用しています。</p>
+<div class="cell">
+
+</div>
+<section id="身長データ" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="身長データ">身長データ</h4>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["height"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"151"},{"1":"154"},{"1":"160"},{"1":"160"},{"1":"163"},{"1":"156"},{"1":"158"},{"1":"156"},{"1":"154"},{"1":"160"},{"1":"154"},{"1":"162"},{"1":"156"},{"1":"162"},{"1":"157"},{"1":"162"},{"1":"162"},{"1":"169"},{"1":"150"},{"1":"162"},{"1":"152"},{"1":"161"},{"1":"159"},{"1":"164"},{"1":"168"},{"1":"153"},{"1":"160"},{"1":"155"},{"1":"160"},{"1":"158"},{"1":"160"},{"1":"150"},{"1":"163"},{"1":"155"},{"1":"157"},{"1":"162"},{"1":"154"},{"1":"161"},{"1":"153"},{"1":"154"},{"1":"151"},{"1":"155"},{"1":"158"},{"1":"146"},{"1":"149"},{"1":"165"},{"1":"169"},{"1":"154"},{"1":"155"},{"1":"166"},{"1":"165"},{"1":"161"},{"1":"148"},{"1":"143"},{"1":"156"},{"1":"162"},{"1":"158"},{"1":"156"},{"1":"159"},{"1":"164"},{"1":"167"},{"1":"159"},{"1":"157"},{"1":"151"},{"1":"159"},{"1":"156"},{"1":"151"},{"1":"160"},{"1":"153"},{"1":"156"},{"1":"146"},{"1":"166"},{"1":"151"},{"1":"159"},{"1":"157"},{"1":"156"},{"1":"162"},{"1":"156"},{"1":"156"},{"1":"161"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section><section id="度数分布表" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="度数分布表">度数分布表</h4>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["class"],"name":[1],"type":["fct"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["l"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["h"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["mids"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["range"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["cumsum_n"],"name":[7],"type":["int"],"align":["right"]},{"label":["prop"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["cumsum_prop"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"(140,145]","2":"1","3":"140","4":"145","5":"143","6":"5","7":"1","8":"0.0125","9":"0.0125"},{"1":"(145,150]","2":"6","3":"145","4":"150","5":"148","6":"5","7":"7","8":"0.0750","9":"0.0875"},{"1":"(150,155]","2":"19","3":"150","4":"155","5":"153","6":"5","7":"26","8":"0.2375","9":"0.3250"},{"1":"(155,160]","2":"30","3":"155","4":"160","5":"158","6":"5","7":"56","8":"0.3750","9":"0.7000"},{"1":"(160,165]","2":"18","3":"160","4":"165","5":"163","6":"5","7":"74","8":"0.2250","9":"0.9250"},{"1":"(165,170]","2":"6","3":"165","4":"170","5":"168","6":"5","7":"80","8":"0.0750","9":"1.0000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　</p>
+</section><section id="統計量はデータを要約する数値" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="統計量はデータを要約する数値">
+<span class="header-section-number">2.1</span> 統計量は、データを要約する数値</h2>
+<p>　本講で扱っている統計量（要約統計量）は平均のみです。</p>
+<p>　</p>
+</section><section id="平均値とは" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="平均値とは">
+<span class="header-section-number">2.2</span> 平均値とは</h2>
+<p>　本講の平均値とは算術平均を意味しています。身長データ（<span class="math inline">\(x\)</span>）の平均値は157.575です。</p>
+<p>　</p>
+</section><section id="度数分布表での平均値" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="度数分布表での平均値">
+<span class="header-section-number">2.3</span> 度数分布表での平均値</h2>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>`階級` <span class="op">=</span> <span class="va">class</span>, `度数` <span class="op">=</span> <span class="va">n</span>, `階級値` <span class="op">=</span> <span class="va">mids</span>,
+                `階級幅` <span class="op">=</span> <span class="va">range</span>, `累積度数` <span class="op">=</span> <span class="va">cumsum_n</span>,
+                `相対度数` <span class="op">=</span> <span class="va">prop</span>, `累積相対度数` <span class="op">=</span> <span class="va">cumsum_prop</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["階級"],"name":[1],"type":["fct"],"align":["left"]},{"label":["度数"],"name":[2],"type":["int"],"align":["right"]},{"label":["階級値"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["階級幅"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["累積度数"],"name":[5],"type":["int"],"align":["right"]},{"label":["相対度数"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["累積相対度数"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"(140,145]","2":"1","3":"143","4":"5","5":"1","6":"0.0125","7":"0.0125"},{"1":"(145,150]","2":"6","3":"148","4":"5","5":"7","6":"0.0750","7":"0.0875"},{"1":"(150,155]","2":"19","3":"153","4":"5","5":"26","6":"0.2375","7":"0.3250"},{"1":"(155,160]","2":"30","3":"158","4":"5","5":"56","6":"0.3750","7":"0.7000"},{"1":"(160,165]","2":"18","3":"163","4":"5","5":"74","6":"0.2250","7":"0.9250"},{"1":"(165,170]","2":"6","3":"168","4":"5","5":"80","6":"0.0750","7":"1.0000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　（算術）平均は全ての観測値の総和を総データ数で除したものですので、観測値を各階級の代表値である階級値で近似すると下式が成り立つことが分かります。</p>
+<p><span class="math display">\[\mbox{平均} = \frac{\sum{\mbox{観測値}_i}}{総データ数} = \frac{\sum{\mbox{観測値}_i}}{\sum{度数}_i} \fallingdotseq \frac{\sum{(\mbox{階級値}_i \times \mbox{度数}_i)}}{\sum{度数}_i} = \sum{(\mbox{階級値}_i \times \mbox{相対度数}_i)}\]</span></p>
+<p>　なぜなら <span class="math display">\[\frac{\mbox{度数}_i}{\sum{\mbox{度数}_i}} = \mbox{相対度数}_i\]</span></p>
+<p><span class="math display">\[i = 1, 2, ... , n\]</span></p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">mids</span>, B <span class="op">=</span> <span class="va">prop</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`A x B` <span class="op">=</span> <span class="va">A</span> <span class="op">*</span> <span class="va">B</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>`A 階級値` <span class="op">=</span> <span class="va">A</span>, `B 相対度数` <span class="op">=</span> <span class="va">B</span>,
+                `A x B` <span class="op">=</span> <span class="va">`A x B`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["A 階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["B 相対度数"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["A x B"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"143","2":"0.0125","3":"1.7875"},{"1":"148","2":"0.0750","3":"11.1000"},{"1":"153","2":"0.2375","3":"36.3375"},{"1":"158","2":"0.3750","3":"59.2500"},{"1":"163","2":"0.2250","3":"36.6750"},{"1":"168","2":"0.0750","3":"12.6000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">mids</span>, B <span class="op">=</span> <span class="va">prop</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`A x B` <span class="op">=</span> <span class="va">A</span> <span class="op">*</span> <span class="va">B</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>`平均値` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`A x B`</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+ <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["平均値"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.75"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　実データで求めた平均値は157.575ですので、階級値から求めた平均値との差は-0.175となり、度数分布表を作ることは平均値に大きな影響を与えないことが分かります。</p>
+<p>　</p>
+</section><section id="平均値のヒストグラムの中での役割" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="平均値のヒストグラムの中での役割">
+<span class="header-section-number">2.4</span> 平均値のヒストグラムの中での役割</h2>
+<p>　階級値から求めた平均値をヒストグラム上にプロットすると下図のようになります。</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">157.75</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="chapter02_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>　</p>
+</section><section id="平均値をどう捉えるべきか" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="平均値をどう捉えるべきか">
+<span class="header-section-number">2.5</span> 平均値をどう捉えるべきか</h2>
+<p>　平均値の捉え方は様々考えられますが、テキストでは下記のようにまとめています。</p>
+<ul>
+<li>全データ（値）を代表する値（点）</li>
+<li>データは平均値の周辺に分布する</li>
+<li>数多く現れるデータは平均値への影響が大きい</li>
+<li>データの分布が対象の場合、平均値は対象軸</li>
+</ul>
+<p>　</p>
+</section><section id="練習問題" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="練習問題">
+<span class="header-section-number">2.6</span> 練習問題</h2>
+<section id="解答例" class="level3" data-number="2.6.1"><h3 data-number="2.6.1" class="anchored" data-anchor-id="解答例">
+<span class="header-section-number">2.6.1</span> 解答例</h3>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>mids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">50</span>, <span class="fl">70</span>, <span class="fl">90</span>, <span class="fl">110</span>, <span class="fl">130</span><span class="op">)</span>,
+           n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">15</span>, <span class="fl">40</span>, <span class="fl">20</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, cm <span class="op">=</span> <span class="va">mids</span> <span class="op">*</span> <span class="va">prop</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>`階級値` <span class="op">=</span> <span class="va">mids</span>, `度数` <span class="op">=</span> <span class="va">n</span>, `相対度数` <span class="op">=</span> <span class="va">prop</span>,
+                `階級値×相対度数` <span class="op">=</span> <span class="va">cm</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["度数"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["相対度数"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["階級値×相対度数"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"30","2":"5","3":"0.05","4":"1.5"},{"1":"50","2":"10","3":"0.10","4":"5.0"},{"1":"70","2":"15","3":"0.15","4":"10.5"},{"1":"90","2":"40","3":"0.40","4":"36.0"},{"1":"110","2":"20","3":"0.20","4":"22.0"},{"1":"130","2":"10","3":"0.10","4":"13.0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>mids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">50</span>, <span class="fl">70</span>, <span class="fl">90</span>, <span class="fl">110</span>, <span class="fl">130</span><span class="op">)</span>,
+           n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">15</span>, <span class="fl">40</span>, <span class="fl">20</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, cm <span class="op">=</span> <span class="va">mids</span> <span class="op">*</span> <span class="va">prop</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>`平均値` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">cm</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["平均値"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"88"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section></section><section id="コラム平均値のとり方は１つではない" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="コラム平均値のとり方は１つではない">【コラム】平均値のとり方は、１つではない</h2>
+<section id="算術平均arithmetic-mean" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="算術平均arithmetic-mean">算術平均（Arithmetic Mean）</h3>
+<p><span class="math display">\[\frac{\sum_{i=1}^n{x_i}}{n}\]</span></p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 50</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 50</code></pre>
+</div>
+</div>
+<p>　</p>
+</section><section id="幾何平均geometric-meanまたは相乗平均" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="幾何平均geometric-meanまたは相乗平均">幾何平均（Geometric Mean）または相乗平均</h3>
+<p><span class="math display">\[\sqrt{\prod_{i=1}^n{x_i}}\]</span></p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/geometric.mean.html">geometric.mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 30</code></pre>
+</div>
+</div>
+<p>　</p>
+</section><section id="二乗平均root-mean-square" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="二乗平均root-mean-square">二乗平均（Root Mean Square）</h3>
+<p><span class="math display">\[\sqrt{\frac{\sum_{i=1}^n{x_i^2}}{n}}\]</span></p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">90</span><span class="op">)</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 64.03124</code></pre>
+</div>
+</div>
+<p>　</p>
+</section><section id="調和平均harmonic-mean" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="調和平均harmonic-mean">調和平均（Harmonic Mean）</h3>
+<p><span class="math display">\[\frac{n}{\sum_{i=1}^n{\frac{1}{x_i}}}\]</span></p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/harmonic.mean.html">harmonic.mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 18</code></pre>
+</div>
+</div>
+<p>　</p>
+</section><section id="トリム平均" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="トリム平均">トリム平均</h3>
+<p>　トリム平均は体操競技の評点などで使われる平均値の計算方法で、値を小さい方から順に並べ、上位側と下位側から一定の割合で値を除き算術平均を求めます。外れ値や異常値などを影響を排除するために使われることが多いです。</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.6</code></pre>
+</div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="fl">30</span><span class="op">)</span>, trim <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span>  <span class="co"># データの両側2.5%を対象外とする</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.5</code></pre>
+</div>
+</div>
+<p>　</p>
+</section></section><section id="追加問題" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="追加問題">追加問題</h2>
+<p>　身長のデータを用いて階級幅が変わると度数分布表から求める平均値がどのように変化するか確認してみましょう。</p>
+<section id="階級幅が倍になった場合" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="階級幅が倍になった場合">階級幅が倍になった場合</h3>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>,
+                            breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">140</span>, <span class="fl">150</span>, <span class="fl">160</span>, <span class="fl">170</span><span class="op">)</span>,
+                            include.lowest <span class="op">=</span> <span class="cn">FALSE</span>, right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>class_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">class_value</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"l"</span>, <span class="st">"h"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>l <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">l</span>, <span class="st">"[[:punct:]]"</span><span class="op">)</span><span class="op">)</span>,
+                h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">h</span>, <span class="st">"[[:punct:]]"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mids <span class="op">=</span> <span class="op">(</span><span class="op">(</span><span class="va">l</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="va">h</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>range <span class="op">=</span> <span class="va">h</span> <span class="op">-</span> <span class="va">l</span>, cumsum_n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,
+                prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, cumsum_prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">prop</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">mids</span>, B <span class="op">=</span> <span class="va">prop</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`A x B` <span class="op">=</span> <span class="va">A</span> <span class="op">*</span> <span class="va">B</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>`階級値による平均値` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`A x B`</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`算術平均` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">height</span><span class="op">)</span>,
+                `差` <span class="op">=</span> <span class="va">`算術平均`</span> <span class="op">-</span> <span class="va">`階級値による平均値`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["階級値による平均値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["算術平均"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.625","2":"157.575","3":"-0.05"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section><section id="階級幅が半分になった場合" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="階級幅が半分になった場合">階級幅が半分になった場合</h3>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>,
+                            breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">140</span>, to <span class="op">=</span> <span class="fl">170</span>, by <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span>,
+                            include.lowest <span class="op">=</span> <span class="cn">FALSE</span>, right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>class_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">class_value</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"l"</span>, <span class="st">"h"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>l <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">l</span>, <span class="st">"[[:punct:]]"</span><span class="op">)</span><span class="op">)</span>,
+                h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">h</span>, <span class="st">"[[:punct:]]"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mids <span class="op">=</span> <span class="op">(</span><span class="op">(</span><span class="va">l</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="va">h</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>range <span class="op">=</span> <span class="va">h</span> <span class="op">-</span> <span class="va">l</span>, cumsum_n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,
+                prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, cumsum_prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">prop</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">mids</span>, B <span class="op">=</span> <span class="va">prop</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`A x B` <span class="op">=</span> <span class="va">A</span> <span class="op">*</span> <span class="va">B</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>`階級値による平均値` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`A x B`</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`算術平均` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">height</span><span class="op">)</span>,
+                `差` <span class="op">=</span> <span class="va">`算術平均`</span> <span class="op">-</span> <span class="va">`階級値による平均値`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["階級値による平均値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["算術平均"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.8562","2":"157.575","3":"-0.28125"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<hr>
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./chapter01.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">度数分布表とヒストグラムでデータの特徴を浮き彫りにする</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chapter03.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの散らばり具合を見積もる統計量</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
