@@ -205,7 +205,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header><section id="生データでは何もわからないから統計を使う" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="生データでは何もわからないから統計を使う">
 <span class="header-section-number">1.1</span> 生データでは何もわからないから統計を使う</h2>
-<p>　テキストの図表1-1のデータは4列20行からなるデータです。</p>
+<p>　テキストP16の図表1-1のデータは4列20行からなるデータです。</p>
 <div class="cell">
 <div class="cell-output-display">
 
@@ -216,24 +216,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>　Rでは、このような形式のデータ（雑然データ）をそのまま使わずに整然データ（<a href="https://ja.wikipedia.org/wiki/Tidy_data">Tidy Data</a>）と呼ばれる形式に変換した方が効率的に処理できます。変換には<strong><code>tidyverse</code></strong>ファミリーを利用するのが効率的です。</p>
+<p>　<br>
+　Rでは、このような形式のデータ（雑然データ）をそのまま使わずに整然データ（<a href="https://ja.wikipedia.org/wiki/Tidy_data">Tidy Data</a>）と呼ばれる形式に変換した方が効率的に処理できます。変換には<strong><code>tidyverse</code></strong>ファミリーを利用するのが効率的です。</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>  <span class="co"># load tidyverse package</span>
+<details open=""><summary>Tidy Dataへの変形</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>  <span class="co"># load tidyverse package</span>
 
-<span class="co"># ローカルにあるデータファイルを読み込む</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="st">"./data/P16_図表1-1 .csv"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>col_names <span class="op">=</span> <span class="cn">FALSE</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="co"># 読み込んだデータを縦長形式（Tidy Data）に変換する</span>
   <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span>,
                       names_to <span class="op">=</span> <span class="st">"name"</span>, values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="co"># X1, X2, ... , X4, X1 の順で行方向に読み込まれるので列方向で整列する</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="co"># 必要なデータ列（value）の列名をheightに変更して取り出す</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>height <span class="op">=</span> <span class="va">value</span><span class="op">)</span>
 
 <span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -242,7 +239,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>　このような形式に変換することで、様々な統計量を効率的に求めることができるようになります。</p>
+<p>　このような形式（<a href="https://ja.wikipedia.org/wiki/Tidy_data">Tidy Data</a>）に変換することで、様々な統計量を効率的に求めることができるようになります。</p>
 <p>　</p>
 </section><section id="ヒストグラムを作る" class="level2 page-columns page-full" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="ヒストグラムを作る">
 <span class="header-section-number">1.2</span> ヒストグラムを作る</h2>
@@ -261,19 +258,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>となっていますが、Rでは<code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code>関数だけでヒストグラムを描くことができます。<code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code>関数の引数はベクトル型に限定されますので、データフレーム型の場合は参照演算子（<code>$</code>）などでベクトル型データを取り出す必要があります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">height</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="chapter01_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">R標準のhist()関数</figcaption><p></p>
-</figure>
+<details open=""><summary>R標準のヒストグラム関数</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">height</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter01_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</div>
-<p>　<code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code>関数はヒストグラムを描くために必要となる階級や度数、階級値などの情報を出力することも可能です。</p>
+<p>　<br>
+　<code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code>関数はヒストグラムを描くために必要となる階級や度数、階級値などの情報を出力することも可能です。</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">height</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>階級などを表示させる方法</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">height</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>$breaks
 [1] 140 145 150 155 160 165 170
 
@@ -312,7 +306,7 @@ attr(,"class")
 <tr class="odd">
 <td><code>$breaks</code></td>
 <td>階級</td>
-<td>デフォルトはスタージェスの公式<sup>*</sup>にもとづく区切り（幅）</td>
+<td>デフォルトはスタージェスの公式<sup>*後述</sup>にもとづく区切り（幅）</td>
 </tr>
 <tr class="even">
 <td><code>$counts</code></td>
@@ -331,10 +325,10 @@ attr(,"class")
 </tr>
 </tbody>
 </table>
-<p><sup>*</sup> 後述</p>
+<p>　</p>
 <p>　表形式の度数分布表を作成する場合は以下のようにコード処理します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<details open=""><summary>度数分布表の作成</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># 階級を求めて、データを階級ごとに分ける</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>,
                             breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span>,
@@ -355,7 +349,7 @@ attr(,"class")
                 `度数` <span class="op">=</span> <span class="va">n</span>, `累積度数` <span class="op">=</span> <span class="va">cumsum_n</span>,
                 `相対度数` <span class="op">=</span> <span class="va">prop</span>, `累積相対度数` <span class="op">=</span> <span class="va">cumsum_prop</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -364,7 +358,8 @@ attr(,"class")
 </div>
 </div>
 </div>
-<p>　以降の項は度数分布表の作成に必要な関数の使い方を紹介していますので、不要な方は演習問題まで読み飛ばしてください。</p>
+<p>　<br>
+　以降の項は度数分布表の作成に必要な関数の使い方を紹介していますので、不要な方は演習問題まで読み飛ばしてください。</p>
 <p>　</p>
 <section id="階級を求める" class="level3" data-number="1.2.1"><h3 data-number="1.2.1" class="anchored" data-anchor-id="階級を求める">
 <span class="header-section-number">1.2.1</span> 階級を求める</h3>
@@ -373,41 +368,45 @@ attr(,"class")
 </blockquote>
 <p>　階級を求めるには<code><a href="https://rdrr.io/r/base/pretty.html">pretty()</a></code>関数を使います。</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">height</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>階級を求める</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">height</span>,
+               n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 140 145 150 155 160 165 170</code></pre>
 </div>
 </div>
 <p>　第一引数<code>x</code>には階級を求めたいベクトル型データを第二引数<code>n</code>には階級を区切りたい数（階級数）を指定します。ここでは、階級数<code>n</code>にはスタージェスの公式から求めた階級数を指定しています。<br>
-　ただし、必ずしも指定した階級数に分割される訳ではない点に注意してください。<code>x</code>で指定したデータが階級に収まるように適切な丸め処理を行いますので、指定した階級数とは異なる階級が求められることもあります。</p>
+　ただし、<code>x</code>で指定したデータが階級に収まるように適切な丸め処理を行いますので、指定した階級数とは異なる階級が求められることもあります。</p>
 <p>　スタージェスの公式は、階級数を<span class="math inline">\(k\)</span>、データのサイズ（数）を<span class="math inline">\(n\)</span>とした場合、下式で定義されます。</p>
 <p><span class="math display">\[k = \lceil \log_2n + 1 \rceil\]</span></p>
 <p>　スタージェスの公式は<code>nclass.Sturgess()</code>関数として実装されています。</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>スタージェスの公式に基づく階級数</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 8</code></pre>
 </div>
 </div>
-<p>　スタージェスの公式はヒストグラムを平滑化し過ぎる傾向があると言われています。気になる場合はスコットの選択（<code><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.scott()</a></code>）やフリードマン=ダイアコニスの選択（<code><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.FD()</a></code>）を試して見てください。</p>
+<p>　<br>
+　スタージェスの公式はヒストグラムを平滑化し過ぎる傾向があると言われています。気になる場合はスコットの選択（<code><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.scott()</a></code>）やフリードマン=ダイアコニスの選択（<code><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.FD()</a></code>）を試して見てください。</p>
 <p>　</p>
 </section><section id="データを各階級に分類する" class="level3 page-columns page-full" data-number="1.2.2"><h3 data-number="1.2.2" class="anchored" data-anchor-id="データを各階級に分類する">
 <span class="header-section-number">1.2.2</span> データを各階級に分類する</h3>
 
 <div class="no-row-height column-margin column-container"><div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="co"># 身長データ（元データ）</span>
-<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">height</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details><summary>参考）身長データ（元データ）</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">height</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> [1] 151 154 160 160 163 156 158 156 154 160 154 162 156 162 157 162 162 169 150
 [20] 162 152 161 159 164 168 153 160 155 160 158 160 150 163 155 157 162 154 161
 [39] 153 154 151 155 158 146 149 165 169 154 155 166 165 161 148 143 156 162 158
 [58] 156 159 164 167 159 157 151 159 156 151 160 153 156 146 166 151 159 157 156
 [77] 162 156 156 161</code></pre>
 </div>
-</div></div><p>　データを階級分けするには<code><a href="https://rdrr.io/r/base/cut.html">cut()</a></code>関数を使います。</p>
+</div></div><p>　<br>
+　データを階級分けするには<code><a href="https://rdrr.io/r/base/cut.html">cut()</a></code>関数を使います。</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>データの階級分け</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">height</span>,
+            breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>,
+                            n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> [1] (150,155] (150,155] (155,160] (155,160] (160,165] (155,160] (155,160]
  [8] (155,160] (150,155] (155,160] (150,155] (160,165] (155,160] (160,165]
 [15] (155,160] (160,165] (160,165] (165,170] (145,150] (160,165] (150,155]
@@ -423,10 +422,11 @@ attr(,"class")
 Levels: (140,145] (145,150] (150,155] (155,160] (160,165] (165,170]</code></pre>
 </div>
 </div>
-<p>　第一引数<code>x</code>には階級分けの対象となるベクトル型変数を第二引数<code>breaks</code>には前項で求めた階級を指定します。<code>breaks</code>引数には任意の階級、例えば<code>breaks = c(140, 155, 170)</code>のように指定することも可能です。</p>
+<p>　<br>
+　<code><a href="https://rdrr.io/r/base/cut.html">cut()</a></code>関数の第一引数<code>x</code>には階級分けの対象となるベクトル型変数を第二引数<code>breaks</code>には前項で求めた階級を指定します。<code>breaks</code>引数には任意の階級、例えば<code>breaks = c(140, 155, 170)</code>のような指定も可能です。</p>
 <p>　</p>
 <section id="階級の境界値はどちらに含まれるのか" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="階級の境界値はどちらに含まれるのか">階級の境界値はどちらに含まれるのか？</h4>
-<p>　<code><a href="https://rdrr.io/r/base/cut.html">cut()</a></code>関数の出力は、<code>(140,145] (145,150]</code>のように階級間で同じ数値、この場合は<code>145</code>が含まれます。では、<code>145</code>はどちらの階級に含まれるのでしょうか？答えは、添えられている括弧にあります。</p>
+<p>　<code><a href="https://rdrr.io/r/base/cut.html">cut()</a></code>関数の出力は、<code>(140,145] (145,150]</code>のように階級間で同じ値（この場合は<code>145</code>）が含まれます。では、<code>145</code>はどちらの階級に含まれるのでしょうか？答えは、添えられている括弧にあります。</p>
 <blockquote class="blockquote">
 <p><code>(140,145]</code></p>
 </blockquote>
@@ -472,11 +472,11 @@ Levels: (140,145] (145,150] (150,155] (155,160] (160,165] (165,170]</code></pre>
 </tbody>
 </table>
 <p>　<sup>*</sup>デフォルト</p>
-<p>　例えばデータの最大値と最小値を境界値として含む階級を指定した場合、<code>include.lowest = FALSE, right = FALSE</code>と指定すると最大値が階級に含まれなくなります。</p>
+<p>　例えばデータの最大値と最小値を境界値として含む階級を指定した場合、<code>include.lowest = FALSE, right = FALSE</code>と指定すると最大値が階級に含まれなくなる場合があります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">143</span>, <span class="fl">155</span>, <span class="fl">169</span><span class="op">)</span>,
+<details open=""><summary>以上、未満の場合</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">143</span>, <span class="fl">155</span>, <span class="fl">169</span><span class="op">)</span>,
             include.lowest <span class="op">=</span> <span class="cn">FALSE</span>, right <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code> [1] [143,155) [143,155) [155,169) [155,169) [155,169) [155,169) [155,169)
  [8] [155,169) [143,155) [155,169) [143,155) [155,169) [155,169) [155,169)
 [15] [155,169) [155,169) [155,169) &lt;NA&gt;      [143,155) [155,169) [143,155)
@@ -492,11 +492,12 @@ Levels: (140,145] (145,150] (150,155] (155,160] (160,165] (165,170]</code></pre>
 Levels: [143,155) [155,169)</code></pre>
 </div>
 </div>
-<p>　逆に<code>include.lowest = FALSE, right = TRUE</code>と指定すると最小値が階級に含まれなくなります。</p>
+<p>　<br>
+　逆に<code>include.lowest = FALSE, right = TRUE</code>と指定すると最小値が階級が階級に含まれなくなる場合があります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">143</span>, <span class="fl">155</span>, <span class="fl">169</span><span class="op">)</span>,
+<details open=""><summary>超えて、以下の場合</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">143</span>, <span class="fl">155</span>, <span class="fl">169</span><span class="op">)</span>,
             include.lowest <span class="op">=</span> <span class="cn">FALSE</span>, right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code> [1] (143,155] (143,155] (155,169] (155,169] (155,169] (155,169] (155,169]
  [8] (155,169] (143,155] (155,169] (143,155] (155,169] (155,169] (155,169]
 [15] (155,169] (155,169] (155,169] (155,169] (143,155] (155,169] (143,155]
@@ -515,24 +516,25 @@ Levels: (143,155] (155,169]</code></pre>
 <p>　</p>
 </section></section><section id="度数を求める" class="level3" data-number="1.2.3"><h3 data-number="1.2.3" class="anchored" data-anchor-id="度数を求める">
 <span class="header-section-number">1.2.3</span> 度数を求める</h3>
-<p>　度数を求めるには各階級の数を数えます。数を数えるには<code><a href="https://rdrr.io/r/base/table.html">table()</a></code>関数や<code><a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a></code>関数を使います。<code><a href="https://rdrr.io/r/base/table.html">table()</a></code>関数はベクトル型を対象に、<code><a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a></code>関数はデータフレーム型を対象として個数をカウントします。用途によって使い分けてください。</p>
+<p>　度数を求めるには各階級の数を数えます。数を数えるには<code><a href="https://rdrr.io/r/base/table.html">table()</a></code>関数や<code><a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a></code>関数を使います。<code><a href="https://rdrr.io/r/base/table.html">table()</a></code>関数はベクトル型を対象として、<code><a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a></code>関数はデータフレーム型を対象として個数をカウントする関数です。</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>度数のカウント</summary><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>,
+                  breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>,
+                                  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>
 (140,145] (145,150] (150,155] (155,160] (160,165] (165,170] 
         1         6        19        30        18         6 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="co"># 階級を求めて、データを階級ごとに分ける</span>
+<details open=""><summary>度数のカウント（データフレームの場合）</summary><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>,
-                            breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="co"># 階級ごとの度数を求める</span>
+                            breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>,
+                                            n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -546,27 +548,33 @@ Levels: (143,155] (155,169]</code></pre>
 <span class="header-section-number">1.2.4</span> 累積度数、相対度数、累積相対度数を求める</h3>
 <p>　累積度数（度数の累積和）を求めるには<code><a href="https://rdrr.io/r/base/cumsum.html">cumsum()</a></code>関数を使います。</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>累積度数を求める</summary><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>,
+                         breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>,
+                                         n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>(140,145] (145,150] (150,155] (155,160] (160,165] (165,170] 
         1         7        26        56        74        80 </code></pre>
 </div>
 </div>
-<p>　</p>
-<p>　相対度数を求めるには<code><a href="https://rdrr.io/r/base/proportions.html">prop.table()</a></code>関数を使います。</p>
+<p>　<br>
+　相対度数を求めるには<code><a href="https://rdrr.io/r/base/proportions.html">prop.table()</a></code>関数を使います。</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>相対度数を求める</summary><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>,
+                             breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>,
+                                             n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>
 (140,145] (145,150] (150,155] (155,160] (160,165] (165,170] 
    0.0125    0.0750    0.2375    0.3750    0.2250    0.0750 </code></pre>
 </div>
 </div>
-<p>　</p>
 <p>　累積相対度数は相対度数の累積和ですので、<code><a href="https://rdrr.io/r/base/proportions.html">prop.table()</a></code>関数の結果を<code><a href="https://rdrr.io/r/base/cumsum.html">cumsum()</a></code>関数に渡すことで求めることができます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>累積相対度数を求める</summary><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>,
+            breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>,
+                            n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>(140,145] (145,150] (150,155] (155,160] (160,165] (165,170] 
    0.0125    0.0875    0.3250    0.7000    0.9250    1.0000 </code></pre>
 </div>
@@ -576,7 +584,7 @@ Levels: (143,155] (155,169]</code></pre>
 <span class="header-section-number">1.2.5</span> 階級値を求める</h3>
 <p>　階級値は階級の文字列から下端と上端の境界値を抜き出し、下式で単純平均として求めています。</p>
 <p><span class="math display">\[\frac{(\mbox{下端} + 1) + \mbox{上端}}{2}\]</span></p>
-<p>　手順としては以下のようにしています。</p>
+<p>　手順としては以下のようになります。</p>
 <ol type="1">
 <li>
 <code><a href="https://rdrr.io/r/base/character.html">as.character()</a></code>関数で 階級（<code>class</code>）を文字型に変換し、新しい変数（<code>class_value</code>）を作成する<br>
@@ -590,11 +598,13 @@ Levels: (143,155] (155,169]</code></pre>
 <li>数値に変換された二つの変数から（<code>l</code>, <code>h</code>）平均値を求める</li>
 </ol>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<details open=""><summary>階級値を求める</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># 階級を求めて、データを階級ごとに分ける</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>,
-                            breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span>,
-                            include.lowest <span class="op">=</span> <span class="cn">FALSE</span>, right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+                            breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">height</span>,
+                                            n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span>,
+                            include.lowest <span class="op">=</span> <span class="cn">FALSE</span>,
+                            right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># 階級ごとの度数を求める</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># 階級値を求める</span>
@@ -604,7 +614,7 @@ Levels: (143,155] (155,169]</code></pre>
                 h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">h</span>, <span class="st">"[[:punct:]]"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mids <span class="op">=</span> <span class="op">(</span><span class="op">(</span><span class="va">l</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="va">h</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -634,9 +644,9 @@ Levels: (143,155] (155,169]</code></pre>
 
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<details open=""><summary>整形済の処理対象データ（体重データ）</summary><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -647,16 +657,18 @@ Levels: (143,155] (155,169]</code></pre>
 </div>
 <p>　度数分布表を身長の場合と同じ要領で作成します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="co"># 階級を求めて、データを階級ごとに分ける</span>
+<details open=""><summary>度数分布表の作成</summary><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">weight</span>,
-                            breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">weight</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span>,
-                            include.lowest <span class="op">=</span> <span class="cn">FALSE</span>, right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+                            breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span><span class="op">(</span><span class="va">weight</span>,
+                                            n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span>,
+                            include.lowest <span class="op">=</span> <span class="cn">FALSE</span>,
+                            right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># 階級ごとの度数を求める</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># 累積度数、相対度数、累積相対度数を求める</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>cumsum_n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,
-                prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, cumsum_prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">prop</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+                prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,
+                cumsum_prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">prop</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># 階級値を求める</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>class_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">class_value</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"l"</span>, <span class="st">"h"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -666,9 +678,10 @@ Levels: (143,155] (155,169]</code></pre>
   <span class="co"># 変数名を日本語にする</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>`階級` <span class="op">=</span> <span class="va">class</span>, `階級値` <span class="op">=</span> <span class="va">mids</span>,
                 `度数` <span class="op">=</span> <span class="va">n</span>, `累積度数` <span class="op">=</span> <span class="va">cumsum_n</span>,
-                `相対度数` <span class="op">=</span> <span class="va">prop</span>, `累積相対度数` <span class="op">=</span> <span class="va">cumsum_prop</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+                `相対度数` <span class="op">=</span> <span class="va">prop</span>,
+                `累積相対度数` <span class="op">=</span> <span class="va">cumsum_prop</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -680,17 +693,13 @@ Levels: (143,155] (155,169]</code></pre>
 <p>　</p>
 <p>　ヒストグラムを描きます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="chapter01_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">解答例</figcaption><p></p>
-</figure>
+<details open=""><summary>ヒストグラムを描く</summary><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter01_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</div>
-<p>　</p>
-<p>以上</p>
+<p>　<br>
+以上</p>
 <p>　</p>
 </section></section><section id="ヒストグラムを描くポイント" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="ヒストグラムを描くポイント">ヒストグラムを描くポイント</h2>
 <p>　ヒストグラムを描く（度数分布表を作成する）際のポイントは下記の点です。</p>
@@ -702,49 +711,41 @@ Levels: (143,155] (155,169]</code></pre>
 <section id="階級の決め方" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="階級の決め方">階級の決め方</h3>
 <p>　階級を決める方法は特に定められていません。データが取る幅を見て切のよい値にすることが多いようです。ただし、階級のとり方によりヒストグラムの形状が変わる点には注意が必要です。例えば、身長データに対する階級をテキストと同様に<span class="math inline">\(5cm\)</span>幅とした場合は下図のような形状になります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">140</span>, to <span class="op">=</span> <span class="fl">170</span>, by <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="chapter01_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">階級幅5cmの場合</figcaption><p></p>
-</figure>
+<details open=""><summary>階級幅5cmの場合のヒストグラム</summary><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>,
+             breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">140</span>, to <span class="op">=</span> <span class="fl">170</span>, by <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter01_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</div>
-<p>　階級を倍の<span class="math inline">\(10cm\)</span>幅とすると下図のようになります。</p>
+<p>　<br>
+　階級を倍の<span class="math inline">\(10cm\)</span>幅とすると下図のようになります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">140</span>, to <span class="op">=</span> <span class="fl">170</span>, by <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="chapter01_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">階級幅10cmの場合</figcaption><p></p>
-</figure>
+<details open=""><summary>階級幅10cmの場合のヒストグラム</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>,
+             breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">140</span>, to <span class="op">=</span> <span class="fl">170</span>, by <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter01_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</div>
-<p>　逆に階級を半分の<span class="math inline">\(2.5cm\)</span>幅とすると下図のようになります。</p>
+<p>　<br>
+　逆に階級を半分の<span class="math inline">\(2.5cm\)</span>幅とすると下図のようになります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">140</span>, to <span class="op">=</span> <span class="fl">170</span>, by <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="chapter01_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">階級幅2.5cmの場合</figcaption><p></p>
-</figure>
+<details open=""><summary>階級幅2.5cmの場合のヒストグラム</summary><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>,
+             breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">140</span>, to <span class="op">=</span> <span class="fl">170</span>, by <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter01_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</div>
-<p>　更に細かくして<span class="math inline">\(1cm\)</span>幅にすると下図のように歯抜けがある形状になります。</p>
+<p>　<br>
+　更に細かくして<span class="math inline">\(1cm\)</span>幅にすると下図のように歯抜けがある形状になります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">140</span>, to <span class="op">=</span> <span class="fl">170</span>, by <span class="op">=</span> <span class="fl">1.0</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="chapter01_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">階級幅1cmの場合</figcaption><p></p>
-</figure>
+<details open=""><summary>階級幅1cmの場合のヒストグラム</summary><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>,
+             breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">140</span>, to <span class="op">=</span> <span class="fl">170</span>, by <span class="op">=</span> <span class="fl">1.0</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter01_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</div>
-<p>　このように階級の決め方次第でヒストグラムの形状が変わってくることが分かります。ヒストグラムはデータの分布をみるために使うグラフですので、過大な階級幅や過小な階級幅で描くことは好ましくありませんので、適切な値を選ぶようにしてください。</p>
+<p>　<br>
+　このように階級の決め方次第でヒストグラムの形状が変わってくることが分かります。ヒストグラムはデータの分布をみるために使うグラフですので、過大な階級幅や過小な階級幅で描くことは好ましくありませんので、適切な値を選ぶようにしてください。</p>
 <p>　</p>
 <section id="計算で階級を決める" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="計算で階級を決める">計算で階級を決める</h4>
 <p>　適切な階級をどのように決めれば良いか迷う場合には、下表のような計算方法が提案されていますのでこれらを試してみてください。</p>
@@ -789,31 +790,28 @@ Levels: (143,155] (155,169]</code></pre>
 <section id="スタージェスの公式" class="level5 unnumbered"><h5 class="unnumbered anchored" data-anchor-id="スタージェスの公式">スタージェスの公式</h5>
 <p>　スタージェスの公式は、比較的、よく使われる計算方法です。ただし、データの数が<span class="math inline">\(30\)</span>個未満の場合には適切ではありませんし、データの数が多くなるとヒストグラムを<a href="https://k-metrics.netlify.app/post/2018-09/histogram/#/%E4%BB%BB%E6%84%8F%E3%81%AE%E9%9A%8E%E7%B4%9A%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B">平滑化し過ぎる傾向</a>があると言われています。そのような傾向が見られた場合には、他の計算方法や任意の階級も試してみてください。</p>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="st">"Sturges"</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="chapter01_files/figure-html/%E9%9A%8E%E7%B4%9A%E6%95%B0%E3%82%92%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%B8%E3%82%A7%E3%82%B9%E3%81%AE%E5%85%AC%E5%BC%8F%E3%81%A7%E6%B1%82%E3%82%81%E3%81%9F%E5%A0%B4%E5%90%88-1.png" class="img-fluid" width="672"></p>
+<details open=""><summary>階級数をスタージェスの公式で求めた場合のヒストグラム</summary><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>,
+             breaks <span class="op">=</span> <span class="st">"Sturges"</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter01_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>　</p>
 </section><section id="スコットの選択" class="level5 unnumbered"><h5 class="unnumbered anchored" data-anchor-id="スコットの選択">スコットの選択</h5>
 <p>　スコットの選択は、データによってはスタージェスの公式と比べて階級数が少なくなる傾向があります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="st">"Scott"</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="chapter01_files/figure-html/%E3%82%B9%E3%82%B3%E3%83%83%E3%83%88%E3%81%AE%E9%81%B8%E6%8A%9E%E3%81%A7%E6%B1%82%E3%82%81%E3%81%9F%E5%A0%B4%E5%90%88-1.png" class="img-fluid" width="672"></p>
+<details open=""><summary>階級数をスコットの選択を元に求めた場合のヒストグラム</summary><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="st">"Scott"</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter01_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>　</p>
 </section><section id="フリードマンダイアコニスの選択" class="level5 unnumbered"><h5 class="unnumbered anchored" data-anchor-id="フリードマンダイアコニスの選択">フリードマン・ダイアコニスの選択</h5>
 <p>　フリードマン・ダイアコニスの法則とも呼ばれます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="st">"FD"</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="chapter01_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">階級をフリードマン・ダイアコニスの選択で求めた場合</figcaption><p></p>
-</figure>
-</div>
+<details open=""><summary>階級数をフリードマン・ダイアコニスの選択を元に求めた場合のヒストグラム</summary><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="st">"FD"</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter01_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>　</p>
@@ -849,24 +847,16 @@ Levels: (143,155] (155,169]</code></pre>
 </table>
 <p>　例えば、階級を「<span class="math inline">\(\mbox{下端値} &lt; x \leq \mbox{上端値}\)</span>」と定義した場合は、下図のようになります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="chapter01_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">上端を含める場合</figcaption><p></p>
-</figure>
+<details open=""><summary>階級の上端を含める場合のヒストグラム</summary><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter01_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</div>
-<p>階級を「<span class="math inline">\(\mbox{下端値} \leq x &lt;ｌ \mbox{上端値}\)</span>」と定義した場合は、分布形状が異なることが分かります。</p>
+<p>階級を「<span class="math inline">\(\mbox{下端値} \leq x &lt; \mbox{上端値}\)</span>」と定義した場合は、分布形状が異なることが分かります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, right <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="chapter01_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">下端を含める場合</figcaption><p></p>
-</figure>
-</div>
+<details open=""><summary>階級の下端を含める場合のヒストグラム</summary><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, right <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter01_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>　このように階級によりヒストグラムの形状が変わってくる点には注意が必要です。なお、下端、上端の含め方を<a href="https://k-metrics.netlify.app/post/2018-09/histogram/#/%E5%B7%A6%E9%96%89%E3%81%98%E3%81%A8%E5%8F%B3%E9%96%89%E3%81%98">「左閉じ、右閉じ」と表現</a>することもあります。</p>
@@ -879,14 +869,16 @@ Levels: (143,155] (155,169]</code></pre>
 　<br>
 　例えば、テキストにある身長のデータの<span class="math inline">\(140cm\)</span>から<span class="math inline">\(150cm\)</span>をひとつの階級にまとめた場合、度数分布表は下表のようになります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<details open=""><summary>等間隔ではない階級の度数分布表</summary><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">height</span>,
-                            breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">140</span>, <span class="fl">150</span>, <span class="fl">155</span>, <span class="fl">160</span>, <span class="fl">165</span>, <span class="fl">170</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+                            breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">140</span>, <span class="fl">150</span>,
+                                       <span class="fl">155</span>, <span class="fl">160</span>, <span class="fl">165</span>, <span class="fl">170</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>`階級` <span class="op">=</span> <span class="va">class</span>, `度数` <span class="op">=</span> <span class="va">n</span>, `相対度数` <span class="op">=</span> <span class="va">prop</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>`階級` <span class="op">=</span> <span class="va">class</span>, `度数` <span class="op">=</span> <span class="va">n</span>,
+                `相対度数` <span class="op">=</span> <span class="va">prop</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -897,13 +889,10 @@ Levels: (143,155] (155,169]</code></pre>
 </div>
 <p>　これをヒストグラムとして描いた場合は、下図のようにならなければなりません。この図では縦軸は度数でなく密度になっています。</p>
 <div class="cell">
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">140</span>, <span class="fl">150</span>, <span class="fl">155</span>, <span class="fl">160</span>, <span class="fl">165</span>, <span class="fl">170</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="chapter01_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">正しいヒストグラム</figcaption><p></p>
-</figure>
-</div>
+<details open=""><summary>正しいヒストグラム</summary><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>,
+             breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">140</span>, <span class="fl">150</span>, <span class="fl">155</span>, <span class="fl">160</span>, <span class="fl">165</span>, <span class="fl">170</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter01_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>　密度（高さ）は左から<br>
@@ -915,17 +904,15 @@ Levels: (143,155] (155,169]</code></pre>
 　となり、相対度数と等しいことがわかります。　</p>
 <p>　度数を表示させるために下図のようなヒストグラムを描くことは好ましくありません。階級幅が等幅でない場合は度数分布表と共に密度のヒストグラムを示した方がよいでしょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">140</span>, <span class="fl">150</span>, <span class="fl">155</span>, <span class="fl">160</span>, <span class="fl">165</span>, <span class="fl">170</span><span class="op">)</span>, freq <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
+<details open=""><summary>好ましくないヒストグラム（単なる棒グラフ）</summary><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">height</span>,
+             breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">140</span>, <span class="fl">150</span>, <span class="fl">155</span>, <span class="fl">160</span>, <span class="fl">165</span>, <span class="fl">170</span><span class="op">)</span>,
+             freq <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
 <pre><code>Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle =
 angle, : プロットの領域が誤まりです。むしろ 'freq = FALSE' を使用して下さい</code></pre>
 </div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="chapter01_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">好ましくないヒストグラム（単なる棒グラフ）</figcaption><p></p>
-</figure>
-</div>
+<p><img src="chapter01_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <hr>

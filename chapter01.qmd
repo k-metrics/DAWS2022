@@ -1,6 +1,6 @@
 # 度数分布表とヒストグラムでデータの特徴を浮き彫りにする
 
-```{r}
+```{r, setup}
 #| label: setup
 #| include: false
 source("./R/setup.R")
@@ -8,7 +8,7 @@ source("./R/setup.R")
 
 ## 生データでは何もわからないから統計を使う
 
-　テキストの図表1-1のデータは4列20行からなるデータです。
+　テキストP16の図表1-1のデータは4列20行からなるデータです。
 
 ```{r, echo=FALSE, message=FALSE}
 #| echo: false
@@ -18,28 +18,26 @@ source("./R/setup.R")
   readr::read_csv(col_names = FALSE, show_col_types = FALSE) %>% 
   df_print()
 ```
-
+　  
 　Rでは、このような形式のデータ（雑然データ）をそのまま使わずに整然データ（[Tidy Data](https://ja.wikipedia.org/wiki/Tidy_data)）と呼ばれる形式に変換した方が効率的に処理できます。変換には**`tidyverse`**ファミリーを利用するのが効率的です。
 
 ```{r}
+#| code-summary: "Tidy Dataへの変形"
+
 library(tidyverse)  # load tidyverse package
 
-# ローカルにあるデータファイルを読み込む
 x <- "./data/P16_図表1-1 .csv" %>% 
   readr::read_csv(col_names = FALSE, show_col_types = FALSE) %>% 
-  # 読み込んだデータを縦長形式（Tidy Data）に変換する
   tidyr::pivot_longer(cols = dplyr::starts_with("X"),
                       names_to = "name", values_to = "value") %>% 
-  # X1, X2, ... , X4, X1 の順で行方向に読み込まれるので列方向で整列する
   dplyr::arrange(name) %>% 
-  # 必要なデータ列（value）の列名をheightに変更して取り出す
   dplyr::select(height = value)
 
 x %>% 
   df_print()
 ```
 
-　このような形式に変換することで、様々な統計量を効率的に求めることができるようになります。
+　このような形式（[Tidy Data](https://ja.wikipedia.org/wiki/Tidy_data)）に変換することで、様々な統計量を効率的に求めることができるようになります。
 
 　
 
@@ -58,31 +56,35 @@ x %>%
 となっていますが、Rでは`hist()`関数だけでヒストグラムを描くことができます。`hist()`関数の引数はベクトル型に限定されますので、データフレーム型の場合は参照演算子（`$`）などでベクトル型データを取り出す必要があります。
 
 ```{r}
-#| fig-cap: "R標準のhist()関数"
+#| code-summary: "R標準のヒストグラム関数"
 
 hist(x = x$height)
 ```
-
+　  
 　`hist()`関数はヒストグラムを描くために必要となる階級や度数、階級値などの情報を出力することも可能です。
 
 ```{r}
+#| code-summary: "階級などを表示させる方法"
+
 hist(x = x$height, plot = FALSE)
 ```
 
 | 出力名     | 意味   | 備考                                                     |
 |-----------------|-----------------|---------------------------------------|
-| `$breaks`  | 階級   | デフォルトはスタージェスの公式^\*^にもとづく区切り（幅） |
+| `$breaks`  | 階級   | デフォルトはスタージェスの公式^\*後述^にもとづく区切り（幅） |
 | `$counts`  | 度数   | 各階級に入るデータの個数                                 |
 | `$density` | 密度   | 密度推定値                                               |
 | `$mids`    | 階級値 | 階級の中央値（階級の単純平均）                           |
 
 : 主な出力の意味
 
-^\*^ 後述
+　  
 
 　表形式の度数分布表を作成する場合は以下のようにコード処理します。
 
 ```{r}
+#| code-summary: "度数分布表の作成"
+
 x %>% 
   # 階級を求めて、データを階級ごとに分ける
   dplyr::mutate(class = cut(height,
@@ -105,7 +107,7 @@ x %>%
                 `相対度数` = prop, `累積相対度数` = cumsum_prop) %>% 
   df_print()
 ```
-
+　  
 　以降の項は度数分布表の作成に必要な関数の使い方を紹介していますので、不要な方は演習問題まで読み飛ばしてください。
 
 　
@@ -117,11 +119,13 @@ x %>%
 　階級を求めるには`pretty()`関数を使います。
 
 ```{r}
-with(x, pretty(x = height, n = nclass.Sturges(height)))
+#| code-summary: "階級を求める"
+with(x, pretty(x = height,
+               n = nclass.Sturges(height)))
 ```
 
-　第一引数`x`には階級を求めたいベクトル型データを第二引数`n`には階級を区切りたい数（階級数）を指定します。ここでは、階級数`n`にはスタージェスの公式から求めた階級数を指定しています。\
-　ただし、必ずしも指定した階級数に分割される訳ではない点に注意してください。`x`で指定したデータが階級に収まるように適切な丸め処理を行いますので、指定した階級数とは異なる階級が求められることもあります。
+　第一引数`x`には階級を求めたいベクトル型データを第二引数`n`には階級を区切りたい数（階級数）を指定します。ここでは、階級数`n`にはスタージェスの公式から求めた階級数を指定しています。  
+　ただし、`x`で指定したデータが階級に収まるように適切な丸め処理を行いますので、指定した階級数とは異なる階級が求められることもあります。
 
 　スタージェスの公式は、階級数を$k$、データのサイズ（数）を$n$とした場合、下式で定義されます。
 
@@ -130,33 +134,39 @@ $$k = \lceil \log_2n + 1 \rceil$$
 　スタージェスの公式は`nclass.Sturgess()`関数として実装されています。
 
 ```{r}
+#| code-summary: "スタージェスの公式に基づく階級数"
 with(x, nclass.Sturges(height))
 ```
-
+　  
 　スタージェスの公式はヒストグラムを平滑化し過ぎる傾向があると言われています。気になる場合はスコットの選択（`nclass.scott()`）やフリードマン=ダイアコニスの選択（`nclass.FD()`）を試して見てください。
 
 　
 
 ### データを各階級に分類する
 ```{r}
+#| code-summary: "参考）身長データ（元データ）"
+#| code-fold: true
 #| column: margin
-# 身長データ（元データ）
 with(x, height)
 ```
-
+　  
 　データを階級分けするには`cut()`関数を使います。
 
 ```{r}
-with(x, cut(x = height, breaks = pretty(height, n = nclass.Sturges(height))))
-```
+#| code-summary: "データの階級分け"
 
-　第一引数`x`には階級分けの対象となるベクトル型変数を第二引数`breaks`には前項で求めた階級を指定します。`breaks`引数には任意の階級、例えば`breaks = c(140, 155, 170)`のように指定することも可能です。
+with(x, cut(x = height,
+            breaks = pretty(height,
+                            n = nclass.Sturges(height))))
+```
+　  
+　`cut()`関数の第一引数`x`には階級分けの対象となるベクトル型変数を第二引数`breaks`には前項で求めた階級を指定します。`breaks`引数には任意の階級、例えば`breaks = c(140, 155, 170)`のような指定も可能です。
 
 　
 
 #### 階級の境界値はどちらに含まれるのか？ {.unnumbered}
 
-　`cut()`関数の出力は、`(140,145] (145,150]`のように階級間で同じ数値、この場合は`145`が含まれます。では、`145`はどちらの階級に含まれるのでしょうか？答えは、添えられている括弧にあります。
+　`cut()`関数の出力は、`(140,145] (145,150]`のように階級間で同じ値（この場合は`145`）が含まれます。では、`145`はどちらの階級に含まれるのでしょうか？答えは、添えられている括弧にあります。
 
 > `(140,145]`
 
@@ -183,69 +193,86 @@ with(x, cut(x = height, breaks = pretty(height, n = nclass.Sturges(height))))
 
 　^\*^デフォルト
 
-　例えばデータの最大値と最小値を境界値として含む階級を指定した場合、`include.lowest = FALSE, right = FALSE`と指定すると最大値が階級に含まれなくなります。
+　例えばデータの最大値と最小値を境界値として含む階級を指定した場合、`include.lowest = FALSE, right = FALSE`と指定すると最大値が階級に含まれなくなる場合があります。
 
 ```{r}
+#| code-summary: "以上、未満の場合"
+
 with(x, cut(height, breaks = c(143, 155, 169),
             include.lowest = FALSE, right = FALSE))
 ```
-
-　逆に`include.lowest = FALSE, right = TRUE`と指定すると最小値が階級に含まれなくなります。
+　  
+　逆に`include.lowest = FALSE, right = TRUE`と指定すると最小値が階級が階級に含まれなくなる場合があります。
 
 ```{r}
+#| code-summary: "超えて、以下の場合"
+
 with(x, cut(height, breaks = c(143, 155, 169),
             include.lowest = FALSE, right = TRUE))
 ```
 
-　
+　  
 
 ### 度数を求める
 
-　度数を求めるには各階級の数を数えます。数を数えるには`table()`関数や`dplyr::count()`関数を使います。`table()`関数はベクトル型を対象に、`dplyr::count()`関数はデータフレーム型を対象として個数をカウントします。用途によって使い分けてください。
+　度数を求めるには各階級の数を数えます。数を数えるには`table()`関数や`dplyr::count()`関数を使います。`table()`関数はベクトル型を対象として、`dplyr::count()`関数はデータフレーム型を対象として個数をカウントする関数です。
 
 ```{r}
-with(x, table(cut(height, breaks = pretty(height, n = nclass.Sturges(height)))))
+#| code-summary: "度数のカウント"
+with(x, table(cut(height,
+                  breaks = pretty(height,
+                                  n = nclass.Sturges(height)))))
 ```
 
-　
+　  
 
 ```{r}
+#| code-summary: "度数のカウント（データフレームの場合）"
+
 x %>% 
-  # 階級を求めて、データを階級ごとに分ける
   dplyr::mutate(class = cut(height,
-                            breaks = pretty(height, n = nclass.Sturges(height)))) %>% 
-  # 階級ごとの度数を求める
+                            breaks = pretty(height,
+                                            n = nclass.Sturges(height)))) %>% 
   dplyr::count(class) %>% 
   df_print()
 ```
 
-　
+　  
 
 ### 累積度数、相対度数、累積相対度数を求める
 
 　累積度数（度数の累積和）を求めるには`cumsum()`関数を使います。
 
 ```{r}
-with(x, cumsum(table(cut(height, breaks = pretty(height, n = nclass.Sturges(height))))))
+#| code-summary: "累積度数を求める"
+
+with(x, cumsum(table(cut(height,
+                         breaks = pretty(height,
+                                         n = nclass.Sturges(height))))))
 ```
-
-　
-
+　  
 　相対度数を求めるには`prop.table()`関数を使います。
 
 ```{r}
-with(x, prop.table(table(cut(height, breaks = pretty(height, n = nclass.Sturges(height))))))
-```
+#| code-summary: "相対度数を求める"
 
-　
+with(x, prop.table(table(cut(height,
+                             breaks = pretty(height,
+                                             n = nclass.Sturges(height))))))
+```
 
 　累積相対度数は相対度数の累積和ですので、`prop.table()`関数の結果を`cumsum()`関数に渡すことで求めることができます。
 
 ```{r}
-with(x, cumsum(prop.table(table(cut(height, breaks = pretty(height, n = nclass.Sturges(height)))))))
+#| code-summary: "累積相対度数を求める"
+
+with(x, cumsum(prop.table(
+  table(cut(height,
+            breaks = pretty(height,
+                            n = nclass.Sturges(height)))))))
 ```
 
-　
+　  
 
 ### 階級値を求める
 
@@ -253,7 +280,7 @@ with(x, cumsum(prop.table(table(cut(height, breaks = pretty(height, n = nclass.S
 
 $$\frac{(\mbox{下端} + 1) + \mbox{上端}}{2}$$
 
-　手順としては以下のようにしています。
+　手順としては以下のようになります。
 
 1.  `as.character()`関数で 階級（`class`）を文字型に変換し、新しい変数（`class_value`）を作成する\
 2.  `tidyr::separate()`関数で文字型の変数（`class_value`）を`,`の前後で二つの変数（`l`, `h`）に分割する\
@@ -261,11 +288,15 @@ $$\frac{(\mbox{下端} + 1) + \mbox{上端}}{2}$$
 4.  数値に変換された二つの変数から（`l`, `h`）平均値を求める
 
 ```{r}
+#| code-summary: "階級値を求める"
+
 x %>% 
   # 階級を求めて、データを階級ごとに分ける
   dplyr::mutate(class = cut(height,
-                            breaks = pretty(height, n = nclass.Sturges(height)),
-                            include.lowest = FALSE, right = TRUE)) %>% 
+                            breaks = pretty(height,
+                                            n = nclass.Sturges(height)),
+                            include.lowest = FALSE,
+                            right = TRUE)) %>% 
   # 階級ごとの度数を求める
   dplyr::count(class) %>% 
   # 階級値を求める
@@ -306,6 +337,8 @@ df <- df %>%
 ```
 
 ```{r}
+#| code-summary: "整形済の処理対象データ（体重データ）"
+
 df %>% 
   df_print()
 ```
@@ -313,16 +346,20 @@ df %>%
 　度数分布表を身長の場合と同じ要領で作成します。
 
 ```{r}
+#| code-summary: "度数分布表の作成"
+#| 
 df %>% 
-  # 階級を求めて、データを階級ごとに分ける
   dplyr::mutate(class = cut(weight,
-                            breaks = pretty(weight, n = nclass.Sturges(weight)),
-                            include.lowest = FALSE, right = TRUE)) %>% 
+                            breaks = pretty(weight,
+                                            n = nclass.Sturges(weight)),
+                            include.lowest = FALSE,
+                            right = TRUE)) %>% 
   # 階級ごとの度数を求める
   dplyr::count(class) %>% 
   # 累積度数、相対度数、累積相対度数を求める
   dplyr::mutate(cumsum_n = cumsum(n),
-                prop = prop.table(n), cumsum_prop = cumsum(prop)) %>% 
+                prop = prop.table(n),
+                cumsum_prop = cumsum(prop)) %>% 
   # 階級値を求める
   dplyr::mutate(class_value = as.character(class)) %>%
   tidyr::separate(class_value, into = c("l", "h"), sep = ",") %>% 
@@ -332,7 +369,8 @@ df %>%
   # 変数名を日本語にする
   dplyr::select(`階級` = class, `階級値` = mids,
                 `度数` = n, `累積度数` = cumsum_n,
-                `相対度数` = prop, `累積相対度数` = cumsum_prop) %>% 
+                `相対度数` = prop,
+                `累積相対度数` = cumsum_prop) %>% 
   df_print()
 ```
 
@@ -341,16 +379,14 @@ df %>%
 　ヒストグラムを描きます。
 
 ```{r}
-#| fig-cap: "解答例"
+#| code-summary: "ヒストグラムを描く"
 
 with(df, hist(weight))
 ```
-
-　
-
+　  
 以上
 
-　
+　  
 
 ## ヒストグラムを描くポイント {.unnumbered}
 
@@ -365,28 +401,36 @@ with(df, hist(weight))
 
 　階級を決める方法は特に定められていません。データが取る幅を見て切のよい値にすることが多いようです。ただし、階級のとり方によりヒストグラムの形状が変わる点には注意が必要です。例えば、身長データに対する階級をテキストと同様に$5cm$幅とした場合は下図のような形状になります。
 
-```{r, fig.cap="階級幅5cmの場合"}
-with(x, hist(height, breaks = seq(from = 140, to = 170, by = 5)))
+```{r}
+#| code-summary: "階級幅5cmの場合のヒストグラム"
+with(x, hist(height,
+             breaks = seq(from = 140, to = 170, by = 5)))
 ```
-
+　  
 　階級を倍の$10cm$幅とすると下図のようになります。
 
-```{r, fig.cap="階級幅10cmの場合"}
-with(x, hist(height, breaks = seq(from = 140, to = 170, by = 10)))
+```{r}
+#| code-summary: "階級幅10cmの場合のヒストグラム"
+with(x, hist(height,
+             breaks = seq(from = 140, to = 170, by = 10)))
 ```
-
+　  
 　逆に階級を半分の$2.5cm$幅とすると下図のようになります。
 
-```{r, fig.cap="階級幅2.5cmの場合"}
-with(x, hist(height, breaks = seq(from = 140, to = 170, by = 2.5)))
+```{r}
+#| code-summary: "階級幅2.5cmの場合のヒストグラム"
+with(x, hist(height,
+             breaks = seq(from = 140, to = 170, by = 2.5)))
 ```
-
+　  
 　更に細かくして$1cm$幅にすると下図のように歯抜けがある形状になります。
 
-```{r, fig.cap="階級幅1cmの場合"}
-with(x, hist(height, breaks = seq(from = 140, to = 170, by = 1.0)))
+```{r}
+#| code-summary: "階級幅1cmの場合のヒストグラム"
+with(x, hist(height,
+             breaks = seq(from = 140, to = 170, by = 1.0)))
 ```
-
+　  
 　このように階級の決め方次第でヒストグラムの形状が変わってくることが分かります。ヒストグラムはデータの分布をみるために使うグラフですので、過大な階級幅や過小な階級幅で描くことは好ましくありませんので、適切な値を選ぶようにしてください。
 
 　
@@ -417,8 +461,10 @@ $IQR$ :四分位範囲
 
 　スタージェスの公式は、比較的、よく使われる計算方法です。ただし、データの数が$30$個未満の場合には適切ではありませんし、データの数が多くなるとヒストグラムを[平滑化し過ぎる傾向](https://k-metrics.netlify.app/post/2018-09/histogram/#/%E4%BB%BB%E6%84%8F%E3%81%AE%E9%9A%8E%E7%B4%9A%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B)があると言われています。そのような傾向が見られた場合には、他の計算方法や任意の階級も試してみてください。
 
-```{r, "階級数をスタージェスの公式で求めた場合"}
-with(x, hist(height, breaks = "Sturges"))
+```{r}
+#| code-summary: "階級数をスタージェスの公式で求めた場合のヒストグラム"
+with(x, hist(height,
+             breaks = "Sturges"))
 ```
 
 　
@@ -427,7 +473,8 @@ with(x, hist(height, breaks = "Sturges"))
 
 　スコットの選択は、データによってはスタージェスの公式と比べて階級数が少なくなる傾向があります。
 
-```{r, "スコットの選択で求めた場合"}
+```{r}
+#| code-summary: "階級数をスコットの選択を元に求めた場合のヒストグラム"
 with(x, hist(height, breaks = "Scott"))
 ```
 
@@ -437,7 +484,8 @@ with(x, hist(height, breaks = "Scott"))
 
 　フリードマン・ダイアコニスの法則とも呼ばれます。
 
-```{r, fig.cap="階級をフリードマン・ダイアコニスの選択で求めた場合"}
+```{r}
+#| code-summary: "階級数をフリードマン・ダイアコニスの選択を元に求めた場合のヒストグラム"
 with(x, hist(height, breaks = "FD"))
 ```
 
@@ -457,13 +505,15 @@ with(x, hist(height, breaks = "FD"))
 
 　例えば、階級を「$\mbox{下端値} < x \leq \mbox{上端値}$」と定義した場合は、下図のようになります。
 
-```{r, fig.cap="上端を含める場合"}
+```{r}
+#| code-summary: "階級の上端を含める場合のヒストグラム"
 with(x, hist(height, right = TRUE))
 ```
 
-階級を「$\mbox{下端値} \leq x <ｌ \mbox{上端値}$」と定義した場合は、分布形状が異なることが分かります。
+階級を「$\mbox{下端値} \leq x < \mbox{上端値}$」と定義した場合は、分布形状が異なることが分かります。
 
-```{r, fig.cap="下端を含める場合"}
+```{r}
+#| code-summary: "階級の下端を含める場合のヒストグラム"
 with(x, hist(height, right = FALSE))
 ```
 
@@ -487,23 +537,30 @@ knitr::include_graphics("https://www.stat.go.jp/naruhodo/img/picture/4_8_10.png"
 　例えば、テキストにある身長のデータの$140cm$から$150cm$をひとつの階級にまとめた場合、度数分布表は下表のようになります。
 
 ```{r}
+#| code-summary: "等間隔ではない階級の度数分布表"
 x %>% 
   dplyr::mutate(class = cut(height,
-                            breaks = c(140, 150, 155, 160, 165, 170))) %>% 
+                            breaks = c(140, 150,
+                                       155, 160, 165, 170))) %>% 
   dplyr::count(class) %>% 
   dplyr::mutate(prop = prop.table(n)) %>% 
-  dplyr::rename(`階級` = class, `度数` = n, `相対度数` = prop) %>% 
+  dplyr::rename(`階級` = class, `度数` = n,
+                `相対度数` = prop) %>% 
   df_print()
 ```
 
 　これをヒストグラムとして描いた場合は、下図のようにならなければなりません。この図では縦軸は度数でなく密度になっています。
 
-```{r, fig.cap="正しいヒストグラム"}
-with(x, hist(height, breaks = c(140, 150, 155, 160, 165, 170)))
+```{r}
+#| code-summary: "正しいヒストグラム"
+with(x, hist(height,
+             breaks = c(140, 150, 155, 160, 165, 170)))
 ```
 
 ```{r, include=FALSE}
-h <- with(x, hist(height, breaks = c(140, 150, 155, 160, 165, 170), plot = FALSE))
+h <- with(x, hist(height,
+                  breaks = c(140, 150, 155, 160, 165, 170),
+                  plot = FALSE))
 ```
 
 　密度（高さ）は左から\
@@ -516,8 +573,12 @@ h <- with(x, hist(height, breaks = c(140, 150, 155, 160, 165, 170), plot = FALSE
 
 　度数を表示させるために下図のようなヒストグラムを描くことは好ましくありません。階級幅が等幅でない場合は度数分布表と共に密度のヒストグラムを示した方がよいでしょう。
 
-```{r, fig.cap="好ましくないヒストグラム（単なる棒グラフ）"}
-with(x, hist(height, breaks = c(140, 150, 155, 160, 165, 170), freq = TRUE))
+```{r}
+#| code-summary: "好ましくないヒストグラム（単なる棒グラフ）"
+with(x, hist(height,
+             breaks = c(140, 150, 155, 160, 165, 170),
+             freq = TRUE))
 ```
+
 
 ---
