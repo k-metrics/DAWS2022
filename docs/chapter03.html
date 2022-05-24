@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-0.9.440">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです。">
 <title>Rで学ぶ『完全独習 統計学入門』 - 3&nbsp; データの散らばり具合を見積もる統計量</title>
 <style>
 code{white-space: pre-wrap;}
@@ -80,9 +81,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><link href="./chapter04.html" rel="next">
 <link href="./chapter02.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script><script src="site_libs/quarto-html/popper.min.js"></script><script src="site_libs/quarto-html/tippy.umd.min.js"></script><script src="site_libs/quarto-html/anchor.min.js"></script><link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<link class="quarto-color-scheme" id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<link class="quarto-color-scheme quarto-color-alternate" rel="prefetch" id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script><link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link class="quarto-color-scheme" href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link class="quarto-color-scheme quarto-color-alternate" rel="prefetch" href="site_libs/bootstrap/bootstrap-dark.min.css">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -104,7 +107,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 }</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 </head>
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
@@ -115,11 +118,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <i class="bi bi-chevron-right"></i>
       </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title d-none d-lg-block">
+<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの散らばり具合を見積もる統計量</span>
+</h1>
+                  <div>
+        <div class="description">
+          本書はデータ分析勉強会で学んだ成果をまとめたものです。
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Rで学ぶ『完全独習 統計学入門』</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
     </div>
       </div>
       <div class="mt-2 flex-shrink-0 align-items-center">
@@ -179,33 +206,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title d-none d-lg-block">
-<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの散らばり具合を見積もる統計量</span>
-</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-    
-  </div>
-  
-
-</header><div class="cell">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><div class="cell">
 
 </div>
 <section id="データの散らばりやバラツキを知りたい" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="データの散らばりやバラツキを知りたい">
 <span class="header-section-number">3.1</span> データの散らばりやバラツキを知りたい</h2>
 <p>　第2講で学んだ平均値（算術平均）は、データを代表する統計量で、ある一点（支点・重心）を示しているに過ぎません。データが平均値の周辺にどのように分布しているかはヒストグラムを使うことで視覚的には確認できますが、統計量として数値的に扱えた方がなにかと便利なはずです。</p>
 <p>　</p>
-</section><section id="バスの到着時刻の例で分散を理解する" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="バスの到着時刻の例で分散を理解する">
+</section><section id="バスの到着時刻の例で分散を理解する" class="level2 page-columns page-full" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="バスの到着時刻の例で分散を理解する">
 <span class="header-section-number">3.2</span> バスの到着時刻の例で分散を理解する</h2>
 <p>　蛇足ですが実際の路線バスでは予定時刻より早く到着しないように調整運転がなされていますので、時刻より大幅に早着することは稀です。</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html">scan</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"./data/P36_図表3-1.csv"</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span>
+<details open=""><summary>ベクトルを読み込みたい場合はscan()関数を使います</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html">scan</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"./data/P36_図表3-1.csv"</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span>
 
 <span class="va">x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
@@ -214,45 +226,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>　平均値を求める<code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>関数がありますが、ここでは平均値の計算式通りの計算を行っています。</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">`平均値`</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="va">`平均値`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>平均値を求める</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">平均値</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="va">平均値</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 31</code></pre>
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">`偏差`</span> <span class="op">=</span> <span class="va">x</span> <span class="op">-</span> <span class="va">`平均値`</span>
-<span class="va">`偏差`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>偏差を求める</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">偏差</span> <span class="op">=</span> <span class="va">x</span> <span class="op">-</span> <span class="va">平均値</span>
+<span class="va">偏差</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1]  1 -4 -2  3  2</code></pre>
 </div>
 </div>
 <p>　偏差の総和は必ずゼロ（<span class="math inline">\(0\)</span>）になります。</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`偏差`</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>偏差の総和を求める</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">偏差</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
 </div>
 <p>　偏差の二乗和をデータの個数で割ったものは、（標本）分散と呼ばれます。不偏分散と呼ばれる分散は計算式が異なります。Rで分散を計算する<code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code>関数は不偏分散を求める関数です。</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`偏差`</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>（標本）分散を求める</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">偏差</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 6.8</code></pre>
 </div>
 </div>
-<p>　偏差の二乗平均値（<span class="math inline">\(= \sqrt{\mbox{分散}}\)</span>）は標準偏差と呼ばれます。Rで標準偏差を計算する<code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>関数は不偏分散のルートを取ったものです。</p>
+
+<div class="no-row-height column-margin column-container"><div class="cell">
+<details open=""><summary><code>var()</code>関数は<strong>不偏</strong>分散</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 8.5</code></pre>
+</div>
+</div></div><p>　偏差の二乗平均値（<span class="math inline">\(= \sqrt{\mbox{分散}}\)</span>）は標準偏差と呼ばれます。Rで標準偏差を計算する<code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>関数は不偏分散のルートを取ったものです。</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`偏差`</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>（標本）標準偏差を求める</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">偏差</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.607681</code></pre>
 </div>
 </div>
-<p>　</p>
+
+<div class="no-row-height column-margin column-container"><div class="cell">
+<details open=""><summary><code>sd()</code>関数は<strong>不偏</strong>標準偏差</summary><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.915476</code></pre>
+</div>
+</div></div><p>　</p>
 </section><section id="標準偏差の意味" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="標準偏差の意味">
 <span class="header-section-number">3.3</span> 標準偏差の意味</h2>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"./data/P39_図表3-4.csv"</span><span class="op">)</span> 
+<details open=""><summary>対象データ</summary><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"./data/P39_図表3-4.csv"</span><span class="op">)</span> 
 
 <span class="va">x</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -266,18 +290,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">mean</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>`X平均値` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, `Y平均値` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span>
-<span class="va">mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code>  X平均値 Y平均値
-1       5       5</code></pre>
+<details open=""><summary>各々の平均値を求める</summary><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">mean</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>X平均値 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, Y平均値 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">mean</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X平均値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y平均値"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"5","2":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`X偏差` <span class="op">=</span> <span class="va">X</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">`X平均値`</span>,
-                `Y偏差` <span class="op">=</span> <span class="va">Y</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">`Y平均値`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<details open=""><summary>各々の偏差を求める</summary><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>X偏差 <span class="op">=</span> <span class="va">X</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">X平均値</span>,
+                Y偏差 <span class="op">=</span> <span class="va">Y</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">Y平均値</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
@@ -289,11 +319,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`X偏差` <span class="op">=</span> <span class="va">X</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">`X平均値`</span>,
-                `Y偏差` <span class="op">=</span> <span class="va">Y</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">`Y平均値`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>`X標準偏差` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`X偏差`</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span>,
-                   `Y標準偏差` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`Y偏差`</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<details open=""><summary>各々の標準偏差を求める</summary><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>X偏差 <span class="op">=</span> <span class="va">X</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">X平均値</span>,
+                Y偏差 <span class="op">=</span> <span class="va">Y</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">Y平均値</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>X標準偏差 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">X偏差</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span>,
+                   Y標準偏差 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Y偏差</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
@@ -304,23 +334,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>　偏差と標準偏差を可視化すると下図のようになり、XよりYの方が広範囲に分布していることが分かります。</p>
+<p>　<br>
+　偏差と標準偏差を可視化すると下図のようになり、XよりYの方が広範囲に分布していることが分かります。</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`X偏差` <span class="op">=</span> <span class="va">X</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">`X平均値`</span>,
-                `Y偏差` <span class="op">=</span> <span class="va">Y</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">`Y平均値`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<details open=""><summary>偏差と標準偏差を可視化する</summary><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>X偏差 <span class="op">=</span> <span class="va">X</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">X平均値</span>,
+                Y偏差 <span class="op">=</span> <span class="va">Y</span> <span class="op">-</span> <span class="va">mean</span><span class="op">$</span><span class="va">Y平均値</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">X</span>, <span class="op">-</span><span class="va">Y</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/graphics/stripchart.html">stripchart</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.89</span>, <span class="fl">0.89</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>  <span class="co"># X標準偏差／ドット（点線）</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3.03</span>, <span class="fl">3.03</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>  <span class="co"># Y標準偏差／ダッシュ（鎖線）</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<p><img src="chapter03_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="chapter03_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>　</p>
 </section><section id="度数分布表から標準偏差を求める" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="度数分布表から標準偏差を求める">
 <span class="header-section-number">3.4</span> 度数分布表から標準偏差を求める</h2>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"./data/P40_図表3-6.csv"</span>,
+<details open=""><summary>対象データ</summary><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"./data/P40_図表3-6.csv"</span>,
               fileEncoding <span class="op">=</span> <span class="st">"UTF-8"</span><span class="op">)</span>
 
 <span class="va">x</span> <span class="op">%&gt;%</span> 
@@ -334,10 +366,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>　第2講の「2−3 度数分布表での平均値」で学んだように度数分布表から平均値（の近似値）は <span class="math display">\[\mbox{平均値} \fallingdotseq \sum{(\mbox{階級値} \times \mbox{相対度数})}\]</span> 　で求めることができます。</p>
+<p>　<br>
+　第2講の「2−3 度数分布表での平均値」で学んだように度数分布表から平均値（の近似値）は <span class="math display">\[\mbox{平均値} \fallingdotseq \sum{(\mbox{階級値} \times \mbox{相対度数})}\]</span> 　で求めることができます。</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`AxB` <span class="op">=</span> <span class="va">`A階級値`</span> <span class="op">*</span> <span class="va">`B相対度数`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<details open=""><summary>度数分布表から平均値を求める</summary><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>AxB <span class="op">=</span> <span class="va">A階級値</span> <span class="op">*</span> <span class="va">B相対度数</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
@@ -349,23 +382,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">`平均値`</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`AxB` <span class="op">=</span> <span class="va">`A階級値`</span> <span class="op">*</span> <span class="va">`B相対度数`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>`平均値` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`AxB`</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">`平均値`</span><span class="op">)</span>
-<span class="va">`平均値`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>度数分布表から平均値を求める</summary><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">平均値</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>AxB <span class="op">=</span> <span class="va">A階級値</span> <span class="op">*</span> <span class="va">B相対度数</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>平均値 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">AxB</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">平均値</span><span class="op">)</span>
+<span class="va">平均値</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
 </div>
-<p>　平均値を求められたので <span class="math display">\[\mbox{階級の偏差（C階級値-平均値）} = \mbox{階級値} - \mbox{平均値}\]</span> 　とすると度数分布表の計算値と同じ考え方を適用し <span class="math display">\[\mbox{階級の偏差の二乗平均} = \sum{(\mbox{階級の偏差}^2 \times \mbox{相対度数})} = \mbox{分散}\]</span> 　となります。</p>
+<p>　<br>
+　平均値を求められたので <span class="math display">\[\mbox{階級の偏差（C階級値-平均値）} = \mbox{階級値} - \mbox{平均値}\]</span> 　とすると度数分布表の計算値と同じ考え方を適用し <span class="math display">\[\mbox{階級の偏差の二乗平均} = \sum{(\mbox{階級の偏差}^2 \times \mbox{相対度数})} = \mbox{分散}\]</span> 　となります。</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C` <span class="op">=</span> <span class="va">`A階級値`</span> <span class="op">-</span> <span class="va">`平均値`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2` <span class="op">=</span> <span class="va">`C`</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2xB` <span class="op">=</span> <span class="va">`C^2`</span> <span class="op">*</span> <span class="va">`B相対度数`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">`A階級値`</span>, `C階級値-平均値` <span class="op">=</span> <span class="va">`C`</span>,
-                <span class="va">`C^2`</span>, <span class="va">`B相対度数`</span>, <span class="va">`C^2xB`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<details open=""><summary>度数分布表から分散と階級偏差を求める</summary><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>C <span class="op">=</span> <span class="va">A階級値</span> <span class="op">-</span> <span class="va">平均値</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2` <span class="op">=</span> <span class="va">C</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2xB` <span class="op">=</span> <span class="va">`C^2`</span> <span class="op">*</span> <span class="va">B相対度数</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">A階級値</span>, `C階級値-平均値` <span class="op">=</span> <span class="va">C</span>,
+                <span class="va">`C^2`</span>, <span class="va">B相対度数</span>, <span class="va">`C^2xB`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
@@ -377,7 +411,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+<details open=""><summary>度数分布表から分散と階級偏差を求める</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C` <span class="op">=</span> <span class="va">`A階級値`</span> <span class="op">-</span> <span class="va">`平均値`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2` <span class="op">=</span> <span class="va">`C`</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2xB` <span class="op">=</span> <span class="va">`C^2`</span> <span class="op">*</span> <span class="va">`B相対度数`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -395,51 +429,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
+<p>　</p>
 </section><section id="練習問題" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="練習問題">練習問題</h2>
-<p>　次の架空のデータの標準偏差を次のステップで計算してみよ。</p>
+<p>　次の架空のデータの標準偏差を次のステップで計算してみよ。ステップの記載は省略します。</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">`データ`</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html">scan</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"./data/P42_練習問題_v.csv"</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span>
-<span class="va">`データ`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>対象データ</summary><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">データ</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html">scan</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"./data/P42_練習問題_v.csv"</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span>
+
+<span class="va">データ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code> [1] 6 4 6 6 6 3 7 2 2 8</code></pre>
 </div>
 </div>
 <section id="解答例" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="解答例">解答例</h3>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">`平均値`</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`データ`</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">`データ`</span><span class="op">)</span>
-<span class="va">`平均値`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>平均値を求める</summary><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">平均値</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">データ</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">データ</span><span class="op">)</span>
+<span class="va">平均値</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">`偏差`</span> <span class="op">&lt;-</span> <span class="va">`データ`</span> <span class="op">-</span> <span class="va">`平均値`</span>
-<span class="va">`偏差`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>偏差を求める</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">偏差</span> <span class="op">&lt;-</span> <span class="va">データ</span> <span class="op">-</span> <span class="va">平均値</span>
+<span class="va">偏差</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code> [1]  1 -1  1  1  1 -2  2 -3 -3  3</code></pre>
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">`二乗偏差`</span> <span class="op">&lt;-</span> <span class="va">`偏差`</span> <span class="op">^</span> <span class="fl">2</span>
-<span class="va">`二乗偏差`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>二乗偏差を求める</summary><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">二乗偏差</span> <span class="op">&lt;-</span> <span class="va">偏差</span> <span class="op">^</span> <span class="fl">2</span>
+<span class="va">二乗偏差</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code> [1] 1 1 1 1 1 4 4 9 9 9</code></pre>
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">`分散`</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`二乗偏差`</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">`二乗偏差`</span><span class="op">)</span>
-<span class="va">`分散`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>分散を求める</summary><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">分散</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">二乗偏差</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">二乗偏差</span><span class="op">)</span>
+<span class="va">分散</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 4</code></pre>
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">`標準偏差`</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">`分散`</span><span class="op">)</span>
-<span class="va">`標準偏差`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>標準偏差を求める</summary><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">標準偏差</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">分散</span><span class="op">)</span>
+<span class="va">標準偏差</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
 </div>
+<p>　</p>
 </section></section><section id="追加問題" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="追加問題">追加問題</h2>
 <p>　P16にある身長データの度数分布表を作り、分散と標準偏差を求めてみましょう。</p>
 <div class="cell">
@@ -447,56 +484,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["A階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["B相対度数"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"145.0","2":"0.0375"},{"1":"148.5","2":"0.0250"},{"1":"152.0","2":"0.1000"},{"1":"155.0","2":"0.2875"},{"1":"158.0","2":"0.1625"},{"1":"161.0","2":"0.2375"},{"1":"164.5","2":"0.0750"},{"1":"168.0","2":"0.0750"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["A階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["B相対度数"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"143","2":"0.0125"},{"1":"148","2":"0.0750"},{"1":"153","2":"0.2375"},{"1":"158","2":"0.3750"},{"1":"163","2":"0.2250"},{"1":"168","2":"0.0750"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
+<p>　</p>
 <section id="解答例-1" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="解答例-1">解答例</h3>
+<section id="度数分布表から平均分散標準偏差を求める" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="度数分布表から平均分散標準偏差を求める">度数分布表から平均・分散・標準偏差を求める</h4>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`AxB` <span class="op">=</span> <span class="va">`A階級値`</span> <span class="op">*</span> <span class="va">`B相対度数`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<details open=""><summary>度数分布表から平均値を求める</summary><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>AxB <span class="op">=</span> <span class="va">A階級値</span> <span class="op">*</span> <span class="va">B相対度数</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["A階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["B相対度数"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AxB"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"145.0","2":"0.0375","3":"5.4375"},{"1":"148.5","2":"0.0250","3":"3.7125"},{"1":"152.0","2":"0.1000","3":"15.2000"},{"1":"155.0","2":"0.2875","3":"44.5625"},{"1":"158.0","2":"0.1625","3":"25.6750"},{"1":"161.0","2":"0.2375","3":"38.2375"},{"1":"164.5","2":"0.0750","3":"12.3375"},{"1":"168.0","2":"0.0750","3":"12.6000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["A階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["B相対度数"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AxB"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"143","2":"0.0125","3":"1.7875"},{"1":"148","2":"0.0750","3":"11.1000"},{"1":"153","2":"0.2375","3":"36.3375"},{"1":"158","2":"0.3750","3":"59.2500"},{"1":"163","2":"0.2250","3":"36.6750"},{"1":"168","2":"0.0750","3":"12.6000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">`平均値`</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`AxB` <span class="op">=</span> <span class="va">`A階級値`</span> <span class="op">*</span> <span class="va">`B相対度数`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>`平均値` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`AxB`</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">`平均値`</span><span class="op">)</span>
-<span class="va">`平均値`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>度数分布表から平均値を求める</summary><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">平均値</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>AxB <span class="op">=</span> <span class="va">A階級値</span> <span class="op">*</span> <span class="va">B相対度数</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>平均値 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">AxB</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">平均値</span><span class="op">)</span>
+<span class="va">平均値</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 157.7625</code></pre>
+<pre><code>[1] 157.75</code></pre>
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C` <span class="op">=</span> <span class="va">`A階級値`</span> <span class="op">-</span> <span class="va">`平均値`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2` <span class="op">=</span> <span class="va">`C`</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2xB` <span class="op">=</span> <span class="va">`C^2`</span> <span class="op">*</span> <span class="va">`B相対度数`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<details open=""><summary>度数分布表から分散と標準偏差を求める</summary><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>C <span class="op">=</span> <span class="va">A階級値</span> <span class="op">-</span> <span class="va">平均値</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2` <span class="op">=</span> <span class="va">C</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2xB` <span class="op">=</span> <span class="va">`C^2`</span> <span class="op">*</span> <span class="va">B相対度数</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["A階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["B相対度数"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["C"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["C^2"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["C^2xB"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"145.0","2":"0.0375","3":"-12.7625","4":"162.88140625","5":"6.108052734"},{"1":"148.5","2":"0.0250","3":"-9.2625","4":"85.79390625","5":"2.144847656"},{"1":"152.0","2":"0.1000","3":"-5.7625","4":"33.20640625","5":"3.320640625"},{"1":"155.0","2":"0.2875","3":"-2.7625","4":"7.63140625","5":"2.194029297"},{"1":"158.0","2":"0.1625","3":"0.2375","4":"0.05640625","5":"0.009166016"},{"1":"161.0","2":"0.2375","3":"3.2375","4":"10.48140625","5":"2.489333984"},{"1":"164.5","2":"0.0750","3":"6.7375","4":"45.39390625","5":"3.404542969"},{"1":"168.0","2":"0.0750","3":"10.2375","4":"104.80640625","5":"7.860480469"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["A階級値"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["B相対度数"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["C"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["C^2"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["C^2xB"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"143","2":"0.0125","3":"-14.75","4":"217.5625","5":"2.7195313"},{"1":"148","2":"0.0750","3":"-9.75","4":"95.0625","5":"7.1296875"},{"1":"153","2":"0.2375","3":"-4.75","4":"22.5625","5":"5.3585937"},{"1":"158","2":"0.3750","3":"0.25","4":"0.0625","5":"0.0234375"},{"1":"163","2":"0.2250","3":"5.25","4":"27.5625","5":"6.2015625"},{"1":"168","2":"0.0750","3":"10.25","4":"105.0625","5":"7.8796875"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">freq_summary</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C` <span class="op">=</span> <span class="va">`A階級値`</span> <span class="op">-</span> <span class="va">`平均値`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2` <span class="op">=</span> <span class="va">`C`</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2xB` <span class="op">=</span> <span class="va">`C^2`</span> <span class="op">*</span> <span class="va">`B相対度数`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>`平均` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`A階級値`</span> <span class="op">*</span> <span class="va">`B相対度数`</span><span class="op">)</span>,
-                   `分散` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`C^2xB`</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`標準偏差` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">`分散`</span><span class="op">)</span><span class="op">)</span>
+<details open=""><summary>度数分布表から分散と標準偏差を求める</summary><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">freq_summary</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>C <span class="op">=</span> <span class="va">A階級値</span> <span class="op">-</span> <span class="va">平均値</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2` <span class="op">=</span> <span class="va">C</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`C^2xB` <span class="op">=</span> <span class="va">`C^2`</span> <span class="op">*</span> <span class="va">B相対度数</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>平均 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">A階級値</span> <span class="op">*</span> <span class="va">B相対度数</span><span class="op">)</span>,
+                   分散 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`C^2xB`</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>標準偏差 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">分散</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">freq_summary</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -504,14 +543,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["平均"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["分散"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["標準偏差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.7625","2":"27.53109","3":"5.247008"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["平均"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["分散"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["標準偏差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.75","2":"29.3125","3":"5.414102"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
-<p>　生データで計算した場合</p>
+<p>　</p>
+</section><section id="生データから平均分散標準偏差を求める" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="生データから平均分散標準偏差を求める">生データから平均・分散・標準偏差を求める</h4>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/P16_図表1-1 .csv"</span> <span class="op">%&gt;%</span> 
+<details open=""><summary>生データから平均・分散・標準偏差を求める</summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/P16_図表1-1 .csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>col_names <span class="op">=</span> <span class="cn">FALSE</span>,
                   show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span>,
@@ -519,20 +559,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
                       values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>height <span class="op">=</span> <span class="va">value</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`偏差` <span class="op">=</span> <span class="va">height</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`偏差^2` <span class="op">=</span> <span class="va">`偏差`</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>偏差 <span class="op">=</span> <span class="va">height</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>二乗偏差 <span class="op">=</span> <span class="va">偏差</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["height"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["偏差"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["偏差^2"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"151","2":"-6.575","3":"43.230625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"163","2":"5.425","3":"29.430625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"158","2":"0.425","3":"0.180625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"157","2":"-0.575","3":"0.330625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"169","2":"11.425","3":"130.530625"},{"1":"150","2":"-7.575","3":"57.380625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"152","2":"-5.575","3":"31.080625"},{"1":"161","2":"3.425","3":"11.730625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"164","2":"6.425","3":"41.280625"},{"1":"168","2":"10.425","3":"108.680625"},{"1":"153","2":"-4.575","3":"20.930625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"155","2":"-2.575","3":"6.630625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"158","2":"0.425","3":"0.180625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"150","2":"-7.575","3":"57.380625"},{"1":"163","2":"5.425","3":"29.430625"},{"1":"155","2":"-2.575","3":"6.630625"},{"1":"157","2":"-0.575","3":"0.330625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"161","2":"3.425","3":"11.730625"},{"1":"153","2":"-4.575","3":"20.930625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"151","2":"-6.575","3":"43.230625"},{"1":"155","2":"-2.575","3":"6.630625"},{"1":"158","2":"0.425","3":"0.180625"},{"1":"146","2":"-11.575","3":"133.980625"},{"1":"149","2":"-8.575","3":"73.530625"},{"1":"165","2":"7.425","3":"55.130625"},{"1":"169","2":"11.425","3":"130.530625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"155","2":"-2.575","3":"6.630625"},{"1":"166","2":"8.425","3":"70.980625"},{"1":"165","2":"7.425","3":"55.130625"},{"1":"161","2":"3.425","3":"11.730625"},{"1":"148","2":"-9.575","3":"91.680625"},{"1":"143","2":"-14.575","3":"212.430625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"158","2":"0.425","3":"0.180625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"164","2":"6.425","3":"41.280625"},{"1":"167","2":"9.425","3":"88.830625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"157","2":"-0.575","3":"0.330625"},{"1":"151","2":"-6.575","3":"43.230625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"151","2":"-6.575","3":"43.230625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"153","2":"-4.575","3":"20.930625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"146","2":"-11.575","3":"133.980625"},{"1":"166","2":"8.425","3":"70.980625"},{"1":"151","2":"-6.575","3":"43.230625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"157","2":"-0.575","3":"0.330625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"161","2":"3.425","3":"11.730625"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["height"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["偏差"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["二乗偏差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"151","2":"-6.575","3":"43.230625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"163","2":"5.425","3":"29.430625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"158","2":"0.425","3":"0.180625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"157","2":"-0.575","3":"0.330625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"169","2":"11.425","3":"130.530625"},{"1":"150","2":"-7.575","3":"57.380625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"152","2":"-5.575","3":"31.080625"},{"1":"161","2":"3.425","3":"11.730625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"164","2":"6.425","3":"41.280625"},{"1":"168","2":"10.425","3":"108.680625"},{"1":"153","2":"-4.575","3":"20.930625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"155","2":"-2.575","3":"6.630625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"158","2":"0.425","3":"0.180625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"150","2":"-7.575","3":"57.380625"},{"1":"163","2":"5.425","3":"29.430625"},{"1":"155","2":"-2.575","3":"6.630625"},{"1":"157","2":"-0.575","3":"0.330625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"161","2":"3.425","3":"11.730625"},{"1":"153","2":"-4.575","3":"20.930625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"151","2":"-6.575","3":"43.230625"},{"1":"155","2":"-2.575","3":"6.630625"},{"1":"158","2":"0.425","3":"0.180625"},{"1":"146","2":"-11.575","3":"133.980625"},{"1":"149","2":"-8.575","3":"73.530625"},{"1":"165","2":"7.425","3":"55.130625"},{"1":"169","2":"11.425","3":"130.530625"},{"1":"154","2":"-3.575","3":"12.780625"},{"1":"155","2":"-2.575","3":"6.630625"},{"1":"166","2":"8.425","3":"70.980625"},{"1":"165","2":"7.425","3":"55.130625"},{"1":"161","2":"3.425","3":"11.730625"},{"1":"148","2":"-9.575","3":"91.680625"},{"1":"143","2":"-14.575","3":"212.430625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"158","2":"0.425","3":"0.180625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"164","2":"6.425","3":"41.280625"},{"1":"167","2":"9.425","3":"88.830625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"157","2":"-0.575","3":"0.330625"},{"1":"151","2":"-6.575","3":"43.230625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"151","2":"-6.575","3":"43.230625"},{"1":"160","2":"2.425","3":"5.880625"},{"1":"153","2":"-4.575","3":"20.930625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"146","2":"-11.575","3":"133.980625"},{"1":"166","2":"8.425","3":"70.980625"},{"1":"151","2":"-6.575","3":"43.230625"},{"1":"159","2":"1.425","3":"2.030625"},{"1":"157","2":"-0.575","3":"0.330625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"162","2":"4.425","3":"19.580625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"156","2":"-1.575","3":"2.480625"},{"1":"161","2":"3.425","3":"11.730625"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">raw_summary</span> <span class="op">&lt;-</span> <span class="st">"./data/P16_図表1-1 .csv"</span> <span class="op">%&gt;%</span> 
+<details open=""><summary>生データから平均・分散・標準偏差を求める</summary><div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">raw_summary</span> <span class="op">&lt;-</span> <span class="st">"./data/P16_図表1-1 .csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>col_names <span class="op">=</span> <span class="cn">FALSE</span>,
                   show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span>,
@@ -540,11 +580,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
                       values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>height <span class="op">=</span> <span class="va">value</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`偏差` <span class="op">=</span> <span class="va">height</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`偏差^2` <span class="op">=</span> <span class="va">`偏差`</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>`平均` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span>,
-                   `分散` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">`偏差^2`</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span>,
-                   `標準偏差` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">`分散`</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>偏差 <span class="op">=</span> <span class="va">height</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>二乗偏差 <span class="op">=</span> <span class="va">偏差</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>平均 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span>,
+                   分散 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">二乗偏差</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span>,
+                   標準偏差 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">分散</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">raw_summary</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -557,19 +597,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>　要約統計量を比べてみると以下のようになります。</p>
+<p>　</p>
+</section><section id="度数分布表と生データの平均分散標準偏差を比較する" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="度数分布表と生データの平均分散標準偏差を比較する">度数分布表と生データの平均・分散・標準偏差を比較する</h4>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">freq_summary</span> <span class="op">%&gt;%</span>  <span class="co"># 度数分布表からの要約統計量</span>
+<details><summary>度数分布表からの要約統計量</summary><div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">freq_summary</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["平均"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["分散"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["標準偏差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.7625","2":"27.53109","3":"5.247008"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["平均"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["分散"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["標準偏差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"157.75","2":"29.3125","3":"5.414102"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">raw_summary</span> <span class="op">%&gt;%</span>   <span class="co"># 生データからの要約統計量</span>
+</div>
+<div class="cell">
+<details><summary>生データからの要約統計量</summary><div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">raw_summary</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
@@ -579,13 +622,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </script>
 </div>
 </div>
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="op">(</span><span class="va">freq_summary</span> <span class="op">-</span> <span class="va">raw_summary</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># 両者の差</span>
+</div>
+<div class="cell">
+<details><summary>度数分布表と生データの差</summary><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="op">(</span><span class="va">freq_summary</span> <span class="op">-</span> <span class="va">raw_summary</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["平均"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["分散"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["標準偏差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.1875","2":"-1.313281","3":"-0.1236879"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["平均"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["分散"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["標準偏差"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.175","2":"0.468125","3":"0.04340601"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -593,8 +638,105 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+    } else {
+      disableStylesheet(alternateStylesheets);
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } 
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {

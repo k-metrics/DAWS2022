@@ -11,7 +11,7 @@ source("./R/setup.R")
 
 　標準偏差は平均値からどの程度データがばらついているかを表しています。テキストではこのばらつきを「波打ちの激しさ」と表現しています。
 
-　
+　  
 
 ## 標準偏差がわかるとデータの特殊性を評価できる
 
@@ -20,36 +20,41 @@ source("./R/setup.R")
 -   一つのデータ（セット）の中にある任意の値の持つ意味
 -   複数のデータ（セット）の違い
 
-　
+　  
 
 ## 複数のデータセットの比較
 
 　（省略）
 
-　
+　  
 
 ## 加工されたデータの平均値と標準偏差
 
 　以下のデータに一定の加工を加えた際に平均値や標準偏差がどのように変化するかを見てみましょう。
 
 ```{r}
+#| code-summary: "対象データ"
 x <- read.csv(file = "./data/P49_図表4-5.csv")
 
 x %>% 
   df_print()
 ```
 
+　  
+
 ### データに一定数を加えた場合 {.unnumbered}
 
 　それぞれに$4$を加える。
 
 ```{r}
+#| code-summary: "元データ全てに$4$を加える"
 x %>% 
   dplyr::mutate(Y = X + 4) %>% 
   df_print()
 ```
 
 ```{r}
+#| code-summary: "それぞれの平均値を求める"
 mean <- x %>% 
   dplyr::mutate(Y = X + 4) %>% 
   dplyr::summarise(X = mean(X), Y = mean(Y))
@@ -58,9 +63,8 @@ mean %>%
   df_print()
 ```
 
-　偏差
-
 ```{r}
+#| code-summary: "求めた平均値を用いてそれぞれの偏差を求める"
 dev <- x %>% 
   dplyr::mutate(Y = X + 4) %>% 
   dplyr::mutate(X = X - mean$X, Y = Y - mean$Y)
@@ -69,9 +73,8 @@ dev %>%
   df_print()
 ```
 
-　分散
-
 ```{r}
+#| code-summary: "求めた偏差を用いてそれぞれの分散を求める"
 var <- dev %>% 
   dplyr::summarize(X = sum(X ^ 2) / length(X),
                    Y = sum(Y ^ 2) / length(Y))
@@ -80,85 +83,84 @@ var %>%
   df_print()
 ```
 
-　標準偏差
 
 ```{r}
-sqrt(var)
+#| code-summary: "求めた分散を用いてそれぞれの標準偏差を求める"
+sqrt(var) %>% 
+  df_print()
 ```
-
-　以上のようにデータに一定数を加えると平均値は加えた一定値の分だけ大きくなりますが、他の統計量は変化していないことが分かります。これを正規分布で図示すると下図のようになります。
+　  
+　以上のようにデータに一定数を加えると平均値は加えた一定値の分だけ大きくなりますが、他の統計量は変化していないことが分かります。元データが正規分布のデータであると仮定して可視化すると下図のようになります。
 
 ```{r}
-#| fig-cap: "元データ（点線：左）と加算データ（破線：右）"
-curve(dnorm(x, mean = 4, sd = 2), -3, 15,
-      lty = 3, xlab = "", ylab = "")
+#| code-summary: "元データ（点線：左）と加算データ（破線：右）"
+curve(dnorm(x, mean = 4, sd = 2), -3, 15, lty = 3, xlab = "", ylab = "")
 abline(v = 4, lty = 3)
-curve(dnorm(x, mean = 8, sd = 2), -3, 15, add = TRUE,
-      lty = 2, xlab = "", ylab = "")
+curve(dnorm(x, mean = 8, sd = 2), -3, 15, add = TRUE, lty = 2, xlab = "", ylab = "")
 abline(v = 8, lty = 2)
 ```
 
-　
+　  
 
 ### データに一定数を乗じた場合 {.unnumbered}
 
 　それぞれに$2$を乗ずる。
 
 ```{r}
+#| code-summary: "元データ全てに$2$を乗ずる"
 x %>% 
   dplyr::mutate(Y = X * 2) %>% 
   df_print()
 ```
 
 ```{r}
+#| code-summary: "それぞれの平均値を求める"
 mean <- x %>% 
   dplyr::mutate(Y = X * 2) %>% 
   dplyr::summarise(X = mean(X), Y = mean(Y))
 
-mean %>% df_print()
+mean %>% 
+  df_print()
 ```
 
-　偏差
-
 ```{r}
+#| code-summary: "求めた平均値を用いてそれぞれの偏差を求める"
 dev <- x %>% 
   dplyr::mutate(Y = X * 2) %>% 
   dplyr::mutate(X = X - mean$X, Y = Y - mean$Y)
 
-dev %>% df_print()
+dev %>% 
+  df_print()
 ```
 
-　分散
-
 ```{r}
+#| code-summary: "求めた偏差を用いてそれぞれの分散を求める"
 var <- dev %>% 
   dplyr::summarize(X = sum(X ^ 2) / length(X),
                    Y = sum(Y ^ 2) / length(Y))
 
-var %>% df_print()
+var %>% 
+  df_print()
 ```
 
-　標準偏差
-
 ```{r}
-sqrt(var)
+#| code-summary: "求めた分散を用いてそれぞれの標準偏差を求める"
+sqrt(var) %>% 
+  df_print()
 ```
-
-　以上のようにデータに一定数を乗じると平均値は乗じた一定値の分だけ大きくなり、他の統計量も乗じた一定値の分だけ大きくなっていることが分かります。これを正規分布で図示すると下図のようになります。
+　  
+　以上のようにデータに一定数を乗じると平均値は乗じた一定値の分だけ大きくなり、他の統計量も乗じた一定値の分だけ大きくなっていることが分かります。元データが正規分布のデータであると仮定して可視化すると下図のようになります。
 
 ```{r}
-#| fig-cap: "元データ（点線：左）と乗算データ（破線：右）"
-
-curve(dnorm(x, mean = 4, sd = 2), -3, 15,
-      lty = 3, xlab = "", ylab = "")
+#| code-summary: "元データ（点線：左）と加算データ（破線：右）"
+curve(dnorm(x, mean = 4, sd = 2), -3, 15, lty = 3, xlab = "", ylab = "")
 abline(v = 4, lty = 3)
-curve(dnorm(x, mean = 8, sd = 4),
-      -3, 15, add = TRUE, lty = 2,
-      xlab = "", ylab = "")
+curve(dnorm(x, mean = 8, sd = 4), -3, 15, add = TRUE, lty = 2, xlab = "", ylab = "")
 abline(v = 8, lty = 2)
 ```
 
-　
+　  
+　整理すると下表になります。
 
 | 加工方法                 |       平均値       |   標準偏差    | 備考                       |
 |----------------------|:---------------:|:---------------:|:----------------|
@@ -168,31 +170,34 @@ abline(v = 8, lty = 2)
 
 $k$: 任意の実数
 
-　
+　  
 
 ### 標準偏差何個分となるようにデータを加工する効果 {.unnumbered}
 
 　ここで説明されているのは「正規化」です。
 
 ```{r}
+#| code-summary: "対象データ（P49のデータX）"
 x <- read.csv(file = "./data/P49_図表4-5.csv")
 
 x %>% 
   df_print()
 ```
-
-　上記のP49のデータは、平均値$4$、標準偏差$2$ですので、$(データ - 平均値) \div 標準偏差$を計算すると下記のようになります。
+　  
+　上記のP49のデータは、平均値$4$、標準偏差$2$ですので、$(データ - 平均値) \div 標準偏差$を計算（正規化）すると下記のようになります。
 
 ```{r}
+#| code-summary: "正規化する"
 x %>% 
   dplyr::mutate(dev = (X - (sum(X) / length(X))),
                 nX = dev / sqrt(sum(dev ^ 2) / length(dev))) %>% 
   df_print()
 ```
-
+　  
 　`nX`の平均値と標準偏差は以下のように$0$と$1$になることが分かります。
 
 ```{r}
+#| code-summary: "正規化したデータの平均と標準偏差を求める"
 x %>% 
   dplyr::mutate(nX = (X - 4) / 2) %>% 
   dplyr::summarise(mean = sum(nX) / length(nX),
@@ -200,23 +205,30 @@ x %>%
   df_print()
 ```
 
+　  
+
 ## 練習問題 {.unnumbered}
 
 　（省略）
 
-　
+　  
 
 ## 【コラム】偏差値で嫌な思いをしたことのあるあなたに {.unnumbered}
 
-　
+　（省略）
+
+　  
 
 ## 追加問題 {.unnumbered}
 
 　P16の身長データを正規化（$(\mbox{データ} - \mbox{平均値}) \div \mbox{標準偏差}$）してみましょう。
 
+　  
+
 ### 解答例 {.unnumbered}
 
 ```{r}
+#| code-summary: "`scale()`関数を使うと簡単に正規化できます"
 x <- "./data/P16_図表1-1 .csv" %>% 
   readr::read_csv(col_names = FALSE, show_col_types = FALSE) %>% 
   tidyr::pivot_longer(cols = dplyr::starts_with("X"),
@@ -228,15 +240,19 @@ x <- "./data/P16_図表1-1 .csv" %>%
 x %>% 
   df_print()
 ```
-
+　  
 　正規化前後の平均値と標準偏差を比べると下記のようになります。
 
 ```{r}
+#| code-summary: "正規化前の平均値と標準偏差"
 x %>% 
   dplyr::summarise(mean = sum(height) / length(height),
                    sd = sqrt(sum((height - mean)^ 2) / length(height))) %>% 
   df_print()
+```
 
+```{r}
+#| code-summary: "正規化後の平均値と標準偏差"
 x %>% 
   dplyr::summarise(mean = sum(normalized) / length(normalized),
                    sd = sqrt(sum((normalized - mean)^ 2) / length(normalized))) %>% 

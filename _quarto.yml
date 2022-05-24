@@ -5,12 +5,8 @@ project:
 book:
   title: "Rで学ぶ『完全独習 統計学入門』"
   author: "Sampo Suzuki, CC 4.0 BY-NC-SA"
-  date: "2022/5/23"
-  # date: "`r format(Sys.Date(), format = '%Y-%m-%d')`"
-  # title: "quarto_book"
-  # author: "Jane Doe"
-  # date: "2022/5/23"
-  # description: "本書はデータ分析勉強会で学んだ成果をまとめたものです。"
+  date: today
+  description: "本書はデータ分析勉強会で学んだ成果をまとめたものです。"
   chapters:
     - index.qmd
     - chapter01.qmd
@@ -22,15 +18,31 @@ book:
 
 format:
   html:
-    theme: minty # cosmo 
+    # Toggle light and dark
+    theme:
+      light: minty
+      dark: superhero
     # theme - Boothswatch 
     #         https://quarto.org/docs/output-formats/html-themes.html
-    # default, cerulean, cosmo, cyborg, darkly, flatly, journal, litera, lumen,
-    # lux, materia, minty, morph, pulse, quartz, sandstone, simplex, sketchy,
-    # slate, solar, spacelab, superhero, united, vapor, yeti, zephyr
+    # Light theme: default, cerulean, cosmo, flatly, journal, litera, lumen,
+    #       lux, materia, minty, morph, pulse, quartz, sandstone, simplex,
+    #       sketchy, spacelab, united, yeti, zephyr
+    # Dark theme: cyborg, darkly, slate, solar, superhero, vapor
+    code-block-bg: true
+    code-block-border-left: "#77C2AD"
     code-copy: true
     code-fold: show
     code-link: true
+    # code-tools: 
+    #   source: true   # 各ページのソースを表示するか否か
+    #   toggle: true   # 
+    #   caption: none  # 
+    highlight-style: gruvbox # arrow github
+    # highlight-style - highlight.js
+    #            https://quarto.org/docs/output-formats/html-code.html
+    # Automatically switch 
+    #  a11y, arrow, atom-one, ayu, breeze, github, gruvbox
+    title-block-banner: true
 
 editor: source
 

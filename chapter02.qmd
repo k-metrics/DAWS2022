@@ -45,6 +45,7 @@ df <- x %>%
 #### 身長データ {.unnumbered}
 
 ```{r}
+#| code-summary: "第1講での身長データ"
 x %>% 
   df_print()
 ```
@@ -52,6 +53,7 @@ x %>%
 #### 度数分布表 {.unnumbered}
 
 ```{r}
+#| code-summary: "第1講での度数分布表"
 df %>% 
   df_print()
 ```
@@ -62,78 +64,86 @@ df %>%
 
 　本講で扱っている統計量（要約統計量）は平均のみです。
 
-　
+　  
 
 ## 平均値とは
 
 　本講の平均値とは算術平均を意味しています。身長データ（$x$）の平均値は`r with(x, mean(height))`です。
 
-　
+　  
 
 ## 度数分布表での平均値
 
 ```{r}
+#| code-summary: "第1講での度数分布表"
 df %>% 
   dplyr::select(`階級` = class, `度数` = n, `階級値` = mids,
                 `階級幅` = range, `累積度数` = cumsum_n,
                 `相対度数` = prop, `累積相対度数` = cumsum_prop) %>% 
   df_print()
 ```
-
+　  
 　（算術）平均は全ての観測値の総和を総データ数で除したものですので、観測値を各階級の代表値である階級値で近似すると下式が成り立つことが分かります。
 
-$$\mbox{平均} = \frac{\sum{\mbox{観測値}_i}}{総データ数} = \frac{\sum{\mbox{観測値}_i}}{\sum{度数}_i} \fallingdotseq \frac{\sum{(\mbox{階級値}_i \times \mbox{度数}_i)}}{\sum{度数}_i} = \sum{(\mbox{階級値}_i \times \mbox{相対度数}_i)}$$
+$$\mbox{平均} = \frac{\sum{\mbox{観測値}_i}}{総データ数} = \frac{\sum{\mbox{観測値}_i}}{\sum{度数}_i}$$
+$$ \fallingdotseq \frac{\sum{(\mbox{階級値}_i \times \mbox{度数}_i)}}{\sum{度数}_i} = \sum{(\mbox{階級値}_i \times \mbox{相対度数}_i)}$$
 
 　なぜなら $$\frac{\mbox{度数}_i}{\sum{\mbox{度数}_i}} = \mbox{相対度数}_i$$
 
 $$i = 1, 2, ... , n$$
 
 ```{r}
+#| code-summary: "P26 図表2−1 階級数×相対度数"
 df %>% 
   dplyr::select(A = mids, B = prop) %>% 
   dplyr::mutate(`A x B` = A * B) %>% 
   dplyr::rename(`A 階級値` = A, `B 相対度数` = B,
                 `A x B` = `A x B`) %>% 
   df_print()
+```
 
+```{r}
+#| code-summary: "P26 図表2−1 平均値"
 df %>% 
   dplyr::select(A = mids, B = prop) %>% 
   dplyr::mutate(`A x B` = A * B) %>% 
   dplyr::summarise(`平均値` = sum(`A x B`)) %>% 
  df_print()
 ```
+　  
+　実データで求めた平均値は`r with(x, mean(height))`ですので、階級値から求めた平均値との差は`r with(x, mean(height)) - 157.75`となり、度数分布表を作ることは平均値に大きな影響を与えていないことが分かります。
 
-　実データで求めた平均値は`r with(x, mean(height))`ですので、階級値から求めた平均値との差は`r with(x, mean(height)) - 157.75`となり、度数分布表を作ることは平均値に大きな影響を与えないことが分かります。
-
-　
+　  
 
 ## 平均値のヒストグラムの中での役割
 
 　階級値から求めた平均値をヒストグラム上にプロットすると下図のようになります。
 
 ```{r}
+#| code-summary: "ヒストグラムにおける平均値"
 with(x, hist(height))
 abline(v = 157.75, lty = 2)
 ```
 
-　
+　  
 
 ## 平均値をどう捉えるべきか
 
 　平均値の捉え方は様々考えられますが、テキストでは下記のようにまとめています。
 
--   全データ（値）を代表する値（点）
--   データは平均値の周辺に分布する
--   数多く現れるデータは平均値への影響が大きい
--   データの分布が対象の場合、平均値は対象軸
+* 全データ（値）を代表する値（点）
+* データは平均値の周辺に分布する
+* 数多く現れるデータは平均値への影響が大きい
+* データの分布が対象の場合、平均値は対象軸
 
-　
+　  
 
 ## 練習問題
 
 ### 解答例
 
 ```{r}
+#| code-summary: "相対度数と階級値×相対度数を求める"
 data.frame(mids = c(30, 50, 70, 90, 110, 130),
            n = c(5, 10, 15, 40, 20, 10)) %>% 
   dplyr::mutate(prop = prop.table(n), cm = mids * prop) %>% 
@@ -143,12 +153,15 @@ data.frame(mids = c(30, 50, 70, 90, 110, 130),
 ```
 
 ```{r}
+#| code-summary: "平均値（階級数×相対度数の和）を求める"
 data.frame(mids = c(30, 50, 70, 90, 110, 130),
            n = c(5, 10, 15, 40, 20, 10)) %>% 
   dplyr::mutate(prop = prop.table(n), cm = mids * prop) %>% 
   dplyr::summarise(`平均値` = sum(cm)) %>% 
   df_print()
 ```
+
+　  
 
 ## 【コラム】平均値のとり方は、１つではない {.unnumbered}
 
@@ -157,17 +170,23 @@ data.frame(mids = c(30, 50, 70, 90, 110, 130),
 $$\frac{\sum_{i=1}^n{x_i}}{n}$$
 
 ```{r}
+#| code-summary: "計算式通りの求め方"
 sum(c(10, 90)) / length(c(10, 90))
+```
+
+```{r}
+#| code-summary: "標準で組み込まれている関数"
 mean(c(10, 90))
 ```
 
-　
+　  
 
 ### 幾何平均（Geometric Mean）または相乗平均 {.unnumbered}
 
 $$\sqrt{\prod_{i=1}^n{x_i}}$$
 
 ```{r}
+#| code-summary: "幾何平均はフローしやすいので専用関数で"
 psych::geometric.mean(c(10, 90))
 ```
 
@@ -178,31 +197,40 @@ psych::geometric.mean(c(10, 90))
 $$\sqrt{\frac{\sum_{i=1}^n{x_i^2}}{n}}$$
 
 ```{r}
+#| code-summary: "計算式通りの求め方"
 sqrt(mean(c(10, 90) ^ 2))
 ```
+　  
+　`seewave`パッケージで二乗平均が関数として定義されていますが、コードの中身は上記の`sqrt(mean(x ^ 2))`と同一です。
+```{r}
+#| code-summary: "フロー対策などは施されていません"
+seewave::rms(c(10, 90))
+```
 
-　
+　  
 
 ### 調和平均（Harmonic Mean） {.unnumbered}
 
 $$\frac{n}{\sum_{i=1}^n{\frac{1}{x_i}}}$$
 
 ```{r}
+#| code-summary: "パッケージで提供されています"
 psych::harmonic.mean(c(10, 90))
 ```
 
-　
+　  
 
 ### トリム平均 {.unnumbered}
 
 　トリム平均は体操競技の評点などで使われる平均値の計算方法で、値を小さい方から順に並べ、上位側と下位側から一定の割合で値を除き算術平均を求めます。外れ値や異常値などを影響を排除するために使われることが多いです。
 
 ```{r}
+#| code-summary: "知っておくと便利なトリム平均"
 mean(c(0, 1:8, 30))
 mean(c(0, 1:8, 30), trim = 0.25)  # データの両側2.5%を対象外とする
 ```
 
-　
+　  
 
 ## 追加問題 {.unnumbered}
 
@@ -211,6 +239,7 @@ mean(c(0, 1:8, 30), trim = 0.25)  # データの両側2.5%を対象外とする
 ### 階級幅が倍になった場合 {.unnumbered}
 
 ```{r}
+#| code-summary: "階級幅が倍になった場合の平均値の差"
 x %>% 
   dplyr::mutate(class = cut(height,
                             breaks = c(140, 150, 160, 170),
@@ -234,6 +263,7 @@ x %>%
 ### 階級幅が半分になった場合 {.unnumbered}
 
 ```{r}
+#| code-summary: "階級幅が半分になった場合の平均値の差"
 x %>% 
   dplyr::mutate(class = cut(height,
                             breaks = seq(from = 140, to = 170, by = 2.5),
@@ -253,5 +283,7 @@ x %>%
                 `差` = `算術平均` - `階級値による平均値`) %>% 
   df_print()
 ```
+
+　  
 
 ---
