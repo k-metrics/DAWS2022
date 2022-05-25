@@ -13,10 +13,13 @@ book:
   repo-branch: main
   repo-actions: [edit]
   # downloads: [pdf]
+  search: 
+    location: sidebar # navbar or sidebar
+    type: textbox     # overlay or textbox
   sharing: [twitter, facebook]
   sidebar:
-    style: docked # floating
-    background: dark #light
+    style: floating   # floating or docked
+    background: dark  # light or dark
   chapters:
     - index.qmd
     - chapter01.qmd

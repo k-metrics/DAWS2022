@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Rで学ぶ『完全独習 統計学入門』",
     "section": "",
-    "text": "本資料は『完全独習 統計学入門』小島寛之著（以降、テキスト）の内容をRで計算する方法を紹介しています1。テキストに記載されているデータの一部をCSVファイルに起こして利用していますが、データ自体の著作権は原著作者にあります。また、CSVファイルは著作権を侵害する意図で作成したものではありません。1 Rのインストール方法や基本文法などには触れません\n　\n\n　本書の想定読者は以下に該当する方です。\n\nRに関する基本的な知識を有している方\n\nデータフレーム型や因子型などの変数型の知識\n変数の代入・参照方法\n\ntidyverseの基本的な知識（パイプ演算子など）\n\n\nRで統計量を求めてみたい方\n\n　\n\n\n\n\n\n\ndf_print()関数について\n\n\n\n　本書のコードに出てくるdf_pirnt()関数はデータフレームを出力フォーマットごとに適切な形式で出力するために定義した関数です。RやCRANのパッケージで提供されている関数ではありません。ご自身の環境でコードを実行する際にはdf_print()関数とその直前のパイプ演算子（%>%）を削除してから実行してください。\n　例）x %>% df_printとなっている場合は%>% df_print()を削除しxを実行してください。\n\n\n\n\n\n\n\n\nTip: Code Block Operation\n\n\n\n　コードブロックの上にある▼マークをクリックするとコードの表示・非表示を切り替えることができます。また、コードブロック中のパッケージ名や関数名にマウスオーバーした際に下線が表示されるものについては、クリックをするとパッケージや関数の説明ページ（英語）にジャンプできます。 　なお、コードブロック右上にあるアイコンをクリックするとコードをクリップボードにコピーできます。\n\n\n\n\n\n\n\n\nTip: Index\n\n\n\n　左側に章単位のインデックス（以降、メインインデックス）、右側に現在表示中のページ内のインデックス（以降、サブインデックス）がフローティング表示されます。ウィンドウ幅が狭い場合はメインインデックスは最上段に折りたたみ形式で表示され、サブインデックスは表示幅により表示・非表示が自動的に切り替わります。 　また、メインインデックス最上段のタイトル右側に表示されるトグルスイッチでカラーモードを切り替えることができます。"
+    "text": "本資料は『完全独習 統計学入門』小島寛之著（以降、テキスト）の内容をRで計算する方法を紹介しています1。テキストに記載されているデータの一部をCSVファイルに起こして利用していますが、データ自体の著作権は原著作者にあります。また、CSVファイルは著作権を侵害する意図で作成したものではありません。1 Rのインストール方法や基本文法などには触れません\n　\n\n　本書の想定読者は以下に該当する方です。\n\nRに関する基本的な知識を有している方\n\nデータフレーム型や因子型などの変数型の知識\n変数の代入・参照方法\n\ntidyverseの基本的な知識（パイプ演算子など）\n\n\nRで統計量を求めてみたい方\n\n　\n\n\n\n\n\n\ndf_print()関数について\n\n\n\n　本書のコードに出てくるdf_pirnt()関数はデータフレームを出力フォーマットごとに適切な形式で出力するために定義した関数です。RやCRANのパッケージで提供されている関数ではありません。ご自身の環境でコードを実行する際にはdf_print()関数とその直前のパイプ演算子（%>%）を削除してから実行してください。\n　例）x %>% df_printとなっている場合は%>% df_print()を削除しxを実行してください。\n\n\n　\n\n\n\n\n\n\nTip: Index\n\n\n\n　左側に章単位のインデックス（以降、メインインデックス）、右側に現在表示中のページ内のインデックス（以降、サブインデックス）が表示されます。インデックスはウィンドウサイズにより表示位置などが自動的に切り替わります。\n\n\n\n\n\n\n\n\nTip: Code Block Operation\n\n\n\n　コードブロックの上にある▼マークをクリックするとコードの表示・非表示を切り替えることができます。また、コードブロック中のパッケージ名や関数名にマウスオーバーした際に下線が表示されるものは、クリックをすると説明ページ（英語）にジャンプできます。 　コードブロック右上にあるアイコンをクリックするとコードをクリップボードにコピーできます。"
   },
   {
     "objectID": "chapter01.html",
@@ -200,21 +200,21 @@
     "href": "chapter05.html#株の平均収益率とは何か",
     "title": "\n5  標準偏差は株のリスクの指標として活用できる\n",
     "section": "\n5.1 株の平均収益率とは何か？",
-    "text": "5.1 株の平均収益率とは何か？"
+    "text": "5.1 株の平均収益率とは何か？\n　株価の変動を利用して得られる収益は「キャピタルゲイン」と呼ばれます。キャピタルゲインを目当てとした株取引で重要になる指標のひとつに「収益率」があります。毎月の終値が前月の終値に対して、値上がった、または、値下がった率を「月次収益率」といいます。「月次平均収益率」は、月次収益率の一年間（十二ヶ月）単位で平均した値になります。\n　\n　実際に株探というサイトから某社の月次株価一覧を取得して月次平均収益率を計算してみましょう。\n\nサイトから株価データを取得するlibrary(tidyverse)\nlibrary(rvest)\n\nsite_url <- \"https://kabutan.jp/stock/kabuka?code=7203&ashi=mon&page=\"\npages <- c(1:5)\nxpath <- '//*[@id=\"stock_kabuka_table\"]/table[2]'\n\nstock <- purrr::map2(site_url, pages, ~ paste0(.x, .y)) %>%\n  purrr::map2_df(pages, .f = function(.x, .y) {\n    xml2::read_html(.x) %>% \n      rvest::html_element(xpath = xpath) %>%\n      rvest::html_table(header = FALSE) %>%\n      dplyr::slice(-1)\n  }\n)\n\nstock %>% \n  df_print()\n\n\n\n  \n\n\n\n　\n　上表の「X7」が月次収益率、月次収益率の十二ヶ月平均が月次平均収益率になりますので、データがそろっている年の月次平均収益率を算出してみます。\n\n月次平均収益率を求めるstock %>% \n  dplyr::mutate(日付 = lubridate::as_date(X1),\n                年 = lubridate::year(日付)) %>% \n  dplyr::filter(年 >= 2010 & 年 <= 2021) %>% \n  dplyr::group_by(年) %>% \n  dplyr::summarise(月次平均収益率 = mean(as.numeric(X7)) %>% \n                            round(digits = 2)) %>% \n  df_print()"
   },
   {
     "objectID": "chapter05.html#平均収益率だけでは優良な投資かどうかは判断できない",
     "href": "chapter05.html#平均収益率だけでは優良な投資かどうかは判断できない",
     "title": "\n5  標準偏差は株のリスクの指標として活用できる\n",
     "section": "\n5.2 平均収益率だけでは、優良な投資かどうかは判断できない",
-    "text": "5.2 平均収益率だけでは、優良な投資かどうかは判断できない"
+    "text": "5.2 平均収益率だけでは、優良な投資かどうかは判断できない\n\nCode\"./data/P56_ 図表5-3.csv\" %>% \n  read.csv() %>% \n  df_print()\n\n\n\n  \n\n\n\n\n月次平均収益率を求める\"./data/P56_ 図表5-3.csv\" %>% \n  read.csv() %>% \n  dplyr::summarise_if(is.numeric, mean) %>% \n  round(digits = 2) %>% \n  df_print()\n\n\n\n  \n\n\n\n\n月次平均収益率の標準偏差を求めるSD <- function(x) {\n  sqrt((length(x) - 1) / length(x)) * sd(x)\n}\n\n\"./data/P56_ 図表5-3.csv\" %>% \n  read.csv() %>% \n  dplyr::summarise_if(is.numeric, SD) %>% \n  round(digits = 2) %>% \n  df_print()\n\n\n\n  \n\n\n\n　\n　前節の株探のデータを利用して月次平均収益率と標準偏差を求めます。\n\n実際の株価から月次平均収益率と標準偏差を求めるstock %>% \n  dplyr::mutate(日付 = lubridate::as_date(X1), 年 = lubridate::year(日付),\n                月次収益率 = as.numeric(X7)) %>% \n  dplyr::filter(年 >= 2010 & 年 <= 2021) %>% \n  dplyr::group_by(年) %>% \n  dplyr::summarise(月次平均収益率 = mean(月次収益率) %>% round(digits = 2),\n                   標準偏差 = SD(月次収益率) %>% round(digits = 2)) %>% \n  dplyr::mutate(下 = 月次平均収益率 - 標準偏差, 上 = 月次平均収益率 + 標準偏差) %>% \n  df_print()"
   },
   {
     "objectID": "chapter05.html#ボラリティが意味するところ",
     "href": "chapter05.html#ボラリティが意味するところ",
     "title": "\n5  標準偏差は株のリスクの指標として活用できる\n",
     "section": "\n5.3 ボラリティが意味するところ",
-    "text": "5.3 ボラリティが意味するところ"
+    "text": "5.3 ボラリティが意味するところ\n\n実際の株価から直近三年の月次収益率の変動を可視化するstock %>% \n  dplyr::mutate(日付 = lubridate::as_date(X1), 月次収益率 = as.numeric(X7),\n                年 = lubridate::year(日付), 月 = lubridate::month(日付)) %>% \n  dplyr::filter(年 >= 2019 & 年 <= 2021) %>% \n  dplyr::mutate(年 = as.factor(年)) %>% \n  ggplot2::ggplot(ggplot2::aes(x = 月, y = 月次収益率, fill = 年)) +\n    ggplot2::geom_bar(stat = \"identity\", position = \"dodge\")"
   },
   {
     "objectID": "chapter05.html#練習問題",
