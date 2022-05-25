@@ -1,0 +1,19 @@
+# 標準偏差は株のリスクの指標として活用できる
+```{r}
+#| label: setup
+#| echo: false
+#| warning: false
+#| message: false
+source("./R/setup.R")
+```
+
+## 株の平均収益率とは何か？
+
+## 平均収益率だけでは、優良な投資かどうかは判断できない
+
+## ボラリティが意味するところ
+
+## 練習問題 {.unnumbered}
+
+
+---
