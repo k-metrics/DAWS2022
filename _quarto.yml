@@ -11,7 +11,7 @@ book:
   site-url: https://k-metrics.github.io/DAWS2022/
   repo-url: https://github.com/k-metrics/DAWS2022/
   repo-branch: main
-  repo-actions: [edit]
+  repo-actions: [issue] # edit, issue or source
   # downloads: [pdf]
   search: 
     location: sidebar # navbar or sidebar
@@ -20,6 +20,13 @@ book:
   sidebar:
     style: floating   # floating or docked
     background: dark  # light or dark
+  page-footer: 
+    left: "Sampo Suzuki, CC 4.0 BY-NC-SA"
+    # center: 
+    right: 
+      - icon: github
+        href: https://github.com/k-metrics/DAWS2022/
+    background: dark # or light
   chapters:
     - index.qmd
     - chapter01.qmd
