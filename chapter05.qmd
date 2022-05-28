@@ -217,8 +217,7 @@ stock %>%
 #| code-fold: true
 #| warning: false
 #| message: false
-#| cache: true
-
+#| cache: false
 site_url1 <- "https://kabutan.jp/stock/kabuka?code="
 site_url2 <- "&ashi=mon&page="
 pages <- c(1:5)
@@ -266,7 +265,7 @@ stock_m %>%
 #| code-fold: true
 #| warning: false
 #| message: false
-#| cache: true
+#| cache: false
 url1 <- "https://kabutan.jp/stock/kabuka?code="
 url2 <- "&ashi=mon&page="
 pages <- c(1:5)
@@ -311,7 +310,7 @@ stock_n %>%
 #| code-fold: true
 #| warning: false
 #| message: false
-#| cache: true
+#| cache: false
 url1 <- "https://kabutan.jp/stock/kabuka?code="
 url2 <- "&ashi=mon&page="
 pages <- c(1:5)
