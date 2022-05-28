@@ -7,12 +7,33 @@ book:
   author: "Sampo Suzuki, CC 4.0 BY-NC-SA"
   date: today
   description: "本書はデータ分析勉強会で学んだ成果をまとめたものです。"
+  lang: ja
+  site-url: https://k-metrics.github.io/DAWS2022/
+  repo-url: https://github.com/k-metrics/DAWS2022/
+  repo-branch: main
+  repo-actions: [issue] # edit, issue or source
+  # downloads: [pdf]
+  search: 
+    location: sidebar # navbar or sidebar
+    type: textbox     # overlay or textbox
+  sharing: [twitter, facebook]
+  sidebar:
+    style: floating   # floating or docked
+    background: dark  # light or dark
+  page-footer: 
+    left: "Sampo Suzuki, CC 4.0 BY-NC-SA"
+    # center: 
+    right: 
+      - icon: github
+        href: https://github.com/k-metrics/DAWS2022/
+    background: dark # or light
   chapters:
     - index.qmd
     - chapter01.qmd
     - chapter02.qmd
     - chapter03.qmd
     - chapter04.qmd
+    - chapter05.qmd
 
 # bibliography: references.bib
 
@@ -23,7 +44,7 @@ format:
       light: minty
       dark: superhero
     # theme - Boothswatch 
-    #         https://quarto.org/docs/output-formats/html-themes.html
+    #   https://quarto.org/docs/output-formats/html-themes.html
     # Light theme: default, cerulean, cosmo, flatly, journal, litera, lumen,
     #       lux, materia, minty, morph, pulse, quartz, sandstone, simplex,
     #       sketchy, spacelab, united, yeti, zephyr
@@ -37,12 +58,15 @@ format:
     #   source: true   # 各ページのソースを表示するか否か
     #   toggle: true   # 
     #   caption: none  # 
-    highlight-style: gruvbox # arrow github
+    highlight-style: gruvbox
     # highlight-style - highlight.js
-    #            https://quarto.org/docs/output-formats/html-code.html
-    # Automatically switch 
+    #   https://quarto.org/docs/output-formats/html-code.html
+    # Automatically switch type
     #  a11y, arrow, atom-one, ayu, breeze, github, gruvbox
     title-block-banner: true
+    reference-location: margin
+    # citation-location: margin
+    # Margin Refernces
+    #   https://quarto.org/docs/authoring/article-layout.html#margin-references
 
 editor: source
-

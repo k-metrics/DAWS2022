@@ -90,3 +90,11 @@ df_print <- function(df = NULL,             # 表示させたいデータをフ�
     }
   }
 }
+
+
+## 標本標準偏差を求める
+SD <- function(x) {
+  # sqrt((length(x) - 1) / length(x)) * sd(x)
+  sqrt(sum((x - mean(x)) ^ 2) / length(x))
+}
+

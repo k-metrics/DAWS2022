@@ -1,0 +1,348 @@
+# 標準偏差は株のリスクの指標として活用できる
+```{r}
+#| label: setup
+#| echo: false
+#| warning: false
+#| message: false
+source("./R/setup.R")
+```
+
+## 株の平均収益率とは何か？
+
+　株価の変動を利用して得られる収益は「キャピタルゲイン」と呼ばれます。キャピタルゲインを目当てとした株取引で重要になる指標のひとつに「収益率」があります。毎月の終値が前月の終値に対して、値上がった、または、値下がった率を「月次収益率」といいます。「月次平均収益率」は、月次収益率の一年間（十二ヶ月）単位で平均した値になります。  
+　  
+
+## 平均収益率だけでは、優良な投資かどうかは判断できない
+
+```{r}
+"./data/P56_ 図表5-3.csv" %>% 
+  read.csv() %>% 
+  df_print()
+```
+　  
+
+```{r}
+#| code-summary: "月次平均収益率を求める"
+"./data/P56_ 図表5-3.csv" %>% 
+  read.csv() %>% 
+  dplyr::summarise_if(is.numeric, mean) %>% 
+  round(digits = 2) %>% 
+  df_print()
+```
+　  
+
+```{r}
+#| code-summary: "月次平均収益率の標準偏差を求める"
+"./data/P56_ 図表5-3.csv" %>% 
+  read.csv() %>% 
+  dplyr::summarise_if(is.numeric, SD) %>% 
+  round(digits = 2) %>% 
+  df_print()
+```
+
+```{r}
+#| code-summary: "月次平均収益率と標準偏差を可視化する"
+#| include: false
+#| eval: false
+"./data/P56_ 図表5-3.csv" %>% 
+  read.csv() %>% 
+  tidyr::pivot_longer(-月, names_to = "年", values_to = "月次収益率") %>% 
+  dplyr::group_by(年) %>% 
+  dplyr::summarise(月次平均収益率 = mean(月次収益率),
+                   標準偏差 = SD(月次収益率)) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = 年, y = 月次平均収益率)) + 
+    ggplot2::geom_bar(stat = "identity", position = "dodge") + 
+    ggplot2::geom_errorbar(ggplot2::aes(ymax = 月次平均収益率 + 標準偏差,
+                                        ymin = 月次平均収益率 - 標準偏差),
+                           position = "dodge", width = 0.2)
+```
+
+　  
+
+## ボラリティが意味するところ
+
+　ボラリティ（予想変動率）とは標準偏差、つまり平均値からのブレ（バラツキ）のことです。例えば1981年の月次平均収益率は$2.46\%$、標準偏差は$9.11\%$なので、概ね下図のマゼンタ色のラインの間で変動していると想定できます。
+
+```{r}
+#| code-summary: "1981年の月次収益率"
+"./data/P56_ 図表5-3.csv" %>% 
+  read.csv() %>% 
+  dplyr::mutate(月 = forcats::fct_inorder(月)) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = 月, y = X1981年)) + 
+    ggplot2::geom_bar(stat = "identity") + 
+    ggplot2::geom_hline(yintercept = 2.46, colour = "lightskyblue") + 
+    ggplot2::geom_hline(yintercept = c(2.46 + 9.11, 2.46 - 9.11),
+                        colour = "magenta")
+```
+
+
+## 練習問題 {.unnumbered}
+
+　（省略）
+
+　  
+
+## 実際の株価で計算してみる {.unnumbered}
+
+　実際に[株探](https://kabutan.jp/)というサイトから某社の月次株価一覧を取得して月次平均収益率を計算してみます。  
+
+```{r}
+#| code-summary: "サイトから株価データを取得する"
+#| code-fold: true
+#| message: false
+#| warning: false
+library(tidyverse)
+library(rvest)
+
+site_url <- "https://kabutan.jp/stock/kabuka?code=7203&ashi=mon&page="
+pages <- c(1:5)
+xpath <- '//*[@id="stock_kabuka_table"]/table[2]'
+
+stock <- tidyr::crossing(site_url, pages) %>% 
+  dplyr::mutate(url = paste0(site_url, pages)) %>% 
+  dplyr::pull(url) %>% 
+  purrr::map_df(.f = function(.x) {
+    xml2::read_html(.x) %>% 
+      rvest::html_element(xpath = xpath) %>%
+      rvest::html_table(header = FALSE) %>%
+      dplyr::slice(-1)
+  }) %>% 
+  dplyr::mutate(dplyr::across(.col = dplyr::everything(),
+                              .f = readr::parse_guess)) %>% 
+  dplyr::mutate(X1 = lubridate::as_date(X1)) %>% 
+  dplyr::rename(`日付` = X1, `始値` = X2, `高値` = X3, `安値` = X4,
+                `終値` = X5, `前月比` = X6, `月次収益率` = X7, `売買高` = X8)
+
+stock %>% 
+  df_print()
+```
+```{r}
+#| code-summary: "以前のやり方"
+#| include: false
+#| eval: false
+stock <- purrr::map2(site_url, pages, ~ paste0(.x, .y)) %>%
+  purrr::map2_df(pages, .f = function(.x, .y) {
+    xml2::read_html(.x) %>% 
+      rvest::html_element(xpath = xpath) %>%
+      rvest::html_table(header = FALSE) %>%
+      dplyr::slice(-1)
+  }
+) %>% 
+  dplyr::mutate_all(readr::parse_guess) %>% 
+  dplyr::mutate(X1 = lubridate::as_date(X1)) %>% 
+  dplyr::rename(`日付` = X1, `始値` = X2, `高値` = X3, `安値` = X4,
+                `終値` = X5, `前月比` = X6, `月次収益率` = X7, `売買高` = X8)
+```
+
+　  
+　月次収益率の十二ヶ月平均が月次平均収益率になりますので、データがそろっている年の月次平均収益率と標準偏差を算出します。
+
+```{r}
+#| code-summary: "月次平均収益率と標準偏差を求める"
+#| code-fold: true
+stock %>% 
+  dplyr::mutate(年 = lubridate::year(日付)) %>% 
+  dplyr::filter(年 >= 2010 & 年 <= 2021) %>% 
+  dplyr::group_by(年) %>% 
+  dplyr::summarise(月次平均収益率 = mean(月次収益率),
+                   標準偏差 = SD(月次収益率)) %>% 
+  round(digits = 2) %>% 
+  df_print()
+```
+　  
+　上記を可視化します。
+
+```{r}
+#| code-summary: "月次平均収益率と標準偏差を可視化する"
+#| code-fold: true
+stock %>% 
+  dplyr::mutate(年 = lubridate::year(日付)) %>% 
+  dplyr::filter(年 >= 2010 & 年 <= 2021) %>% 
+  dplyr::group_by(年) %>% 
+  dplyr::summarise(月次平均収益率 = mean(as.numeric(月次収益率)) %>% 
+                            round(digits = 2),
+                   標準偏差 = SD(月次収益率)) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = 年, y = 月次平均収益率)) + 
+    ggplot2::geom_bar(stat = "identity", position = "dodge") + 
+    ggplot2::geom_errorbar(ggplot2::aes(ymax = 月次平均収益率 + 標準偏差,
+                                        ymin = 月次平均収益率 - 標準偏差),
+                           position = "dodge", width = 0.2)
+```
+　  
+　月次平均収益率だけを見ていても儲けられる株かどうかの判断が難しいので、参考までに隔月の終値の変動を可視化します。
+
+```{r}
+#| code-summary: "終値の変動を可視化する"
+#| code-fold: true
+stock %>% 
+  ggplot2::ggplot(ggplot2::aes(x = 日付, y = 終値)) + 
+    ggplot2::geom_line()
+```
+
+　  
+
+```{r}
+#| code-summary: "直近三年の月次収益率の変動を可視化する"
+#| code-fold: true
+stock %>% 
+  dplyr::mutate(年 = lubridate::year(日付), 月 = lubridate::month(日付)) %>% 
+  dplyr::filter(年 >= 2019 & 年 <= 2021) %>% 
+  dplyr::mutate(年 = as.factor(年)) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = 月, y = 月次収益率, fill = 年)) +
+    ggplot2::geom_bar(stat = "identity", position = "dodge")
+```
+
+```{r}
+#| code-summary: "実際の株価から直近三年の月次収益率の変動を可視化する"
+#| include: false
+#| eval: false
+stock %>% 
+  dplyr::mutate(年 = lubridate::year(日付), 月 = lubridate::month(日付)) %>% 
+  dplyr::filter(年 >= 2019 & 年 <= 2021) %>% 
+  dplyr::mutate(年 = as.factor(年)) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = 月, y = 月次収益率, colour = 年)) +
+    ggplot2::geom_line()
+```
+
+　  
+
+### 複数の株を比較する
+
+　複数の同業種銘柄を比較してみます。どの株が儲かりそうでしょうか？
+
+```{r}
+#| code-summary: "6銘柄の月次平均収益率と標準偏差を可視化する"
+#| include: false
+#| eval: false
+#| code-fold: true
+#| warning: false
+#| message: false
+#| cache: true
+
+site_url1 <- "https://kabutan.jp/stock/kabuka?code="
+site_url2 <- "&ashi=mon&page="
+pages <- c(1:5)
+xpath <- '//*[@id="stock_kabuka_table"]/table[2]'
+code = c(7201, 7203, 7211, 7261, 7267, 7270)
+
+url1 <- purrr::map2_chr(site_url1, code, ~ paste0(.x, .y))
+url2 <- purrr::map2_chr(site_url2, pages, ~ paste0(.x, .y))
+
+
+stock_m <- expand.grid(url1, url2) %>% 
+  dplyr::mutate(url = paste0(Var1, Var2)) %>% 
+  dplyr::pull(url) %>% 
+  purrr::map_df(.f = function(.x) {
+    xml2::read_html(.x) %>% 
+      rvest::html_element(xpath = xpath) %>%
+      rvest::html_table(header = FALSE) %>%
+      dplyr::slice(-1) %>% 
+      dplyr::mutate(url = .x)
+    } 
+  )
+
+stock_m %>% 
+  dplyr::mutate(dplyr::across(.fns = readr::parse_guess)) %>% 
+  dplyr::mutate(X1 = lubridate::as_date(X1),
+                year = lubridate::year(X1)) %>% 
+  dplyr::mutate(code = stringr::str_sub(url, start = 38, end = -17)) %>% 
+  dplyr::select(-url) %>% 
+  dplyr::arrange(code, X1) %>% 
+  dplyr::filter(year >= 2010 & year <= 2021) %>% 
+  dplyr::group_by(code, year) %>% 
+  dplyr::summarise(mean = mean(X7), sd = sd(X7)) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = year, y = mean, fill = code)) + 
+    ggplot2::geom_bar(stat = "identity", position = "dodge") + 
+    ggplot2::geom_errorbar(ggplot2::aes(ymax = mean + sd,
+                                        ymin = mean - sd),
+                           position = "dodge", width = 0.5, size = 0.25) + 
+    ggplot2::facet_wrap(~ code)
+```
+
+```{r}
+#| code-summary: "6銘柄の月次平均収益率と標準偏差を可視化する（改良板）"
+#| include: false
+#| eval: false
+#| code-fold: true
+#| warning: false
+#| message: false
+#| cache: true
+url1 <- "https://kabutan.jp/stock/kabuka?code="
+url2 <- "&ashi=mon&page="
+pages <- c(1:5)
+xpath <- '//*[@id="stock_kabuka_table"]/table[2]'
+code = c(7201, 7203, 7211, 7261, 7267, 7270)
+
+site <- expand.grid(url1, code, url2, pages) %>% 
+  dplyr::mutate(url = paste0(Var1, Var2, Var3, Var4),
+                code = Var2, page = Var4) %>% 
+  dplyr::arrange(code, page)
+
+stock_n <- purrr::map2_df(.x = site$url, .y = site$code,
+                          .f = function(.x, .y) {
+  xml2::read_html(.x) %>% 
+    rvest::html_element(xpath = xpath) %>%
+    rvest::html_table(header = FALSE) %>%
+    dplyr::slice(-1) %>% 
+    dplyr::mutate(code = .y)
+  }
+)
+
+stock_n %>% 
+  dplyr::mutate(dplyr::across(.cols = tidyselect::starts_with("X"),
+                              .fns = readr::parse_guess)) %>% 
+  dplyr::mutate(date = lubridate::as_date(X1),
+                year = lubridate::year(date),
+                code = as.character(code)) %>% 
+  dplyr::filter(year >= 2010 & year <= 2021) %>% 
+  dplyr::group_by(code, year) %>% 
+  dplyr::summarise(mean = mean(X7), sd = sd(X7)) %>% 
+  # print() %>% 
+  ggplot2::ggplot(ggplot2::aes(x = year, y = mean, fill = code)) + 
+    ggplot2::geom_bar(stat = "identity", position = "dodge") + 
+    ggplot2::geom_errorbar(ggplot2::aes(ymax = mean + sd,
+                                        ymin = mean - sd),
+                           position = "dodge", width = 0.5, size = 0.25) + 
+    ggplot2::facet_wrap(~ code)
+```
+
+```{r}
+#| code-summary: "6銘柄の月次平均収益率と標準偏差を可視化する"
+#| code-fold: true
+#| warning: false
+#| message: false
+#| cache: true
+url1 <- "https://kabutan.jp/stock/kabuka?code="
+url2 <- "&ashi=mon&page="
+pages <- c(1:5)
+xpath <- '//*[@id="stock_kabuka_table"]/table[2]'
+code = c(7201, 7203, 7211, 7261, 7267, 7270)
+
+tidyr::crossing(code, pages) %>% 
+  dplyr::mutate(url = paste0(url1, code, url2, pages)) %>% 
+  # dplyr::select(-pages) %>% 
+  purrr::pmap_df(.f = function(url, code, pages) {
+    xml2::read_html(url) %>% 
+      rvest::html_element(xpath = xpath) %>%
+      rvest::html_table(header = FALSE) %>%
+      dplyr::slice(-1) %>% 
+      dplyr::mutate(code = code, page = pages)
+  }) %>% 
+  dplyr::mutate(dplyr::across(.cols = tidyselect::starts_with("X"),
+                              .fns = readr::parse_guess)) %>% 
+  dplyr::mutate(date = lubridate::as_date(X1),
+                year = lubridate::year(date),
+                code = as.character(code)) %>% 
+  dplyr::filter(year >= 2010 & year <= 2021) %>% 
+  dplyr::group_by(code, year) %>% 
+  dplyr::summarise(mean = mean(X7), sd = sd(X7)) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = year, y = mean, fill = code)) + 
+    ggplot2::geom_hline(yintercept = 0, colour = "gray") + 
+    ggplot2::geom_bar(stat = "identity", position = "dodge") + 
+    ggplot2::geom_errorbar(ggplot2::aes(ymax = mean + sd,
+                                        ymin = mean - sd),
+                           position = "dodge", width = 0.5, size = 0.25) + 
+    ggplot2::facet_wrap(~ code)
+```
+
+---

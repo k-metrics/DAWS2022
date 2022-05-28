@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-0.9.440">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Sampo Suzuki, CC 4.0 BY-NC-SA">
-<meta name="dcterms.date" content="2022-05-24">
+<meta name="dcterms.date" content="2022-05-28">
 <meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです。">
 <title>Rで学ぶ『完全独習 統計学入門』</title>
 <style>
@@ -44,7 +44,7 @@ ul.task-list{list-style: none;}
   }
 }</script>
 </head>
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
@@ -77,7 +77,7 @@ ul.task-list{list-style: none;}
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 24, 2022</p>
+        <p class="date">May 28, 2022</p>
       </div>
     </div>
       
@@ -89,8 +89,24 @@ ul.task-list{list-style: none;}
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Rで学ぶ『完全独習 統計学入門』</a> 
-        <div class="sidebar-tools-main">
-  <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/k-metrics/DAWS2022/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+<li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
+<a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
       </div>
@@ -126,6 +142,11 @@ ul.task-list{list-style: none;}
   <a href="./chapter04.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">そのデータは「月並み」か「特殊」か？ 標準偏差で評価する</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter05.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">標準偏差は株のリスクの指標として活用できる</span></a>
+  </div>
+</li>
     </ul>
 </div>
 </nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -138,12 +159,11 @@ ul.task-list{list-style: none;}
 <li><a href="#%E6%83%B3%E5%AE%9A%E8%AA%AD%E8%80%85" id="toc-想定読者" class="nav-link" data-scroll-target="#%E6%83%B3%E5%AE%9A%E8%AA%AD%E8%80%85">想定読者</a></li>
   </ul>
 </li>
-  </ul></nav>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/k-metrics/DAWS2022/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="はじめに" class="level1 unnumbered"><h1 class="unnumbered">はじめに</h1>
-<p>　本資料は<a href="https://www.diamond.co.jp/book/9784478820094.html">『完全独習 統計学入門』小島寛之著</a>（以降、テキスト）の内容をRで計算する方法を紹介しています。基本的な統計量を求める際に必要となる関数などの解説が中心です。 　</p>
-<p>　テキストに記載されているデータの一部をCSVファイルにして利用していますが、データ自体の著作権は原著作者にあります。また、CSVファイルは著作権を侵害する意図で作成したものではありません。</p>
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><section id="はじめに" class="level1 unnumbered page-columns page-full"><h1 class="unnumbered">はじめに</h1>
+<div class="page-columns page-full"><p>　本資料は<a href="https://www.diamond.co.jp/book/9784478820094.html">『完全独習 統計学入門』小島寛之著</a>（以降、テキスト）の内容をRで計算する方法を紹介しています<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。テキストに記載されているデータの一部をCSVファイルに起こして利用していますが、データ自体の著作権は原著作者にあります。また、CSVファイルは著作権を侵害する意図で作成したものではありません。</p><div class="no-row-height column-margin column-container"><li id="fn1" role="doc-endnote"><p><sup>1</sup>&nbsp;Rのインストール方法や基本文法などには触れません</p></li></div></div>
 <p>　</p>
 <section id="想定読者" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="想定読者">想定読者</h2>
 <p>　本書の想定読者は以下に該当する方です。</p>
@@ -158,7 +178,7 @@ ul.task-list{list-style: none;}
 </li>
 <li>Rで統計量を求めてみたい方</li>
 </ul>
-<p>　本書ではRのインストール方法や基本文法などには触れません。</p>
+<p>　</p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -173,19 +193,7 @@ ul.task-list{list-style: none;}
 　例）<code>x %&gt;% df_print</code>となっている場合は<code>%&gt;% df_print()</code>を削除し<code>x</code>を実行してください。</p>
 </div>
 </div>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Tip: Code Block Operation
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>　コードブロックの上にある▼マークをクリックするとコードの表示・非表示を切り替えることができます。また、コードブロック中のパッケージ名や関数名にマウスオーバーした際に下線が表示されるものについては、クリックをするとパッケージや関数の説明ページ（英語）にジャンプできます。 　なお、コードブロック右上にあるアイコンをクリックするとコードをクリップボードにコピーできます。</p>
-</div>
-</div>
+<p>　</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -196,7 +204,20 @@ Tip: Index
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>　左側に章単位のインデックス（以降、メインインデックス）、右側に現在表示中のページ内のインデックス（以降、サブインデックス）がフローティング表示されます。ウィンドウ幅が狭い場合はメインインデックスは最上段に折りたたみ形式で表示され、サブインデックスは表示幅により表示・非表示が自動的に切り替わります。 　また、メインインデックス最上段のタイトル右側に表示されるトグルスイッチでカラーモードを切り替えることができます。</p>
+<p>　左側に章単位のインデックス、右側に現在表示中のページ内のインデックスが表示されます。インデックスはウィンドウサイズなどにより表示位置が変わったり、自動的に縮小表示されたりします。</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip: Code Block Operation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>　コードブロックの上にある▼マークをクリックするとコードの表示・非表示を切り替えることができます。また、コードブロック中のパッケージ名や関数名にマウスオーバーした際に下線が表示されるものは、クリックをすると説明ページ（英語）にジャンプできます。 　コードブロック右上にあるアイコンをクリックするとコードをクリップボードにコピーできます。</p>
 </div>
 </div>
 <div class="cell">
@@ -389,7 +410,20 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">Sampo Suzuki, CC 4.0 BY-NC-SA</div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link active" href="https://github.com/k-metrics/DAWS2022/" aria-current="page">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
 
 
 </body></html>
