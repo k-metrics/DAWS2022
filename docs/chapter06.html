@@ -4,10 +4,8 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-0.9.440">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="author" content="Sampo Suzuki, CC 4.0 BY-NC-SA">
-<meta name="dcterms.date" content="2022-05-28">
 <meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです。">
-<title>Rで学ぶ『完全独習 統計学入門』</title>
+<title>Rで学ぶ『完全独習 統計学入門』 - 6&nbsp; 標準偏差でハイリスク・ハイリターンも理解できる</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,7 +15,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 </style>
 <script src="site_libs/quarto-nav/quarto-nav.js"></script><script src="site_libs/quarto-nav/headroom.min.js"></script><script src="site_libs/clipboard/clipboard.min.js"></script><meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><link href="./chapter01.html" rel="next">
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><link href="./chapter05.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script><script src="site_libs/quarto-html/popper.min.js"></script><script src="site_libs/quarto-html/tippy.umd.min.js"></script><script src="site_libs/quarto-html/anchor.min.js"></script><link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link class="quarto-color-scheme" id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
 <link class="quarto-color-scheme quarto-color-alternate" rel="prefetch" id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css">
@@ -44,18 +42,22 @@ ul.task-list{list-style: none;}
   }
 }</script>
 </head>
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Rで学ぶ『完全独習 統計学入門』</h1>
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">標準偏差でハイリスク・ハイリターンも理解できる</span>
+</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
     </div>
   </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title d-none d-lg-block">Rで学ぶ『完全独習 統計学入門』</h1>
+      <h1 class="title d-none d-lg-block">
+<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">標準偏差でハイリスク・ハイリターンも理解できる</span>
+</h1>
                   <div>
         <div class="description">
           本書はデータ分析勉強会で学んだ成果をまとめたものです。
@@ -67,19 +69,7 @@ ul.task-list{list-style: none;}
   
   <div class="quarto-title-meta">
 
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Sampo Suzuki, CC 4.0 BY-NC-SA </p>
-            </div>
-    </div>
       
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">May 28, 2022</p>
-      </div>
-    </div>
       
     </div>
     
@@ -119,7 +109,7 @@ ul.task-list{list-style: none;}
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">はじめに</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">はじめに</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -149,7 +139,7 @@ ul.task-list{list-style: none;}
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapter06.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">標準偏差でハイリスク・ハイリターンも理解できる</span></a>
+  <a href="./chapter06.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">標準偏差でハイリスク・ハイリターンも理解できる</span></a>
   </div>
 </li>
     </ul>
@@ -158,80 +148,31 @@ ul.task-list{list-style: none;}
         <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li>
-<a href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB" id="toc-はじめに" class="nav-link active" data-scroll-target="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB">はじめに</a>
-  <ul class="collapse">
-<li><a href="#%E6%83%B3%E5%AE%9A%E8%AA%AD%E8%80%85" id="toc-想定読者" class="nav-link" data-scroll-target="#%E6%83%B3%E5%AE%9A%E8%AA%AD%E8%80%85">想定読者</a></li>
-  </ul>
-</li>
+<li><a href="#%E3%83%8F%E3%82%A4%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%8F%E3%82%A4%E3%83%AA%E3%82%BF%E3%83%BC%E3%83%B3%E3%81%A8%E3%83%AD%E3%83%BC%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%AA%E3%82%BF%E3%83%BC%E3%83%B3" id="toc-ハイリスクハイリターンとローリスクローリターン" class="nav-link active" data-scroll-target="#%E3%83%8F%E3%82%A4%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%8F%E3%82%A4%E3%83%AA%E3%82%BF%E3%83%BC%E3%83%B3%E3%81%A8%E3%83%AD%E3%83%BC%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%AA%E3%82%BF%E3%83%BC%E3%83%B3"> <span class="header-section-number">6.1</span> ハイリスク・ハイリターンとローリスク・ローリターン</a></li>
+  <li><a href="#%E9%87%91%E8%9E%8D%E5%95%86%E5%93%81%E3%81%AE%E5%84%AA%E5%8A%A3%E3%81%AE%E6%B8%AC%E3%82%8A%E6%96%B9" id="toc-金融商品の優劣の測り方" class="nav-link" data-scroll-target="#%E9%87%91%E8%9E%8D%E5%95%86%E5%93%81%E3%81%AE%E5%84%AA%E5%8A%A3%E3%81%AE%E6%B8%AC%E3%82%8A%E6%96%B9"> <span class="header-section-number">6.2</span> 金融商品の優劣の測り方</a></li>
+  <li><a href="#%E9%87%91%E8%9E%8D%E5%95%86%E5%93%81%E3%81%AE%E5%84%AA%E5%8A%A3%E3%82%92%E6%B8%AC%E3%82%8B%E6%95%B0%E5%80%A4%E3%82%B7%E3%83%A3%E3%83%BC%E3%83%97%E3%83%AC%E3%82%B7%E3%82%AA" id="toc-金融商品の優劣を測る数値シャープレシオ" class="nav-link" data-scroll-target="#%E9%87%91%E8%9E%8D%E5%95%86%E5%93%81%E3%81%AE%E5%84%AA%E5%8A%A3%E3%82%92%E6%B8%AC%E3%82%8B%E6%95%B0%E5%80%A4%E3%82%B7%E3%83%A3%E3%83%BC%E3%83%97%E3%83%AC%E3%82%B7%E3%82%AA"> <span class="header-section-number">6.3</span> 金融商品の優劣を測る数値・シャープレシオ</a></li>
+  <li><a href="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C" id="toc-練習問題" class="nav-link" data-scroll-target="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C">練習問題</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/k-metrics/DAWS2022/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><section id="はじめに" class="level1 unnumbered page-columns page-full"><h1 class="unnumbered">はじめに</h1>
-<div class="page-columns page-full"><p>　本資料は<a href="https://www.diamond.co.jp/book/9784478820094.html">『完全独習 統計学入門』小島寛之著</a>（以降、テキスト）の内容をRで計算する方法を紹介しています<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。テキストに記載されているデータの一部をCSVファイルに起こして利用していますが、データ自体の著作権は原著作者にあります。また、CSVファイルは著作権を侵害する意図で作成したものではありません。</p><div class="no-row-height column-margin column-container"><li id="fn1" role="doc-endnote"><p><sup>1</sup>&nbsp;Rのインストール方法や基本文法などには触れません</p></li></div></div>
-<p>　</p>
-<section id="想定読者" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="想定読者">想定読者</h2>
-<p>　本書の想定読者は以下に該当する方です。</p>
-<ul>
-<li>Rに関する基本的な知識を有している方
-<ul>
-<li>データフレーム型や因子型などの変数型の知識</li>
-<li>変数の代入・参照方法</li>
-<li>
-<code>tidyverse</code>の基本的な知識（パイプ演算子など）</li>
-</ul>
-</li>
-<li>Rで統計量を求めてみたい方</li>
-</ul>
-<p>　</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<code>df_print()</code>関数について
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>　本書のコードに出てくる<code>df_pirnt()</code>関数はデータフレームを出力フォーマットごとに適切な形式で出力するために定義した関数です。<strong>R</strong>やCRANのパッケージで提供されている関数ではありません。ご自身の環境でコードを実行する際には<code>df_print()</code>関数とその直前のパイプ演算子（<code>%&gt;%</code>）を削除してから実行してください。<br>
-　例）<code>x %&gt;% df_print</code>となっている場合は<code>%&gt;% df_print()</code>を削除し<code>x</code>を実行してください。</p>
-</div>
-</div>
-<p>　</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Tip: Index
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>　左側に章単位のインデックス、右側に現在表示中のページ内のインデックスが表示されます。インデックスはウィンドウサイズなどにより表示位置が変わったり、自動的に縮小表示されたりします。</p>
-</div>
-</div>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Tip: Code Block Operation
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>　コードブロックの上にある▼マークをクリックするとコードの表示・非表示を切り替えることができます。また、コードブロック中のパッケージ名や関数名にマウスオーバーした際に下線が表示されるものは、クリックをすると説明ページ（英語）にジャンプできます。 　コードブロック右上にあるアイコンをクリックするとコードをクリップボードにコピーできます。</p>
-</div>
-</div>
-<div class="cell">
+<main class="content quarto-banner-title-block" id="quarto-document-content"><div class="cell">
 
 </div>
+<section id="ハイリスクハイリターンとローリスクローリターン" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="ハイリスクハイリターンとローリスクローリターン">
+<span class="header-section-number">6.1</span> ハイリスク・ハイリターンとローリスク・ローリターン</h2>
+<p>　</p>
+</section><section id="金融商品の優劣の測り方" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="金融商品の優劣の測り方">
+<span class="header-section-number">6.2</span> 金融商品の優劣の測り方</h2>
+<p>　</p>
+</section><section id="金融商品の優劣を測る数値シャープレシオ" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="金融商品の優劣を測る数値シャープレシオ">
+<span class="header-section-number">6.3</span> 金融商品の優劣を測る数値・シャープレシオ</h2>
+<p>　</p>
+</section><section id="練習問題" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="練習問題">練習問題</h2>
+<p>　</p>
 <hr>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const disableStylesheet = (stylesheets) => {
     for (let i=0; i < stylesheets.length; i++) {
@@ -407,11 +348,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./chapter05.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">標準偏差は株のリスクの指標として活用できる</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapter01.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">度数分布表とヒストグラムでデータの特徴を浮き彫りにする</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

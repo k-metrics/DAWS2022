@@ -9,9 +9,90 @@ source("./R/setup.R")
 
 ## ハイリスク・ハイリターンとローリスク・ローリターン
 
+　ボラティリティとは株の収益率の標準偏差（SD）のことで、収益率は標準偏差分の変動（$\pm SD$）が起きるので、それをリスクとして認識すべきです。  
+
+```{r}
+#| code-summary: "P60図表6−1"
+"./data/P60_図表6-1.csv" %>% 
+  read.csv()
+```
+
+　各金融商品の標準偏差（リスク）と平均値（リターン）は下表のようになります。このデータでの標準偏差（リスク）は標本標準偏差ではないことに注意してください。
+```{r}
+#| code-summary: "P60図表6−1のリスクとリターン"
+
+リスク <- "./data/P60_図表6-1.csv" %>% 
+  read.csv() %>% 
+  dplyr::summarise(dplyr::across(.cols = tidyselect::starts_with("商品"),
+                                 .fns = sd)) %>% 
+  round(digits = 1)
+リスク
+
+リターン <- "./data/P60_図表6-1.csv" %>% 
+  read.csv() %>% 
+  dplyr::summarise(dplyr::across(.cols = tidyselect::starts_with("商品"),
+                                 .fns = mean)) %>% 
+  round(digits = 1)
+リターン
+```
+　  
+　このようにリターンの大きな商品はリスクも大きい、ハイリスク・ハイリターンであることが分かります。
+
+```{r}
+#| code-summary: ""
+risk <- リスク %>% 
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "商品", values_to = "リスク")
+
+return <- リターン %>% 
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "商品", values_to = "リターン")
+
+risk %>% 
+  dplyr::left_join(return, by = "商品") %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン, label = 商品)) + 
+    ggplot2::geom_point() + 
+    ggplot2::geom_smooth(se = FALSE, method = "lm", size = 0.5) +
+    ggrepel::geom_text_repel()
+```
+
+
+
 　  
 
 ## 金融商品の優劣の測り方
+
+
+```{r}
+"https://www.wam.abic.co.jp/contents/C130122/wam3/1/pc/funddtilprice.html?_com_id_session=02202205280131075947&date=202205281752&_biz_id_itcode=”A0331309A&id_src_screen=91101001&_biz_displayterm=3"
+
+"https://www.wam.abic.co.jp/contents/C130122/wam3/1/pc/funddtilprice.html?_com_id_session=02202205280131075947&date=20220528”1752&_biz_id_itcode=A01312103&id_src_screen=91101001&_biz_displayterm=3"
+
+url1 <- ""
+
+xpath <- '//*[@id="fund-price"]/div/ul[2]/li/div[2]/table[2]'
+
+
+
+url1 <- "https://kabutan.jp/stock/kabuka?code="
+url2 <- "&ashi=mon&page="
+pages <- c(1:5)
+xpath <- '//*[@id="stock_kabuka_table"]/table[2]'
+code = c(7201, 7203, 7211, 7261, 7267, 7270)
+
+tidyr::crossing(code, pages) %>% 
+  dplyr::mutate(url = paste0(url1, code, url2, pages)) %>% 
+  # dplyr::select(-pages) %>% 
+  purrr::pmap_df(.f = function(url, code, pages) {
+    xml2::read_html(url) %>% 
+      rvest::html_element(xpath = xpath) %>%
+      rvest::html_table(header = FALSE) %>%
+      dplyr::slice(-1) %>% 
+      dplyr::mutate(code = code, page = pages)
+  })
+```
+
+
 
 　  
 

@@ -34,6 +34,7 @@ book:
     - chapter03.qmd
     - chapter04.qmd
     - chapter05.qmd
+    - chapter06.qmd
 
 # bibliography: references.bib
 
