@@ -1,0 +1,308 @@
+# なぜ、統計手法が必要か {.unnumbered}
+
+```{r, setup}
+#| label: setup
+#| include: false
+source("./R/setup.R")
+```
+
+## グループ演習1（分布の特徴を捉える） {.unnumbered}
+
+```{r}
+#| code-fold: true
+x <- "./data/Pre_P20_演習1.csv" %>% 
+  read.csv()
+
+x %>% df_print()
+```
+
+　データの分布傾向を見るには箱ひげ図が便利です。Rで箱ひげ図を描くには`boxplot()`関数を用います。
+```{r}
+#| code-fold: true
+boxplot(x)
+```
+　  
+　箱ひげ図は五数要約の値を箱とひげ（whisker）で表現したもので、`boxplot()`関数の場合は外れ値（outliers）が描かれます。五数要約は下表のようなもので、上から最小値、第一四分位値（25%点）、中央値・第二四分位値（50%点）、第三四分位値（75%点）、最大値となっています。
+```{r}
+#| code-fold: true
+x %>% 
+  dplyr::summarise(dplyr::across(.cols = dplyr::everything(),
+                                 .fns = fivenum)) %>% 
+  df_print()
+```
+　箱ひげ図からは以下のような特徴がうかがえます。
+
+* 英語の得点は他の二教科に比べて狭い範囲に得点が集中している
+* 数学の得点は他の二教科に比べて全体的に得点が低めである
+* 国語の得点は中央値は英語の得点と同じである
+* 国語の得点は英語の得点より倍近い範囲に得点が散らばっている
+* どの教科も高得点な人が一人はいる
+
+　  
+　箱ひげ図はデータを要約した結果を図示したものですので、もう少し細かい分布を見るにはヒストグラムが便利です。Rでは`hist()`関数を用いて描きます。
+```{r}
+#| code-fold: true
+with(x, hist(国語, breaks = seq(0, 100, 10)))
+with(x, hist(数学, breaks = seq(0, 100, 10)))
+with(x, hist(英語, breaks = seq(0, 100, 10)))
+```
+　  
+　ヒストグラムで見ると以下のような特徴がうかがえます。
+
+* 概ね箱ひげ図でうかがえた特徴通りである
+* 国語の得点の7割近くが中央値の付近に集中している
+* 英語の得点の9割近くが中央値の付近に集中している
+* 数学の得点は他の二教科にくらべると正規分布に近い分布をしている
+
+　  
+　教科間の得点の関係をみるには散布図行列が便利です。Rでは`pairs()`関数を使います。
+```{r}
+#| code-fold: true
+pairs(x)
+```
+　  
+　散布図行列で見ると以下のような特徴がうかがえます。
+
+* 不自然なほど教科間で強い相関が認められる
+    * 人工的なデータであることがうかがえる
+
+　  
+
+## 個人演習（基本統計量の算出） {.unnumbered}
+　グループ演習1のデータを用いて基本統計量を求めます。最初は平均値です。Rで平均値を求めるには`mean()`関数を用います。
+```{r}
+#| code-fold: true
+#| code-summary: "平均値"
+x %>% 
+  dplyr::summarise(dplyr::across(dplyr::everything(), mean)) %>% 
+  df_print()
+```
+　  
+　次に分散（母分散）を求めます。Rには母分散を求める関数がありませんので、本資料では計算式（$\frac{1}{n}\sum{(x_i - \mu)^2} = \sigma^2$）を`VAR()`関数として定義しています。
+```{r}
+#| code-fold: true
+#| code-summary: "（母）分散"
+x %>% 
+  dplyr::summarise(dplyr::across(dplyr::everything(), VAR)) %>% 
+  round(digits = 1) %>% 
+  df_print()
+```
+　  
+　分散を求めましたので標準偏差（母標準偏差）を求めますが、母分散同様に求める関数がありませんので本資料では計算式（$\sqrt{\frac{1}{n}\sum{(x_i - \bar{x})^2}} = \sigma$）を`SD()`関数として定義しています。
+```{r}
+#| code-fold: true
+#| code-summary: "（母）標準偏差"
+x %>% 
+  dplyr::summarise(dplyr::across(dplyr::everything(), SD)) %>% 
+  round(digits = 1) %>% 
+  df_print()
+```
+　  
+　最後に変動係数（ばらつきを比較するための値）を求めます。
+```{r}
+#| code-fold: true
+#| code-summary: "変動係数"
+x %>% 
+  dplyr::summarise(dplyr::across(dplyr::everything(),
+                                 function(x = .) {SD(x)/mean(x)} )) %>% 
+  round(digits = 2) %>% 
+  df_print()
+```
+　  
+　基本統計量をまとめて計算するには`skimr::skim()`関数が便利ですが、求められる標準偏差は母標準偏差の**推定量**である点に注意してください。
+```{r}
+#| code-fold: true
+#| code-summary: "基本統計量"
+skimr::skim(x) %>% 
+  df_print()
+```
+
+## 個人演習（層別ヒストグラムの作成） {.unnumbered}
+　層別のヒストグラムを描くには**`ggplot2`**パッケージが便利です。
+```{r}
+#| include: false
+#| eval: false
+#| code-fold: true
+#| code-summary: "層別ヒストグラム"
+x %>% 
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "教科", values_to = "得点") %>% 
+  ggplot2::ggplot(ggplot2::aes(x = 得点, fill = 教科)) + 
+    ggplot2::geom_histogram(position = "identity", alpha = 0.5,
+                            breaks = seq(0, 100, 10))
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "層別ヒストグラム"
+x %>% 
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "教科", values_to = "得点") %>% 
+  ggplot2::ggplot(ggplot2::aes(x = 得点, fill = 教科)) + 
+    ggplot2::geom_histogram(breaks = seq(0, 100, 10), alpha = 0.5) + 
+    ggplot2::facet_grid(rows = dplyr::vars(教科))
+```
+
+
+## グループ演習2（同じ30点でも） {.unnumbered}
+
+統計量   | 国語 | 数学 | 英語 | 備考
+---------|-----:|-----:|-----:|----
+平均     | 50   | 25   | 50   | 
+分散     | 101  | 101  | 26   | 母分散
+標準偏差 | 10   | 10   | 5    | 標準偏差の推定値
+変動係数 | 0.20 | 0.40 | 0.10 | 
+中央値   | 50   | 25   | 50   | 第二四分位値
+
+```{r}
+#| code-fold: true
+#| code-summary: "層別ヒストグラム"
+x %>% 
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "教科", values_to = "得点") %>% 
+  dplyr::mutate(教科 = forcats::fct_inorder(教科)) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = 得点, fill = 教科)) + 
+    ggplot2::geom_histogram(breaks = seq(0, 100, 10), alpha = 0.5) + 
+    ggplot2::facet_grid(rows = dplyr::vars(教科)) + 
+    ggplot2::geom_vline(xintercept = 30, colour = "red")
+```
+
+　上記より30点という得点は以下のように判断できます。
+
+* 数学では、まあまあの得点（$\mu + 1\sigma$以内なので良いとは言えない）
+* 国語では、悪い得点（$\mu - 2\sigma$）
+* 英語では、非常に悪い得点（$\mu - 3\sigma$の外）
+
+また、以下のようなことも推測できます。
+
++ 数学は50点以上の得点を取得したものほとんどがいないことから難しい問題
+* 英語は標準偏差が他の二教科の半分なことから理解度にあまり差がない（可能性が高い）
+
+　  
+
+## 個人演習（テスト結果を比べる） {.unnumbered}
+　対象データ
+```{r}
+#| code-fold: true
+#| code-summary: "三教科の平均点と標準偏差"
+x <- "./data/Pre_P37_個人演習.csv" %>% 
+  read.csv()
+
+x %>% df_print()
+```
+
+### Q1 成績の良い順に並べる{.unnumbered}
+　Zスコアと偏差値を算出して成績の良い順に並べる。
+```{r}
+#| code-fold: true
+#| code-summary: "Zスコアと偏差値を求める"
+x %>% 
+  dplyr::mutate(Z = (得点 - 平均点) / 標準偏差,
+                偏差値 = Z * 10 + 50) %>% 
+  dplyr::arrange(dplyr::desc(偏差値))
+```
+
+### Q2 {.unnumbered}
+　Zスコアから相対順位（上位%)を求める。
+```{r}
+#| code-fold: true
+#| code-summary: "相対順位"
+x %>% 
+  dplyr::mutate(Z = (得点 - 平均点) / 標準偏差,
+                偏差値 = Z * 10 + 50,
+                相対順位 = round((1 - pnorm(Z)) * 100))
+```
+
+　  
+
+## グループ演習3（二群のデータの違いによるp値比較） {.unnumbered}
+```{r}
+x <- "./data/Pre_P53_2群のデータ.csv" %>% 
+  read.csv()
+
+x %>% df_print()
+```
+
+
+### Q1
+　グラフから順位を予想する。$標準誤差 = \frac{s}{\sqrt{n}}$である。
+
+* 平均値の差は、全て同じである
+* データ数は、パターン3が最も多く、パターン4が最も少ない
+    * パターン3の標準誤差の方が小さいと推測できる
+    * よって、パターン3 $>$ パターン4と推定できる
+* パターン2のデータ数はパターン3のデータ数の半分
+    * パターン2の標準偏差はパターン3の標準偏差の約半分
+    * パターン2の方が標準誤差が小さいと推定できる
+    * よって、パターン2 $>$ パターン3
+
+ここまでの関係は
+
+$$\mbox{パターン2} > \mbox{パターン3} > \mbox{パターン4}$$
+
+
+* パターン1とパターン2のデータ数は等しい
+    * パターン1の標準偏差はパターン2の標準偏差の倍
+    * パターン1の方が標準誤差が大きいと推定できる
+* パターン1のデータ数はパターン4のデータ数の約倍である
+    * パターン1の標準偏差はパターン4の標準偏差の約倍である
+    * パターン1の標準誤差が大きいと推定できる
+    * よって、パターン4 $>$ パターン1
+
+
+$$\mbox{パターン2} > \mbox{パターン3} > \mbox{パターン4} > \mbox{パターン1}$$
+と推測できる。
+
+
+### Q2
+
+
+## 個人演習（ツール導入すべきか？） {.unnumbered}
+　欠陥密度データ
+```{r}
+"./data/Pre_P13_ツールを導入すべきか.csv" %>% 
+  read.csv()
+```
+　  
+　欠陥密度データの平均値
+```{r}
+"./data/Pre_P13_ツールを導入すべきか.csv" %>% 
+  read.csv() %>% 
+  dplyr::summarise(dplyr::across(dplyr::everything(), mean))
+```
+　  
+　平均値の差の検定（t検定）
+```{r}
+"./data/Pre_P13_ツールを導入すべきか.csv" %>% 
+  read.csv() %>% 
+  with(t.test(変更前, 変更後))
+```
+
+```{r}
+"./data/Pre_P13_ツールを導入すべきか.csv" %>% 
+  read.csv() %>% 
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "type", values_to = "value") %>% 
+  with(stripchart(value ~ type))
+```
+
+
+
+
+## ヒストグラム {.unnumbered}
+　Microsoft Excel（2016以降）ではヒストグラムを描くことができますが、グラフ表示の調整には制限があります。Excelでヒストグラム間の比較を行いたい場合は小池方式のテクニックを使う必要がありますが、他のツールでは調整が可能です。
+
+ツール名             | 階級幅 | 階級（横軸） | 度数（縦軸） | 閉じ[^1]
+---------------------|--------|------------|------------|----------
+Microsoft Excel(365) | 調整可 | 調整不可   | 調整不可   | 調整不可
+Google Spreadsheet   | 調整可 | 調整可     | 調整可     | 調整不可
+Base R (hist)        | 調整可 | 調整可     | 調整可     | 調整可
+R/Tidyverse (ggplot2)| 調整可 | 調整可     | 調整可     | 調整可
+
+[^1]: 閉じとは階級の境界にあたるデータの処理方法です。$a < x \le b$を右閉じ、$a \le x < b$を左閉じといい、右閉じが主流です。
+
+　  
+
+
+---
+ｘ
