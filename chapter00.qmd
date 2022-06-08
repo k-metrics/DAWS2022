@@ -1,4 +1,5 @@
 # なぜ、統計手法が必要か {.unnumbered}
+　本講はテキスト前半部分の概観を説明する講義における演習をRで解答しています。テキストとは異なるデータを利用しており、演習自体やデータの著作権は講義担当者にあります。
 
 ```{r, setup}
 #| label: setup
@@ -6,75 +7,97 @@
 source("./R/setup.R")
 ```
 
+　  
+
 ## グループ演習1（分布の特徴を捉える） {.unnumbered}
 
 ```{r}
 #| code-fold: true
+#| code-summary: "三教科の得点表"
 x <- "./data/Pre_P20_演習1.csv" %>% 
   read.csv()
 
 x %>% df_print()
 ```
 
+　  
+
+### Q1 各教科の得点の違いを考える（演習1）
 　データの分布傾向を見るには箱ひげ図が便利です。Rで箱ひげ図を描くには`boxplot()`関数を用います。
 ```{r}
 #| code-fold: true
+#| code-summary: "箱ひげ図による得点分布の可視化"
 boxplot(x)
 ```
 　  
 　箱ひげ図は五数要約の値を箱とひげ（whisker）で表現したもので、`boxplot()`関数の場合は外れ値（outliers）が描かれます。五数要約は下表のようなもので、上から最小値、第一四分位値（25%点）、中央値・第二四分位値（50%点）、第三四分位値（75%点）、最大値となっています。
 ```{r}
 #| code-fold: true
+#| code-summary: "五数要約"
 x %>% 
   dplyr::summarise(dplyr::across(.cols = dplyr::everything(),
                                  .fns = fivenum)) %>% 
   df_print()
 ```
+　  
 　箱ひげ図からは以下のような特徴がうかがえます。
 
 * 英語の得点は他の二教科に比べて狭い範囲に得点が集中している
 * 数学の得点は他の二教科に比べて全体的に得点が低めである
 * 国語の得点は中央値は英語の得点と同じである
 * 国語の得点は英語の得点より倍近い範囲に得点が散らばっている
-* どの教科も高得点な人が一人はいる
+* どの教科も一人は、理解度が高い（高得点な）人がいる
 
 　  
-　箱ひげ図はデータを要約した結果を図示したものですので、もう少し細かい分布を見るにはヒストグラムが便利です。Rでは`hist()`関数を用いて描きます。
+　箱ひげ図はデータを要約した結果を図示したものですので、もう少し細かい分布を見るにはヒストグラム（度数分布表）が便利です。Rでは`hist()`関数を用いて描きます。
 ```{r}
 #| code-fold: true
-with(x, hist(国語, breaks = seq(0, 100, 10)))
-with(x, hist(数学, breaks = seq(0, 100, 10)))
-with(x, hist(英語, breaks = seq(0, 100, 10)))
+with(x, hist(国語))
+with(x, hist(数学))
+with(x, hist(英語))
 ```
 　  
 　ヒストグラムで見ると以下のような特徴がうかがえます。
 
 * 概ね箱ひげ図でうかがえた特徴通りである
 * 国語の得点の7割近くが中央値の付近に集中している
-* 英語の得点の9割近くが中央値の付近に集中している
-* 数学の得点は他の二教科にくらべると正規分布に近い分布をしている
+* 英語の得点の7割近くが中央値の付近に集中している
+* 英語で得点30点はありえない（このデータでは存在しない）
+* 数学の得点は他の二教科にくらべると綺麗な分布をしている
 
 　  
-　教科間の得点の関係をみるには散布図行列が便利です。Rでは`pairs()`関数を使います。
+　教科間の得点の関係をみるには散布図行列が便利です。Rでは`pairs()`関数が標準関数として用意されていますが、ここでは**`psych`**パッケージの`psych::pairs.panels(x)`関数を用います。
 ```{r}
 #| code-fold: true
-pairs(x)
+#| code-summary: "散布図行列"
+psych::pairs.panels(x)
 ```
 　  
 　散布図行列で見ると以下のような特徴がうかがえます。
 
-* 不自然なほど教科間で強い相関が認められる
-    * 人工的なデータであることがうかがえる
+* 不自然なほど教科間に強い相関が認められる
+    * 人為的な的なデータであることがうかがえる
 
 　  
 
 ## 個人演習（基本統計量の算出） {.unnumbered}
+
+### Q2 基本統計量から違いを考察する（演習1） {.unnumbered}
 　グループ演習1のデータを用いて基本統計量を求めます。最初は平均値です。Rで平均値を求めるには`mean()`関数を用います。
 ```{r}
 #| code-fold: true
 #| code-summary: "平均値"
 x %>% 
   dplyr::summarise(dplyr::across(dplyr::everything(), mean)) %>% 
+  df_print()
+```
+　  
+　参考として中央値も求めてみます。
+```{r}
+#| code-fold: true
+#| code-summary: "中央値"
+x %>% 
+  dplyr::summarise(dplyr::across(dplyr::everything(), median)) %>% 
   df_print()
 ```
 　  
@@ -109,7 +132,27 @@ x %>%
   df_print()
 ```
 　  
-　基本統計量をまとめて計算するには`skimr::skim()`関数が便利ですが、求められる標準偏差は母標準偏差の**推定量**である点に注意してください。
+
+#### 考察 {.unnumbered}
+　以上の基本統計量より
+
+* 平均値から数学の得点は他の二教科に比べて全体的に得点が低めであることがわかる
+* 中央値から三教科とも左右対称な分布をしいていることが推測できる
+* 標準偏差から英語の得点が他の二教科に比べて狭い範囲に集中していることがわかる
+* 変動係数から数学より国語の方がバラツキが少ないことがわかる
+* 変動係数から国語より英語の方がバラツキが少ないことがわかる
+
+したがって
+
+* 国語は他の二教科に比べて理解度にバラツキがあると推測できる
+* 英語は他の二教科に比べて理解度にバラツキがないと推測できる
+* 数学は他の二教科に比べて理解度が全体的位低い可能性がある
+    * もしくは難易度が高かった可能性がある
+
+　  
+
+#### おまけ {.unnumbered}
+　基本統計量をまとめて計算するには**`skimr`**パッケージの`skimr::skim()`関数が便利です。ただし、求められる標準偏差は母標準偏差の**推定量**です。
 ```{r}
 #| code-fold: true
 #| code-summary: "基本統計量"
@@ -117,8 +160,13 @@ skimr::skim(x) %>%
   df_print()
 ```
 
+　  
+
 ## 個人演習（層別ヒストグラムの作成） {.unnumbered}
-　層別のヒストグラムを描くには**`ggplot2`**パッケージが便利です。
+
+
+### Q3 ヒストグラムを作成して比較する（演習1） {.unnumbered}
+　層別のヒストグラムを描くには**`ggplot2`**パッケージが便利です。ここでは階級幅を$10点$としています。
 ```{r}
 #| include: false
 #| eval: false
@@ -131,29 +179,6 @@ x %>%
     ggplot2::geom_histogram(position = "identity", alpha = 0.5,
                             breaks = seq(0, 100, 10))
 ```
-
-```{r}
-#| code-fold: true
-#| code-summary: "層別ヒストグラム"
-x %>% 
-  tidyr::pivot_longer(cols = dplyr::everything(),
-                      names_to = "教科", values_to = "得点") %>% 
-  ggplot2::ggplot(ggplot2::aes(x = 得点, fill = 教科)) + 
-    ggplot2::geom_histogram(breaks = seq(0, 100, 10), alpha = 0.5) + 
-    ggplot2::facet_grid(rows = dplyr::vars(教科))
-```
-
-
-## グループ演習2（同じ30点でも） {.unnumbered}
-
-統計量   | 国語 | 数学 | 英語 | 備考
----------|-----:|-----:|-----:|----
-平均     | 50   | 25   | 50   | 
-分散     | 101  | 101  | 26   | 母分散
-標準偏差 | 10   | 10   | 5    | 標準偏差の推定値
-変動係数 | 0.20 | 0.40 | 0.10 | 
-中央値   | 50   | 25   | 50   | 第二四分位値
-
 ```{r}
 #| code-fold: true
 #| code-summary: "層別ヒストグラム"
@@ -163,133 +188,12 @@ x %>%
   dplyr::mutate(教科 = forcats::fct_inorder(教科)) %>% 
   ggplot2::ggplot(ggplot2::aes(x = 得点, fill = 教科)) + 
     ggplot2::geom_histogram(breaks = seq(0, 100, 10), alpha = 0.5) + 
-    ggplot2::facet_grid(rows = dplyr::vars(教科)) + 
-    ggplot2::geom_vline(xintercept = 30, colour = "red")
-```
-
-　上記より30点という得点は以下のように判断できます。
-
-* 数学では、まあまあの得点（$\mu + 1\sigma$以内なので良いとは言えない）
-* 国語では、悪い得点（$\mu - 2\sigma$）
-* 英語では、非常に悪い得点（$\mu - 3\sigma$の外）
-
-また、以下のようなことも推測できます。
-
-+ 数学は50点以上の得点を取得したものほとんどがいないことから難しい問題
-* 英語は標準偏差が他の二教科の半分なことから理解度にあまり差がない（可能性が高い）
-
-　  
-
-## 個人演習（テスト結果を比べる） {.unnumbered}
-　対象データ
-```{r}
-#| code-fold: true
-#| code-summary: "三教科の平均点と標準偏差"
-x <- "./data/Pre_P37_個人演習.csv" %>% 
-  read.csv()
-
-x %>% df_print()
-```
-
-### Q1 成績の良い順に並べる{.unnumbered}
-　Zスコアと偏差値を算出して成績の良い順に並べる。
-```{r}
-#| code-fold: true
-#| code-summary: "Zスコアと偏差値を求める"
-x %>% 
-  dplyr::mutate(Z = (得点 - 平均点) / 標準偏差,
-                偏差値 = Z * 10 + 50) %>% 
-  dplyr::arrange(dplyr::desc(偏差値))
-```
-
-### Q2 {.unnumbered}
-　Zスコアから相対順位（上位%)を求める。
-```{r}
-#| code-fold: true
-#| code-summary: "相対順位"
-x %>% 
-  dplyr::mutate(Z = (得点 - 平均点) / 標準偏差,
-                偏差値 = Z * 10 + 50,
-                相対順位 = round((1 - pnorm(Z)) * 100))
+    ggplot2::facet_grid(rows = dplyr::vars(教科))
 ```
 
 　  
 
-## グループ演習3（二群のデータの違いによるp値比較） {.unnumbered}
-```{r}
-x <- "./data/Pre_P53_2群のデータ.csv" %>% 
-  read.csv()
-
-x %>% df_print()
-```
-
-
-### Q1
-　グラフから順位を予想する。$標準誤差 = \frac{s}{\sqrt{n}}$である。
-
-* 平均値の差は、全て同じである
-* データ数は、パターン3が最も多く、パターン4が最も少ない
-    * パターン3の標準誤差の方が小さいと推測できる
-    * よって、パターン3 $>$ パターン4と推定できる
-* パターン2のデータ数はパターン3のデータ数の半分
-    * パターン2の標準偏差はパターン3の標準偏差の約半分
-    * パターン2の方が標準誤差が小さいと推定できる
-    * よって、パターン2 $>$ パターン3
-
-ここまでの関係は
-
-$$\mbox{パターン2} > \mbox{パターン3} > \mbox{パターン4}$$
-
-
-* パターン1とパターン2のデータ数は等しい
-    * パターン1の標準偏差はパターン2の標準偏差の倍
-    * パターン1の方が標準誤差が大きいと推定できる
-* パターン1のデータ数はパターン4のデータ数の約倍である
-    * パターン1の標準偏差はパターン4の標準偏差の約倍である
-    * パターン1の標準誤差が大きいと推定できる
-    * よって、パターン4 $>$ パターン1
-
-
-$$\mbox{パターン2} > \mbox{パターン3} > \mbox{パターン4} > \mbox{パターン1}$$
-と推測できる。
-
-
-### Q2
-
-
-## 個人演習（ツール導入すべきか？） {.unnumbered}
-　欠陥密度データ
-```{r}
-"./data/Pre_P13_ツールを導入すべきか.csv" %>% 
-  read.csv()
-```
-　  
-　欠陥密度データの平均値
-```{r}
-"./data/Pre_P13_ツールを導入すべきか.csv" %>% 
-  read.csv() %>% 
-  dplyr::summarise(dplyr::across(dplyr::everything(), mean))
-```
-　  
-　平均値の差の検定（t検定）
-```{r}
-"./data/Pre_P13_ツールを導入すべきか.csv" %>% 
-  read.csv() %>% 
-  with(t.test(変更前, 変更後))
-```
-
-```{r}
-"./data/Pre_P13_ツールを導入すべきか.csv" %>% 
-  read.csv() %>% 
-  tidyr::pivot_longer(cols = dplyr::everything(),
-                      names_to = "type", values_to = "value") %>% 
-  with(stripchart(value ~ type))
-```
-
-
-
-
-## ヒストグラム {.unnumbered}
+### ヒストグラムの調整比較 {.unnumbered}
 　Microsoft Excel（2016以降）ではヒストグラムを描くことができますが、グラフ表示の調整には制限があります。Excelでヒストグラム間の比較を行いたい場合は小池方式のテクニックを使う必要がありますが、他のツールでは調整が可能です。
 
 ツール名             | 階級幅 | 階級（横軸） | 度数（縦軸） | 閉じ[^1]
@@ -303,6 +207,308 @@ R/Tidyverse (ggplot2)| 調整可 | 調整可     | 調整可     | 調整可
 
 　  
 
+## グループ演習2（同じ30点でも） {.unnumbered}
+
+統計量   | 国語 | 数学 | 英語 | 備考
+---------|-----:|-----:|-----:|----
+平均     | 50   | 25   | 50   | 
+分散     | 101  | 101  | 26   | 母分散
+標準偏差 | 10   | 10   | 5    | 標準偏差の推定値
+変動係数 | 0.20 | 0.40 | 0.10 | 
+中央値   | 50   | 25   | 50   | 第二四分位値（参考）
+
+```{r}
+#| code-fold: true
+#| code-summary: "層別ヒストグラム"
+x %>% 
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "教科", values_to = "得点") %>% 
+  dplyr::mutate(教科 = forcats::fct_inorder(教科)) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = 得点, fill = 教科)) + 
+    ggplot2::geom_histogram(breaks = seq(0, 100, 10), alpha = 0.5) + 
+    ggplot2::facet_grid(rows = dplyr::vars(教科)) + 
+    ggplot2::geom_vline(xintercept = 30, colour = "red", size = 0.25)
+```
+
+　上記より30点という得点は以下のように判断できます。
+
+* 国語は悪い得点
+    * $\mu - 2\sigma$なので
+* 数学はまあまあの得点
+    * $\mu + 1\sigma$以内なのですごく良いとは言えない（まあ平均的）
+* 英語は非常に悪い得点
+    * $\mu - 3\sigma$の外側なので本来ならありえない（実際データにはない）
+
+また、以下のようなことも推測できます。
+
+* 数学は50点以上の得点を取得したものほぼいないことから難しい問題
+    * もしくは、全体の理解度が低い
+* 英語は標準偏差が他の二教科に比べると小さいので全体の理解度がある程度の水準にある
+    * もしくは、極端に難しい問題が半分くらいある
+
+　  
+
+## 個人演習（テスト結果を比べる） {.unnumbered}
+　対象データは下記の通り。
+```{r}
+#| code-fold: true
+#| code-summary: "三教科の平均点と標準偏差"
+x <- "./data/Pre_P37_個人演習.csv" %>% 
+  read.csv()
+
+x %>% df_print()
+```
+
+　  
+
+### Q1 成績の良い順に並べる（演習2） {.unnumbered}
+　Zスコアと偏差値を算出して成績の良い順に並べる。
+```{r}
+#| code-fold: true
+#| code-summary: "Zスコアと偏差値を求める"
+x %>% 
+  dplyr::mutate(Z = (得点 - 平均点) / 標準偏差,
+                偏差値 = Z * 10 + 50) %>% 
+  dplyr::arrange(dplyr::desc(偏差値)) %>% 
+  df_print()
+```
+
+　  
+
+### Q2 相対順位を算出する（演習2） {.unnumbered}
+　Zスコアから相対順位（上位$%$)を求める。
+```{r}
+#| code-fold: true
+#| code-summary: "相対順位"
+x %>% 
+  dplyr::mutate(Z = (得点 - 平均点) / 標準偏差,
+                偏差値 = Z * 10 + 50,
+                相対順位 = round((1 - pnorm(Z)) * 100)) %>% 
+  df_print(ｄ)
+```
+
+　  
+
+### Q3 SECデータ白書のベンチワーク（演習2） {.unnumbered}
+
+```{r}
+#| echo: false
+#| code-summary: "金融・保険業界の生産性"
+x <- data.frame(平均 = 0.051, 標準偏差 = 0.029, 評価対象 = 0.09)
+x %>% df_print()
+```
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "計算結果"
+x %>% 
+  dplyr::mutate(Zスコア = (評価対象 - 平均) / 標準偏差,
+                上位パーセンテージ = (1 - pnorm(Zスコア)) * 100,
+                偏差値 = Zスコア * 10 + 50) %>% 
+  df_print()
+```
+
+　  
+
+## グループ演習3（二群のデータの違いによるp値比較） {.unnumbered}
+```{r}
+#| code-fold: true
+#| code-summary: "4パターンの二群のデータ"
+x <- "./data/Pre_P53_2群のデータ.csv" %>% 
+  read.csv()
+
+x %>% df_print()
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "4パターンの二群のデータ"
+"./data/Pre_P52_4パターン.csv" %>% 
+  read.csv() %>% 
+  ggplot2::ggplot(ggplot2::aes(x = Group, y = Value, colour = Group)) +
+    ggplot2::geom_jitter(position = "dodge") +
+    ggplot2::facet_grid(~ Pattern)
+```
+
+　  
+
+### Q1 グラフから結果を予想する（演習3） {.unnumbered}
+　グラフから結果を予想するにあたり、データの分布が見やすい箱ひげ図を描いておきます。
+```{r}
+#| code-fold: true
+#| code-summary: "4パターンの二群のデータ"
+"./data/Pre_P52_4パターン.csv" %>% 
+  read.csv() %>% 
+  ggplot2::ggplot(ggplot2::aes(x = Group, y = Value, colour = Group)) +
+    ggplot2::geom_boxplot(position = "dodge") +
+    ggplot2::facet_grid(~ Pattern)
+```
+
+<!-- * パターン1とパターン3に比べて -->
+<!--     * パターン2とパターン4の方が分布が狭いので被っている範囲が狭い（分離性が高い） -->
+
+<!-- したがって、p値の関係は下記と推測できる。 -->
+
+<!-- $$\mbox{パターン2, パターン4} < \mbox{パターン1, パターン3}$$ -->
+
+<!-- * パターン1とパターン3では -->
+<!--     * パターン3の方がデータ数が多いので標準誤差が小さい（p値が小さい） -->
+
+<!-- したがって、上記の関係からp値は下記と推測できる。 -->
+
+<!-- $$\mbox{パターン2, パターン4} < \mbox{パターン3} < \mbox{パターン1}$$ -->
+
+<!-- * パターン3とパターン4では -->
+<!--     * パターン4の方がデータ数が少ない（$\frac{1}{4}$未満）ので標準誤差が大きい（p値が大きい） -->
+
+<!-- したがって、パターン3の方が分離性は低いがデータの少ないパターン4の方がp値が大きいと推測できる（データ数より標準偏差の方が標準誤差への影響が大きいが、パターン4はパターン3に比べると標準偏差は半分、データ数が$\frac{1}{4}$未満とデータ数の影響の方が大きいため）。 -->
+
+<!-- $$\mbox{パターン2} < \mbox{パターン3} < \mbox{パターン4} < \mbox{パターン1}$$ -->
+
+<!-- * パターン2とパターン3では -->
+<!--     * パターン2の方がデータ数が少ない（半分） -->
+<!--     * パターン3の方が分離性が低い -->
+
+<!-- したがって、データ数は少ないが分離性の高いパターン2の方がp値が小さいと推測する（データ数より標準偏差の方が標準誤差への影響が大きいため）。 -->
+
+<!-- $$\mbox{パターン2} < \mbox{パターン3} < \mbox{パターン4} < \mbox{パターン1}$$ -->
+
+* パターン1とパターン2は
+    * データ数は等しい
+    * パターン2の方が標準偏差が小さい（分離性が高い）
+
+$$\mbox{パターン2} < \mbox{パターン1}$$
+
+* パターン2とパターン4は
+    * 標準偏差は等しい
+    * パターン4の方がデータ数が少ない（半分以下）
+
+$$\mbox{パターン2} < \mbox{パターン4}$$
+
+* パターン2とパターン3は
+    * パターン2の方が標準偏差が小さい（約半分）
+    * パターン3の方がデータ数が多い（倍）
+
+$$\mbox{パターン2} < \mbox{パターン3}$$
+
+* パターン3とパターン4は
+    * 標準偏差は同じ
+    * パターン4の方がデータ数が少ない（半分以下）
+
+$$\mbox{パターン3} < \mbox{パターン4}$$
+
+* パターン1とパターン4は
+    * パターン1の方がデータ数が多い（倍以上）
+    * パターン4の方が標準偏差が小さい（約半分）
+
+$$\mbox{パターン4} < \mbox{パターン1}$$
+
+したがって、4パターンのp値の関係は以下と推測できる。
+
+$$\mbox{パターン2} < \mbox{パターン3} < \mbox{パターン4} < \mbox{パターン1}$$
+
+　  
+
+### Q2 t検定のp値で結果を確認する（演習3） {.unnumbered}
+　Rで二群の平均値の差の検定を行うには`t.test()`関数を用います。
+```{r}
+#| code-fold: true
+#| code-summary: "パターン1のt検定結果"
+"./data/Pre_P53_パターン1.csv" %>% 
+  read.csv() %>% 
+  with(t.test(Value ~ Group, var.equal = TRUE))
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "パターン2のt検定結果"
+"./data/Pre_P53_パターン2.csv" %>% 
+  read.csv() %>% 
+  with(t.test(Value ~ Group, var.equal = TRUE))
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "パターン3のt検定結果"
+"./data/Pre_P53_パターン3.csv" %>% 
+  read.csv() %>% 
+  with(t.test(Value ~ Group, var.equal = TRUE))
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "パターン4のt検定結果"
+"./data/Pre_P53_パターン4.csv" %>% 
+  read.csv() %>% 
+  with(t.test(Value ~ Group, var.equal = TRUE))
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "t検定結果の比較（p値順）"
+"./data/Pre_P52_4パターン.csv" %>% 
+  read.csv() %>% 
+  dplyr::group_by(Pattern) %>% 
+  tidyr::nest() %>% 
+  dplyr::mutate(out = purrr::map(.x = data,
+                                 .f = ~ with(.x, t.test(Value ~ Group,
+                                                        var.equal = TRUE) %>% 
+                                               broom::tidy()))) %>% 
+  tidyr::unnest(out) %>% 
+  dplyr::select(Pattern, p.value, t.value = statistic) %>% 
+  dplyr::arrange(p.value) %>% 
+  dplyr::left_join(x, by = c("Pattern" = "パターン")) %>% 
+  df_print()
+```
+
+　  
+
+## 個人演習（ツール導入すべきか？） {.unnumbered}
+　ツール導入前後の欠陥密度データです。データ間に対応はありません。
+```{r}
+#| code-fold: true
+#| code-summary: "ツール導入前後の欠陥密度"
+"./data/Pre_P13_ツールを導入すべきか.csv" %>% 
+  read.csv() %>% 
+  df_print()
+```
+　  
+　欠陥密度の平均値の差は$0.5$なので約$17%$改善していることになります。
+```{r}
+#| code-fold: true
+#| code-summary: "ツール導入前後の欠陥密度の平均値"
+"./data/Pre_P13_ツールを導入すべきか.csv" %>% 
+  read.csv() %>% 
+  dplyr::summarise(dplyr::across(dplyr::everything(), mean)) %>% 
+  df_print()
+```
+
+　  
+
+### Q1 t検定で検証する （演習4） {.unnumbered}
+　ツール導入前後の欠陥密度に優位な差があるかをt検定で検証します。なお、両者のデータは等分散であると仮定、有意水準は$5%$とします。
+```{r}
+#| code-fold: true
+#| code-summary: "欠陥密度の平均値の差の検定"
+"./data/Pre_P13_ツールを導入すべきか.csv" %>% 
+  read.csv() %>% 
+  with(t.test(変更前, 変更後, var.equal = TRUE))
+```
+
+　p値が有意水準を下回らないので、帰無仮説は棄却できず有意な差がある（二群の平均値の差が$0$でない）とは言えない。したがって、このデータからはツール導入の効果は見込めない。ただし、p値からみてデータ数を増やして再検定すれば有意になる可能性があるかも知れない。
+
+```{r}
+#| code-fold: true
+#| code-summary: "参考）欠陥密度の分布"
+"./data/Pre_P13_ツールを導入すべきか.csv" %>% 
+  read.csv() %>% 
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "type", values_to = "value") %>% 
+  ggplot2::ggplot(ggplot2::aes(x = type, y = value, colour = type)) +
+    ggplot2::geom_jitter(position = "dodge")
+```
+
+　  
 
 ---
-ｘ
