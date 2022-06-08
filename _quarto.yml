@@ -29,6 +29,7 @@ book:
     background: dark # or light
   chapters:
     - index.qmd
+    - chapter00.qmd
     - chapter01.qmd
     - chapter02.qmd
     - chapter03.qmd
