@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-0.9.440">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです。">
-<title>Rで学ぶ『完全独習 統計学入門』 - なぜ、統計手法が必要か</title>
+<title>Rで学ぶ『完全独習 統計学入門』 - 【序】なぜ、統計手法が必要か</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,14 +111,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">なぜ、統計手法が必要か</h1>
+      <h1 class="quarto-secondary-nav-title">【序】なぜ、統計手法が必要か</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
     </div>
   </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title d-none d-lg-block">なぜ、統計手法が必要か</h1>
+      <h1 class="title d-none d-lg-block">【序】なぜ、統計手法が必要か</h1>
                   <div>
         <div class="description">
           本書はデータ分析勉強会で学んだ成果をまとめたものです。
@@ -175,7 +175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapter00.html" class="sidebar-item-text sidebar-link active">なぜ、統計手法が必要か</a>
+  <a href="./chapter00.html" class="sidebar-item-text sidebar-link active">【序】なぜ、統計手法が必要か</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -253,7 +253,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/k-metrics/DAWS2022/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><p>　本講はテキスト前半部分の概観を説明する講義における演習をRで解答しています。テキストとは異なるデータを利用しており、演習自体やデータの著作権は講義担当者にあります。</p>
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><p>　本講はテキストの概観に関する<a href="https://drive.google.com/drive/folders/16joGdT7H_-jleZvKVs2KWtoGmI6ejJha">第一回講義</a>における演習をRで解答したものです。テキストとは異なるデータを利用しており演習自体やデータの著作権は講義担当者にあります。</p>
 <p>　</p>
 <section id="グループ演習1分布の特徴を捉える" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="グループ演習1分布の特徴を捉える">グループ演習1（分布の特徴を捉える）</h2>
 <div class="cell">
@@ -307,15 +307,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>　<br>
 　箱ひげ図はデータを要約した結果を図示したものですので、もう少し細かい分布を見るにはヒストグラム（度数分布表）が便利です。Rでは<code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code>関数を用いて描きます。</p>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">国語</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details><summary>各教科の得点分布（ヒストグラム）</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">国語</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <p><img src="chapter00_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
-<details><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">数学</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details><summary>各教科の得点分布（ヒストグラム）</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">数学</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <p><img src="chapter00_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="672"></p>
 </div>
-<details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">英語</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details><summary>各教科の得点分布（ヒストグラム）</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">英語</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <p><img src="chapter00_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid" width="672"></p>
 </div>
@@ -364,7 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>　<br>
-　参考として中央値も求めてみます。</p>
+　参考として中央値も求めてみます。中央値は<code><a href="https://rdrr.io/r/stats/median.html">median()</a></code>関数で求めます。</p>
 <div class="cell">
 <details><summary>中央値</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">median</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -379,7 +379,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>　<br>
-　次に分散（母分散）を求めます。Rには母分散を求める関数がありませんので、本資料では計算式（<span class="math inline">\(\frac{1}{n}\sum{(x_i - \mu)^2} = \sigma^2\)</span>）を<code>VAR()</code>関数として定義しています。</p>
+　次に分散（母分散）を求めます。Rには母分散を求める関数がありませんので、本資料では計算式（<span class="math inline">\(\frac{\sum{(x_i - \mu)^2}}{n} = \sigma^2\)</span>）を<code>VAR()</code>関数として定義しています。</p>
 <div class="cell">
 <details><summary>（母）分散</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">VAR</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -395,7 +395,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>　<br>
-　分散を求めましたので標準偏差（母標準偏差）を求めますが、母分散同様に求める関数がありませんので本資料では計算式（<span class="math inline">\(\sqrt{\frac{1}{n}\sum{(x_i - \bar{x})^2}} = \sigma\)</span>）を<code>SD()</code>関数として定義しています。</p>
+　分散を求めましたので標準偏差（母標準偏差）を求めますが、母分散同様に求める関数がありませんので本資料では計算式（<span class="math inline">\(\sqrt{\frac{\sum{(x_i - \mu)^2}}{n}} = \sigma\)</span>）を<code>SD()</code>関数として定義しています。</p>
 <div class="cell">
 <details><summary>（母）標準偏差</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">SD</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -465,7 +465,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>　</p>
 </section></section></section><section id="個人演習層別ヒストグラムの作成" class="level2 unnumbered page-columns page-full"><h2 class="unnumbered anchored" data-anchor-id="個人演習層別ヒストグラムの作成">個人演習（層別ヒストグラムの作成）</h2>
 <section id="q3-ヒストグラムを作成して比較する演習1" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="q3-ヒストグラムを作成して比較する演習1">Q3 ヒストグラムを作成して比較する（演習1）</h3>
-<p>　層別のヒストグラムを描くには<strong><code>ggplot2</code></strong>パッケージが便利です。ここでは階級幅を<span class="math inline">\(10点\)</span>としています。</p>
+<p>　層別のヒストグラムを描くには<strong><code>ggplot2</code></strong>パッケージが便利です。ここでは階級幅を<span class="math inline">\(10\mbox{点}\)</span>としています。</p>
 <div class="cell">
 <details><summary>層別ヒストグラム</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
   <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>,
@@ -482,6 +482,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section><section id="ヒストグラムの調整比較" class="level3 unnumbered page-columns page-full"><h3 class="unnumbered anchored" data-anchor-id="ヒストグラムの調整比較">ヒストグラムの調整比較</h3>
 <p>　Microsoft Excel（2016以降）ではヒストグラムを描くことができますが、グラフ表示の調整には制限があります。Excelでヒストグラム間の比較を行いたい場合は小池方式のテクニックを使う必要がありますが、他のツールでは調整が可能です。</p>
 <table class="table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 10%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 25%">
+</colgroup>
 <thead><tr class="header">
 <th>ツール名</th>
 <th>階級幅</th>
@@ -621,12 +628,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>　対象データは下記の通り。</p>
 <div class="cell">
 <details><summary>三教科の平均点と標準偏差</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="st">"./data/Pre_P37_個人演習.csv"</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stderr">
-<pre><code>Warning in read.table(file = file, header = header, sep = sep, quote = quote, :
-incomplete final line found by readTableHeader on './data/Pre_P37_個人演習.csv'</code></pre>
-</div>
-<details><summary>三教科の平均点と標準偏差</summary><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -640,7 +644,7 @@ incomplete final line found by readTableHeader on './data/Pre_P37_個人演習.c
 <section id="q1-成績の良い順に並べる演習2" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="q1-成績の良い順に並べる演習2">Q1 成績の良い順に並べる（演習2）</h3>
 <p>　Zスコアと偏差値を算出して成績の良い順に並べる。</p>
 <div class="cell">
-<details><summary>Zスコアと偏差値を求める</summary><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+<details><summary>Zスコアと偏差値を求める</summary><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Z <span class="op">=</span> <span class="op">(</span><span class="va">得点</span> <span class="op">-</span> <span class="va">平均点</span><span class="op">)</span> <span class="op">/</span> <span class="va">標準偏差</span>,
                 偏差値 <span class="op">=</span> <span class="va">Z</span> <span class="op">*</span> <span class="fl">10</span> <span class="op">+</span> <span class="fl">50</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">偏差値</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -658,7 +662,7 @@ incomplete final line found by readTableHeader on './data/Pre_P37_個人演習.c
 </section><section id="q2-相対順位を算出する演習2" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="q2-相対順位を算出する演習2">Q2 相対順位を算出する（演習2）</h3>
 <p>　Zスコアから相対順位（上位<span class="math inline">\(%\)</span>)を求める。</p>
 <div class="cell">
-<details><summary>相対順位</summary><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+<details><summary>相対順位</summary><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Z <span class="op">=</span> <span class="op">(</span><span class="va">得点</span> <span class="op">-</span> <span class="va">平均点</span><span class="op">)</span> <span class="op">/</span> <span class="va">標準偏差</span>,
                 偏差値 <span class="op">=</span> <span class="va">Z</span> <span class="op">*</span> <span class="fl">10</span> <span class="op">+</span> <span class="fl">50</span>,
                 相対順位 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">Z</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -685,7 +689,7 @@ incomplete final line found by readTableHeader on './data/Pre_P37_個人演習.c
 </div>
 </div>
 <div class="cell">
-<details><summary>計算結果</summary><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
+<details><summary>計算結果</summary><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Zスコア <span class="op">=</span> <span class="op">(</span><span class="va">評価対象</span> <span class="op">-</span> <span class="va">平均</span><span class="op">)</span> <span class="op">/</span> <span class="va">標準偏差</span>,
                 上位パーセンテージ <span class="op">=</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">Zスコア</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span>,
                 偏差値 <span class="op">=</span> <span class="va">Zスコア</span> <span class="op">*</span> <span class="fl">10</span> <span class="op">+</span> <span class="fl">50</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -702,7 +706,7 @@ incomplete final line found by readTableHeader on './data/Pre_P37_個人演習.c
 <p>　</p>
 </section></section><section id="グループ演習3二群のデータの違いによるp値比較" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="グループ演習3二群のデータの違いによるp値比較">グループ演習3（二群のデータの違いによるp値比較）</h2>
 <div class="cell">
-<details><summary>4パターンの二群のデータ</summary><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="st">"./data/Pre_P53_2群のデータ.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>4パターンの二群のデータ</summary><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="st">"./data/Pre_P53_2群のデータ.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -716,7 +720,7 @@ incomplete final line found by readTableHeader on './data/Pre_P37_個人演習.c
 </div>
 </div>
 <div class="cell">
-<details><summary>4パターンの二群のデータ</summary><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P52_4パターン.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>4パターンの二群のデータ</summary><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P52_4パターン.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Group</span>, y <span class="op">=</span> <span class="va">Value</span>, colour <span class="op">=</span> <span class="va">Group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span>
@@ -732,7 +736,7 @@ incomplete final line found by readTableHeader on './data/Pre_P37_個人演習.c
 <section id="q1-グラフから結果を予想する演習3" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="q1-グラフから結果を予想する演習3">Q1 グラフから結果を予想する（演習3）</h3>
 <p>　グラフから結果を予想するにあたり、データの分布が見やすい箱ひげ図を描いておきます。</p>
 <div class="cell">
-<details><summary>4パターンの二群のデータ</summary><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P52_4パターン.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>4パターンの二群のデータ</summary><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P52_4パターン.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Group</span>, y <span class="op">=</span> <span class="va">Value</span>, colour <span class="op">=</span> <span class="va">Group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span>
@@ -809,7 +813,7 @@ incomplete final line found by readTableHeader on './data/Pre_P37_個人演習.c
 </section><section id="q2-t検定のp値で結果を確認する演習3" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="q2-t検定のp値で結果を確認する演習3">Q2 t検定のp値で結果を確認する（演習3）</h3>
 <p>　Rで二群の平均値の差の検定を行うには<code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code>関数を用います。</p>
 <div class="cell">
-<details><summary>パターン1のt検定結果</summary><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P53_パターン1.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>パターン1のt検定結果</summary><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P53_パターン1.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">Value</span> <span class="op">~</span> <span class="va">Group</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
@@ -827,7 +831,7 @@ mean in group  A mean in group  B
 </div>
 </div>
 <div class="cell">
-<details><summary>パターン2のt検定結果</summary><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P53_パターン2.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>パターン2のt検定結果</summary><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P53_パターン2.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">Value</span> <span class="op">~</span> <span class="va">Group</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
@@ -845,7 +849,7 @@ mean in group  A mean in group  B
 </div>
 </div>
 <div class="cell">
-<details><summary>パターン3のt検定結果</summary><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P53_パターン3.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>パターン3のt検定結果</summary><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P53_パターン3.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">Value</span> <span class="op">~</span> <span class="va">Group</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
@@ -863,7 +867,7 @@ mean in group  A mean in group  B
 </div>
 </div>
 <div class="cell">
-<details><summary>パターン4のt検定結果</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P53_パターン4.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>パターン4のt検定結果</summary><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P53_パターン4.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">Value</span> <span class="op">~</span> <span class="va">Group</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
@@ -881,7 +885,7 @@ mean in group  A mean in group  B
 </div>
 </div>
 <div class="cell">
-<details><summary>t検定結果の比較（p値順）</summary><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P52_4パターン.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>t検定結果の比較（p値順）</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P52_4パターン.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Pattern</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -907,22 +911,22 @@ mean in group  A mean in group  B
 </section></section><section id="個人演習ツール導入すべきか" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="個人演習ツール導入すべきか">個人演習（ツール導入すべきか？）</h2>
 <p>　ツール導入前後の欠陥密度データです。データ間に対応はありません。</p>
 <div class="cell">
-<details><summary>ツール導入前後の欠陥密度</summary><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P13_ツールを導入すべきか.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>ツール導入前後の欠陥密度</summary><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P13_ツールを導入すべきか.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["変更前"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["変更後"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2.8","2":"2.7"},{"1":"3.2","2":"2.5"},{"1":"3.0","2":"2.3"},{"1":"2.5","2":"2.0"},{"1":"3.5","2":"3.0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["導入前"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["導入後"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2.8","2":"2.7"},{"1":"3.2","2":"2.5"},{"1":"3.0","2":"2.3"},{"1":"2.5","2":"2.0"},{"1":"3.5","2":"3.0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <p>　<br>
-　欠陥密度の平均値の差は<span class="math inline">\(0.5\)</span>なので約<span class="math inline">\(17%\)</span>改善していることになります。</p>
+　欠陥密度の平均値の差は<span class="math inline">\(0.5\)</span>なので約<span class="math inline">\(17\%\)</span>改善していることになります。</p>
 <div class="cell">
-<details><summary>ツール導入前後の欠陥密度の平均値</summary><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P13_ツールを導入すべきか.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>ツール導入前後の欠陥密度の平均値</summary><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P13_ツールを導入すべきか.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -930,23 +934,23 @@ mean in group  A mean in group  B
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["変更前"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["変更後"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"2.5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["導入前"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["導入後"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"2.5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <p>　</p>
 <section id="q1-t検定で検証する-演習4" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="q1-t検定で検証する-演習4">Q1 t検定で検証する （演習4）</h3>
-<p>　ツール導入前後の欠陥密度に優位な差があるかをt検定で検証します。なお、両者のデータは等分散であると仮定、有意水準は<span class="math inline">\(5%\)</span>とします。</p>
+<p>　ツール導入前後の欠陥密度に優位な差があるかをt検定で検証します。なお、両者のデータは等分散であると仮定、有意水準は<span class="math inline">\(5\%\)</span>とします。</p>
 <div class="cell">
-<details><summary>欠陥密度の平均値の差の検定</summary><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P13_ツールを導入すべきか.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>欠陥密度の平均値の差の検定</summary><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P13_ツールを導入すべきか.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">変更前</span>, <span class="va">変更後</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">導入前</span>, <span class="va">導入後</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
 
-data:  変更前 and 変更後
+data:  導入前 and 導入後
 t = 2.0761, df = 8, p-value = 0.07154
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
@@ -958,7 +962,7 @@ mean of x mean of y
 </div>
 <p>　p値が有意水準を下回らないので、帰無仮説は棄却できず有意な差がある（二群の平均値の差が<span class="math inline">\(0\)</span>でない）とは言えない。したがって、このデータからはツール導入の効果は見込めない。ただし、p値からみてデータ数を増やして再検定すれば有意になる可能性があるかも知れない。</p>
 <div class="cell">
-<details><summary>参考）欠陥密度の分布</summary><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P13_ツールを導入すべきか.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>参考）欠陥密度の分布</summary><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/Pre_P13_ツールを導入すべきか.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>,
                       names_to <span class="op">=</span> <span class="st">"type"</span>, values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -971,6 +975,7 @@ mean of x mean of y
 <p><img src="chapter00_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>　</p>
 <hr>
 
 
