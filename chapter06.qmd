@@ -65,37 +65,7 @@ risk %>%
 投信総合検索ライブラリ
 https://toushin-lib.fwg.ne.jp/FdsWeb/
 
-```{r}
-"https://www.wam.abic.co.jp/contents/C130122/wam3/1/pc/funddtilprice.html?_com_id_session=02202205280131075947&date=202205281752&_biz_id_itcode=”A0331309A&id_src_screen=91101001&_biz_displayterm=3"
-
-"https://www.wam.abic.co.jp/contents/C130122/wam3/1/pc/funddtilprice.html?_com_id_session=02202205280131075947&date=20220528”1752&_biz_id_itcode=A01312103&id_src_screen=91101001&_biz_displayterm=3"
-
-url1 <- ""
-
-xpath <- '//*[@id="fund-price"]/div/ul[2]/li/div[2]/table[2]'
-
-
-
-url1 <- "https://kabutan.jp/stock/kabuka?code="
-url2 <- "&ashi=mon&page="
-pages <- c(1:5)
-xpath <- '//*[@id="stock_kabuka_table"]/table[2]'
-code = c(7201, 7203, 7211, 7261, 7267, 7270)
-
-tidyr::crossing(code, pages) %>% 
-  dplyr::mutate(url = paste0(url1, code, url2, pages)) %>% 
-  # dplyr::select(-pages) %>% 
-  purrr::pmap_df(.f = function(url, code, pages) {
-    xml2::read_html(url) %>% 
-      rvest::html_element(xpath = xpath) %>%
-      rvest::html_table(header = FALSE) %>%
-      dplyr::slice(-1) %>% 
-      dplyr::mutate(code = code, page = pages)
-  })
-```
-
-
-　SMBC日興証券の[取扱ファンド一覧](https://fund2.smbcnikko.co.jp/smbc_nikko_fund/qsearch.exe?F=list_kokunai&KEY3=101)の各カテゴリの一番はじめにある商品のデータを取得します。
+　SMBC日興証券の[取扱ファンド一覧](https://fund2.smbcnikko.co.jp/smbc_nikko_fund/qsearch.exe?F=list_kokunai&KEY3=101)の各カテゴリの一番はじめにある投資信託商品のデータを取得します。
 ```{r}
 url <- "https://fund2.smbcnikko.co.jp/smbc_nikko_fund/qsearch.exe?F=detail_kokunai1&KEY1="
 code <- c("9C311125", "39312149", "9K31419A", "32315984", "4931112B",
@@ -174,6 +144,10 @@ result %>%
                               ~ dplyr::na_if(.x, "--")))
 ```
 
+
+[三菱UFJモルガン・スタンレー証券商品一覧](https://www.sc.mufg.jp/products/trust/ranking/index.html)
+
+[大和証券 投資信託](https://www.daiwa.jp/products/fund/?iid=subnav_fund)
 
 　  
 
