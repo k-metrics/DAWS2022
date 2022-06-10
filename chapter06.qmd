@@ -121,11 +121,18 @@ $$\frac{分配金 + 売約益}{期首基準価額} = \frac{分配金 + 売約益
 
 ### 投信総合検索ライブラリー {.unnumbered}
 　[投信総合検索ライブラリー](https://toushin-lib.fwg.ne.jp/FdsWeb/)では、運用情報から騰落率（このサイトではリターンに同じ）、リスク（標準偏差）、シャープレシオを同一表形式で掲載しているため、一度に3つの指標を取得することができます。
+
+
 　ここでは、「資産複合（バランス型）」の期間3年でのシャープレシオ上位5件の情報を取得しています。
 ```{r}
 url <- "https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd="
 code <- c("JP90C000BE38", "JP90C0002LP2", "JP90C0002LR8", "JP90C0000R71",
-          "JP90C000EMH6")
+          "JP90C000EMH6",
+          "JP90C0002H06", "JP90C0009E44", "JP90C0007GF2", "JP90C0007GD7",
+          "JP90C000A1B6",
+          "JP90C000GKC6", "JP90C000FCD3", "JP3047260009", "JP90C000FFX4",
+          "JP90C000FN66")
+
 xpath <- c('//*[@id="tab_content2"]/div/div[2]/div[1]/div[1]/div/table',
            '//*[@id="tab_content2"]/div/div[2]/div[1]/div[2]/div/table',
            '//*[@id="tab_content2"]/div/div[2]/div[1]/div[3]/div/table')
@@ -148,9 +155,14 @@ df %>%
                 X2 = forcats::fct_inorder(X2)) %>% 
   tidyr::pivot_wider(names_from = X1, values_from = X3) %>% 
   dplyr::select(code, 期間 = X2, dplyr::everything()) %>% 
+  # print()
+  dplyr::filter(期間 %in% c("6ヶ月", "1年", "3年", "5年")) %>% 
+  # print()
   ggplot2::ggplot(ggplot2::aes(x = `リスク（標準偏差）`, y = 騰落率,
                   color = code)) + 
+    ggplot2::geom_abline(slope = 1, intercept = 0, size = 0.2) + 
     ggplot2::geom_point() + 
+    # ggplot2::coord_fixed() +
     ggplot2::facet_wrap(~ 期間)
 
 ```
@@ -281,5 +293,146 @@ result %>%
 
 [大和証券 投資信託](https://www.daiwa.jp/products/fund/?iid=subnav_fund)
 
+
+#### 楽天証券＆投信協会
+
+```{r}
+#| eval: false
+#| include: false
+# つみたてNISAの一覧取得（楽天証券）
+url <- "https://www.rakuten-sec.co.jp/nisa/tsumitate/products.html"
+xpath <- '//*[@id="str-main"]/div[4]/table'
+
+nisa_id <- xml2::read_html(url) %>% 
+  rvest::html_element(xpath = xpath) %>% 
+  rvest::html_nodes("a") %>% 
+  rvest::html_attr("href") %>% 
+  as.data.frame() %>% 
+  dplyr::rename(id = 1) %>% 
+  dplyr::mutate(id = stringr::str_sub(id, start = 22))
+
+
+nisa_name <- xml2::read_html(url) %>% 
+  rvest::html_element(xpath = xpath) %>% 
+  rvest::html_table()
+
+nisa_id %>% 
+  dplyr::bind_cols(nisa_name) # %>% 
+  # readr::write_excel_csv("./data/NISA.csv")
+```
+
+```{r}
+#| code-summary: "基本情報を取得する"
+url <- "https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd="
+code <- nisa_id$id
+xpath <- '//*[@id="tab_content1"]/div/div[1]/div/div[1]/table'
+
+xml2::read_html(paste0(url, "JP90C000EMH6")) %>%
+  rvest::html_element(xpath = xpath) %>% 
+  rvest::html_table()
+
+nisa_info <- tidyr::crossing(url, code, xpath) %>% 
+  dplyr::mutate(url = paste0(url, code)) %>% 
+  purrr::pmap_df(.f = function (url, xpath, code) {
+    xml2::read_html(url) %>% 
+      rvest::html_element(xpath = xpath) %>% 
+      rvest::html_table(header = TRUE) %>%
+      # dplyr::slice(-1) %>% 
+      dplyr::mutate(code = code)
+  })
+
+nisa_info # %>% 
+  # readr::write_excel_csv("./data/NISA_手数料.csv")
+```
+
+```{r}
+#| code-summary: "つみたてNISA運用情報"
+xpath <- c('//*[@id="tab_content2"]/div/div[2]/div[1]/div[1]/div/table',
+           '//*[@id="tab_content2"]/div/div[2]/div[1]/div[2]/div/table',
+           '//*[@id="tab_content2"]/div/div[2]/div[1]/div[3]/div/table')
+
+df <- tidyr::crossing(url, code, xpath) %>% 
+  dplyr::mutate(url = paste0(url, code)) %>% 
+  purrr::pmap_df(.f = function (url, xpath, code) {
+    xml2::read_html(url) %>% 
+      rvest::html_element(xpath = xpath) %>% 
+      rvest::html_table(header = FALSE) %>% 
+      dplyr::slice(-(1:2)) %>% 
+      dplyr::mutate(code = code)
+  })
+
+df %>% 
+  dplyr::select(-4) %>% 
+  dplyr::mutate(X3 = stringr::str_remove(X3, "%"),
+                X3 = dplyr::na_if(X3, "-"),
+                X3 = as.numeric(X3),
+                X2 = forcats::fct_inorder(X2)) %>% 
+  tidyr::pivot_wider(names_from = X1, values_from = X3) # %>% 
+  # readr::write_excel_csv("./data/NISA_RRS.csv")
+```
+
+#### 楽天証券
+
+```{r}
+#| eval: false
+#| include: false
+# つみたてNISAの一覧取得（楽天証券）
+
+url <- "https://www.rakuten-sec.co.jp/nisa/tsumitate/products.html"
+xpath <- '//*[@id="str-main"]/div[4]/table'
+
+nisa_id <- xml2::read_html(url) %>% 
+  rvest::html_element(xpath = xpath) %>% 
+  rvest::html_nodes("a") %>% 
+  rvest::html_attr("href") %>% 
+  as.data.frame() %>% 
+  dplyr::rename(id = 1) %>% 
+  dplyr::mutate(id = stringr::str_sub(id, start = 22))
+
+
+nisa_name <- xml2::read_html(url) %>% 
+  rvest::html_element(xpath = xpath) %>% 
+  rvest::html_table()
+
+nisa_id %>% 
+  dplyr::bind_cols(nisa_name) # %>% 
+  # readr::write_excel_csv("./data/NISA.csv")
+```
+
+
+```{r}
+#| eval: false
+#| include: false
+#| code-summary: "つみたてNISA運用情報（接続拒否か？）"
+url <- "https://www.rakuten-sec.co.jp/web/fund/detail/?ID="
+xpath <- '//*[@id="infoPage"]/div[6]/div/table'
+code <- nisa_id$id
+
+xml2::read_html(paste0(url, "JP90C0006LC1")) %>%
+  rvest::html_element(xpath = xpath) %>%
+  rvest::html_table(header = TRUE)
+
+code <- code[1:10]
+
+# 連続するとサイト側で拒否されている模様
+df <- tidyr::crossing(url, code, xpath) %>% 
+  dplyr::mutate(url = paste0(url, code)) %>% 
+  purrr::pmap_df(.f = function (url, xpath, code) {
+    xml2::read_html(url) %>% 
+      rvest::html_element(xpath = xpath) %>% 
+      rvest::html_table(header = TRUE) %>% 
+      dplyr::mutate(code = code)
+      Sys.sleep(5)
+  })
+
+# df %>% 
+#   dplyr::select(-4) %>% 
+#   dplyr::mutate(X3 = stringr::str_remove(X3, "%"),
+#                 X3 = dplyr::na_if(X3, "-"),
+#                 X3 = as.numeric(X3),
+#                 X2 = forcats::fct_inorder(X2)) %>% 
+#   tidyr::pivot_wider(names_from = X1, values_from = X3) # %>% 
+#   # readr::write_excel_csv("./data/NISA_RRS.csv")
+```
 
 ---
