@@ -56,16 +56,133 @@ risk %>%
     ggrepel::geom_text_repel()
 ```
 
-
-
 　  
 
 ## 金融商品の優劣の測り方
 
-投信総合検索ライブラリ
-https://toushin-lib.fwg.ne.jp/FdsWeb/
+　  
 
-　SMBC日興証券の[取扱ファンド一覧](https://fund2.smbcnikko.co.jp/smbc_nikko_fund/qsearch.exe?F=list_kokunai&KEY3=101)の各カテゴリの一番はじめにある投資信託商品のデータを取得します。
+## 金融商品の優劣を測る数値・シャープレシオ
+
+　  
+
+## 練習問題 {.unnumbered}
+
+　  
+
+## 実際のデータで確認する {.unnumbered}
+　実際のデータではテキストと同じ言葉でリターンとリスクが公開されているわけではありません。証券会社などにより様々な表現がなされていますので、最初に整理しておきます。
+　
+　[投資信託の基礎知識](https://www.smbcnikko.co.jp/products/inv/toshin_lab/column/001.html)によれば  
+　  
+　**利回り**とは
+
+>**投資金額に対する収益の割合**のことをいいます。この収益には「利息」だけでなく、投資商品を売却した場合に得られる**「売却損益」も含みます**。また、通常は1年間の「年利回り」のことを利回りと呼ぶことが多いです。
+
+　利回を数式で表すと下式になります。ただし、手数料や税金などは考慮していません。
+
+$$\mbox{利回り} = \frac{\mbox{分配金} + \mbox{売却益}}{\mbox{投資金額}} \times 100$$
+
+　参考までに**利率**は
+
+> 一般的に、利率は、債券や預金に対して使われる言葉のため、**投資信託では利率とは言いません**。
+
+　SMBC日興証券では「**累積リターン**」という言葉を使っていますが、その定義は以下となっていますので利回りと等価といえます。
+　
+> 一定期間内における**分配金込み基準価額の騰落率**です。
+
+　一方、**騰落率**は
+
+> 騰落率とは、投資信託の**基準価額が、ある期間の間にどのくらい変動したか**を、パーセンテージで示します。例えば、基準価額10,000円の投資信託が1年後に11,000円に値上がりした場合の騰落率は10％です。
+
+　なので、利回りから分配金を除いた下式となります。利回りと同様に手数用や税金などは考慮していません。
+
+$$\mbox{騰落率} = \frac{売却益}{投資金額} \times 100$$
+
+　ところが、投信総合検索ライブラリーでは「騰落率」を以下のように定義しています。
+
+> 期間別騰落率は、**分配金(課税前)をファンドへ再投資したものとみなして月末時点の修正した価額をもとに計算**＊しています。一方、利回りは、分配金込み基準価額の騰落率です。
+
+　具体的には[用語集](https://www.toushin.or.jp/words/keyword/2779/)に記載されているように下式で定義されています。
+
+> (期末の基準価額+期中の分配金の合計)/期首の基準価額-1
+
+　この数式を整理すると菓子器のようになります。
+
+$$\frac{\mbox{期末準価額} + \mbox{期中分配金}}{\mbox{期首基準価額}} - 1 = \frac{\mbox{期中分配金} + \mbox{期末基準価額} - \mbox{期首基準価額}}{\mbox{期首基準価額}}$$
+
+　期末で売却したとすると$\mbox{期末基準価格} - \mbox|期首基準価格} = \mbox{売却益}$とみなせ、期首で投資したとすれば、騰落率は下式となり百分率をとれば「利回り」と同等であることが分かります。
+
+$$\frac{分配金 + 売約益}{期首基準価額} = \frac{分配金 + 売約益}{投資金額}$$
+
+　実際に同一銘柄を[投信総合ライブラリー](https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd=JP90C0008CH5)と[SMBC日興証券](https://fund2.smbcnikko.co.jp/smbc_nikko_fund/qsearch.exe?F=detail_kokunai1&KEY1=9C311125)で比較すると部分的に若干の差異があるものの騰落率と累積リターンが同一指標になっていることが分かります。
+
+　  
+
+### 投信総合検索ライブラリー {.unnumbered}
+　[投信総合検索ライブラリー](https://toushin-lib.fwg.ne.jp/FdsWeb/)では、運用情報から騰落率（このサイトではリターンに同じ）、リスク（標準偏差）、シャープレシオを同一表形式で掲載しているため、一度に3つの指標を取得することができます。
+　ここでは、「資産複合（バランス型）」の期間3年でのシャープレシオ上位5件の情報を取得しています。
+```{r}
+url <- "https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd="
+code <- c("JP90C000BE38", "JP90C0002LP2", "JP90C0002LR8", "JP90C0000R71",
+          "JP90C000EMH6")
+xpath <- c('//*[@id="tab_content2"]/div/div[2]/div[1]/div[1]/div/table',
+           '//*[@id="tab_content2"]/div/div[2]/div[1]/div[2]/div/table',
+           '//*[@id="tab_content2"]/div/div[2]/div[1]/div[3]/div/table')
+
+df <- tidyr::crossing(url, code, xpath) %>% 
+  dplyr::mutate(url = paste0(url, code)) %>% 
+  purrr::pmap_df(.f = function (url, xpath, code) {
+    xml2::read_html(url) %>% 
+      rvest::html_element(xpath = xpath) %>% 
+      rvest::html_table(header = FALSE) %>% 
+      dplyr::slice(-(1:2)) %>% 
+      dplyr::mutate(code = code)
+  })
+
+df %>% 
+  dplyr::select(-4) %>% 
+  dplyr::mutate(X3 = stringr::str_remove(X3, "%"),
+                X3 = dplyr::na_if(X3, "-"),
+                X3 = as.numeric(X3),
+                X2 = forcats::fct_inorder(X2)) %>% 
+  tidyr::pivot_wider(names_from = X1, values_from = X3) %>% 
+  dplyr::select(code, 期間 = X2, dplyr::everything()) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = `リスク（標準偏差）`, y = 騰落率,
+                  color = code)) + 
+    ggplot2::geom_point() + 
+    ggplot2::facet_wrap(~ 期間)
+
+```
+
+
+　基本情報タブから購入時手数料、信託財産保留額、運用管理費用を取得する
+```{r}
+#| code-summary: "基本情報を取得する"
+url <- "https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd="
+code <- c("JP90C000BE38", "JP90C0002LP2", "JP90C0002LR8", "JP90C0000R71",
+          "JP90C000EMH6")
+xpath <- '//*[@id="tab_content1"]/div/div[1]/div/div[1]/table'
+
+xml2::read_html(paste0(url, "JP90C000EMH6")) %>%
+  rvest::html_element(xpath = xpath) %>% 
+  rvest::html_table()
+
+tidyr::crossing(url, code, xpath) %>% 
+  dplyr::mutate(url = paste0(url, code)) %>% 
+  purrr::pmap_df(.f = function (url, xpath, code) {
+    xml2::read_html(url) %>% 
+      rvest::html_element(xpath = xpath) %>% 
+      rvest::html_table(header = TRUE) %>%
+      # dplyr::slice(-1) %>% 
+      dplyr::mutate(code = code)
+  })
+```
+
+
+
+### SMBC日興証券 {.unnumbered}
+　SMBC日興証券は[取扱ファンド一覧](https://fund2.smbcnikko.co.jp/smbc_nikko_fund/qsearch.exe?F=list_kokunai&KEY3=101)からカテゴリごとに商品を選択できますが、リターン、シャープレシオの期間が異なっています。
 ```{r}
 url <- "https://fund2.smbcnikko.co.jp/smbc_nikko_fund/qsearch.exe?F=detail_kokunai1&KEY1="
 code <- c("9C311125", "39312149", "9K31419A", "32315984", "4931112B",
@@ -73,7 +190,7 @@ code <- c("9C311125", "39312149", "9K31419A", "32315984", "4931112B",
 ```
 
 ```{r}
-#| code-summary: "累積リターン"
+#| code-summary: "累積リターン（利回り）"
 xpath <- '//*[@id="main"]/section/section[3]/section[2]/div/div[1]/div/table'
 
 return <- tidyr::crossing(url, code) %>% 
@@ -100,6 +217,7 @@ return %>%
   dplyr::select(-name) %>% 
   tidyr::pivot_wider(names_from = 期間, values_from = value)
 ```
+
 
 ```{r}
 #| code-summary: "シャープレシオ"
@@ -135,8 +253,8 @@ result <- tidyr::crossing(url, code) %>%
     xml2::read_html(site) %>% 
       rvest::html_element(xpath = xpath) %>% 
       rvest::html_table(header = FALSE) %>% 
-      dplyr::slice(-(1:2)) %>%
-      dplyr::mutate(code = code)
+      dplyr::mutate(code = code) %>% 
+      dplyr::slice(-(1:2))
   })
 
 result %>% 
@@ -144,19 +262,24 @@ result %>%
                               ~ dplyr::na_if(.x, "--")))
 ```
 
+　  
+
+### 無リスクの資産 {.unnumbered}
+　テキストでのシャープレシオは無リスクの資産として国債のリターン（利回り）を使っています。
+　[国債金利情報](https://www.mof.go.jp/jgbs/reference/interest_rate/)によるとリターンは下表のようになっています。なお、このファイルは`read.csv`関数では読み込めませんので**`readr`**パッケージの`readr::read_csv()`関数を用いて読み込んでいます。`
+```{r}
+#| code-fold: true
+#| code-summary: "国債の利回り"
+"https://www.mof.go.jp/jgbs/reference/interest_rate/jgbcm.csv" %>% 
+  readr::read_csv(locale = readr::locale(encoding = "CP932"), skip = 1)
+```
+
+
+### その他 {.unnumbered}
 
 [三菱UFJモルガン・スタンレー証券商品一覧](https://www.sc.mufg.jp/products/trust/ranking/index.html)
 
 [大和証券 投資信託](https://www.daiwa.jp/products/fund/?iid=subnav_fund)
 
-　  
-
-## 金融商品の優劣を測る数値・シャープレシオ
-
-　  
-
-## 練習問題 {.unnumbered}
-
-　  
 
 ---
