@@ -7,79 +7,132 @@
 source("./R/setup.R")
 ```
 
-## ハイリスク・ハイリターンとローリスク・ローリターン
+　  
 
+## ハイリスク・ハイリターンとローリスク・ローリターン
 　ボラティリティとは株の収益率の標準偏差（SD）のことで、収益率は標準偏差分の変動（$\pm SD$）が起きるので、それをリスクとして認識すべきです。  
 
 ```{r}
+#| code-fold: true
 #| code-summary: "P60図表6−1"
 "./data/P60_図表6-1.csv" %>% 
-  read.csv()
+  read.csv() %>% 
+  df_print()
 ```
 
 　各金融商品の標準偏差（リスク）と平均値（リターン）は下表のようになります。このデータでの標準偏差（リスク）は標本標準偏差ではないことに注意してください。
 ```{r}
+#| code-fold: true
 #| code-summary: "P60図表6−1のリスクとリターン"
-
-リスク <- "./data/P60_図表6-1.csv" %>% 
-  read.csv() %>% 
+リスク <- "./data/P60_図表6-1.csv" %>%
+  read.csv() %>%
   dplyr::summarise(dplyr::across(.cols = tidyselect::starts_with("商品"),
-                                 .fns = sd)) %>% 
+                                 .fns = sd)) %>%
   round(digits = 1)
-リスク
 
-リターン <- "./data/P60_図表6-1.csv" %>% 
-  read.csv() %>% 
+リスク %>% 
+  df_print()
+
+リターン <- "./data/P60_図表6-1.csv" %>%
+  read.csv() %>%
   dplyr::summarise(dplyr::across(.cols = tidyselect::starts_with("商品"),
-                                 .fns = mean)) %>% 
+                                 .fns = mean)) %>%
   round(digits = 1)
-リターン
+
+リターン %>% 
+  df_print()
 ```
-　  
+
 　このようにリターンの大きな商品はリスクも大きい、ハイリスク・ハイリターンであることが分かります。
 
 ```{r}
-#| code-summary: ""
-risk <- リスク %>% 
+#| code-fold: true
+#| code-summary: "リスクとリターンの関係"
+#| message: false
+risk <- リスク %>%
   tidyr::pivot_longer(cols = dplyr::everything(),
                       names_to = "商品", values_to = "リスク")
 
-return <- リターン %>% 
+return <- リターン %>%
   tidyr::pivot_longer(cols = dplyr::everything(),
                       names_to = "商品", values_to = "リターン")
 
-risk %>% 
-  dplyr::left_join(return, by = "商品") %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン, label = 商品)) + 
-    ggplot2::geom_point() + 
+risk %>%
+  dplyr::left_join(return, by = "商品") %>%
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン, label = 商品)) +
+    ggplot2::geom_point() +
     ggplot2::geom_smooth(se = FALSE, method = "lm", size = 0.5) +
     ggrepel::geom_text_repel()
 ```
 
-　  
+　
 
 ## 金融商品の優劣の測り方
+　前述の商品A〜商品Dのうち、どの商品が最も優れているでしょうか？実は、この四商品で比較する限り優劣はありません。
+```{r}
+#| echo: false
+#| code-summary: "リスクとリターンの関係"
+#| message: false
+risk <- リスク %>%
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "商品", values_to = "リスク")
+
+return <- リターン %>%
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "商品", values_to = "リターン")
+
+risk %>%
+  dplyr::left_join(return, by = "商品") %>%
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン, label = 商品)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_smooth(se = FALSE, method = "lm", size = 0.5) +
+    ggrepel::geom_text_repel()
+```
+　  
+
 
 　  
 
 ## 金融商品の優劣を測る数値・シャープレシオ
+　シャープレシオは下式で定義される金融商品の優劣を比較するための指標です。シャープレシオが高いほどリスクを抑えながらリターンが期待できる効率的なファンドといえます。
+
+$$\mbox{シャープレシオ} = \frac{\mbox{リターンの平均値} - \mbox{無リスク資産の利回り}}{\mbox{リスク（リターンの標準偏差）}}$$
+
+　無リスク資産の利回りには国債の利回りを使用する場合が多いようですが、具体的に何を用いているかを記載しているファンドを見たことがありません。参考までに近年の国債の利回りは下表の通りです。
+```{r}
+#| code-fold: true
+#| code-summary: "財務省の国債金利情報より"
+#| message: false
+"https://www.mof.go.jp/jgbs/reference/interest_rate/jgbcm.csv" %>% 
+  readr::read_csv(locale = readr::locale(encoding = "CP932"), skip = 1) %>% 
+  df_print()
+```
+
+　国債の利回りは5年経って約$0\%$なので、無リスク資産の利回りを$0\%$（利回りはほぼ得られない）と考えるとシャープレシオは下式のようになります。
+
+$$\mbox{シャープレシオ} = \frac{\mbox{リターンの平均値}}{\mbox{リスク（リターンの標準偏差）}}$$
+
+　リターンの平均値は、リスクとシャープレシオが分かれば下式で求められます。
+
+$$\mbox{リターンの平均値} = \mbox{シャープレシオ} \times \mbox{リスク（リターンの標準偏差）} + \mbox{無リスク資産の利回り}$$
 
 　  
 
 ## 練習問題 {.unnumbered}
+　（省略）
 
 　  
 
 ## 実際のデータで確認する {.unnumbered}
-　実際のデータではテキストと同じ言葉でリターンとリスクが公開されているわけではありません。証券会社などにより様々な表現がなされていますので、最初に整理しておきます。
-　
-　[投資信託の基礎知識](https://www.smbcnikko.co.jp/products/inv/toshin_lab/column/001.html)によれば  
-　  
+　実際のデータではテキストと同じ言葉でリターンとリスクが公開されているわけではありません。証券会社などにより様々な表現がなされていますので、最初に簡単に整理しておきます。
+
+　[投資信託の基礎知識](https://www.smbcnikko.co.jp/products/inv/toshin_lab/column/001.html)によれば
+
 　**利回り**とは
 
 >**投資金額に対する収益の割合**のことをいいます。この収益には「利息」だけでなく、投資商品を売却した場合に得られる**「売却損益」も含みます**。また、通常は1年間の「年利回り」のことを利回りと呼ぶことが多いです。
 
-　利回を数式で表すと下式になります。ただし、手数料や税金などは考慮していません。
+　利回りを数式で表すと下式になります。ただし、手数料や税金などは考慮していません。
 
 $$\mbox{利回り} = \frac{\mbox{分配金} + \mbox{売却益}}{\mbox{投資金額}} \times 100$$
 
@@ -88,351 +141,92 @@ $$\mbox{利回り} = \frac{\mbox{分配金} + \mbox{売却益}}{\mbox{投資金�
 > 一般的に、利率は、債券や預金に対して使われる言葉のため、**投資信託では利率とは言いません**。
 
 　SMBC日興証券では「**累積リターン**」という言葉を使っていますが、その定義は以下となっていますので利回りと等価といえます。
-　
+
 > 一定期間内における**分配金込み基準価額の騰落率**です。
 
 　一方、**騰落率**は
 
 > 騰落率とは、投資信託の**基準価額が、ある期間の間にどのくらい変動したか**を、パーセンテージで示します。例えば、基準価額10,000円の投資信託が1年後に11,000円に値上がりした場合の騰落率は10％です。
 
-　なので、利回りから分配金を除いた下式となります。利回りと同様に手数用や税金などは考慮していません。
+　式では下式となります。ただし、利回りと同様に手数料や税金などは考慮していません。
 
-$$\mbox{騰落率} = \frac{売却益}{投資金額} \times 100$$
+$$\mbox{騰落率} = \frac{\mbox{期末基準価額} - \mbox{期首基準価額}}{\mbox{期首基準価額}} \times 100$$
 
-　ところが、投信総合検索ライブラリーでは「騰落率」を以下のように定義しています。
+　ただし、投信総合検索ライブラリーでは「騰落率」を以下のように定義しています。
 
 > 期間別騰落率は、**分配金(課税前)をファンドへ再投資したものとみなして月末時点の修正した価額をもとに計算**＊しています。一方、利回りは、分配金込み基準価額の騰落率です。
 
-　具体的には[用語集](https://www.toushin.or.jp/words/keyword/2779/)に記載されているように下式で定義されています。
+　具体的には[用語集](https://www.toushin.or.jp/words/keyword/2779/)に記載されているように下式の定義となります。
 
 > (期末の基準価額+期中の分配金の合計)/期首の基準価額-1
 
-　この数式を整理すると菓子器のようになります。
+　この定義を整理すると下式になります。
 
 $$\frac{\mbox{期末準価額} + \mbox{期中分配金}}{\mbox{期首基準価額}} - 1 = \frac{\mbox{期中分配金} + \mbox{期末基準価額} - \mbox{期首基準価額}}{\mbox{期首基準価額}}$$
 
-　期末で売却したとすると$\mbox{期末基準価格} - \mbox|期首基準価格} = \mbox{売却益}$とみなせ、期首で投資したとすれば、騰落率は下式となり百分率をとれば「利回り」と同等であることが分かります。
+　期末で売却したとすると$\mbox{期末基準価格} - \mbox{期首基準価格} = \mbox{売却益}$とみなせ、期首で投資したとすれば、$\mbox{期首基準価格} = \mbox{投資金額}$となり投信総合検索ライブラリーでの騰落率は「利回り」と同等であることが分かります。
 
-$$\frac{分配金 + 売約益}{期首基準価額} = \frac{分配金 + 売約益}{投資金額}$$
+$$\frac{\mbox{分配金} + \mbox{売約益}}{\mbox{期首基準価額}} = \frac{\mbox{分配金} + \mbox{売約益}}{\mbox{投資金額}}$$
 
-　実際に同一銘柄を[投信総合ライブラリー](https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd=JP90C0008CH5)と[SMBC日興証券](https://fund2.smbcnikko.co.jp/smbc_nikko_fund/qsearch.exe?F=detail_kokunai1&KEY1=9C311125)で比較すると部分的に若干の差異があるものの騰落率と累積リターンが同一指標になっていることが分かります。
+　実際に同一銘柄を[投信総合ライブラリー](https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd=JP90C0008CH5)と[SMBC日興証券](https://fund2.smbcnikko.co.jp/smbc_nikko_fund/qsearch.exe?F=detail_kokunai1&KEY1=9C311125)で比較すると部分的に若干の差異が認められるものの騰落率と累積リターンが同一指標になっていることが分かります。
+
+　ただし、利回りや騰落率は一年間（期首と期末）の数値から求めていることに注意してください。リターンの平均値を知りたい場合は、騰落率ではなく前述したようにシャープレシオとリスク（標準偏差）から求める必要があります。近年の無リスク資産（国債）の利回りは、ほぼ$0\%$なので、これは省略しています。
+
+$$\mbox{リターンの平均値} = \mbox{シャープレシオ} \times \mbox{リスク}$$
 
 　  
 
 ### 投信総合検索ライブラリー {.unnumbered}
-　[投信総合検索ライブラリー](https://toushin-lib.fwg.ne.jp/FdsWeb/)では、運用情報から騰落率（このサイトではリターンに同じ）、リスク（標準偏差）、シャープレシオを同一表形式で掲載しているため、一度に3つの指標を取得することができます。
-
-
-　ここでは、「資産複合（バランス型）」の期間3年でのシャープレシオ上位5件の情報を取得しています。
+　[楽天証券](https://www.rakuten-sec.co.jp/nisa/tsumitate/products.html)で扱っているつみたてNISAのファンドのデータを[投信総合検索ライブラリー](https://toushin-lib.fwg.ne.jp/FdsWeb/)から取得して実際のデータがどのようになっているかをみます。
+　  
+　取得しているファンドは下表の通りです。
 ```{r}
-url <- "https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd="
-code <- c("JP90C000BE38", "JP90C0002LP2", "JP90C0002LR8", "JP90C0000R71",
-          "JP90C000EMH6",
-          "JP90C0002H06", "JP90C0009E44", "JP90C0007GF2", "JP90C0007GD7",
-          "JP90C000A1B6",
-          "JP90C000GKC6", "JP90C000FCD3", "JP3047260009", "JP90C000FFX4",
-          "JP90C000FN66")
-
-xpath <- c('//*[@id="tab_content2"]/div/div[2]/div[1]/div[1]/div/table',
-           '//*[@id="tab_content2"]/div/div[2]/div[1]/div[2]/div/table',
-           '//*[@id="tab_content2"]/div/div[2]/div[1]/div[3]/div/table')
-
-df <- tidyr::crossing(url, code, xpath) %>% 
-  dplyr::mutate(url = paste0(url, code)) %>% 
-  purrr::pmap_df(.f = function (url, xpath, code) {
-    xml2::read_html(url) %>% 
-      rvest::html_element(xpath = xpath) %>% 
-      rvest::html_table(header = FALSE) %>% 
-      dplyr::slice(-(1:2)) %>% 
-      dplyr::mutate(code = code)
-  })
-
-df %>% 
-  dplyr::select(-4) %>% 
-  dplyr::mutate(X3 = stringr::str_remove(X3, "%"),
-                X3 = dplyr::na_if(X3, "-"),
-                X3 = as.numeric(X3),
-                X2 = forcats::fct_inorder(X2)) %>% 
-  tidyr::pivot_wider(names_from = X1, values_from = X3) %>% 
-  dplyr::select(code, 期間 = X2, dplyr::everything()) %>% 
-  # print()
-  dplyr::filter(期間 %in% c("6ヶ月", "1年", "3年", "5年")) %>% 
-  # print()
-  ggplot2::ggplot(ggplot2::aes(x = `リスク（標準偏差）`, y = 騰落率,
-                  color = code)) + 
-    ggplot2::geom_abline(slope = 1, intercept = 0, size = 0.2) + 
-    ggplot2::geom_point() + 
-    # ggplot2::coord_fixed() +
-    ggplot2::facet_wrap(~ 期間)
-
-```
-
-
-　基本情報タブから購入時手数料、信託財産保留額、運用管理費用を取得する
-```{r}
-#| code-summary: "基本情報を取得する"
-url <- "https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd="
-code <- c("JP90C000BE38", "JP90C0002LP2", "JP90C0002LR8", "JP90C0000R71",
-          "JP90C000EMH6")
-xpath <- '//*[@id="tab_content1"]/div/div[1]/div/div[1]/table'
-
-xml2::read_html(paste0(url, "JP90C000EMH6")) %>%
-  rvest::html_element(xpath = xpath) %>% 
-  rvest::html_table()
-
-tidyr::crossing(url, code, xpath) %>% 
-  dplyr::mutate(url = paste0(url, code)) %>% 
-  purrr::pmap_df(.f = function (url, xpath, code) {
-    xml2::read_html(url) %>% 
-      rvest::html_element(xpath = xpath) %>% 
-      rvest::html_table(header = TRUE) %>%
-      # dplyr::slice(-1) %>% 
-      dplyr::mutate(code = code)
-  })
-```
-
-
-
-### SMBC日興証券 {.unnumbered}
-　SMBC日興証券は[取扱ファンド一覧](https://fund2.smbcnikko.co.jp/smbc_nikko_fund/qsearch.exe?F=list_kokunai&KEY3=101)からカテゴリごとに商品を選択できますが、リターン、シャープレシオの期間が異なっています。
-```{r}
-url <- "https://fund2.smbcnikko.co.jp/smbc_nikko_fund/qsearch.exe?F=detail_kokunai1&KEY1="
-code <- c("9C311125", "39312149", "9K31419A", "32315984", "4931112B",
-          "3231203C", "0431218A", "39312149", "42311081", "79314144")
+#| code-fold: true
+#| code-summary: "商品種別ごとのファンド数"
+#| message: false
+"./data/つみたてNISA_基本情報_2022-06-12.csv" %>%
+  read.csv() %>%
+  dplyr::group_by(インデックス型, type) %>%
+  dplyr::summarise(n = n()) %>%
+  tidyr::pivot_wider(names_from = インデックス型, values_from = n) %>% 
+  df_print()
 ```
 
 ```{r}
-#| code-summary: "累積リターン（利回り）"
-xpath <- '//*[@id="main"]/section/section[3]/section[2]/div/div[1]/div/table'
+#| include: false
+#| code-summary: "追加型/内外/株式タイプのファンド一覧"
+code_list <- "./data/つみたてNISA_基本情報_2022-06-12.csv" %>%
+  read.csv() %>%
+  dplyr::filter(type == "追加型/内外/株式") %>%
+  dplyr::select(code, fund, インデックス型)
 
-return <- tidyr::crossing(url, code) %>% 
-  dplyr::mutate(site = paste0(url, code)) %>% 
-  dplyr::select(code, site) %>% 
-  purrr::pmap_df(.f = function (code, site) {
-    xml2::read_html(site) %>% 
-      rvest::html_element(xpath = xpath) %>% 
-      rvest::html_table(header = FALSE) %>% 
-      dplyr::slice(-1) %>% 
-      dplyr::mutate(code = code)
-  })
-
-return %>% 
-  dplyr::select(-(X5:X8)) %>% 
-      tidyr::unite("Y1", X1, X2) %>% 
-  tidyr::unite("Y2", X3, X4) %>% 
-      tidyr::pivot_longer(cols = dplyr::starts_with("Y"),
-                          names_to = "name", values_to = "value") %>% 
-  tidyr::separate(value, into = c("期間", "value"), sep = "_") %>% 
-  dplyr::mutate(value = stringr::str_remove_all(value, pattern = "[+%]"),
-                value = dplyr::na_if(value, "--"),
-                value = as.numeric(value)) %>% 
-  dplyr::select(-name) %>% 
-  tidyr::pivot_wider(names_from = 期間, values_from = value)
+code_list %>% 
+  df_print()
 ```
-
-
+　
+　この中から「追加型/内外/株式」のリスクの平均値・リターン遷移をグラフにします。どのファンドも短期間ではリターンの平均値が非常に悪いことが分かります。
 ```{r}
-#| code-summary: "シャープレシオ"
-xpath <- '//*[@id="main"]/section/section[3]/section[2]/div/div[2]/div/table'
-
-sr <- tidyr::crossing(url, code) %>% 
-  dplyr::mutate(site = paste0(url, code)) %>% 
-  dplyr::select(code, site) %>% 
-  purrr::pmap_df(.f = function (code, site) {
-    xml2::read_html(site) %>% 
-      rvest::html_element(xpath = xpath) %>% 
-      rvest::html_table(header = FALSE) %>% 
-      dplyr::slice(-1) %>% 
-      dplyr::mutate(code = code)
-  })
-
-sr %>% 
-  dplyr::rename(期間 = X1, SR = X2, SD = X3, 基準日 = X4) %>% 
-  dplyr::mutate(SR = dplyr::na_if(SR, "--"), SD = dplyr::na_if(SD, "--")) %>% 
-  dplyr::mutate(SR = as.numeric(SR), SD = as.numeric(SD)) %>% 
-  dplyr::select(code, 期間, SR, SD, 基準日)
-```
-
-
-```{r}
-#| code-summary: "決算実績"
-xpath = '//*[@id="main"]/section/section[3]/section[3]/div/div[2]/div/table'
-
-result <- tidyr::crossing(url, code) %>% 
-  dplyr::mutate(site = paste0(url, code)) %>% 
-  dplyr::select(code, site) %>% 
-  purrr::pmap_df(.f = function (code, site) {
-    xml2::read_html(site) %>% 
-      rvest::html_element(xpath = xpath) %>% 
-      rvest::html_table(header = FALSE) %>% 
-      dplyr::mutate(code = code) %>% 
-      dplyr::slice(-(1:2))
-  })
-
-result %>% 
-  dplyr::mutate(dplyr::across(.cols = X1:X4, 
-                              ~ dplyr::na_if(.x, "--")))
+#| code-fold: true
+#| message: false
+#| warning: false
+#| code-summary: "追加型/内外/株式タイプのリスク・リターン遷移"
+"./data/つみたてNISA_運用情報_2022-06-12.csv" %>%
+  readr::read_csv() %>%
+  dplyr::mutate(期間 = forcats::fct_inorder(期間)) %>%
+  dplyr::left_join(code_list, by = "code") %>%
+  dplyr::filter(code %in% code_list$code) %>%
+  # dplyr::filter(期間 %in% c("6ヶ月", "1年", "3年", "5年")) %>%
+  dplyr::mutate(リターンの平均値 = シャープレシオ * `リスク（標準偏差）`) %>% 
+  dplyr::mutate(label = paste0(fundcode, "(", 期間, "/", シャープレシオ, ")")) %>%
+  ggplot2::ggplot(ggplot2::aes(x = `リスク（標準偏差）`, y = リターンの平均値,
+                  color = fundcode, shape = インデックス型, label = label)) +
+    ggplot2::geom_abline(slope = 0, intercept = 0,
+                         size = 0.2, linetype = "dashed") +
+    ggplot2::geom_point() +
+    ggplot2::geom_path(linetype = "dotted") + 
+    ggrepel::geom_text_repel(size = 2.5)
 ```
 
 　  
-
-### 無リスクの資産 {.unnumbered}
-　テキストでのシャープレシオは無リスクの資産として国債のリターン（利回り）を使っています。
-　[国債金利情報](https://www.mof.go.jp/jgbs/reference/interest_rate/)によるとリターンは下表のようになっています。なお、このファイルは`read.csv`関数では読み込めませんので**`readr`**パッケージの`readr::read_csv()`関数を用いて読み込んでいます。`
-```{r}
-#| code-fold: true
-#| code-summary: "国債の利回り"
-"https://www.mof.go.jp/jgbs/reference/interest_rate/jgbcm.csv" %>% 
-  readr::read_csv(locale = readr::locale(encoding = "CP932"), skip = 1)
-```
-
-
-### その他 {.unnumbered}
-
-[三菱UFJモルガン・スタンレー証券商品一覧](https://www.sc.mufg.jp/products/trust/ranking/index.html)
-
-[大和証券 投資信託](https://www.daiwa.jp/products/fund/?iid=subnav_fund)
-
-
-#### 楽天証券＆投信協会
-
-```{r}
-#| eval: false
-#| include: false
-# つみたてNISAの一覧取得（楽天証券）
-url <- "https://www.rakuten-sec.co.jp/nisa/tsumitate/products.html"
-xpath <- '//*[@id="str-main"]/div[4]/table'
-
-nisa_id <- xml2::read_html(url) %>% 
-  rvest::html_element(xpath = xpath) %>% 
-  rvest::html_nodes("a") %>% 
-  rvest::html_attr("href") %>% 
-  as.data.frame() %>% 
-  dplyr::rename(id = 1) %>% 
-  dplyr::mutate(id = stringr::str_sub(id, start = 22))
-
-
-nisa_name <- xml2::read_html(url) %>% 
-  rvest::html_element(xpath = xpath) %>% 
-  rvest::html_table()
-
-nisa_id %>% 
-  dplyr::bind_cols(nisa_name) # %>% 
-  # readr::write_excel_csv("./data/NISA.csv")
-```
-
-```{r}
-#| code-summary: "基本情報を取得する"
-url <- "https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd="
-code <- nisa_id$id
-xpath <- '//*[@id="tab_content1"]/div/div[1]/div/div[1]/table'
-
-xml2::read_html(paste0(url, "JP90C000EMH6")) %>%
-  rvest::html_element(xpath = xpath) %>% 
-  rvest::html_table()
-
-nisa_info <- tidyr::crossing(url, code, xpath) %>% 
-  dplyr::mutate(url = paste0(url, code)) %>% 
-  purrr::pmap_df(.f = function (url, xpath, code) {
-    xml2::read_html(url) %>% 
-      rvest::html_element(xpath = xpath) %>% 
-      rvest::html_table(header = TRUE) %>%
-      # dplyr::slice(-1) %>% 
-      dplyr::mutate(code = code)
-  })
-
-nisa_info # %>% 
-  # readr::write_excel_csv("./data/NISA_手数料.csv")
-```
-
-```{r}
-#| code-summary: "つみたてNISA運用情報"
-xpath <- c('//*[@id="tab_content2"]/div/div[2]/div[1]/div[1]/div/table',
-           '//*[@id="tab_content2"]/div/div[2]/div[1]/div[2]/div/table',
-           '//*[@id="tab_content2"]/div/div[2]/div[1]/div[3]/div/table')
-
-df <- tidyr::crossing(url, code, xpath) %>% 
-  dplyr::mutate(url = paste0(url, code)) %>% 
-  purrr::pmap_df(.f = function (url, xpath, code) {
-    xml2::read_html(url) %>% 
-      rvest::html_element(xpath = xpath) %>% 
-      rvest::html_table(header = FALSE) %>% 
-      dplyr::slice(-(1:2)) %>% 
-      dplyr::mutate(code = code)
-  })
-
-df %>% 
-  dplyr::select(-4) %>% 
-  dplyr::mutate(X3 = stringr::str_remove(X3, "%"),
-                X3 = dplyr::na_if(X3, "-"),
-                X3 = as.numeric(X3),
-                X2 = forcats::fct_inorder(X2)) %>% 
-  tidyr::pivot_wider(names_from = X1, values_from = X3) # %>% 
-  # readr::write_excel_csv("./data/NISA_RRS.csv")
-```
-
-#### 楽天証券
-
-```{r}
-#| eval: false
-#| include: false
-# つみたてNISAの一覧取得（楽天証券）
-
-url <- "https://www.rakuten-sec.co.jp/nisa/tsumitate/products.html"
-xpath <- '//*[@id="str-main"]/div[4]/table'
-
-nisa_id <- xml2::read_html(url) %>% 
-  rvest::html_element(xpath = xpath) %>% 
-  rvest::html_nodes("a") %>% 
-  rvest::html_attr("href") %>% 
-  as.data.frame() %>% 
-  dplyr::rename(id = 1) %>% 
-  dplyr::mutate(id = stringr::str_sub(id, start = 22))
-
-
-nisa_name <- xml2::read_html(url) %>% 
-  rvest::html_element(xpath = xpath) %>% 
-  rvest::html_table()
-
-nisa_id %>% 
-  dplyr::bind_cols(nisa_name) # %>% 
-  # readr::write_excel_csv("./data/NISA.csv")
-```
-
-
-```{r}
-#| eval: false
-#| include: false
-#| code-summary: "つみたてNISA運用情報（接続拒否か？）"
-url <- "https://www.rakuten-sec.co.jp/web/fund/detail/?ID="
-xpath <- '//*[@id="infoPage"]/div[6]/div/table'
-code <- nisa_id$id
-
-xml2::read_html(paste0(url, "JP90C0006LC1")) %>%
-  rvest::html_element(xpath = xpath) %>%
-  rvest::html_table(header = TRUE)
-
-code <- code[1:10]
-
-# 連続するとサイト側で拒否されている模様
-df <- tidyr::crossing(url, code, xpath) %>% 
-  dplyr::mutate(url = paste0(url, code)) %>% 
-  purrr::pmap_df(.f = function (url, xpath, code) {
-    xml2::read_html(url) %>% 
-      rvest::html_element(xpath = xpath) %>% 
-      rvest::html_table(header = TRUE) %>% 
-      dplyr::mutate(code = code)
-      Sys.sleep(5)
-  })
-
-# df %>% 
-#   dplyr::select(-4) %>% 
-#   dplyr::mutate(X3 = stringr::str_remove(X3, "%"),
-#                 X3 = dplyr::na_if(X3, "-"),
-#                 X3 = as.numeric(X3),
-#                 X2 = forcats::fct_inorder(X2)) %>% 
-#   tidyr::pivot_wider(names_from = X1, values_from = X3) # %>% 
-#   # readr::write_excel_csv("./data/NISA_RRS.csv")
-```
 
 ---
