@@ -62,13 +62,15 @@ risk %>%
   ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン, label = 商品)) +
     ggplot2::geom_point() +
     ggplot2::geom_smooth(se = FALSE, method = "lm", size = 0.5) +
-    ggrepel::geom_text_repel()
+    ggrepel::geom_text_repel() + 
+    ggplot2::lims(x = c(0, 16), y = c(0, 16))
+
 ```
 
 　
 
 ## 金融商品の優劣の測り方
-　前述の商品A〜商品Dのうち、どの商品が最も優れているでしょうか？実は、この四商品で比較する限り優劣はありません。
+　前述の商品A〜商品Dの四商品を比較する限り、優劣はありません。では、下図の商品N, P, Qは四商品（A〜D）と比べてどれが優れているのでしょうか？
 ```{r}
 #| echo: false
 #| code-summary: "リスクとリターンの関係"
@@ -81,15 +83,23 @@ return <- リターン %>%
   tidyr::pivot_longer(cols = dplyr::everything(),
                       names_to = "商品", values_to = "リターン")
 
-risk %>%
+rr_lm <- risk %>%
   dplyr::left_join(return, by = "商品") %>%
+  with(lm(リターン ~ リスク))
+
+tibble::tibble(商品 = c("A", "B", "C", "D", "N", "P", "Q"),
+               リスク = c(14.7, 6.6, 2.3, 2.1, 0, 10.5, 6.4),
+               リターン = c(14.2, 8.5, 5.7, 5.8, rr_lm$coefficients[1], 14.3, 5.0)) %>% 
   ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン, label = 商品)) +
+    ggplot2::geom_abline(slope = rr_lm$coefficients[2], intercept = rr_lm$coefficients[1],
+                         colour = "cornflowerblue") +
     ggplot2::geom_point() +
-    ggplot2::geom_smooth(se = FALSE, method = "lm", size = 0.5) +
-    ggrepel::geom_text_repel()
+    ggrepel::geom_text_repel() + 
+    ggplot2::lims(x = c(0, 16), y = c(0, 16))
+
 ```
 　  
-
+　
 
 　  
 
@@ -112,9 +122,9 @@ $$\mbox{シャープレシオ} = \frac{\mbox{リターンの平均値} - \mbox{�
 
 $$\mbox{シャープレシオ} = \frac{\mbox{リターンの平均値}}{\mbox{リスク（リターンの標準偏差）}}$$
 
-　リターンの平均値は、リスクとシャープレシオが分かれば下式で求められます。
+　リターンの平均値は、リスク（リターンの標準偏差）とシャープレシオが分かれば下式で求められます。
 
-$$\mbox{リターンの平均値} = \mbox{シャープレシオ} \times \mbox{リスク（リターンの標準偏差）} + \mbox{無リスク資産の利回り}$$
+$$\mbox{リターンの平均値} = \mbox{リスク} \times \mbox{シャープレシオ} + \mbox{無リスク資産の利回り}$$
 
 　  
 
@@ -203,7 +213,6 @@ code_list <- "./data/つみたてNISA_基本情報_2022-06-12.csv" %>%
 code_list %>% 
   df_print()
 ```
-　
 　この中から「追加型/内外/株式」のリスクの平均値・リターン遷移をグラフにします。どのファンドも短期間ではリターンの平均値が非常に悪いことが分かります。
 ```{r}
 #| code-fold: true
@@ -226,6 +235,31 @@ code_list %>%
     ggplot2::geom_path(linetype = "dotted") + 
     ggrepel::geom_text_repel(size = 2.5)
 ```
+
+```{r}
+#| include: false
+#| eval: false
+#| code-summary: "演習用データ作成"
+
+"./data/つみたてNISA_運用情報_2022-06-12.csv" %>% 
+  read_csv() %>% 
+  dplyr::filter(期間 == "3年") %>% 
+  tidyr::drop_na(騰落率) %>% 
+  dplyr::sample_n(size = 10) %>% 
+  readr::write_excel_csv("./data/sample_1.csv")
+
+"./data/つみたてNISA_運用情報_2022-06-12.csv" %>%
+  readr::read_csv() %>%
+  dplyr::mutate(期間 = forcats::fct_inorder(期間)) %>%
+  dplyr::left_join(code_list, by = "code") %>%
+  dplyr::filter(code %in% code_list$code) %>%
+  # dplyr::filter(期間 %in% c("6ヶ月", "1年", "3年", "5年")) %>%
+  dplyr::mutate(リターンの平均値 = シャープレシオ * `リスク（標準偏差）`) %>% 
+  readr::write_excel_csv("./data/sample_2.csv")
+
+```
+
+
 
 　  
 
