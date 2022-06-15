@@ -85,53 +85,13 @@ source("./R/setup.R")
 ## 実際の株価で計算してみる {.unnumbered}
 
 　実際に[株探](https://kabutan.jp/)というサイトから某社の月次株価一覧を取得して月次平均収益率を計算してみます。  
-
 ```{r}
-#| code-summary: "サイトから株価データを取得する"
 #| code-fold: true
+#| code-summary: "サイトから取得した株価データ"
 #| message: false
-#| warning: false
-library(tidyverse)
-library(rvest)
-
-site_url <- "https://kabutan.jp/stock/kabuka?code=7203&ashi=mon&page="
-pages <- c(1:5)
-xpath <- '//*[@id="stock_kabuka_table"]/table[2]'
-
-stock <- tidyr::crossing(site_url, pages) %>% 
-  dplyr::mutate(url = paste0(site_url, pages)) %>% 
-  dplyr::pull(url) %>% 
-  purrr::map_df(.f = function(.x) {
-    xml2::read_html(.x) %>% 
-      rvest::html_element(xpath = xpath) %>%
-      rvest::html_table(header = FALSE) %>%
-      dplyr::slice(-1)
-  }) %>% 
-  dplyr::mutate(dplyr::across(.col = dplyr::everything(),
-                              .f = readr::parse_guess)) %>% 
-  dplyr::mutate(X1 = lubridate::as_date(X1)) %>% 
-  dplyr::rename(`日付` = X1, `始値` = X2, `高値` = X3, `安値` = X4,
-                `終値` = X5, `前月比` = X6, `月次収益率` = X7, `売買高` = X8)
-
-stock %>% 
-  df_print()
-```
-```{r}
-#| code-summary: "以前のやり方"
-#| include: false
-#| eval: false
-stock <- purrr::map2(site_url, pages, ~ paste0(.x, .y)) %>%
-  purrr::map2_df(pages, .f = function(.x, .y) {
-    xml2::read_html(.x) %>% 
-      rvest::html_element(xpath = xpath) %>%
-      rvest::html_table(header = FALSE) %>%
-      dplyr::slice(-1)
-  }
-) %>% 
-  dplyr::mutate_all(readr::parse_guess) %>% 
-  dplyr::mutate(X1 = lubridate::as_date(X1)) %>% 
-  dplyr::rename(`日付` = X1, `始値` = X2, `高値` = X3, `安値` = X4,
-                `終値` = X5, `前月比` = X6, `月次収益率` = X7, `売買高` = X8)
+stock <- "./data/株価の月次推移_2022-06-15.csv" %>% 
+  read_csv()
+stock %>% df_print()
 ```
 
 　  
@@ -209,93 +169,28 @@ stock %>%
 ### 複数の株を比較する
 
 　複数の同業種銘柄を比較してみます。どの株が儲かりそうでしょうか？
-
-```{r}
-#| code-summary: "6銘柄の月次平均収益率と標準偏差を可視化する"
-#| include: false
-#| eval: false
-#| code-fold: true
-#| warning: false
-#| message: false
-#| cache: false
-site_url1 <- "https://kabutan.jp/stock/kabuka?code="
-site_url2 <- "&ashi=mon&page="
-pages <- c(1:5)
-xpath <- '//*[@id="stock_kabuka_table"]/table[2]'
-code = c(7201, 7203, 7211, 7261, 7267, 7270)
-
-url1 <- purrr::map2_chr(site_url1, code, ~ paste0(.x, .y))
-url2 <- purrr::map2_chr(site_url2, pages, ~ paste0(.x, .y))
-
-
-stock_m <- expand.grid(url1, url2) %>% 
-  dplyr::mutate(url = paste0(Var1, Var2)) %>% 
-  dplyr::pull(url) %>% 
-  purrr::map_df(.f = function(.x) {
-    xml2::read_html(.x) %>% 
-      rvest::html_element(xpath = xpath) %>%
-      rvest::html_table(header = FALSE) %>%
-      dplyr::slice(-1) %>% 
-      dplyr::mutate(url = .x)
-    } 
-  )
-
-stock_m %>% 
-  dplyr::mutate(dplyr::across(.fns = readr::parse_guess)) %>% 
-  dplyr::mutate(X1 = lubridate::as_date(X1),
-                year = lubridate::year(X1)) %>% 
-  dplyr::mutate(code = stringr::str_sub(url, start = 38, end = -17)) %>% 
-  dplyr::select(-url) %>% 
-  dplyr::arrange(code, X1) %>% 
-  dplyr::filter(year >= 2010 & year <= 2021) %>% 
-  dplyr::group_by(code, year) %>% 
-  dplyr::summarise(mean = mean(X7), sd = sd(X7)) %>% 
-  ggplot2::ggplot(ggplot2::aes(x = year, y = mean, fill = code)) + 
-    ggplot2::geom_bar(stat = "identity", position = "dodge") + 
-    ggplot2::geom_errorbar(ggplot2::aes(ymax = mean + sd,
-                                        ymin = mean - sd),
-                           position = "dodge", width = 0.5, size = 0.25) + 
-    ggplot2::facet_wrap(~ code)
-```
-
 ```{r}
 #| code-summary: "6銘柄の月次平均収益率と標準偏差を可視化する（改良板）"
-#| include: false
-#| eval: false
 #| code-fold: true
 #| warning: false
 #| message: false
 #| cache: false
-url1 <- "https://kabutan.jp/stock/kabuka?code="
-url2 <- "&ashi=mon&page="
-pages <- c(1:5)
-xpath <- '//*[@id="stock_kabuka_table"]/table[2]'
-code = c(7201, 7203, 7211, 7261, 7267, 7270)
 
-site <- expand.grid(url1, code, url2, pages) %>% 
-  dplyr::mutate(url = paste0(Var1, Var2, Var3, Var4),
-                code = Var2, page = Var4) %>% 
-  dplyr::arrange(code, page)
 
-stock_n <- purrr::map2_df(.x = site$url, .y = site$code,
-                          .f = function(.x, .y) {
-  xml2::read_html(.x) %>% 
-    rvest::html_element(xpath = xpath) %>%
-    rvest::html_table(header = FALSE) %>%
-    dplyr::slice(-1) %>% 
-    dplyr::mutate(code = .y)
-  }
-)
+stock_n <- "./data/メーカー６社の株価の月次推移_2022-06-15.csv" %>% 
+  read_csv()
+
+stock_n %>% df_print()
 
 stock_n %>% 
   dplyr::mutate(dplyr::across(.cols = tidyselect::starts_with("X"),
                               .fns = readr::parse_guess)) %>% 
-  dplyr::mutate(date = lubridate::as_date(X1),
+  dplyr::mutate(date = lubridate::as_date(日付),
                 year = lubridate::year(date),
                 code = as.character(code)) %>% 
   dplyr::filter(year >= 2010 & year <= 2021) %>% 
   dplyr::group_by(code, year) %>% 
-  dplyr::summarise(mean = mean(X7), sd = sd(X7)) %>% 
+  dplyr::summarise(mean = mean(`前月比％`), sd = sd(`前月比％`)) %>% 
   # print() %>% 
   ggplot2::ggplot(ggplot2::aes(x = year, y = mean, fill = code)) + 
     ggplot2::geom_bar(stat = "identity", position = "dodge") + 
@@ -306,42 +201,44 @@ stock_n %>%
 ```
 
 ```{r}
+#| include: false
+#| eval: false
 #| code-summary: "6銘柄の月次平均収益率と標準偏差を可視化する"
 #| code-fold: true
 #| warning: false
 #| message: false
 #| cache: false
-url1 <- "https://kabutan.jp/stock/kabuka?code="
-url2 <- "&ashi=mon&page="
-pages <- c(1:5)
-xpath <- '//*[@id="stock_kabuka_table"]/table[2]'
-code = c(7201, 7203, 7211, 7261, 7267, 7270)
-
-tidyr::crossing(code, pages) %>% 
-  dplyr::mutate(url = paste0(url1, code, url2, pages)) %>% 
-  # dplyr::select(-pages) %>% 
-  purrr::pmap_df(.f = function(url, code, pages) {
-    xml2::read_html(url) %>% 
-      rvest::html_element(xpath = xpath) %>%
-      rvest::html_table(header = FALSE) %>%
-      dplyr::slice(-1) %>% 
-      dplyr::mutate(code = code, page = pages)
-  }) %>% 
-  dplyr::mutate(dplyr::across(.cols = tidyselect::starts_with("X"),
-                              .fns = readr::parse_guess)) %>% 
-  dplyr::mutate(date = lubridate::as_date(X1),
-                year = lubridate::year(date),
-                code = as.character(code)) %>% 
-  dplyr::filter(year >= 2010 & year <= 2021) %>% 
-  dplyr::group_by(code, year) %>% 
-  dplyr::summarise(mean = mean(X7), sd = sd(X7)) %>% 
-  ggplot2::ggplot(ggplot2::aes(x = year, y = mean, fill = code)) + 
-    ggplot2::geom_hline(yintercept = 0, colour = "gray") + 
-    ggplot2::geom_bar(stat = "identity", position = "dodge") + 
-    ggplot2::geom_errorbar(ggplot2::aes(ymax = mean + sd,
-                                        ymin = mean - sd),
-                           position = "dodge", width = 0.5, size = 0.25) + 
-    ggplot2::facet_wrap(~ code)
+# url1 <- "https://kabutan.jp/stock/kabuka?code="
+# url2 <- "&ashi=mon&page="
+# pages <- c(1:5)
+# xpath <- '//*[@id="stock_kabuka_table"]/table[2]'
+# code = c(7201, 7203, 7211, 7261, 7267, 7270)
+# 
+# tidyr::crossing(code, pages) %>% 
+#   dplyr::mutate(url = paste0(url1, code, url2, pages)) %>% 
+#   # dplyr::select(-pages) %>% 
+#   purrr::pmap_df(.f = function(url, code, pages) {
+#     xml2::read_html(url) %>% 
+#       rvest::html_element(xpath = xpath) %>%
+#       rvest::html_table(header = FALSE) %>%
+#       dplyr::slice(-1) %>% 
+#       dplyr::mutate(code = code, page = pages)
+#   }) %>% 
+#   dplyr::mutate(dplyr::across(.cols = tidyselect::starts_with("X"),
+#                               .fns = readr::parse_guess)) %>% 
+#   dplyr::mutate(date = lubridate::as_date(X1),
+#                 year = lubridate::year(date),
+#                 code = as.character(code)) %>% 
+#   dplyr::filter(year >= 2010 & year <= 2021) %>% 
+#   dplyr::group_by(code, year) %>% 
+#   dplyr::summarise(mean = mean(X7), sd = sd(X7)) %>% 
+#   ggplot2::ggplot(ggplot2::aes(x = year, y = mean, fill = code)) + 
+#     ggplot2::geom_hline(yintercept = 0, colour = "gray") + 
+#     ggplot2::geom_bar(stat = "identity", position = "dodge") + 
+#     ggplot2::geom_errorbar(ggplot2::aes(ymax = mean + sd,
+#                                         ymin = mean - sd),
+#                            position = "dodge", width = 0.5, size = 0.25) + 
+#     ggplot2::facet_wrap(~ code)
 ```
 
 ---
