@@ -240,8 +240,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 　</p>
 </section><section id="平均収益率だけでは優良な投資かどうかは判断できない" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="平均収益率だけでは優良な投資かどうかは判断できない">
 <span class="header-section-number">5.2</span> 平均収益率だけでは、優良な投資かどうかは判断できない</h2>
+<p>　1980年台の株価の月次収益率です。年数の頭に<code>X</code>がついているのは、Rでは変数名は英数字から始まらなければならないからです。</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/P56_ 図表5-3.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>図表5-3 株の月次平均収益率</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/P56_ 図表5-3.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
@@ -253,8 +254,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
+<p>　<br>
+　図表5-2は株の月次平均収益率ですので、図表5-3の株の月次収益率から簡単に計算することができます。</p>
 <div class="cell">
-<details open=""><summary>月次平均収益率を求める</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/P56_ 図表5-3.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>図表5-2 株の月次平均収益率</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/P56_ 図表5-3.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarise_if</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">mean</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -268,8 +271,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
+<p>　<br>
+　同様に図表5-4の標準偏差（S.D）も図表5-3から求めることができます。</p>
 <div class="cell">
-<details open=""><summary>月次平均収益率の標準偏差を求める</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/P56_ 図表5-3.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>図表5-3 月次平均収益率の標準偏差</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/P56_ 図表5-3.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarise_if</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">SD</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -283,12 +288,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
+<p>　<br>
+この二つの統計量（平均値、標準偏差）から月次の収益率はどの程度の範囲になるのかを可視化したものが下図です。テキストのように1981年の月次収益率は<span class="math inline">\(2.46 \pm 9.11\%\)</span>の範囲になることは普通に考えるべきというのが分かります。</p>
+<p>::: {.cell code^fold=‘true’}</p>
+<details open=""><summary>月次平均収益率と標準偏差を可視化する</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/P56_ 図表5-3.csv"</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">月</span>, names_to <span class="op">=</span> <span class="st">"年"</span>, values_to <span class="op">=</span> <span class="st">"月次収益率"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">年</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>月次平均収益率 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">月次収益率</span><span class="op">)</span>,
+                   標準偏差 <span class="op">=</span> <span class="fu">SD</span><span class="op">(</span><span class="va">月次収益率</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">年</span>, y <span class="op">=</span> <span class="va">月次平均収益率</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymax <span class="op">=</span> <span class="va">月次平均収益率</span> <span class="op">+</span> <span class="va">標準偏差</span>,
+                                        ymin <span class="op">=</span> <span class="va">月次平均収益率</span> <span class="op">-</span> <span class="va">標準偏差</span><span class="op">)</span>,
+                           position <span class="op">=</span> <span class="st">"dodge"</span>, width <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter05_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<p>:::</p>
 <p>　</p>
 </section><section id="ボラリティが意味するところ" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="ボラリティが意味するところ">
 <span class="header-section-number">5.3</span> ボラリティが意味するところ</h2>
 <p>　ボラリティ（予想変動率）とは標準偏差、つまり平均値からのブレ（バラツキ）のことです。例えば1981年の月次平均収益率は<span class="math inline">\(2.46\%\)</span>、標準偏差は<span class="math inline">\(9.11\%\)</span>なので、概ね下図のマゼンタ色のラインの間で変動していると想定できます。</p>
 <div class="cell">
-<details open=""><summary>1981年の月次収益率</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/P56_ 図表5-3.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>1981年の月次収益率</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/P56_ 図表5-3.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>月 <span class="op">=</span> <span class="fu">forcats</span><span class="fu">::</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_inorder</a></span><span class="op">(</span><span class="va">月</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">X1981年</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -306,7 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section><section id="実際の株価で計算してみる" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="実際の株価で計算してみる">実際の株価で計算してみる</h2>
 <p>　実際に<a href="https://kabutan.jp/">株探</a>というサイトから某社の月次株価一覧を取得して月次平均収益率を計算してみます。</p>
 <div class="cell">
-<details><summary>サイトから取得した株価データ</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock</span> <span class="op">&lt;-</span> <span class="st">"./data/株価の月次推移_2022-06-15.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>サイトから取得した株価データ</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock</span> <span class="op">&lt;-</span> <span class="st">"./data/株価の月次推移_2022-06-15.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu">read_csv</span><span class="op">(</span><span class="op">)</span>
 <span class="va">stock</span> <span class="op">%&gt;%</span> <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
@@ -321,7 +344,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>　<br>
 　月次収益率の十二ヶ月平均が月次平均収益率になりますので、データがそろっている年の月次平均収益率と標準偏差を算出します。</p>
 <div class="cell">
-<details><summary>月次平均収益率と標準偏差を求める</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock</span> <span class="op">%&gt;%</span> 
+<details><summary>月次平均収益率と標準偏差を求める</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>年 <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">日付</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">年</span> <span class="op">&gt;=</span> <span class="fl">2010</span> <span class="op">&amp;</span> <span class="va">年</span> <span class="op">&lt;=</span> <span class="fl">2021</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">年</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -341,7 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>　<br>
 　上記を可視化します。</p>
 <div class="cell">
-<details><summary>月次平均収益率と標準偏差を可視化する</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock</span> <span class="op">%&gt;%</span> 
+<details><summary>月次平均収益率と標準偏差を可視化する</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>年 <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">日付</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">年</span> <span class="op">&gt;=</span> <span class="fl">2010</span> <span class="op">&amp;</span> <span class="va">年</span> <span class="op">&lt;=</span> <span class="fl">2021</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">年</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -360,7 +383,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>　<br>
 　月次平均収益率だけを見ていても儲けられる株かどうかの判断が難しいので、参考までに隔月の終値の変動を可視化します。</p>
 <div class="cell">
-<details><summary>終値の変動を可視化する</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock</span> <span class="op">%&gt;%</span> 
+<details><summary>終値の変動を可視化する</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock</span> <span class="op">%&gt;%</span> 
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">日付</span>, y <span class="op">=</span> <span class="va">終値</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
@@ -368,7 +391,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<details><summary>直近三年の月次収益率の変動を可視化する</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock</span> <span class="op">%&gt;%</span> 
+<details><summary>直近三年の月次収益率の変動を可視化する</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>年 <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">日付</span><span class="op">)</span>, 月 <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">日付</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">年</span> <span class="op">&gt;=</span> <span class="fl">2019</span> <span class="op">&amp;</span> <span class="va">年</span> <span class="op">&lt;=</span> <span class="fl">2021</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>年 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">年</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -383,7 +406,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="header-section-number">5.3.1</span> 複数の株を比較する</h3>
 <p>　複数の同業種銘柄を比較してみます。どの株が儲かりそうでしょうか？</p>
 <div class="cell">
-<details><summary>6銘柄の月次平均収益率と標準偏差を可視化する（改良板）</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock_n</span> <span class="op">&lt;-</span> <span class="st">"./data/メーカー６社の株価の月次推移_2022-06-15.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>6銘柄の月次平均収益率と標準偏差を可視化する（改良板）</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock_n</span> <span class="op">&lt;-</span> <span class="st">"./data/６銘柄の株価の月次推移_2022-06-15.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu">read_csv</span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">stock_n</span> <span class="op">%&gt;%</span> <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -395,7 +418,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </script>
 </div>
 </div>
-<details><summary>6銘柄の月次平均収益率と標準偏差を可視化する（改良板）</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock_n</span> <span class="op">%&gt;%</span> 
+<details><summary>6銘柄の月次平均収益率と標準偏差を可視化する（改良板）</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock_n</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span>.cols <span class="op">=</span> <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span>,
                               .fns <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="va"><a href="https://readr.tidyverse.org/reference/parse_guess.html">parse_guess</a></span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/as_date.html">as_date</a></span><span class="op">(</span><span class="va">日付</span><span class="op">)</span>,
