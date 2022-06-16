@@ -66,7 +66,7 @@ sqrt(sum(偏差 ^ 2) / length(x))
 ```
 
 ```{r}
-#| code-summary: "`sd()`関数は**不偏**標準偏差"
+#| code-summary: "`sd()`関数は標準偏差"
 #| column: margin
 sd(x)
 ```

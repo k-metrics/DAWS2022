@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.440">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです。">
+<title>Rで学ぶ『完全独習 統計学入門』 - 6&nbsp; 標準偏差でハイリスク・ハイリターンも理解できる</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<script src="site_libs/quarto-nav/quarto-nav.js"></script><script src="site_libs/quarto-nav/headroom.min.js"></script><script src="site_libs/clipboard/clipboard.min.js"></script><meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><link href="./chapter05.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script><script src="site_libs/quarto-html/popper.min.js"></script><script src="site_libs/quarto-html/tippy.umd.min.js"></script><script src="site_libs/quarto-html/anchor.min.js"></script><link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link class="quarto-color-scheme" id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<link class="quarto-color-scheme quarto-color-alternate" rel="prefetch" id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script><link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link class="quarto-color-scheme" href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link class="quarto-color-scheme quarto-color-alternate" rel="prefetch" href="site_libs/bootstrap/bootstrap-dark.min.css">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">標準偏差でハイリスク・ハイリターンも理解できる</span>
+</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title d-none d-lg-block">
+<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">標準偏差でハイリスク・ハイリターンも理解できる</span>
+</h1>
+                  <div>
+        <div class="description">
+          本書はデータ分析勉強会で学んだ成果をまとめたものです。
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Rで学ぶ『完全独習 統計学入門』</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/k-metrics/DAWS2022/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+<li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
+<a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">はじめに</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter00.html" class="sidebar-item-text sidebar-link">【序】なぜ、統計手法が必要か</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter01.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">度数分布表とヒストグラムでデータの特徴を浮き彫りにする</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter02.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">平均値とはやじろべえの視点である</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter03.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの散らばり具合を見積もる統計量</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter04.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">そのデータは「月並み」か「特殊」か？ 標準偏差で評価する</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter05.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">標準偏差は株のリスクの指標として活用できる</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter06.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">標準偏差でハイリスク・ハイリターンも理解できる</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#%E3%83%8F%E3%82%A4%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%8F%E3%82%A4%E3%83%AA%E3%82%BF%E3%83%BC%E3%83%B3%E3%81%A8%E3%83%AD%E3%83%BC%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%AA%E3%82%BF%E3%83%BC%E3%83%B3" id="toc-ハイリスクハイリターンとローリスクローリターン" class="nav-link active" data-scroll-target="#%E3%83%8F%E3%82%A4%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%8F%E3%82%A4%E3%83%AA%E3%82%BF%E3%83%BC%E3%83%B3%E3%81%A8%E3%83%AD%E3%83%BC%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%AA%E3%82%BF%E3%83%BC%E3%83%B3"> <span class="header-section-number">6.1</span> ハイリスク・ハイリターンとローリスク・ローリターン</a></li>
+  <li><a href="#%E9%87%91%E8%9E%8D%E5%95%86%E5%93%81%E3%81%AE%E5%84%AA%E5%8A%A3%E3%81%AE%E6%B8%AC%E3%82%8A%E6%96%B9" id="toc-金融商品の優劣の測り方" class="nav-link" data-scroll-target="#%E9%87%91%E8%9E%8D%E5%95%86%E5%93%81%E3%81%AE%E5%84%AA%E5%8A%A3%E3%81%AE%E6%B8%AC%E3%82%8A%E6%96%B9"> <span class="header-section-number">6.2</span> 金融商品の優劣の測り方</a></li>
+  <li><a href="#%E9%87%91%E8%9E%8D%E5%95%86%E5%93%81%E3%81%AE%E5%84%AA%E5%8A%A3%E3%82%92%E6%B8%AC%E3%82%8B%E6%95%B0%E5%80%A4%E3%82%B7%E3%83%A3%E3%83%BC%E3%83%97%E3%83%AC%E3%82%B7%E3%82%AA" id="toc-金融商品の優劣を測る数値シャープレシオ" class="nav-link" data-scroll-target="#%E9%87%91%E8%9E%8D%E5%95%86%E5%93%81%E3%81%AE%E5%84%AA%E5%8A%A3%E3%82%92%E6%B8%AC%E3%82%8B%E6%95%B0%E5%80%A4%E3%82%B7%E3%83%A3%E3%83%BC%E3%83%97%E3%83%AC%E3%82%B7%E3%82%AA"> <span class="header-section-number">6.3</span> 金融商品の優劣を測る数値・シャープレシオ</a></li>
+  <li><a href="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C" id="toc-練習問題" class="nav-link" data-scroll-target="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C">練習問題</a></li>
+  <li>
+<a href="#%E5%AE%9F%E9%9A%9B%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A7%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B" id="toc-実際のデータで確認する" class="nav-link" data-scroll-target="#%E5%AE%9F%E9%9A%9B%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A7%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B">実際のデータで確認する</a>
+  <ul class="collapse">
+<li><a href="#%E6%8A%95%E4%BF%A1%E7%B7%8F%E5%90%88%E6%A4%9C%E7%B4%A2%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%83%BC" id="toc-投信総合検索ライブラリー" class="nav-link" data-scroll-target="#%E6%8A%95%E4%BF%A1%E7%B7%8F%E5%90%88%E6%A4%9C%E7%B4%A2%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%83%BC">投信総合検索ライブラリー</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/k-metrics/DAWS2022/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><div class="cell">
+
+</div>
+<p>　</p>
+<section id="ハイリスクハイリターンとローリスクローリターン" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="ハイリスクハイリターンとローリスクローリターン">
+<span class="header-section-number">6.1</span> ハイリスク・ハイリターンとローリスク・ローリターン</h2>
+<p>　ボラティリティとは株の収益率の標準偏差（SD）のことで、収益率は標準偏差分の変動（<span class="math inline">\(\pm SD\)</span>）が起きるので、それをリスクとして認識すべきです。</p>
+<div class="cell">
+<details><summary>P60図表6−1</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/P60_図表6-1.csv"</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["年"],"name":[1],"type":["int"],"align":["right"]},{"label":["商品A"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["商品B"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["商品C"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["商品D"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1988","2":"13.2","3":"7.7","4":"7.3","5":"7.4"},{"1":"1989","2":"20.9","3":"9.5","4":"9.0","5":"8.2"},{"1":"1990","2":"-6.9","3":"3.7","4":"8.1","5":"7.9"},{"1":"1991","2":"35.6","3":"17.2","4":"5.9","5":"7.1"},{"1":"1992","2":"8.9","3":"7.9","4":"3.3","5":"4.2"},{"1":"1993","2":"12.5","3":"10.3","4":"2.6","5":"3.3"},{"1":"1994","2":"-1.7","3":"-3.7","4":"3.8","5":"3.0"},{"1":"1995","2":"31.1","3":"15.6","4":"5.4","5":"4.9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　各金融商品の標準偏差（リスク）と平均値（リターン）は下表のようになります。このデータでの標準偏差（リスク）は標本標準偏差ではないことに注意してください。</p>
+<div class="cell">
+<details><summary>P60図表6−1のリスクとリターン</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">リスク</span> <span class="op">&lt;-</span> <span class="st">"./data/P60_図表6-1.csv"</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span>.cols <span class="op">=</span> <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"商品"</span><span class="op">)</span>,
+                                 .fns <span class="op">=</span> <span class="va">sd</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+
+<span class="va">リスク</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["商品A"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["商品B"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["商品C"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["商品D"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"14.7","2":"6.6","3":"2.3","4":"2.1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<details><summary>P60図表6−1のリスクとリターン</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">リターン</span> <span class="op">&lt;-</span> <span class="st">"./data/P60_図表6-1.csv"</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span>.cols <span class="op">=</span> <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"商品"</span><span class="op">)</span>,
+                                 .fns <span class="op">=</span> <span class="va">mean</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+
+<span class="va">リターン</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["商品A"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["商品B"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["商品C"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["商品D"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"14.2","2":"8.5","3":"5.7","4":"5.8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　このようにリターンの大きな商品はリスクも大きい、ハイリスク・ハイリターンであることが分かります。</p>
+<div class="cell">
+<details><summary>リスクとリターンの関係</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">risk</span> <span class="op">&lt;-</span> <span class="va">リスク</span> <span class="op">%&gt;%</span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>,
+                      names_to <span class="op">=</span> <span class="st">"商品"</span>, values_to <span class="op">=</span> <span class="st">"リスク"</span><span class="op">)</span>
+
+<span class="va">return</span> <span class="op">&lt;-</span> <span class="va">リターン</span> <span class="op">%&gt;%</span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>,
+                      names_to <span class="op">=</span> <span class="st">"商品"</span>, values_to <span class="op">=</span> <span class="st">"リターン"</span><span class="op">)</span>
+
+<span class="va">risk</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">return</span>, by <span class="op">=</span> <span class="st">"商品"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">リスク</span>, y <span class="op">=</span> <span class="va">リターン</span>, label <span class="op">=</span> <span class="va">商品</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span>, method <span class="op">=</span> <span class="st">"lm"</span>, size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu">ggrepel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">lims</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">16</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">16</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter06_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>　</p>
+</section><section id="金融商品の優劣の測り方" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="金融商品の優劣の測り方">
+<span class="header-section-number">6.2</span> 金融商品の優劣の測り方</h2>
+<p>　前述の商品A〜商品Dの四商品を比較する限り、優劣はありません。では、下図の商品N, P, Qは四商品（A〜D）と比べてどれが優れているのでしょうか？</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="chapter06_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>　<br>
+　</p>
+<p>　</p>
+</section><section id="金融商品の優劣を測る数値シャープレシオ" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="金融商品の優劣を測る数値シャープレシオ">
+<span class="header-section-number">6.3</span> 金融商品の優劣を測る数値・シャープレシオ</h2>
+<p>　シャープレシオは下式で定義される金融商品の優劣を比較するための指標です。シャープレシオが高いほどリスクを抑えながらリターンが期待できる効率的なファンドといえます。</p>
+<p><span class="math display">\[\mbox{シャープレシオ} = \frac{\mbox{リターンの平均値} - \mbox{無リスク資産の利回り}}{\mbox{リスク（リターンの標準偏差）}}\]</span></p>
+<p>　無リスク資産の利回りには国債の利回りを使用する場合が多いようですが、具体的に何を用いているかを記載しているファンドを見たことがありません。参考までに近年の国債の利回りは下表の通りです。</p>
+<div class="cell">
+<details><summary>財務省の国債金利情報より</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"https://www.mof.go.jp/jgbs/reference/interest_rate/jgbcm.csv"</span> <span class="op">%&gt;%</span> 
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>locale <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/locale.html">locale</a></span><span class="op">(</span>encoding <span class="op">=</span> <span class="st">"CP932"</span><span class="op">)</span>, skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["基準日"],"name":[1],"type":["chr"],"align":["left"]},{"label":["1年"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2年"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3年"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["4年"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["5年"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["6年"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["7年"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["8年"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["9年"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["10年"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["15年"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["20年"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["25年"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["30年"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["40年"],"name":[16],"type":["dbl"],"align":["right"]}],"data":[{"1":"R4.6.1","2":"-0.085","3":"-0.075","4":"-0.059","5":"-0.033","6":"-0.001","7":"0.052","8":"0.114","9":"0.168","10":"0.208","11":"0.242","12":"0.526","13":"0.766","14":"0.918","15":"1.034","16":"1.110"},{"1":"R4.6.2","2":"-0.085","3":"-0.070","4":"-0.055","5":"-0.031","6":"0.006","7":"0.058","8":"0.122","9":"0.178","10":"0.217","11":"0.251","12":"0.535","13":"0.779","14":"0.931","15":"1.038","16":"1.122"},{"1":"R4.6.3","2":"-0.086","3":"-0.070","4":"-0.059","5":"-0.036","6":"-0.001","7":"0.048","8":"0.106","9":"0.163","10":"0.206","11":"0.241","12":"0.521","13":"0.756","14":"0.916","15":"1.025","16":"1.101"},{"1":"R4.6.6","2":"-0.086","3":"-0.065","4":"-0.055","5":"-0.030","6":"0.006","7":"0.058","8":"0.123","9":"0.179","10":"0.218","11":"0.252","12":"0.531","13":"0.766","14":"0.926","15":"1.029","16":"1.106"},{"1":"R4.6.7","2":"-0.087","3":"-0.070","4":"-0.055","5":"-0.030","6":"0.009","7":"0.068","8":"0.143","9":"0.199","10":"0.229","11":"0.257","12":"0.541","13":"0.781","14":"0.944","15":"1.052","16":"1.123"},{"1":"R4.6.8","2":"-0.087","3":"-0.070","4":"-0.059","5":"-0.035","6":"0.003","7":"0.063","8":"0.138","9":"0.199","10":"0.229","11":"0.257","12":"0.541","13":"0.775","14":"0.940","15":"1.055","16":"1.127"},{"1":"R4.6.9","2":"-0.087","3":"-0.075","4":"-0.065","5":"-0.040","6":"0.003","7":"0.058","8":"0.128","9":"0.199","10":"0.233","11":"0.255","12":"0.544","13":"0.785","14":"0.953","15":"1.074","16":"1.144"},{"1":"R4.6.10","2":"-0.088","3":"-0.081","4":"-0.069","5":"-0.041","6":"0.007","7":"0.073","8":"0.138","9":"0.213","10":"0.245","11":"0.261","12":"0.560","13":"0.798","14":"0.962","15":"1.079","16":"1.153"},{"1":"R4.6.13","2":"-0.085","3":"-0.051","4":"-0.039","5":"-0.006","6":"0.047","7":"0.119","8":"0.189","9":"0.253","10":"0.263","11":"0.264","12":"0.613","13":"0.862","14":"1.033","15":"1.163","16":"1.241"},{"1":"R4.6.14","2":"-0.085","3":"-0.050","4":"-0.020","5":"0.029","6":"0.092","7":"0.184","8":"0.271","9":"0.323","10":"0.310","11":"0.264","12":"0.639","13":"0.875","14":"1.042","15":"1.157","16":"1.237"},{"1":"R4.6.15","2":"-0.095","3":"-0.060","4":"-0.026","5":"0.024","6":"0.087","7":"0.174","8":"0.261","9":"0.314","10":"0.314","11":"0.271","12":"0.693","13":"0.930","14":"1.095","15":"1.211","16":"1.286"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　国債の利回りは5年経って約<span class="math inline">\(0\%\)</span>なので、無リスク資産の利回りを<span class="math inline">\(0\%\)</span>（利回りはほぼ得られない）と考えるとシャープレシオは下式のようになります。</p>
+<p><span class="math display">\[\mbox{シャープレシオ} = \frac{\mbox{リターンの平均値}}{\mbox{リスク（リターンの標準偏差）}}\]</span></p>
+<p>　リターンの平均値は、リスク（リターンの標準偏差）とシャープレシオが分かれば下式で求められます。</p>
+<p><span class="math display">\[\mbox{リターンの平均値} = \mbox{リスク} \times \mbox{シャープレシオ} + \mbox{無リスク資産の利回り}\]</span></p>
+<p>　</p>
+</section><section id="練習問題" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="練習問題">練習問題</h2>
+<p>　（省略）</p>
+<p>　</p>
+</section><section id="実際のデータで確認する" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="実際のデータで確認する">実際のデータで確認する</h2>
+<p>　実際のデータではテキストと同じ言葉でリターンとリスクが公開されているわけではありません。証券会社などにより様々な表現がなされていますので、最初に簡単に整理しておきます。</p>
+<p>　<a href="https://www.smbcnikko.co.jp/products/inv/toshin_lab/column/001.html">投資信託の基礎知識</a>によれば</p>
+<p>　<strong>利回り</strong>とは</p>
+<blockquote class="blockquote">
+<p><strong>投資金額に対する収益の割合</strong>のことをいいます。この収益には「利息」だけでなく、投資商品を売却した場合に得られる<strong>「売却損益」も含みます</strong>。また、通常は1年間の「年利回り」のことを利回りと呼ぶことが多いです。</p>
+</blockquote>
+<p>　利回りを数式で表すと下式になります。ただし、手数料や税金などは考慮していません。</p>
+<p><span class="math display">\[\mbox{利回り} = \frac{\mbox{分配金} + \mbox{売却益}}{\mbox{投資金額}} \times 100\]</span></p>
+<p>　参考までに<strong>利率</strong>は</p>
+<blockquote class="blockquote">
+<p>一般的に、利率は、債券や預金に対して使われる言葉のため、<strong>投資信託では利率とは言いません</strong>。</p>
+</blockquote>
+<p>　SMBC日興証券では「<strong>累積リターン</strong>」という言葉を使っていますが、その定義は以下となっていますので利回りと等価といえます。</p>
+<blockquote class="blockquote">
+<p>一定期間内における<strong>分配金込み基準価額の騰落率</strong>です。</p>
+</blockquote>
+<p>　一方、<strong>騰落率</strong>は</p>
+<blockquote class="blockquote">
+<p>騰落率とは、投資信託の<strong>基準価額が、ある期間の間にどのくらい変動したか</strong>を、パーセンテージで示します。例えば、基準価額10,000円の投資信託が1年後に11,000円に値上がりした場合の騰落率は10％です。</p>
+</blockquote>
+<p>　式では下式となります。ただし、利回りと同様に手数料や税金などは考慮していません。</p>
+<p><span class="math display">\[\mbox{騰落率} = \frac{\mbox{期末基準価額} - \mbox{期首基準価額}}{\mbox{期首基準価額}} \times 100\]</span></p>
+<p>　ただし、投信総合検索ライブラリーでは「騰落率」を以下のように定義しています。</p>
+<blockquote class="blockquote">
+<p>期間別騰落率は、<strong>分配金(課税前)をファンドへ再投資したものとみなして月末時点の修正した価額をもとに計算</strong>＊しています。一方、利回りは、分配金込み基準価額の騰落率です。</p>
+</blockquote>
+<p>　具体的には<a href="https://www.toushin.or.jp/words/keyword/2779/">用語集</a>に記載されているように下式の定義となります。</p>
+<blockquote class="blockquote">
+<p>(期末の基準価額+期中の分配金の合計)/期首の基準価額-1</p>
+</blockquote>
+<p>　この定義を整理すると下式になります。</p>
+<p><span class="math display">\[\frac{\mbox{期末準価額} + \mbox{期中分配金}}{\mbox{期首基準価額}} - 1 = \frac{\mbox{期中分配金} + \mbox{期末基準価額} - \mbox{期首基準価額}}{\mbox{期首基準価額}}\]</span></p>
+<p>　期末で売却したとすると<span class="math inline">\(\mbox{期末基準価格} - \mbox{期首基準価格} = \mbox{売却益}\)</span>とみなせ、期首で投資したとすれば、<span class="math inline">\(\mbox{期首基準価格} = \mbox{投資金額}\)</span>となり投信総合検索ライブラリーでの騰落率は「利回り」と同等であることが分かります。</p>
+<p><span class="math display">\[\frac{\mbox{分配金} + \mbox{売約益}}{\mbox{期首基準価額}} = \frac{\mbox{分配金} + \mbox{売約益}}{\mbox{投資金額}}\]</span></p>
+<p>　実際に同一銘柄を<a href="https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd=JP90C0008CH5">投信総合ライブラリー</a>と<a href="https://fund2.smbcnikko.co.jp/smbc_nikko_fund/qsearch.exe?F=detail_kokunai1&amp;KEY1=9C311125">SMBC日興証券</a>で比較すると部分的に若干の差異が認められるものの騰落率と累積リターンが同一指標になっていることが分かります。</p>
+<p>　ただし、利回りや騰落率は一年間（期首と期末）の数値から求めていることに注意してください。リターンの平均値を知りたい場合は、騰落率ではなく前述したようにシャープレシオとリスク（標準偏差）から求める必要があります。近年の無リスク資産（国債）の利回りは、ほぼ<span class="math inline">\(0\%\)</span>なので、これは省略しています。</p>
+<p><span class="math display">\[\mbox{リターンの平均値} = \mbox{シャープレシオ} \times \mbox{リスク}\]</span></p>
+<p>　</p>
+<section id="投信総合検索ライブラリー" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="投信総合検索ライブラリー">投信総合検索ライブラリー</h3>
+<p>　<a href="https://www.rakuten-sec.co.jp/nisa/tsumitate/products.html">楽天証券</a>で扱っているつみたてNISAのファンドのデータを<a href="https://toushin-lib.fwg.ne.jp/FdsWeb/">投信総合検索ライブラリー</a>から取得して実際のデータがどのようになっているかをみます。 　<br>
+　取得しているファンドは下表の通りです。</p>
+<div class="cell">
+<details><summary>商品種別ごとのファンド数</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/つみたてNISA_基本情報_2022-06-12.csv"</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">インデックス型</span>, <span class="va">type</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">インデックス型</span>, values_from <span class="op">=</span> <span class="va">n</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["インデックス型"],"name":[2],"type":["int"],"align":["right"]},{"label":["該当なし"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"追加型/海外/株式","2":"41","3":"2"},{"1":"追加型/海外/資産複合","2":"2","3":"NA"},{"1":"追加型/国内/株式","2":"33","3":"3"},{"1":"追加型/国内/資産複合","2":"3","3":"1"},{"1":"追加型/内外/株式","2":"9","3":"5"},{"1":"追加型/内外/資産複合","2":"29","3":"53"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>　この中から「追加型/内外/株式」のリスクの平均値・リターン遷移をグラフにします。どのファンドも短期間ではリターンの平均値が非常に悪いことが分かります。</p>
+<div class="cell">
+<details><summary>追加型/内外/株式タイプのリスク・リターン遷移</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="st">"./data/つみたてNISA_運用情報_2022-06-12.csv"</span> <span class="op">%&gt;%</span>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>期間 <span class="op">=</span> <span class="fu">forcats</span><span class="fu">::</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_inorder</a></span><span class="op">(</span><span class="va">期間</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">code_list</span>, by <span class="op">=</span> <span class="st">"code"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">code_list</span><span class="op">$</span><span class="va">code</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="co"># dplyr::filter(期間 %in% c("6ヶ月", "1年", "3年", "5年")) %&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>リターンの平均値 <span class="op">=</span> <span class="va">シャープレシオ</span> <span class="op">*</span> <span class="va">`リスク（標準偏差）`</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">fundcode</span>, <span class="st">"("</span>, <span class="va">期間</span>, <span class="st">"/"</span>, <span class="va">シャープレシオ</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">`リスク（標準偏差）`</span>, y <span class="op">=</span> <span class="va">リターンの平均値</span>,
+                  color <span class="op">=</span> <span class="va">fundcode</span>, shape <span class="op">=</span> <span class="va">インデックス型</span>, label <span class="op">=</span> <span class="va">label</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">0</span>, intercept <span class="op">=</span> <span class="fl">0</span>,
+                         size <span class="op">=</span> <span class="fl">0.2</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_path</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="st">"dotted"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu">ggrepel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter06_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<hr>
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+    } else {
+      disableStylesheet(alternateStylesheets);
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } 
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./chapter05.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">標準偏差は株のリスクの指標として活用できる</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">Sampo Suzuki, CC 4.0 BY-NC-SA</div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link active" href="https://github.com/k-metrics/DAWS2022/" aria-current="page">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+</body></html>
