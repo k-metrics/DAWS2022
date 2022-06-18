@@ -1,12 +1,17 @@
 # -----------------------------------------------------------------------------
-# 株探のサイトから任意の一銘柄の月次株価一覧を取得する
+# 株探のサイトから株価一覧を取得する
 # -----------------------------------------------------------------------------
 library(tidyverse)
 library(rvest)
 
-path <- "./data/"
+interval <- 1.0            # スクレイピング実行の間隔 [sec]
+path <- "./data/sample/"   # ファイルの保存先
 date <- as.character(lubridate::today())
 
+
+# -----------------------------------------------------------------------------
+# 株探のサイトから任意の一銘柄の月次株価一覧を取得する
+# -----------------------------------------------------------------------------
 url <- "https://kabutan.jp/stock/kabuka?code=7203&ashi=mon&page="
 pages <- c(1:5)
 xpath <- '//*[@id="stock_kabuka_table"]/table[2]'
@@ -15,6 +20,7 @@ stock <- tidyr::crossing(url, pages, xpath) %>%
   dplyr::mutate(url = paste0(url, pages)) %>% 
   dplyr::select(url, xpath) %>% 
   purrr::pmap_df(.f = function(url, xpath) {
+    Sys.sleep(interval)
     xml2::read_html(url) %>% 
       rvest::html_element(xpath = xpath) %>% 
       rvest::html_table() %>% 
@@ -45,6 +51,7 @@ stock <- tidyr::crossing(url1, code, url2, pages, xpath) %>%
   dplyr::mutate(url = paste0(url1, code, url2, pages)) %>% 
   dplyr::select(url, xpath, code) %>% 
   purrr::pmap_df(.f = function(url, xpath, code) {
+    Sys.sleep(interval)
     xml2::read_html(url) %>% 
       rvest::html_element(xpath = xpath) %>% 
       rvest::html_table() %>% 

@@ -3,6 +3,11 @@
 require(tidyverse)
 require(rvest)
 
+interval <- 1.0            # スクレイピング実行の間隔 [sec]
+path <- "./data/sample/"   # ファイルの保存先
+date <- as.character(lubridate::today())
+
+
 
 # -----------------------------------------------------------------------------
 # 協会コード
@@ -32,8 +37,6 @@ require(rvest)
 url <- "https://www.rakuten-sec.co.jp/nisa/tsumitate/products.html"
 # ファンド名（商品名）一覧のテーブル
 xpath <- '//*[@id="str-main"]/div[4]/table'
-# ファイルの保存先（
-path <- "./data/"
 
 
 # ファンド名（商品名）一覧テーブルを読み込み、ファンド名欄にあるリンク情報から
@@ -67,10 +70,9 @@ nisa <- nisa_code %>%
 # -----------------------------------------------------------------------------
 # 投信協会のライブラリから情報を取得する
 # -----------------------------------------------------------------------------
-
 # 投信協会の商品情報ページ
 url <- "https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd="
-# 協会コード一覧
+# 協会JPコード一覧
 code <- nisa_code$code
 
 # -----------------------------------------------------------------------------
@@ -88,6 +90,7 @@ xpath <- '/html/body/div[4]/div/div/div[1]/div[1]/h3'
 nisa_fund <- tidyr::crossing(url, code, xpath) %>% 
   dplyr::mutate(url = paste0(url, code)) %>% 
   purrr::pmap_df(.f = function (url, xpath, code) {
+    Sys.sleep(interval)
     xml2::read_html(url) %>% 
       rvest::html_element(xpath = xpath) %>% 
       rvest::html_text() %>% 
@@ -96,6 +99,9 @@ nisa_fund <- tidyr::crossing(url, code, xpath) %>%
       dplyr::mutate(code = code)
   }) %>% 
   dplyr::rename(fund = value)
+
+nisa_fund
+
 
 
 # -----------------------------------------------------------------------------
@@ -113,6 +119,7 @@ xpath <- '/html/body/div[4]/div/div/div[1]/div[1]/div[2]'
 nisa_inves <- tidyr::crossing(url, code, xpath) %>% 
   dplyr::mutate(url = paste0(url, code)) %>% 
   purrr::pmap_df(.f = function (url, xpath, code) {
+    Sys.sleep(interval)
     xml2::read_html(url) %>% 
       rvest::html_element(xpath = xpath) %>% 
       rvest::html_text() %>% 
@@ -137,9 +144,10 @@ xpath <- '/html/body/div[4]/div/div/div[2]/div[4]/div[2]'
 #   rvest::html_element(xpath = xpath) %>%
 #   rvest::html_text()
 
-nia_type <- tidyr::crossing(url, code, xpath) %>% 
+nisa_type <- tidyr::crossing(url, code, xpath) %>% 
   dplyr::mutate(url = paste0(url, code)) %>% 
   purrr::pmap_df(.f = function (url, xpath, code) {
+    Sys.sleep(interval)
     xml2::read_html(url) %>% 
       rvest::html_element(xpath = xpath) %>% 
       rvest::html_text() %>% 
@@ -150,6 +158,8 @@ nia_type <- tidyr::crossing(url, code, xpath) %>%
   dplyr::rename(type = value)
 
 nisa_type
+
+
 
 # -----------------------------------------------------------------------------
 # 手数料・運用管理費情報
@@ -163,6 +173,7 @@ xpath <- '//*[@id="tab_content1"]/div/div[1]/div/div[1]/table'
 nisa_fee <- tidyr::crossing(url, code, xpath) %>% 
   dplyr::mutate(url = paste0(url, code)) %>% 
   purrr::pmap_df(.f = function (url, xpath, code) {
+    Sys.sleep(interval)
     xml2::read_html(url) %>% 
       rvest::html_element(xpath = xpath) %>% 
       rvest::html_table(header = TRUE) %>%
@@ -186,6 +197,7 @@ xpath <- '//*[@id="tab_content1"]/div/table'
 nisa_base <- tidyr::crossing(url, code, xpath) %>% 
   dplyr::mutate(url = paste0(url, code)) %>% 
   purrr::pmap_df(.f = function (url, xpath, code) {
+    Sys.sleep(interval)
     xml2::read_html(url) %>% 
       rvest::html_element(xpath = xpath) %>% 
       rvest::html_table() %>%
@@ -216,6 +228,7 @@ xpath <- '//*[@id="mainLeft"]/div[5]/p'
 kakakucom_code <- tidyr::crossing(url, code, xpath) %>% 
   dplyr::mutate(url = paste0(url, code)) %>% 
   purrr::pmap_df(.f = function (url, xpath, code) {
+    Sys.sleep(interval)
     xml2::read_html(url) %>% 
       rvest::html_element(xpath = xpath) %>% 
       rvest::html_text() %>% 
@@ -244,14 +257,16 @@ nisa_info <- nisa_fund %>%
 # 結果を保存する
 nisa_info %>% 
   readr::write_excel_csv(paste0(path, "つみたてNISA_基本情報_",
-                                as.character(lubridate::today()),
-                                ".csv"))
+                                date, ".csv"))
 
 
 
 # -----------------------------------------------------------------------------
-# 投信協会のライブラリからリスク・リターン・シャープレシオを取得する
+# 投信協会のライブラリから騰落率・リターン・シャープレシオを取得する
 # -----------------------------------------------------------------------------
+# 商品情報ページ（ファンド詳細）
+url <- "https://toushin-lib.fwg.ne.jp/FdsWeb/FDST030000?isinCd="
+# 運用情報
 xpath <- c('//*[@id="tab_content2"]/div/div[2]/div[1]/div[1]/div/table',
            '//*[@id="tab_content2"]/div/div[2]/div[1]/div[2]/div/table',
            '//*[@id="tab_content2"]/div/div[2]/div[1]/div[3]/div/table')
@@ -259,6 +274,7 @@ xpath <- c('//*[@id="tab_content2"]/div/div[2]/div[1]/div[1]/div/table',
 nisa_rrs <- tidyr::crossing(url, code, xpath) %>% 
   dplyr::mutate(url = paste0(url, code)) %>% 
   purrr::pmap_df(.f = function (url, xpath, code) {
+    Sys.sleep(interval)
     xml2::read_html(url) %>% 
       rvest::html_element(xpath = xpath) %>% 
       rvest::html_table(header = FALSE) %>% 
@@ -278,7 +294,24 @@ nisa_rrs %>%
   dplyr::select(code, fundcode, dplyr::everything()) %>% 
   print() %>% 
   readr::write_excel_csv(paste0(path, "つみたてNISA_運用情報_",
-                                as.character(lubridate::today()),
-                                ".csv"))
+                                date, ".csv"))
 
+
+
+# -----------------------------------------------------------------------------
+# 商品分類別平均値
+#------------------------------------------------------------------------------
+nisa_info %>% 
+  dplyr::select(code, インデックス型, type) %>% 
+  dplyr::left_join(nisa_rrs, by = "code") %>% 
+  dplyr::select(-code, -X3) %>% 
+  dplyr::mutate(X4 = stringr::str_remove(X4, "%")) %>% 
+  # readr::write_excel_csv(paste0(path, "つみたてNISA_商品分類_check_",
+  #                               as.character(lubridate::today()),
+  #                               ".csv"))
+  dplyr::distinct(インデックス型,type, X1, X2, .keep_all = TRUE) %>% 
+  tidyr::pivot_wider(names_from = X1, values_from = X4) %>% 
+  print() %>% 
+  readr::write_excel_csv(paste0(path, "つみたてNISA_商品分類別運用情報_",
+                                date, ".csv"))
 

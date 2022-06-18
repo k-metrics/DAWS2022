@@ -194,7 +194,7 @@ $$\mbox{リターンの平均値} = \mbox{シャープレシオ} \times \mbox{�
 #| code-fold: true
 #| code-summary: "商品種別ごとのファンド数"
 #| message: false
-"./data/つみたてNISA_基本情報_2022-06-12.csv" %>%
+"./data/sample/つみたてNISA_基本情報_2022-06-12.csv" %>%
   read.csv() %>%
   dplyr::group_by(インデックス型, type) %>%
   dplyr::summarise(n = n()) %>%
@@ -205,7 +205,7 @@ $$\mbox{リターンの平均値} = \mbox{シャープレシオ} \times \mbox{�
 ```{r}
 #| include: false
 #| code-summary: "追加型/内外/株式タイプのファンド一覧"
-code_list <- "./data/つみたてNISA_基本情報_2022-06-12.csv" %>%
+code_list <- "./data/sample/つみたてNISA_基本情報_2022-06-12.csv" %>%
   read.csv() %>%
   dplyr::filter(type == "追加型/内外/株式") %>%
   dplyr::select(code, fund, インデックス型)
@@ -213,13 +213,14 @@ code_list <- "./data/つみたてNISA_基本情報_2022-06-12.csv" %>%
 code_list %>% 
   df_print()
 ```
+　  
 　この中から「追加型/内外/株式」のリスクの平均値・リターン遷移をグラフにします。どのファンドも短期間ではリターンの平均値が非常に悪いことが分かります。
 ```{r}
 #| code-fold: true
 #| message: false
 #| warning: false
 #| code-summary: "追加型/内外/株式タイプのリスク・リターン遷移"
-"./data/つみたてNISA_運用情報_2022-06-12.csv" %>%
+"./data/sample/つみたてNISA_運用情報_2022-06-12.csv" %>%
   readr::read_csv() %>%
   dplyr::mutate(期間 = forcats::fct_inorder(期間)) %>%
   dplyr::left_join(code_list, by = "code") %>%
@@ -241,22 +242,21 @@ code_list %>%
 #| eval: false
 #| code-summary: "演習用データ作成"
 
-"./data/つみたてNISA_運用情報_2022-06-12.csv" %>% 
+"./data/sample/つみたてNISA_運用情報_2022-06-12.csv" %>% 
   read_csv() %>% 
   dplyr::filter(期間 == "3年") %>% 
   tidyr::drop_na(騰落率) %>% 
   dplyr::sample_n(size = 10) %>% 
-  readr::write_excel_csv("./data/sample_1.csv")
+  readr::write_excel_csv("./data/Exercies_6_1.csv")
 
-"./data/つみたてNISA_運用情報_2022-06-12.csv" %>%
+"./data/sample/つみたてNISA_運用情報_2022-06-12.csv" %>%
   readr::read_csv() %>%
   dplyr::mutate(期間 = forcats::fct_inorder(期間)) %>%
   dplyr::left_join(code_list, by = "code") %>%
   dplyr::filter(code %in% code_list$code) %>%
   # dplyr::filter(期間 %in% c("6ヶ月", "1年", "3年", "5年")) %>%
   dplyr::mutate(リターンの平均値 = シャープレシオ * `リスク（標準偏差）`) %>% 
-  readr::write_excel_csv("./data/sample_2.csv")
-
+  readr::write_excel_csv("./data/Exercies_6_2.csv")
 ```
 
 
