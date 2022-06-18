@@ -213,53 +213,56 @@ code_list <- "./data/sample/つみたてNISA_基本情報_2022-06-12.csv" %>%
 code_list %>% 
   df_print()
 ```
+<!-- 　   -->
+<!-- 　この中から「追加型/内外/株式」のリスクの平均値・リターン遷移をグラフにします。どのファンドも短期間ではリターンの平均値が非常に悪いことが分かります。 -->
+<!-- ```{r} -->
+<!-- #| code-fold: true -->
+<!-- #| code-summary: "追加型/内外/株式タイプのリスク・リターン遷移" -->
+<!-- #| eval: false -->
+<!-- #| include: false -->
+<!-- #| message: false -->
+<!-- #| warning: false -->
+<!-- "./data/sample/つみたてNISA_運用情報_2022-06-12.csv" %>% -->
+<!--   readr::read_csv() %>% -->
+<!--   dplyr::mutate(期間 = forcats::fct_inorder(期間)) %>% -->
+<!--   dplyr::left_join(code_list, by = "code") %>% -->
+<!--   dplyr::filter(code %in% code_list$code) %>% -->
+<!--   # dplyr::filter(期間 %in% c("6ヶ月", "1年", "3年", "5年")) %>% -->
+<!--   dplyr::mutate(リターンの平均値 = シャープレシオ * `リスク（標準偏差）`) %>%  -->
+<!--   dplyr::mutate(label = paste0(fundcode, "(", 期間, "/", シャープレシオ, ")")) %>% -->
+<!--   ggplot2::ggplot(ggplot2::aes(x = `リスク（標準偏差）`, y = リターンの平均値, -->
+<!--                   color = fundcode, shape = インデックス型, label = label)) + -->
+<!--     ggplot2::geom_abline(slope = 0, intercept = 0, -->
+<!--                          size = 0.2, linetype = "dashed") + -->
+<!--     ggplot2::geom_point() + -->
+<!--     ggplot2::geom_path(linetype = "dotted") +  -->
+<!--     ggrepel::geom_text_repel(size = 2.5) -->
+<!-- ``` -->
 　  
-　この中から「追加型/内外/株式」のリスクの平均値・リターン遷移をグラフにします。どのファンドも短期間ではリターンの平均値が非常に悪いことが分かります。
+　商品分類別のリスク・リターンの平均値（インデックス型での区別なし）は下図のようになります。
 ```{r}
 #| code-fold: true
-#| message: false
-#| warning: false
-#| code-summary: "追加型/内外/株式タイプのリスク・リターン遷移"
-"./data/sample/つみたてNISA_運用情報_2022-06-12.csv" %>%
-  readr::read_csv() %>%
-  dplyr::mutate(期間 = forcats::fct_inorder(期間)) %>%
-  dplyr::left_join(code_list, by = "code") %>%
-  dplyr::filter(code %in% code_list$code) %>%
-  # dplyr::filter(期間 %in% c("6ヶ月", "1年", "3年", "5年")) %>%
-  dplyr::mutate(リターンの平均値 = シャープレシオ * `リスク（標準偏差）`) %>% 
-  dplyr::mutate(label = paste0(fundcode, "(", 期間, "/", シャープレシオ, ")")) %>%
-  ggplot2::ggplot(ggplot2::aes(x = `リスク（標準偏差）`, y = リターンの平均値,
-                  color = fundcode, shape = インデックス型, label = label)) +
-    ggplot2::geom_abline(slope = 0, intercept = 0,
+#| code-summary: "商品分類別平均値"
+#| fig-height: 6
+"./data/sample/つみたてNISA_商品分類別運用情報_2022-06-18.csv" %>% 
+  read.csv() %>% 
+  dplyr::mutate(リターン = シャープレシオ * `リスク.標準偏差.`,
+                label = paste0(X2, "/", シャープレシオ)) %>% 
+  dplyr::rename(リスク = `リスク.標準偏差.`, 商品分類 = type) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン,
+                               colour = 商品分類, label = label)) + 
+    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
                          size = 0.2, linetype = "dashed") +
     ggplot2::geom_point() +
     ggplot2::geom_path(linetype = "dotted") + 
-    ggrepel::geom_text_repel(size = 2.5)
+    ggrepel::geom_text_repel(size = 3.5) + 
+    ggplot2::lims(x = c(0, 30), y = c(-15, 15)) +
+    ggplot2::labs(title = "商品分類別の平均",
+                  caption = "※無リスク資産の利回りを0%とした場合")
 ```
-
-```{r}
-#| include: false
-#| eval: false
-#| code-summary: "演習用データ作成"
-
-"./data/sample/つみたてNISA_運用情報_2022-06-12.csv" %>% 
-  read_csv() %>% 
-  dplyr::filter(期間 == "3年") %>% 
-  tidyr::drop_na(騰落率) %>% 
-  dplyr::sample_n(size = 10) %>% 
-  readr::write_excel_csv("./data/Exercies_6_1.csv")
-
-"./data/sample/つみたてNISA_運用情報_2022-06-12.csv" %>%
-  readr::read_csv() %>%
-  dplyr::mutate(期間 = forcats::fct_inorder(期間)) %>%
-  dplyr::left_join(code_list, by = "code") %>%
-  dplyr::filter(code %in% code_list$code) %>%
-  # dplyr::filter(期間 %in% c("6ヶ月", "1年", "3年", "5年")) %>%
-  dplyr::mutate(リターンの平均値 = シャープレシオ * `リスク（標準偏差）`) %>% 
-  readr::write_excel_csv("./data/Exercies_6_2.csv")
-```
-
-
+　  
+　国内外の問わず株式商品が資産複合商品に比べるとハイリスク・ハイリターンと言えます。また、どの商品も3年を超えると若干リスクが下がる傾向があるようです。  
+　なお、投信総合検索ライブラリーのデータ上、資産複合は国内外の区別がありません。
 
 　  
 
