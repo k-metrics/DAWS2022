@@ -93,7 +93,7 @@ source("./R/setup.R")
 #| code-fold: true
 #| code-summary: "サイトから取得した株価データ"
 #| message: false
-stock <- "./data/株価の月次推移_2022-06-15.csv" %>% 
+stock <- "./data/sample/株価の月次推移_2022-06-15.csv" %>% 
   read_csv()
 stock %>% df_print()
 ```
@@ -178,7 +178,7 @@ stock %>%
 #| code-summary: "6銘柄の月次平均収益率と標準偏差を可視化する（改良板）"
 #| warning: false
 #| message: false
-stock_n <- "./data/６銘柄の株価の月次推移_2022-06-15.csv" %>% 
+stock_n <- "./data/sample/６銘柄の株価の月次推移_2022-06-15.csv" %>% 
   read_csv()
 
 stock_n %>% df_print()

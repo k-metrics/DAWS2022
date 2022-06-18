@@ -329,7 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section><section id="実際の株価で計算してみる" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="実際の株価で計算してみる">実際の株価で計算してみる</h2>
 <p>　実際に<a href="https://kabutan.jp/">株探</a>というサイトから某社の月次株価一覧を取得して月次平均収益率を計算してみます。</p>
 <div class="cell">
-<details><summary>サイトから取得した株価データ</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock</span> <span class="op">&lt;-</span> <span class="st">"./data/株価の月次推移_2022-06-15.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>サイトから取得した株価データ</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock</span> <span class="op">&lt;-</span> <span class="st">"./data/sample/株価の月次推移_2022-06-15.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu">read_csv</span><span class="op">(</span><span class="op">)</span>
 <span class="va">stock</span> <span class="op">%&gt;%</span> <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
@@ -406,7 +406,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="header-section-number">5.3.1</span> 複数の株を比較する</h3>
 <p>　複数の同業種銘柄を比較してみます。どの株が儲かりそうでしょうか？</p>
 <div class="cell">
-<details><summary>6銘柄の月次平均収益率と標準偏差を可視化する（改良板）</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock_n</span> <span class="op">&lt;-</span> <span class="st">"./data/６銘柄の株価の月次推移_2022-06-15.csv"</span> <span class="op">%&gt;%</span> 
+<details><summary>6銘柄の月次平均収益率と標準偏差を可視化する（改良板）</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">stock_n</span> <span class="op">&lt;-</span> <span class="st">"./data/sample/６銘柄の株価の月次推移_2022-06-15.csv"</span> <span class="op">%&gt;%</span> 
   <span class="fu">read_csv</span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">stock_n</span> <span class="op">%&gt;%</span> <span class="fu">df_print</span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
