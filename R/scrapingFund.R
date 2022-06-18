@@ -302,16 +302,38 @@ nisa_rrs %>%
 # 商品分類別平均値
 #------------------------------------------------------------------------------
 nisa_info %>% 
-  dplyr::select(code, インデックス型, type) %>% 
+  dplyr::select(code, type) %>% 
   dplyr::left_join(nisa_rrs, by = "code") %>% 
   dplyr::select(-code, -X3) %>% 
   dplyr::mutate(X4 = stringr::str_remove(X4, "%")) %>% 
-  # readr::write_excel_csv(paste0(path, "つみたてNISA_商品分類_check_",
-  #                               as.character(lubridate::today()),
-  #                               ".csv"))
-  dplyr::distinct(インデックス型,type, X1, X2, .keep_all = TRUE) %>% 
+  dplyr::mutate(type = dplyr::if_else(stringr::str_detect(type, "資産複合"),
+                                      "資産複合（バランス型）", type)) %>% 
+  # DT::datatable()
+  dplyr::distinct(type, X1, X2, .keep_all = TRUE) %>% 
   tidyr::pivot_wider(names_from = X1, values_from = X4) %>% 
   print() %>% 
   readr::write_excel_csv(paste0(path, "つみたてNISA_商品分類別運用情報_",
                                 date, ".csv"))
+
+
+
+# -----------------------------------------------------------------------------
+# 演習用データの作成
+#------------------------------------------------------------------------------
+"./data/sample/つみたてNISA_運用情報_2022-06-12.csv" %>% 
+  read_csv() %>% 
+  dplyr::filter(期間 == "3年") %>% 
+  tidyr::drop_na(騰落率) %>% 
+  dplyr::sample_n(size = 10) %>% 
+  readr::write_excel_csv("./data/Exercies_6_1.csv")
+
+"./data/sample/つみたてNISA_運用情報_2022-06-12.csv" %>%
+  readr::read_csv() %>%
+  dplyr::mutate(期間 = forcats::fct_inorder(期間)) %>%
+  dplyr::left_join(code_list, by = "code") %>%
+  dplyr::filter(code %in% code_list$code) %>%
+  # dplyr::filter(期間 %in% c("6ヶ月", "1年", "3年", "5年")) %>%
+  dplyr::mutate(リターンの平均値 = シャープレシオ * `リスク（標準偏差）`) %>% 
+  readr::write_excel_csv("./data/Exercies_6_2.csv")
+
 
