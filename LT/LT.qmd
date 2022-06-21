@@ -1,0 +1,133 @@
+---
+title: "金融商品を比較する"
+subtitle: "リスクとリターン"
+author: "Sampo Suzuki"
+format: 
+  revealjs: 
+    theme: moon # beige, blood, dark, default, league, moon, night, serif, simple, sky, solarized
+---
+
+```{r}
+#| include: false
+source("../R/setup.R")
+```
+
+
+## 対象データ
+::: {.notes}
+投信総合検索ライブラリーからスクレイピングで取得した下記のデータ
+:::
+```{r}
+#| echo: false
+base_info <- "../data/sample/つみたてNISA_基本情報_2022-06-18.csv" %>% 
+  read.csv()
+
+base_info %>% 
+  dplyr::group_by(インデックス型, type) %>%
+  dplyr::summarise(n = n()) %>%
+  tidyr::pivot_wider(names_from = インデックス型, values_from = n) %>% 
+  df_print()
+```
+
+
+## 商品分類毎の運用実績（平均値） {.scrollable}
+::: {.notes}
+商品分類ごとの平均値
+:::
+```{r}
+#| echo: false
+operation_info <- "../data/sample/つみたてNISA_運用情報_2022-06-18.csv" %>% 
+  read.csv()
+
+operation_mean <- base_info %>% 
+  dplyr::select(code, fund, index = インデックス型, type) %>% 
+  dplyr::left_join(operation_info, by = "code") %>% 
+  dplyr::rename(term = 期間, risk = `リスク.標準偏差.`,
+                s.ratio = シャープレシオ) %>% 
+  dplyr::mutate(term = forcats::fct_inorder(term),
+                return = risk * s.ratio) %>% 
+  tidyr::separate(type, into = c("NISA", "area", "type"), sep = "/") %>% 
+  dplyr::group_by(area, type, index, term) %>% 
+  dplyr::summarise(risk = mean(risk, na.rm = TRUE) %>% round(2),
+                   return = mean(return, na.rm = TRUE) %>% round(2),
+                   s.ratio = mean(s.ratio, na.rm = TRUE) %>% round(2)) %>% 
+  df_print()
+
+operation_mean
+```
+
+
+## 可視化 {.scrollable}
+```{r}
+operation_mean %>% 
+  dplyr::filter(index == "インデックス型") %>% 
+  dplyr::mutate(商品分類 = paste(area, type, index, sep = "/")) %>% 
+  dplyr::rename(リスク = risk, リターン = return) %>% 
+  dplyr::mutate(label = paste(area, type, term, s.ratio, sep = "/")) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン,
+                               colour = 商品分類, label = label)) + 
+    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
+                         size = 0.2, linetype = "dashed") +
+    ggplot2::geom_point() +
+    ggplot2::geom_path(linetype = "dotted") + 
+    ggrepel::geom_text_repel(size = 2.5) + 
+    ggplot2::lims(x = c(0, 25), y = c(-10, 15)) +
+    # ggplot2::xlim(0, 25) + 
+    ggplot2::labs(title = "インデックス型商品分類別の平均",
+                  caption = "※無リスク資産の利回りを0%とした場合") 
+# + 
+#     ggplot2::facet_wrap(~ area)
+```
+
+## 可視化 {.scrollable}
+```{r}
+operation_mean %>% 
+  dplyr::filter(index != "インデックス型") %>% 
+  dplyr::mutate(商品分類 = paste(area, type, index, sep = "/")) %>% 
+  dplyr::rename(リスク = risk, リターン = return) %>% 
+  dplyr::mutate(label = paste(area, type, term, s.ratio, sep = "/")) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン,
+                               colour = 商品分類, label = label,
+                               shape = index)) + 
+    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
+                         size = 0.2, linetype = "dashed") +
+    ggplot2::geom_point() +
+    ggplot2::geom_path(linetype = "dotted") + 
+    ggrepel::geom_text_repel(size = 2.5) + 
+    ggplot2::lims(x = c(0, 25), y = c(-10, 15)) +
+    # ggplot2::xlim(0, 25) + 
+    ggplot2::labs(title = "非インデックス型商品分類別の平均",
+                  caption = "※無リスク資産の利回りを0%とした場合") 
+# + 
+#     ggplot2::facet_wrap(~ area)
+```
+
+
+## 可視化 {.scrollable}
+```{r}
+operation_mean %>% 
+  dplyr::mutate(商品分類 = paste(area, type, index, sep = "/")) %>% 
+  dplyr::rename(リスク = risk, リターン = return) %>% 
+  dplyr::mutate(label = dplyr::if_else(term == "6ヶ月",
+                                       paste(area, type, term, s.ratio, sep = "/"),
+                                       paste(term, s.ratio, sep = "/"))) %>%
+  dplyr::mutate(label = dplyr::if_else(term == "6ヶ月",
+                                       paste(area, type, term, s.ratio, sep = "/"),
+                                       paste(term, s.ratio, sep = "/"))) %>%
+  # dplyr::mutate(label = paste(term, s.ratio, sep = "/")) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン,
+                               colour = 商品分類, label = label,
+                               shape = index, linetype = type)) + 
+    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
+                         size = 0.2, linetype = "dashed") +
+    ggrepel::geom_text_repel(size = 2.5) + 
+    ggplot2::geom_path(size = 0.3) + 
+    ggplot2::geom_point() +
+    ggplot2::lims(x = c(0, 25), y = c(-10, 15)) +
+    # ggplot2::xlim(0, 25) + 
+    ggplot2::labs(title = "全商品分類別の平均",
+                  caption = "※無リスク資産の利回りを0%とした場合") 
+```
+
+
+
