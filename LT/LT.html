@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="ja"><head>
   <meta charset="utf-8">
   <meta name="generator" content="quarto-0.9.440">
 
-  <meta name="author" content="Sampo Suzuki">
-  <title>金融商品を比較する</title>
+  <meta name="author" content="CC 4.0 BY-NC-SA, Sampo Suzuki">
+  <title>金融商品の比較</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -323,13 +323,43 @@
     <div class="slides">
 
 <section id="title-slide" class="center">
-  <h1 class="title">金融商品を比較する</h1>
-  <p class="subtitle">リスクとリターン</p>
-  <p class="author">Sampo Suzuki</p>
+  <h1 class="title">金融商品の比較</h1>
+  <p class="subtitle">リスクとリターンの関係を可視化する</p>
+  <p class="author">CC 4.0 BY-NC-SA, Sampo Suzuki</p>
 </section>
 
-<section id="対象データ" class="slide level2">
-<h2>対象データ</h2>
+<section>
+<section id="はじめに" class="title-slide slide level1 center">
+<h1>はじめに</h1>
+
+</section>
+<section id="注意事項" class="slide level2">
+<h2>注意事項</h2>
+<ul>
+<li>本資料は楽天証券・投資信託協会・価格コムのサイトからスクレイピングして得た運用データを利用しています
+<ul>
+<li>運用データ自体の著作権は原著作者にあります</li>
+<li>運用データは過去の実績に基づくもので将来を保証するものではありません</li>
+</ul></li>
+<li>本資料を利用したことによって生じたいかなる損害についても一切の責任は負いません</li>
+<li>本資料は投資勧誘を目的にするものではありません</li>
+<li>本資料では手数料などは考慮していません</li>
+<li>本資料の再配布は禁止します</li>
+</ul>
+</section>
+<section id="リターンの算出おさらい" class="slide level2">
+<h2>リターンの算出（おさらい）</h2>
+<p>スクレイピングで得た運用情報は、騰落率（<span class="math inline">\(\simeq\)</span>利回り）・リスク・シャープレシオのみのため<br>
+　</p>
+<p><span class="math inline">\(\mbox{シャープレシオ} = \frac{\mbox{リターン} - \mbox{無リスク資産の利回り}}{\mbox{リスク}}\)</span></p>
+<p>　<br>
+の関係式を用いて、無リスク資産の利回り（国債の利回り）を<span class="math inline">\(0\%\)</span>としてリターンを求めています。</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="対象データつみたてｎｉｓａ" class="slide level2">
+<h2>対象データ（つみたてＮＩＳＡ）</h2>
 <aside class="notes">
 <p>投信総合検索ライブラリーからスクレイピングで取得した下記のデータ</p>
 <style type="text/css">
@@ -348,16 +378,162 @@
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["インデックス型"],"name":[2],"type":["int"],"align":["right"]},{"label":["該当なし"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"追加型/海外/株式","2":"41","3":"2"},{"1":"追加型/海外/資産複合","2":"2","3":"NA"},{"1":"追加型/国内/株式","2":"33","3":"3"},{"1":"追加型/国内/資産複合","2":"3","3":"1"},{"1":"追加型/内外/株式","2":"9","3":"5"},{"1":"追加型/内外/資産複合","2":"29","3":"53"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["市場"],"name":[1],"type":["chr"],"align":["left"]},{"label":["タイプ"],"name":[2],"type":["chr"],"align":["left"]},{"label":["インデックス型"],"name":[3],"type":["int"],"align":["right"]},{"label":["該当なし"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"海外","2":"株式","3":"41","4":"2"},{"1":"海外","2":"資産複合","3":"2","4":"NA"},{"1":"国内","2":"株式","3":"33","4":"3"},{"1":"国内","2":"資産複合","3":"3","4":"1"},{"1":"内外","2":"株式","3":"9","4":"5"},{"1":"内外","2":"資産複合","3":"29","4":"53"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
+</section></section>
+<section>
+<section id="リスク" class="title-slide slide level1 center">
+<h1>リスク</h1>
+
 </section>
-<section id="商品分類毎の運用実績平均値" class="slide level2 scrollable">
-<h2>商品分類毎の運用実績（平均値）</h2>
+<section id="リスクの分布" class="slide level2">
+<h2>リスクの分布</h2>
+
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+<section id="運用期間ごとのリスクの分布" class="slide level2">
+<h2>運用期間ごとのリスクの分布</h2>
+
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
+<section id="市場ごとのリスクの分布" class="slide level2">
+<h2>市場ごとのリスクの分布</h2>
+
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
+<section id="インデックスによるリスクの分布" class="slide level2">
+<h2>インデックスによるリスクの分布</h2>
+
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
+<section id="リスクの傾向" class="slide level2">
+<h2>リスクの傾向</h2>
+<ul>
+<li>全体傾向
+<ul>
+<li>株式に比べて資産複合の方がリスクが低い傾向</li>
+</ul></li>
+<li>期間による傾向
+<ul>
+<li>期間によるリスクの傾向変化は大きくない</li>
+</ul></li>
+<li>市場による傾向
+<ul>
+<li>海外市場の方が国内市場に比べると高リスク傾向</li>
+<li>内外市場では資産複合の方がリスクが低い傾向</li>
+</ul></li>
+<li>インデックスによる傾向
+<ul>
+<li>資産複合はインデックス型の方がリスクが低い傾向</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="リターン" class="title-slide slide level1 center">
+<h1>リターン</h1>
+
+</section>
+<section id="リターンの分布" class="slide level2">
+<h2>リターンの分布</h2>
+
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
+<section id="運用期間ごとのリターン" class="slide level2">
+<h2>運用期間ごとのリターン</h2>
+
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<section id="市場ごとのリターン" class="slide level2">
+<h2>市場ごとのリターン</h2>
+
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
+<section id="インデックスによるリターン" class="slide level2">
+<h2>インデックスによるリターン</h2>
+
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<section id="リターンの傾向" class="slide level2">
+<h2>リターンの傾向</h2>
+<ul>
+<li>全体傾向
+<ul>
+<li>株式に比べて資産複合の方がリターンが低い傾向</li>
+<li>ただし、株式には二極化傾向が見られる</li>
+</ul></li>
+<li>期間による傾向
+<ul>
+<li>期間が長いほうがリターンが高くなる傾向</li>
+</ul></li>
+<li>市場による傾向
+<ul>
+<li>海外市場より国内市場の方がマイナスになりにくい</li>
+<li>内外市場の大半はプラスリターン</li>
+</ul></li>
+<li>インデックスによる傾向
+<ul>
+<li>複合資産は非インデックス型の方が高リターン傾向</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="リスクとリターン" class="title-slide slide level1 center">
+<h1>リスクとリターン</h1>
+
+</section>
+<section id="リスクとリターンの関係" class="slide level2">
+<h2>リスクとリターンの関係</h2>
+
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
+<section id="運用期間ごとのリスクとリターンの関係" class="slide level2">
+<h2>運用期間ごとのリスクとリターンの関係</h2>
+
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
+<section id="市場ごとのリスクとリターンの関係" class="slide level2">
+<h2>市場ごとのリスクとリターンの関係</h2>
+
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
+<section id="インデックスによるリスクとリターンの関係" class="slide level2">
+<h2>インデックスによるリスクとリターンの関係</h2>
+
+<!-- ## 運用期間ごとのインデックス・タイプ別 -->
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- fund_data %>%  -->
+<!--   ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) +  -->
+<!--     ggplot2::geom_abline(slope = c(0, 1), intercept = 0, -->
+<!--                          size = 0.2, linetype = "dashed") + -->
+<!--     ggplot2::geom_point(ggplot2::aes(colour = タイプ, -->
+<!--                                      shape = インデックス)) +  -->
+<!--     ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") +  -->
+<!--     ggplot2::facet_wrap(~ 期間) -->
+<!-- ``` -->
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch"></section>
+<section id="リスクとリターンの関係-1" class="slide level2">
+<h2>リスクとリターンの関係</h2>
+<ul>
+<li>株式の方がハイリスク・ハイリターンの傾向</li>
+<li>1年未満の短期保有では低シャープレシオの傾向</li>
+<li>長期保有の方がシャープレシオが高くなる傾向
+<ul>
+<li>ただし、途中で谷になる傾向が見られる</li>
+</ul></li>
+<li>海外市場の方がハイリスク・ハイリターンの傾向</li>
+<li>内外市場の資産複合はローリスク・ローリターンの傾向</li>
+<li>インデックス型の方がシャープレシオが高い傾向</li>
+</ul>
+</section></section>
+<section>
+<section id="商品分類ごとの比較" class="title-slide slide level1 center">
+<h1>商品分類ごとの比較</h1>
+
+</section>
+<section id="平均値の算出" class="slide level2">
+<h2>平均値の算出</h2>
+<p>市場・タイプの組合せを商品分類とし、各商品分類のインデックス・期間ごとにリスク・リターン・シャープレシオの単純平均を求め、求めた値を用いて商品分類ごとの比較を行っています。</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="平均値による比較" class="slide level2">
+<h2>平均値による比較</h2>
 <aside class="notes">
-<p>商品分類ごとの平均値</p>
+<p>商品分類ごとに平均値を計算して期間による変動を可視化</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -369,29 +545,35 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<div class="cell">
-<div class="cell-output-display">
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["area"],"name":[1],"type":["chr"],"align":["left"]},{"label":["type"],"name":[2],"type":["chr"],"align":["left"]},{"label":["index"],"name":[3],"type":["chr"],"align":["left"]},{"label":["term"],"name":[4],"type":["fct"],"align":["left"]},{"label":["risk"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["return"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["s.ratio"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"海外","2":"株式","3":"インデックス型","4":"6ヶ月","5":"17.82","6":"1.28","7":"0.05"},{"1":"海外","2":"株式","3":"インデックス型","4":"1年","5":"14.85","6":"6.64","7":"0.36"},{"1":"海外","2":"株式","3":"インデックス型","4":"3年","5":"18.60","6":"16.10","7":"0.87"},{"1":"海外","2":"株式","3":"インデックス型","4":"5年","5":"17.40","6":"11.83","7":"0.69"},{"1":"海外","2":"株式","3":"インデックス型","4":"10年","5":"16.90","6":"14.06","7":"0.84"},{"1":"海外","2":"株式","3":"該当なし","4":"6ヶ月","5":"22.76","6":"-2.34","7":"-0.10"},{"1":"海外","2":"株式","3":"該当なし","4":"1年","5":"18.04","6":"6.27","7":"0.35"},{"1":"海外","2":"株式","3":"該当なし","4":"3年","5":"18.40","6":"16.75","7":"0.92"},{"1":"海外","2":"株式","3":"該当なし","4":"5年","5":"17.42","6":"13.13","7":"0.76"},{"1":"海外","2":"株式","3":"該当なし","4":"10年","5":"17.18","6":"16.90","7":"0.99"},{"1":"海外","2":"資産複合","3":"インデックス型","4":"6ヶ月","5":"19.55","6":"6.28","7":"0.32"},{"1":"海外","2":"資産複合","3":"インデックス型","4":"1年","5":"14.99","6":"13.02","7":"0.82"},{"1":"海外","2":"資産複合","3":"インデックス型","4":"3年","5":"14.55","6":"10.48","7":"0.72"},{"1":"海外","2":"資産複合","3":"インデックス型","4":"5年","5":"12.76","6":"7.66","7":"0.60"},{"1":"海外","2":"資産複合","3":"インデックス型","4":"10年","5":"NaN","6":"NaN","7":"NaN"},{"1":"国内","2":"株式","3":"インデックス型","4":"6ヶ月","5":"13.80","6":"0.45","7":"0.04"},{"1":"国内","2":"株式","3":"インデックス型","4":"1年","5":"12.53","6":"-0.31","7":"0.00"},{"1":"国内","2":"株式","3":"インデックス型","4":"3年","5":"15.98","6":"11.73","7":"0.74"},{"1":"国内","2":"株式","3":"インデックス型","4":"5年","5":"15.44","6":"8.04","7":"0.52"},{"1":"国内","2":"株式","3":"インデックス型","4":"10年","5":"16.15","6":"13.60","7":"0.84"},{"1":"国内","2":"株式","3":"該当なし","4":"6ヶ月","5":"13.01","6":"5.65","7":"0.53"},{"1":"国内","2":"株式","3":"該当なし","4":"1年","5":"11.80","6":"6.55","7":"0.58"},{"1":"国内","2":"株式","3":"該当なし","4":"3年","5":"15.57","6":"13.72","7":"0.89"},{"1":"国内","2":"株式","3":"該当なし","4":"5年","5":"15.32","6":"8.85","7":"0.58"},{"1":"国内","2":"株式","3":"該当なし","4":"10年","5":"16.03","6":"14.12","7":"0.88"},{"1":"国内","2":"資産複合","3":"インデックス型","4":"6ヶ月","5":"11.81","6":"0.90","7":"-0.06"},{"1":"国内","2":"資産複合","3":"インデックス型","4":"1年","5":"8.96","6":"-0.98","7":"-0.16"},{"1":"国内","2":"資産複合","3":"インデックス型","4":"3年","5":"10.16","6":"5.96","7":"0.54"},{"1":"国内","2":"資産複合","3":"インデックス型","4":"5年","5":"NaN","6":"NaN","7":"NaN"},{"1":"国内","2":"資産複合","3":"インデックス型","4":"10年","5":"NaN","6":"NaN","7":"NaN"},{"1":"国内","2":"資産複合","3":"該当なし","4":"6ヶ月","5":"3.74","6":"-2.58","7":"-0.69"},{"1":"国内","2":"資産複合","3":"該当なし","4":"1年","5":"2.83","6":"-1.53","7":"-0.54"},{"1":"国内","2":"資産複合","3":"該当なし","4":"3年","5":"4.03","6":"-0.24","7":"-0.06"},{"1":"国内","2":"資産複合","3":"該当なし","4":"5年","5":"NaN","6":"NaN","7":"NaN"},{"1":"国内","2":"資産複合","3":"該当なし","4":"10年","5":"NaN","6":"NaN","7":"NaN"},{"1":"内外","2":"株式","3":"インデックス型","4":"6ヶ月","5":"18.37","6":"3.13","7":"0.17"},{"1":"内外","2":"株式","3":"インデックス型","4":"1年","5":"14.13","6":"8.18","7":"0.56"},{"1":"内外","2":"株式","3":"インデックス型","4":"3年","5":"17.09","6":"16.57","7":"0.97"},{"1":"内外","2":"株式","3":"インデックス型","4":"5年","5":"NaN","6":"NaN","7":"NaN"},{"1":"内外","2":"株式","3":"インデックス型","4":"10年","5":"NaN","6":"NaN","7":"NaN"},{"1":"内外","2":"株式","3":"該当なし","4":"6ヶ月","5":"19.67","6":"-7.88","7":"-0.37"},{"1":"内外","2":"株式","3":"該当なし","4":"1年","5":"15.68","6":"0.56","7":"0.04"},{"1":"内外","2":"株式","3":"該当なし","4":"3年","5":"18.18","6":"14.55","7":"0.80"},{"1":"内外","2":"株式","3":"該当なし","4":"5年","5":"17.47","6":"10.42","7":"0.59"},{"1":"内外","2":"株式","3":"該当なし","4":"10年","5":"15.42","6":"14.96","7":"0.97"},{"1":"内外","2":"資産複合","3":"インデックス型","4":"6ヶ月","5":"10.64","6":"0.86","7":"0.05"},{"1":"内外","2":"資産複合","3":"インデックス型","4":"1年","5":"8.03","6":"3.10","7":"0.37"},{"1":"内外","2":"資産複合","3":"インデックス型","4":"3年","5":"10.08","6":"8.47","7":"0.85"},{"1":"内外","2":"資産複合","3":"インデックス型","4":"5年","5":"8.59","6":"5.73","7":"0.68"},{"1":"内外","2":"資産複合","3":"インデックス型","4":"10年","5":"8.19","6":"8.37","7":"1.04"},{"1":"内外","2":"資産複合","3":"該当なし","4":"6ヶ月","5":"11.13","6":"-1.83","7":"-0.37"},{"1":"内外","2":"資産複合","3":"該当なし","4":"1年","5":"8.46","6":"2.73","7":"0.22"},{"1":"内外","2":"資産複合","3":"該当なし","4":"3年","5":"9.89","6":"8.27","7":"0.80"},{"1":"内外","2":"資産複合","3":"該当なし","4":"5年","5":"10.68","6":"6.84","7":"0.64"},{"1":"内外","2":"資産複合","3":"該当なし","4":"10年","5":"10.58","6":"10.18","7":"0.97"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-</section>
-<section id="可視化" class="slide level2 scrollable">
-<h2>可視化</h2>
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-17-1.png" width="960" class="r-stretch"></section>
+<section id="商品国内資産複合単位の比較" class="slide level2">
+<h2>商品（国内/資産複合）単位の比較</h2>
 
-<img data-src="LT_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
-<section id="可視化-1" class="slide level2 scrollable">
-<h2>可視化</h2>
-
-<img data-src="LT_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
-<section id="可視化-2" class="slide level2 scrollable">
-<h2>可視化</h2>
-
-<img data-src="LT_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"><div class="footer footer-default">
+<img data-src="LT_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch"></section>
+<section id="まとめ" class="slide level2">
+<h2>まとめ</h2>
+<ul>
+<li>株式はハイリスク・ハイリターン傾向
+<ul>
+<li>海外市場株式は、よりハイリスク・ハイリターン傾向</li>
+<li>1年未満の短期保有ではマイナスになる可能性も</li>
+<li>長期保有でハイリターンが得られる可能背も</li>
+</ul></li>
+<li>資産複合は海外市場を除きローリスク・ローリターン傾向
+<ul>
+<li>海外市場の資産複合は株式並のハイリスク・ハイリターン</li>
+<li>長期保有すればリターンは高くなる傾向</li>
+</ul></li>
+<li>インデックス型の方がハイリターン傾向
+<ul>
+<li>非インデックス型の国内/資産複合の実績はこれから？</li>
+</ul></li>
+</ul>
+</section></section>
+<section id="ｅｎｊｏｙ" class="title-slide slide level1 center">
+<h1>ＥＮＪＯＹ！</h1>
+<div class="footer footer-default">
 
 </div>
 </section>
@@ -667,7 +849,7 @@
         // flash "checked"
         button.classList.add('code-copy-button-checked');
         var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
+        button.setAttribute("title", "完了");
         setTimeout(function() {
           button.setAttribute("title", currentTitle);
           button.classList.remove('code-copy-button-checked');

@@ -1,7 +1,8 @@
 ---
-title: "金融商品を比較する"
-subtitle: "リスクとリターン"
-author: "Sampo Suzuki"
+title: "金融商品の比較"
+subtitle: "リスクとリターンの関係を可視化する"
+author: "CC 4.0 BY-NC-SA, Sampo Suzuki"
+lang: ja
 format: 
   revealjs: 
     theme: moon # beige, blood, dark, default, league, moon, night, serif, simple, sky, solarized
@@ -12,122 +13,342 @@ format:
 source("../R/setup.R")
 ```
 
+# はじめに
 
-## 対象データ
+## 注意事項
+* 本資料は楽天証券・投資信託協会・価格コムのサイトからスクレイピングして得た運用データを利用しています
+    * 運用データ自体の著作権は原著作者にあります
+    * 運用データは過去の実績に基づくもので将来を保証するものではありません
+* 本資料を利用したことによって生じたいかなる損害についても一切の責任は負いません
+* 本資料は投資勧誘を目的にするものではありません
+* 本資料では手数料などは考慮していません
+* 本資料の再配布は禁止します
+
+
+## リターンの算出（おさらい）
+スクレイピングで得た運用情報は、騰落率（$\simeq$利回り）・リスク・シャープレシオのみのため  
+　  
+
+$\mbox{シャープレシオ} = \frac{\mbox{リターン} - \mbox{無リスク資産の利回り}}{\mbox{リスク}}$
+
+　  
+の関係式を用いて、無リスク資産の利回り（国債の利回り）を$0\%$としてリターンを求めています。
+
+
+```{r}
+#| echo: false
+base_info <- "../data/sample/つみたてNISA_基本情報_2022-06-18.csv" %>% 
+  read.csv() %>% 
+  tidyr::separate(type, into = c("NISA", "市場", "タイプ"), sep = "/") %>% 
+  dplyr::select(-NISA)
+
+operation_info <- "../data/sample/つみたてNISA_運用情報_2022-06-18.csv" %>% 
+  read.csv()
+
+fund_data <- base_info %>% 
+  dplyr::select(code, インデックス = インデックス型, 市場, タイプ) %>% 
+  dplyr::left_join(operation_info, by = "code") %>% 
+  dplyr::mutate(期間 = forcats::fct_inorder(期間)) %>% 
+  dplyr::rename(リスク = `リスク.標準偏差.`) %>% 
+  dplyr::mutate(リターン = リスク * シャープレシオ)
+```
+
+
+## 対象データ（つみたてＮＩＳＡ）
 ::: {.notes}
 投信総合検索ライブラリーからスクレイピングで取得した下記のデータ
 :::
 ```{r}
 #| echo: false
-base_info <- "../data/sample/つみたてNISA_基本情報_2022-06-18.csv" %>% 
-  read.csv()
-
 base_info %>% 
-  dplyr::group_by(インデックス型, type) %>%
+  dplyr::group_by(インデックス型, 市場, タイプ) %>%
   dplyr::summarise(n = n()) %>%
   tidyr::pivot_wider(names_from = インデックス型, values_from = n) %>% 
   df_print()
 ```
 
 
-## 商品分類毎の運用実績（平均値） {.scrollable}
+# リスク
+
+
+## リスクの分布
+```{r}
+#| echo: false
+fund_data %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク)) + 
+    ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
+                            position = "identity", alpha = 0.5) + 
+    ggplot2::ylab("")
+```
+
+
+## 運用期間ごとのリスクの分布
+```{r}
+#| echo: false
+fund_data %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク)) + 
+    ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
+                            position = "identity", alpha = 0.5) + 
+    ggplot2::ylab("") + 
+    ggplot2::facet_wrap(~ 期間)
+```
+
+
+## 市場ごとのリスクの分布
+```{r}
+#| echo: false
+fund_data %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク)) + 
+    ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
+                            position = "identity", alpha = 0.5) + 
+    ggplot2::ylab("") + 
+    ggplot2::facet_wrap(~ 市場)
+```
+
+## インデックスによるリスクの分布
+```{r}
+#| echo: false
+fund_data %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク)) + 
+    ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
+                            position = "identity", alpha = 0.5) + 
+    ggplot2::ylab("") + 
+    ggplot2::facet_wrap(~ インデックス)
+```
+
+
+## リスクの傾向
+
+* 全体傾向
+    * 株式に比べて資産複合の方がリスクが低い傾向
+* 期間による傾向
+    * 期間によるリスクの傾向変化は大きくない
+* 市場による傾向
+  * 海外市場の方が国内市場に比べると高リスク傾向
+  * 内外市場では資産複合の方がリスクが低い傾向
+* インデックスによる傾向
+  * 資産複合はインデックス型の方がリスクが低い傾向
+
+
+# リターン
+
+## リターンの分布
+```{r}
+#| echo: false
+fund_data %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リターン)) + 
+    ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
+                            position = "identity", alpha = 0.5) + 
+    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::ylab("")
+```
+
+
+## 運用期間ごとのリターン
+```{r}
+#| echo: false
+fund_data %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リターン)) + 
+    ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
+                            position = "identity", alpha = 0.5) + 
+    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::ylab("") + 
+    ggplot2::facet_wrap(~ 期間)
+```
+
+
+## 市場ごとのリターン
+```{r}
+#| echo: false
+fund_data %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リターン)) + 
+    ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
+                            position = "identity", alpha = 0.5) + 
+    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::ylab("") + 
+    ggplot2::facet_wrap(~ 市場)
+```
+
+
+## インデックスによるリターン
+```{r}
+#| echo: false
+fund_data %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リターン)) + 
+    ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
+                            position = "identity", alpha = 0.5) + 
+    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::ylab("") + 
+    ggplot2::facet_wrap(~ インデックス)
+```
+
+
+## リターンの傾向
+
+* 全体傾向
+    * 株式に比べて資産複合の方がリターンが低い傾向
+    * ただし、株式には二極化傾向が見られる
+* 期間による傾向
+    * 期間が長いほうがリターンが高くなる傾向
+* 市場による傾向
+  * 海外市場より国内市場の方がマイナスになりにくい
+  * 内外市場の大半はプラスリターン
+* インデックスによる傾向
+  * 複合資産は非インデックス型の方が高リターン傾向
+
+
+# リスクとリターン
+
+
+## リスクとリターンの関係
+```{r}
+#| echo: false
+fund_data %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) + 
+    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
+                         size = 0.2, linetype = "dashed") +
+    ggplot2::geom_point(ggplot2::aes(colour = タイプ)) + 
+    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合")
+```
+
+
+## 運用期間ごとのリスクとリターンの関係
+```{r}
+#| echo: false
+fund_data %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) + 
+    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
+                         size = 0.2, linetype = "dashed") +
+    ggplot2::geom_point(ggplot2::aes(colour = タイプ)) + 
+    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::facet_wrap(~ 期間)
+```
+
+
+## 市場ごとのリスクとリターンの関係
+```{r}
+#| echo: false
+fund_data %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) + 
+    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
+                         size = 0.2, linetype = "dashed") +
+    ggplot2::geom_point(ggplot2::aes(colour = タイプ)) + 
+    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::facet_wrap(~ 市場)
+```
+
+
+## インデックスによるリスクとリターンの関係
+```{r}
+#| echo: false
+fund_data %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) + 
+    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
+                         size = 0.2, linetype = "dashed") +
+    ggplot2::geom_point(ggplot2::aes(colour = タイプ)) + 
+    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::facet_wrap(~ インデックス)
+```
+
+
+<!-- ## 運用期間ごとのインデックス・タイプ別 -->
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- fund_data %>%  -->
+<!--   ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) +  -->
+<!--     ggplot2::geom_abline(slope = c(0, 1), intercept = 0, -->
+<!--                          size = 0.2, linetype = "dashed") + -->
+<!--     ggplot2::geom_point(ggplot2::aes(colour = タイプ, -->
+<!--                                      shape = インデックス)) +  -->
+<!--     ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") +  -->
+<!--     ggplot2::facet_wrap(~ 期間) -->
+<!-- ``` -->
+
+
+## リスクとリターンの関係
+
+* 株式の方がハイリスク・ハイリターンの傾向
+* 1年未満の短期保有では低シャープレシオの傾向
+* 長期保有の方がシャープレシオが高くなる傾向
+    * ただし、途中で谷になる傾向が見られる
+* 海外市場の方がハイリスク・ハイリターンの傾向
+* 内外市場の資産複合はローリスク・ローリターンの傾向
+* インデックス型の方がシャープレシオが高い傾向
+
+
+# 商品分類ごとの比較
+
+
+## 平均値の算出
+
+市場・タイプの組合せを商品分類とし、各商品分類のインデックス・期間ごとにリスク・リターン・シャープレシオの単純平均を求め、求めた値を用いて商品分類ごとの比較を行っています。
+
+```{r}
+#| echo: false
+fund_mean <- fund_data %>% 
+  dplyr::group_by(市場, タイプ, インデックス, 期間) %>% 
+  dplyr::summarise(リスク平均 = mean(リスク, na.rm = TRUE),
+                   リターン平均 = mean(リターン, na.rm = TRUE),
+                   シャープレシオ平均 = mean(シャープレシオ, na.rm = TRUE)) 
+```
+
+
+## 平均値による比較
 ::: {.notes}
-商品分類ごとの平均値
+商品分類ごとに平均値を計算して期間による変動を可視化
 :::
 ```{r}
 #| echo: false
-operation_info <- "../data/sample/つみたてNISA_運用情報_2022-06-18.csv" %>% 
-  read.csv()
-
-operation_mean <- base_info %>% 
-  dplyr::select(code, fund, index = インデックス型, type) %>% 
-  dplyr::left_join(operation_info, by = "code") %>% 
-  dplyr::rename(term = 期間, risk = `リスク.標準偏差.`,
-                s.ratio = シャープレシオ) %>% 
-  dplyr::mutate(term = forcats::fct_inorder(term),
-                return = risk * s.ratio) %>% 
-  tidyr::separate(type, into = c("NISA", "area", "type"), sep = "/") %>% 
-  dplyr::group_by(area, type, index, term) %>% 
-  dplyr::summarise(risk = mean(risk, na.rm = TRUE) %>% round(2),
-                   return = mean(return, na.rm = TRUE) %>% round(2),
-                   s.ratio = mean(s.ratio, na.rm = TRUE) %>% round(2)) %>% 
-  df_print()
-
-operation_mean
-```
-
-
-## 可視化 {.scrollable}
-```{r}
-operation_mean %>% 
-  dplyr::filter(index == "インデックス型") %>% 
-  dplyr::mutate(商品分類 = paste(area, type, index, sep = "/")) %>% 
-  dplyr::rename(リスク = risk, リターン = return) %>% 
-  dplyr::mutate(label = paste(area, type, term, s.ratio, sep = "/")) %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン,
+fund_mean %>% 
+  dplyr::mutate(シャープレシオ平均 = round(シャープレシオ平均, 1),
+                label = paste(期間, シャープレシオ平均, sep = "/"),
+                商品分類 = paste(市場, タイプ, sep ="/")) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = リスク平均, y = リターン平均,
                                colour = 商品分類, label = label)) + 
     ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
                          size = 0.2, linetype = "dashed") +
-    ggplot2::geom_point() +
+    ggplot2::geom_point(ggplot2::aes(shape = タイプ)) + 
     ggplot2::geom_path(linetype = "dotted") + 
-    ggrepel::geom_text_repel(size = 2.5) + 
-    ggplot2::lims(x = c(0, 25), y = c(-10, 15)) +
-    # ggplot2::xlim(0, 25) + 
-    ggplot2::labs(title = "インデックス型商品分類別の平均",
-                  caption = "※無リスク資産の利回りを0%とした場合") 
-# + 
-#     ggplot2::facet_wrap(~ area)
+    ggrepel::geom_text_repel() + 
+    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::facet_wrap(~ インデックス) + 
+    ggplot2::scale_color_brewer(palette = "Dark2")
 ```
 
-## 可視化 {.scrollable}
+
+## 商品（国内/資産複合）単位の比較
 ```{r}
-operation_mean %>% 
-  dplyr::filter(index != "インデックス型") %>% 
-  dplyr::mutate(商品分類 = paste(area, type, index, sep = "/")) %>% 
-  dplyr::rename(リスク = risk, リターン = return) %>% 
-  dplyr::mutate(label = paste(area, type, term, s.ratio, sep = "/")) %>% 
+#| echo: false
+fund_data %>% 
+  dplyr::mutate(シャープレシオ = round(シャープレシオ, 1),
+                label = paste(期間, シャープレシオ, sep = "/"),
+                商品分類 = paste(市場, タイプ, sep ="/")) %>% 
+  dplyr::filter(商品分類 == "国内/資産複合") %>% 
   ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン,
-                               colour = 商品分類, label = label,
-                               shape = index)) + 
-    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
+                               colour = code, label = label)) + 
+    ggplot2::geom_abline(slope = c(0, 0.6), intercept = 0,
                          size = 0.2, linetype = "dashed") +
-    ggplot2::geom_point() +
+    ggplot2::geom_point(ggplot2::aes(shape = タイプ)) + 
     ggplot2::geom_path(linetype = "dotted") + 
-    ggrepel::geom_text_repel(size = 2.5) + 
-    ggplot2::lims(x = c(0, 25), y = c(-10, 15)) +
-    # ggplot2::xlim(0, 25) + 
-    ggplot2::labs(title = "非インデックス型商品分類別の平均",
-                  caption = "※無リスク資産の利回りを0%とした場合") 
-# + 
-#     ggplot2::facet_wrap(~ area)
+    ggrepel::geom_text_repel() + 
+    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::facet_wrap(~ インデックス) + 
+    ggplot2::scale_color_brewer(palette = "Dark2")
 ```
 
 
-## 可視化 {.scrollable}
-```{r}
-operation_mean %>% 
-  dplyr::mutate(商品分類 = paste(area, type, index, sep = "/")) %>% 
-  dplyr::rename(リスク = risk, リターン = return) %>% 
-  dplyr::mutate(label = dplyr::if_else(term == "6ヶ月",
-                                       paste(area, type, term, s.ratio, sep = "/"),
-                                       paste(term, s.ratio, sep = "/"))) %>%
-  dplyr::mutate(label = dplyr::if_else(term == "6ヶ月",
-                                       paste(area, type, term, s.ratio, sep = "/"),
-                                       paste(term, s.ratio, sep = "/"))) %>%
-  # dplyr::mutate(label = paste(term, s.ratio, sep = "/")) %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン,
-                               colour = 商品分類, label = label,
-                               shape = index, linetype = type)) + 
-    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
-                         size = 0.2, linetype = "dashed") +
-    ggrepel::geom_text_repel(size = 2.5) + 
-    ggplot2::geom_path(size = 0.3) + 
-    ggplot2::geom_point() +
-    ggplot2::lims(x = c(0, 25), y = c(-10, 15)) +
-    # ggplot2::xlim(0, 25) + 
-    ggplot2::labs(title = "全商品分類別の平均",
-                  caption = "※無リスク資産の利回りを0%とした場合") 
-```
+## まとめ
+
+* 株式はハイリスク・ハイリターン傾向
+    * 海外市場株式は、よりハイリスク・ハイリターン傾向
+    * 1年未満の短期保有ではマイナスになる可能性も
+    * 長期保有でハイリターンが得られる可能背も
+* 資産複合は海外市場を除きローリスク・ローリターン傾向
+    * 海外市場の資産複合は株式並のハイリスク・ハイリターン
+    * 長期保有すればリターンは高くなる傾向
+* インデックス型の方がハイリターン傾向
+    * 非インデックス型の国内/資産複合の実績はこれから？
 
 
+# ＥＮＪＯＹ！
 
