@@ -1,8 +1,8 @@
 ---
 title: "金融商品の比較"
 subtitle: "リスクとリターンの関係を可視化する"
-author: "CC 4.0 BY-NC-SA, Sampo Suzuki"
-lang: ja
+author: "CC BY-NC-SA 4.0, Sampo Suzuki"
+# lang: ja
 format: 
   revealjs: 
     theme: moon # beige, blood, dark, default, league, moon, night, serif, simple, sky, solarized
@@ -11,32 +11,7 @@ format:
 ```{r}
 #| include: false
 source("../R/setup.R")
-```
 
-# はじめに
-
-## 注意事項
-* 本資料は楽天証券・投資信託協会・価格コムのサイトからスクレイピングして得た運用データを利用しています
-    * 運用データ自体の著作権は原著作者にあります
-    * 運用データは過去の実績に基づくもので将来を保証するものではありません
-* 本資料を利用したことによって生じたいかなる損害についても一切の責任は負いません
-* 本資料は投資勧誘を目的にするものではありません
-* 本資料では手数料などは考慮していません
-* 本資料の再配布は禁止します
-
-
-## リターンの算出（おさらい）
-スクレイピングで得た運用情報は、騰落率（$\simeq$利回り）・リスク・シャープレシオのみのため  
-　  
-
-$\mbox{シャープレシオ} = \frac{\mbox{リターン} - \mbox{無リスク資産の利回り}}{\mbox{リスク}}$
-
-　  
-の関係式を用いて、無リスク資産の利回り（国債の利回り）を$0\%$としてリターンを求めています。
-
-
-```{r}
-#| echo: false
 base_info <- "../data/sample/つみたてNISA_基本情報_2022-06-18.csv" %>% 
   read.csv() %>% 
   tidyr::separate(type, into = c("NISA", "市場", "タイプ"), sep = "/") %>% 
@@ -51,12 +26,30 @@ fund_data <- base_info %>%
   dplyr::mutate(期間 = forcats::fct_inorder(期間)) %>% 
   dplyr::rename(リスク = `リスク.標準偏差.`) %>% 
   dplyr::mutate(リターン = リスク * シャープレシオ)
+
+# palette <- "Dark2"
+palette <- "Set1"
 ```
+
+
+# はじめに
+
+## Ｄｉｓｃｌａｉｍｅｒ
+
+:::{.callout-important}
+* 本資料は楽天証券・投資信託協会・価格コムのサイトからスクレイピングして得た情報を利用しています
+    * 情報自体の著作権は原著作者にあります
+    * 情報は過去の実績に基づくもので将来を保証するものではありません
+* 本資料を利用したことにより生じたいかなる損害についても一切の責任は負いません
+* 本資料は投資勧誘を目的にするものではありません
+* 本資料での計算では手数料・管理費・配当金などは考慮していません
+* 本資料で利用している**データファイルの再配布は禁止**します
+:::
 
 
 ## 対象データ（つみたてＮＩＳＡ）
 ::: {.notes}
-投信総合検索ライブラリーからスクレイピングで取得した下記のデータ
+投信総合検索ライブラリーからスクレイピングで取得
 :::
 ```{r}
 #| echo: false
@@ -68,17 +61,42 @@ base_info %>%
 ```
 
 
+## リターンの算出（おさらい）
+スクレイピングで得た運用情報は、各期間（6ヶ月/1年/3年/5年/10年）の騰落率（$\approx$利回り）・リターンの標準偏差（リスク）・シャープレシオのみです。  
+　  
+
+$\mbox{シャープレシオ} = \frac{\mbox{リターンの平均値} - \mbox{無リスク資産のリターン}}{\mbox{リターンの標準偏差}}$
+
+　  
+より無リスク資産のリターンを$0\%$としてリターンの平均値を求めています。
+
+:::{.callout-note}
+運用情報は2022年6月中頃のものです
+:::
+
 # リスク
+
+```{r}
+#| echo: false
+breaks <- seq(from = 0, to = 30, by = 2.5)
+```
 
 
 ## リスクの分布
+::: {.notes}
+階級幅は2.5
+:::
+
 ```{r}
 #| echo: false
 fund_data %>% 
+  dplyr::filter(!is.na(リスク)) %>%
   ggplot2::ggplot(ggplot2::aes(x = リスク)) + 
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
-                            position = "identity", alpha = 0.5) + 
-    ggplot2::ylab("")
+                            position = "identity", alpha = 0.5,
+                            breaks = breaks) + 
+    ggplot2::ylab("") + 
+    ggplot2::scale_fill_brewer(palette = palette)
 ```
 
 
@@ -86,11 +104,14 @@ fund_data %>%
 ```{r}
 #| echo: false
 fund_data %>% 
+  dplyr::filter(!is.na(リスク)) %>%
   ggplot2::ggplot(ggplot2::aes(x = リスク)) + 
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
-                            position = "identity", alpha = 0.5) + 
+                            position = "identity", alpha = 0.5,
+                            breaks = breaks) + 
     ggplot2::ylab("") + 
-    ggplot2::facet_wrap(~ 期間)
+    ggplot2::facet_wrap(~ 期間) + 
+    ggplot2::scale_fill_brewer(palette = palette)
 ```
 
 
@@ -98,22 +119,29 @@ fund_data %>%
 ```{r}
 #| echo: false
 fund_data %>% 
+  dplyr::filter(!is.na(リスク)) %>%
   ggplot2::ggplot(ggplot2::aes(x = リスク)) + 
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
-                            position = "identity", alpha = 0.5) + 
+                            position = "identity", alpha = 0.5,
+                            breaks = breaks) + 
     ggplot2::ylab("") + 
-    ggplot2::facet_wrap(~ 市場)
+    ggplot2::facet_wrap(~ 市場) + 
+    ggplot2::scale_fill_brewer(palette = palette)
 ```
+
 
 ## インデックスによるリスクの分布
 ```{r}
 #| echo: false
 fund_data %>% 
+  dplyr::filter(!is.na(リスク)) %>%
   ggplot2::ggplot(ggplot2::aes(x = リスク)) + 
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
-                            position = "identity", alpha = 0.5) + 
+                            position = "identity", alpha = 0.5,
+                            breaks = breaks) + 
     ggplot2::ylab("") + 
-    ggplot2::facet_wrap(~ インデックス)
+    ggplot2::facet_wrap(~ インデックス) + 
+    ggplot2::scale_fill_brewer(palette = palette)
 ```
 
 
@@ -122,9 +150,8 @@ fund_data %>%
 * 全体傾向
     * 株式に比べて資産複合の方がリスクが低い傾向
 * 期間による傾向
-    * 期間によるリスクの傾向変化は大きくない
+    * 期間によるリスクの変化は少ない傾向
 * 市場による傾向
-  * 海外市場の方が国内市場に比べると高リスク傾向
   * 内外市場では資産複合の方がリスクが低い傾向
 * インデックスによる傾向
   * 資産複合はインデックス型の方がリスクが低い傾向
@@ -132,15 +159,28 @@ fund_data %>%
 
 # リターン
 
+```{r}
+#| echo: false
+breaks <- seq(from = -20, to = 20, by = 5)
+# breaks <- pretty(fund_data$リターン)
+```
+
 ## リターンの分布
+::: {.notes}
+階級幅は5
+:::
+
 ```{r}
 #| echo: false
 fund_data %>% 
+  dplyr::filter(!is.na(リターン)) %>% 
   ggplot2::ggplot(ggplot2::aes(x = リターン)) + 
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
-                            position = "identity", alpha = 0.5) + 
+                            position = "identity", alpha = 0.5,
+                            breaks = breaks) + 
     ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
-    ggplot2::ylab("")
+    ggplot2::ylab("") + 
+    ggplot2::scale_fill_brewer(palette = palette)
 ```
 
 
@@ -148,12 +188,15 @@ fund_data %>%
 ```{r}
 #| echo: false
 fund_data %>% 
+  dplyr::filter(!is.na(リターン)) %>% 
   ggplot2::ggplot(ggplot2::aes(x = リターン)) + 
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
-                            position = "identity", alpha = 0.5) + 
+                            position = "identity", alpha = 0.5,
+                            breaks = breaks) + 
     ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
     ggplot2::ylab("") + 
-    ggplot2::facet_wrap(~ 期間)
+    ggplot2::facet_wrap(~ 期間) + 
+    ggplot2::scale_fill_brewer(palette = palette)
 ```
 
 
@@ -161,12 +204,15 @@ fund_data %>%
 ```{r}
 #| echo: false
 fund_data %>% 
+  dplyr::filter(!is.na(リターン)) %>% 
   ggplot2::ggplot(ggplot2::aes(x = リターン)) + 
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
-                            position = "identity", alpha = 0.5) + 
+                            position = "identity", alpha = 0.5,
+                            breaks = breaks) + 
     ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
     ggplot2::ylab("") + 
-    ggplot2::facet_wrap(~ 市場)
+    ggplot2::facet_wrap(~ 市場) + 
+    ggplot2::scale_fill_brewer(palette = palette)
 ```
 
 
@@ -174,12 +220,15 @@ fund_data %>%
 ```{r}
 #| echo: false
 fund_data %>% 
+  dplyr::filter(!is.na(リターン)) %>% 
   ggplot2::ggplot(ggplot2::aes(x = リターン)) + 
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
-                            position = "identity", alpha = 0.5) + 
+                            position = "identity", alpha = 0.5,
+                            breaks = breaks) + 
     ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
     ggplot2::ylab("") + 
-    ggplot2::facet_wrap(~ インデックス)
+    ggplot2::facet_wrap(~ インデックス) + 
+    ggplot2::scale_fill_brewer(palette = palette)
 ```
 
 
@@ -187,41 +236,48 @@ fund_data %>%
 
 * 全体傾向
     * 株式に比べて資産複合の方がリターンが低い傾向
-    * ただし、株式には二極化傾向が見られる
+    * 株式には二峰性が見られる
 * 期間による傾向
     * 期間が長いほうがリターンが高くなる傾向
 * 市場による傾向
-  * 海外市場より国内市場の方がマイナスになりにくい
-  * 内外市場の大半はプラスリターン
+  * 内外市場の大半はリターンがプラスの傾向
 * インデックスによる傾向
-  * 複合資産は非インデックス型の方が高リターン傾向
+  * 資産複合はインデックス型の方が安定傾向
 
 
 # リスクとリターン
 
 
 ## リスクとリターンの関係
+::: {.notes}
+斜めの点線はシャープレシオ=1の線
+:::
 ```{r}
 #| echo: false
 fund_data %>% 
   ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) + 
     ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
                          size = 0.2, linetype = "dashed") +
-    ggplot2::geom_point(ggplot2::aes(colour = タイプ)) + 
-    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合")
+    ggplot2::geom_point(ggplot2::aes(colour = タイプ), alpha = 0.5) + 
+    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::scale_colour_brewer(palette = palette)
 ```
 
 
 ## 運用期間ごとのリスクとリターンの関係
+::: {.notes}
+運用期間が長い方ほど高シャープレシオになるが、3年から5年の間でゆる戻しが認められる
+:::
 ```{r}
 #| echo: false
 fund_data %>% 
   ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) + 
     ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
                          size = 0.2, linetype = "dashed") +
-    ggplot2::geom_point(ggplot2::aes(colour = タイプ)) + 
+    ggplot2::geom_point(ggplot2::aes(colour = タイプ), alpha = 0.5) + 
     ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
-    ggplot2::facet_wrap(~ 期間)
+    ggplot2::facet_wrap(~ 期間) + 
+    ggplot2::scale_colour_brewer(palette = palette)
 ```
 
 
@@ -232,9 +288,10 @@ fund_data %>%
   ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) + 
     ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
                          size = 0.2, linetype = "dashed") +
-    ggplot2::geom_point(ggplot2::aes(colour = タイプ)) + 
+    ggplot2::geom_point(ggplot2::aes(colour = タイプ), alpha = 0.5) + 
     ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
-    ggplot2::facet_wrap(~ 市場)
+    ggplot2::facet_wrap(~ 市場) + 
+    ggplot2::scale_colour_brewer(palette = palette)
 ```
 
 
@@ -245,43 +302,29 @@ fund_data %>%
   ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) + 
     ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
                          size = 0.2, linetype = "dashed") +
-    ggplot2::geom_point(ggplot2::aes(colour = タイプ)) + 
+    ggplot2::geom_point(ggplot2::aes(colour = タイプ), alpha = 0.5) + 
     ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
-    ggplot2::facet_wrap(~ インデックス)
+    ggplot2::facet_wrap(~ インデックス) + 
+    ggplot2::scale_colour_brewer(palette = palette)
 ```
-
-
-<!-- ## 運用期間ごとのインデックス・タイプ別 -->
-<!-- ```{r} -->
-<!-- #| echo: false -->
-<!-- fund_data %>%  -->
-<!--   ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) +  -->
-<!--     ggplot2::geom_abline(slope = c(0, 1), intercept = 0, -->
-<!--                          size = 0.2, linetype = "dashed") + -->
-<!--     ggplot2::geom_point(ggplot2::aes(colour = タイプ, -->
-<!--                                      shape = インデックス)) +  -->
-<!--     ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") +  -->
-<!--     ggplot2::facet_wrap(~ 期間) -->
-<!-- ``` -->
 
 
 ## リスクとリターンの関係
 
 * 株式の方がハイリスク・ハイリターンの傾向
-* 1年未満の短期保有では低シャープレシオの傾向
+    * 運用期間が長くても傾向は変わらない
 * 長期保有の方がシャープレシオが高くなる傾向
-    * ただし、途中で谷になる傾向が見られる
-* 海外市場の方がハイリスク・ハイリターンの傾向
-* 内外市場の資産複合はローリスク・ローリターンの傾向
-* インデックス型の方がシャープレシオが高い傾向
+* 海外市場の方がハイリスクな傾向
+* インデックス型の方が安定している傾向
 
 
 # 商品分類ごとの比較
 
-
 ## 平均値の算出
 
-市場・タイプの組合せを商品分類とし、各商品分類のインデックス・期間ごとにリスク・リターン・シャープレシオの単純平均を求め、求めた値を用いて商品分類ごとの比較を行っています。
+* 市場・タイプの組合せを商品分類とします
+* 各商品分類のインデックス型・期間ごとに運用情報の単純平均を求めます
+* 求めた単純平均を用いて商品分類ごとの比較を行います
 
 ```{r}
 #| echo: false
@@ -337,17 +380,65 @@ fund_data %>%
 ```
 
 
-## まとめ
+# まとめ
 
-* 株式はハイリスク・ハイリターン傾向
-    * 海外市場株式は、よりハイリスク・ハイリターン傾向
-    * 1年未満の短期保有ではマイナスになる可能性も
-    * 長期保有でハイリターンが得られる可能背も
-* 資産複合は海外市場を除きローリスク・ローリターン傾向
-    * 海外市場の資産複合は株式並のハイリスク・ハイリターン
-    * 長期保有すればリターンは高くなる傾向
-* インデックス型の方がハイリターン傾向
-    * 非インデックス型の国内/資産複合の実績はこれから？
+## 全体を通して
+* 数値を眺めていても分からないことは可視化することで理解しやすくなることもある
+    * 可視化するにも統計の基本的知識は必要
+    * 加えて統計的分析ツールの知識も必要
+* 世間で言われる投資の基本は実データを見るとよくわかる
+* 金融商品を扱っている会社はけっこう厭らしい
+    * 会社によって用語が微妙に異なっている
+    * サイトはスクレイピングしにくいところが多い
+    * 鴨にならないように金融リテラシーは必要
+
+
+# 参考資料
+
+## 購入時手数料の平均値［％］
+```{r}
+#| echo: false
+base_info %>% 
+  dplyr::select(市場, タイプ, インデックス型,
+                購入時手数料 = `購入時手数料.上限.`,
+                運用管理費用 = `運用管理費用.信託報酬.`) %>% 
+  dplyr::mutate(購入時手数料 = stringr::str_remove(購入時手数料, "%"),
+                購入時手数料 = stringr::str_remove(購入時手数料, "以内"),
+                運用管理費用 = stringr::str_remove(運用管理費用, "%")) %>% 
+  dplyr::mutate(購入時手数料 = as.numeric(購入時手数料),
+                運用管理費用 = as.numeric(運用管理費用)) %>% 
+  dplyr::group_by(市場, タイプ, インデックス型) %>% 
+  dplyr::summarise(dplyr::across(.cols = where(is.numeric),
+                                 .fns = mean, na.rm = TRUE)) %>% 
+  dplyr::mutate(dplyr::across(.cols = where(is.numeric),
+                              .fns = round, 2)) %>% 
+  dplyr::select(-運用管理費用) %>% 
+  tidyr::pivot_wider(names_from = インデックス型, values_from = 購入時手数料) %>% 
+  df_print()
+```
+
+
+## 運用管理費用の平均値［％］
+```{r}
+#| echo: false
+base_info %>% 
+  dplyr::select(市場, タイプ, インデックス型,
+                購入時手数料 = `購入時手数料.上限.`,
+                運用管理費用 = `運用管理費用.信託報酬.`) %>% 
+  dplyr::mutate(購入時手数料 = stringr::str_remove(購入時手数料, "%"),
+                購入時手数料 = stringr::str_remove(購入時手数料, "以内"),
+                運用管理費用 = stringr::str_remove(運用管理費用, "%")) %>% 
+  dplyr::mutate(購入時手数料 = as.numeric(購入時手数料),
+                運用管理費用 = as.numeric(運用管理費用)) %>% 
+  dplyr::group_by(市場, タイプ, インデックス型) %>% 
+  dplyr::summarise(dplyr::across(.cols = where(is.numeric),
+                                 .fns = mean, na.rm = TRUE)) %>% 
+  dplyr::mutate(dplyr::across(.cols = where(is.numeric),
+                              .fns = round, 2)) %>% 
+  dplyr::select(-購入時手数料) %>% 
+  tidyr::pivot_wider(names_from = インデックス型, values_from = 運用管理費用) %>% 
+  df_print()
+```
 
 
 # ＥＮＪＯＹ！
