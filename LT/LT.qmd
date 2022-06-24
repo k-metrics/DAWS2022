@@ -1,10 +1,16 @@
 ---
 title: "金融商品の比較"
 subtitle: "リスクとリターンの関係を可視化する"
-author: "CC BY-NC-SA 4.0, Sampo Suzuki"
+# author: "CC BY-NC-SA 4.0, Sampo Suzuki"
+date: "2022/6/24"
 # lang: ja
 format: 
   revealjs: 
+    chalkboard: true
+    footer: "CC BY-NC-SA 4.0, Sampo Suzuki"
+    slide-number: true
+    # smaller: true
+    transition: slide # none, fade, slide, convex, concave, zoom
     theme: moon # beige, blood, dark, default, league, moon, night, serif, simple, sky, solarized
 ---
 
@@ -44,10 +50,11 @@ palette <- "Set1"
 * 本資料は投資勧誘を目的にするものではありません
 * 本資料での計算では手数料・管理費・配当金などは考慮していません
 * 本資料で利用している**データファイルの再配布は禁止**します
+* 本資料は配布用とは異なる部分があります。
 :::
 
 
-## 対象データ（つみたてＮＩＳＡ）
+## 対象データ（インデックス別） {.smaller}
 ::: {.notes}
 投信総合検索ライブラリーからスクレイピングで取得
 :::
@@ -57,21 +64,43 @@ base_info %>%
   dplyr::group_by(インデックス型, 市場, タイプ) %>%
   dplyr::summarise(n = n()) %>%
   tidyr::pivot_wider(names_from = インデックス型, values_from = n) %>% 
-  df_print()
+  knitr::kable()
+```
+
+　  
+
+:::{.callout-note appearance="simple"}
+項目名などの詳細は投信総合検索ライブラリー（投資信託協会）で確認してください  
+以降、同様
+:::
+
+
+## 対象データ（運用期間別） {.smaller}
+::: {.notes}
+3年目を超えると運用実績が減っていく
+:::
+```{r}
+#| echo: false
+fund_data %>% 
+  dplyr::filter(!is.na(リスク)) %>% 
+  dplyr::group_by(インデックス, 市場, タイプ, 期間) %>%
+  dplyr::summarise(n = dplyr::n()) %>%
+  tidyr::pivot_wider(names_from = 期間, values_from = n) %>% 
+  knitr::kable()
 ```
 
 
 ## リターンの算出（おさらい）
-スクレイピングで得た運用情報は、各期間（6ヶ月/1年/3年/5年/10年）の騰落率（$\approx$利回り）・リターンの標準偏差（リスク）・シャープレシオのみです。  
+スクレイピングで得られる運用情報は、各期間の騰落率・リターンの標準偏差（リスク）・シャープレシオですので、  
 　  
 
 $\mbox{シャープレシオ} = \frac{\mbox{リターンの平均値} - \mbox{無リスク資産のリターン}}{\mbox{リターンの標準偏差}}$
 
 　  
-より無リスク資産のリターンを$0\%$としてリターンの平均値を求めています。
+の関係を用いて、無リスク資産のリターン$= 0\%$として、リターンの平均値を算出、利用しています。
 
-:::{.callout-note}
-運用情報は2022年6月中頃のものです
+:::{.callout-note appearance="simple"}
+運用情報は2022年6月中頃に取得したものです  
 :::
 
 # リスク
@@ -178,7 +207,7 @@ fund_data %>%
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
                             position = "identity", alpha = 0.5,
                             breaks = breaks) + 
-    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::ylab("") + 
     ggplot2::scale_fill_brewer(palette = palette)
 ```
@@ -193,7 +222,7 @@ fund_data %>%
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
                             position = "identity", alpha = 0.5,
                             breaks = breaks) + 
-    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::ylab("") + 
     ggplot2::facet_wrap(~ 期間) + 
     ggplot2::scale_fill_brewer(palette = palette)
@@ -209,7 +238,7 @@ fund_data %>%
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
                             position = "identity", alpha = 0.5,
                             breaks = breaks) + 
-    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::ylab("") + 
     ggplot2::facet_wrap(~ 市場) + 
     ggplot2::scale_fill_brewer(palette = palette)
@@ -225,7 +254,7 @@ fund_data %>%
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
                             position = "identity", alpha = 0.5,
                             breaks = breaks) + 
-    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::ylab("") + 
     ggplot2::facet_wrap(~ インデックス) + 
     ggplot2::scale_fill_brewer(palette = palette)
@@ -236,7 +265,7 @@ fund_data %>%
 
 * 全体傾向
     * 株式に比べて資産複合の方がリターンが低い傾向
-    * 株式には二峰性が見られる
+    * 株式には運用期間に起因する二峰性が見られる
 * 期間による傾向
     * 期間が長いほうがリターンが高くなる傾向
 * 市場による傾向
@@ -259,7 +288,7 @@ fund_data %>%
     ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
                          size = 0.2, linetype = "dashed") +
     ggplot2::geom_point(ggplot2::aes(colour = タイプ), alpha = 0.5) + 
-    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::scale_colour_brewer(palette = palette)
 ```
 
@@ -275,7 +304,7 @@ fund_data %>%
     ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
                          size = 0.2, linetype = "dashed") +
     ggplot2::geom_point(ggplot2::aes(colour = タイプ), alpha = 0.5) + 
-    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::facet_wrap(~ 期間) + 
     ggplot2::scale_colour_brewer(palette = palette)
 ```
@@ -289,7 +318,7 @@ fund_data %>%
     ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
                          size = 0.2, linetype = "dashed") +
     ggplot2::geom_point(ggplot2::aes(colour = タイプ), alpha = 0.5) + 
-    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::facet_wrap(~ 市場) + 
     ggplot2::scale_colour_brewer(palette = palette)
 ```
@@ -303,7 +332,7 @@ fund_data %>%
     ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
                          size = 0.2, linetype = "dashed") +
     ggplot2::geom_point(ggplot2::aes(colour = タイプ), alpha = 0.5) + 
-    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::facet_wrap(~ インデックス) + 
     ggplot2::scale_colour_brewer(palette = palette)
 ```
@@ -323,7 +352,7 @@ fund_data %>%
 ## 平均値の算出
 
 * 市場・タイプの組合せを商品分類とします
-* 各商品分類のインデックス型・期間ごとに運用情報の単純平均を求めます
+* 各商品分類のインデックス型・期間ごとにリスクとリターン、シャープレシオの単純平均を求めます
 * 求めた単純平均を用いて商品分類ごとの比較を行います
 
 ```{r}
@@ -343,7 +372,7 @@ fund_mean <- fund_data %>%
 ```{r}
 #| echo: false
 fund_mean %>% 
-  dplyr::mutate(シャープレシオ平均 = round(シャープレシオ平均, 1),
+  dplyr::mutate(シャープレシオ平均 = round(シャープレシオ平均, 2),
                 label = paste(期間, シャープレシオ平均, sep = "/"),
                 商品分類 = paste(市場, タイプ, sep ="/")) %>% 
   ggplot2::ggplot(ggplot2::aes(x = リスク平均, y = リターン平均,
@@ -353,7 +382,7 @@ fund_mean %>%
     ggplot2::geom_point(ggplot2::aes(shape = タイプ)) + 
     ggplot2::geom_path(linetype = "dotted") + 
     ggrepel::geom_text_repel() + 
-    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::facet_wrap(~ インデックス) + 
     ggplot2::scale_color_brewer(palette = "Dark2")
 ```
@@ -363,7 +392,7 @@ fund_mean %>%
 ```{r}
 #| echo: false
 fund_data %>% 
-  dplyr::mutate(シャープレシオ = round(シャープレシオ, 1),
+  dplyr::mutate(シャープレシオ = round(シャープレシオ, 2),
                 label = paste(期間, シャープレシオ, sep = "/"),
                 商品分類 = paste(市場, タイプ, sep ="/")) %>% 
   dplyr::filter(商品分類 == "国内/資産複合") %>% 
@@ -374,7 +403,7 @@ fund_data %>%
     ggplot2::geom_point(ggplot2::aes(shape = タイプ)) + 
     ggplot2::geom_path(linetype = "dotted") + 
     ggrepel::geom_text_repel() + 
-    ggplot2::labs(caption = "無リスク資産の利回りを0%とした場合") + 
+    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::facet_wrap(~ インデックス) + 
     ggplot2::scale_color_brewer(palette = "Dark2")
 ```
@@ -385,17 +414,15 @@ fund_data %>%
 ## 全体を通して
 * 数値を眺めていても分からないことは可視化することで理解しやすくなることもある
     * 可視化するにも統計の基本的知識は必要
-    * 加えて統計的分析ツールの知識も必要
-* 世間で言われる投資の基本は実データを見るとよくわかる
-* 金融商品を扱っている会社はけっこう厭らしい
-    * 会社によって用語が微妙に異なっている
+    * 加えて統計分析ツールの知識も必要
+* 金融商品を扱っているサイトはけっこう厭らしい
+    * サイトによって用語が微妙に異なっている
     * サイトはスクレイピングしにくいところが多い
-    * 鴨にならないように金融リテラシーは必要
 
 
 # 参考資料
 
-## 購入時手数料の平均値［％］
+## 購入時手数料の平均値［％］ {.smaller}
 ```{r}
 #| echo: false
 base_info %>% 
@@ -414,11 +441,17 @@ base_info %>%
                               .fns = round, 2)) %>% 
   dplyr::select(-運用管理費用) %>% 
   tidyr::pivot_wider(names_from = インデックス型, values_from = 購入時手数料) %>% 
-  df_print()
+  knitr::kable()
 ```
 
+　  
 
-## 運用管理費用の平均値［％］
+:::{.callout-note appearance="simple"}
+一部のデータは上限値を使用しています
+:::
+
+
+## 運用管理費用の平均値［％］ {.smaller}
 ```{r}
 #| echo: false
 base_info %>% 
@@ -437,8 +470,28 @@ base_info %>%
                               .fns = round, 2)) %>% 
   dplyr::select(-購入時手数料) %>% 
   tidyr::pivot_wider(names_from = インデックス型, values_from = 運用管理費用) %>% 
-  df_print()
+  knitr::kable()
 ```
+
+
+## 国債の金利［％］ {.smaller}
+```{r}
+#| echo: false
+"../data/sample/JGBCM.csv" %>% 
+  readr::read_csv(locale = readr::locale(encoding = "CP932"), skip = 1) %>% 
+  dplyr::summarise(dplyr::across(.cols = where(is.numeric), .fns = mean)) %>% 
+  dplyr::select(`1年`, `3年`, `5年`, `10年`, `20年`, `30年`) %>% 
+  dplyr::mutate(dplyr::across(.cols = dplyr::everything(),
+                              .fns = round, digits = 3)) %>% 
+  knitr::kable()
+```
+
+　  
+
+:::{.callout-note appearance="simple"}
+財務省が公表している国債金利情報を元に2022年6月の各基準日の値を単純平均したものです  
+1年未満のデータは公表されていません
+:::
 
 
 # ＥＮＪＯＹ！
