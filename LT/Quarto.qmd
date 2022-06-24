@@ -1,0 +1,122 @@
+---
+title: "Quarto"
+subtitle: "Your data has a story - tell it with Quarto."
+# author: "CC BY-NC-SA 4.0, Sampo Suzuki"
+date: "2022/6/24"
+# lang: ja
+format: 
+  revealjs: 
+    chalkboard: true
+    footer: "CC BY-NC-SA 4.0, Sampo Suzuki"
+    slide-number: true
+    # smaller: true
+    transition: slide # none, fade, slide, convex, concave, zoom
+    theme: night # beige, blood, dark, default, league, moon, night, serif, simple, sky, solarized
+---
+
+# Pythonでも再現可能性
+
+## 再現可能性とは
+
+* 分析結果を自身または第三者が再現できること
+    * 同じデータから同じ結果を得られること
+    * 過去の分析を見直した時に何をやっているか理解できること
+    * 単に再現性ともいう
+* 分析の再現可能性を阻害するのは
+    * 記録されない手作業
+    * コピペや記憶に頼った作業
+    * 管理されていないデータ・コード
+
+
+## R Markdown
+
+* Rの実行結果をレポートに埋め込める仕組み
+    * 再現可能性を実現する仕組み
+    * Rだけでなく**PythonやJuliaでも利用可能**
+* Pythonist 「R Markdownなにそれ？」
+    * Rを使っていない人が、わざわざR/RStduioを使うとは思えない
+    * Python/JuliaにはJupyterがある
+    * VS CodeがIDEとして絶賛進化中
+
+
+# Quarto
+
+## Quartoとは
+
+* Pandocを利用するドキュメント作成システム
+    * R、Python、Julia、Observable JSのコードを記述・実行
+    * コードの実行処理はknitrまたはJupyterが担う
+* R Markdownと同等以上の記述・機能
+    * YAMLによる設定
+    * Markdown（pandoc）による文書記述
+    * コードチャンクを利用したコーディング
+
+
+## Quartoの概要
+
+* Quarto本体はコマンドラインのプログラム
+    * CLIなので様々な開発環境に対応できる
+        * RStudio, VisualStudio Codeなど
+* R Markdownはほぼ無修正で移行可能
+    * R Markdownの経験を再現可能性のエコシステムとしてまとめ直したもの
+* Jupyterもほぼ無修正で移行可能
+
+
+## Quartoの動作
+
+* Quarto本体はレンダリングをコントロール
+    * やっていることはR Markdownと同じ
+        * プリプロセスでコードブロックを実行
+        * その後、Pandocで各フォーマットに落とし込む
+
+![](./fig/redering.png)
+
+
+## 豊富な出力フォーマット
+
+* 様々なプロジェクトに対応する出力形式
+    * WebSite, Interactive site
+        * WebSite（Bootswatch）, Blog, Shiny
+    * Documents, Books
+        * HTML, PDF, MS Word, ePub, OpenOffice
+    * Presentations
+        * Revealjs, PowerPoint, Beamer(PDF)
+    * Markdown, Wiki, etc
+
+
+## IDEとの親和性
+
+* RStudio, PBCが関与
+    * RStudioではquartoパッケージをインストールするだけでR Markdownと同等に
+    * コードブロックの制御がR Markdownと共通
+* VisualStudio Code
+    * Quarto Extentionをインストールするだけでワンタッチレンダリングやプレビューをサポート
+
+
+## Quartoの始め方
+
+![](./fig/GetStarted.png)
+
+
+# 実例
+
+## Python
+
+![](./fig/Python.png)
+
+
+## R
+
+![](./fig/R.png)
+
+
+## Quarto Galley
+
+![](./fig/Gallery.png)
+
+Quarto 1.0 will be released at end of July, 2022 
+https://quarto.org
+
+
+# Enjoy, Quarto!
+
