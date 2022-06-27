@@ -1,0 +1,92 @@
+---
+title: "WindowsでR4.2を"
+subtitle: "使うためにおぼえておくこと"
+# author: "CC BY-NC-SA 4.0, Sampo Suzuki"
+date: "2022/6/27"
+lang: ja
+format: 
+  revealjs: 
+    chalkboard: true
+    footer: "CC BY-NC-SA 4.0, Sampo Suzuki"
+    # slide-number: true
+    # smaller: true
+    transition: slide # none, fade, slide, convex, concave, zoom
+    theme: default # beige, blood, dark, default, league, moon, night, serif, simple, sky, solarized
+---
+
+
+# 結論
+
+## Windows環境では**R4.1を使え**
+
+* 日本語版Windows限定
+    * R4.2を使うための特段の理由がなく
+    * Rのスクリプトが書けない人は
+        * 主にR Commanderを使う人
+    * 当面の間
+
+
+# Ｅｎｊｏｙ， Ｒ！
+
+
+# 理由の解説
+
+
+## R4.2の重要な変更点
+* 32bitビルドのサポート終了
+
+* **デフォルト・ロケールをUTF-8に変更**
+    * **U**nicode **T**ransformation **F**ormat
+    * R4.1まではCP932(SJIS, Shift JISとも呼ばれるMicrosoft独自のコード体系)
+
+* デフォルトのインストール先を変更
+    * Rおよびパーソナルライブラリのインストール先が変更
+
+
+## デフォルト・ロケールの変更
+* ”UTF-8 locales are used where available.”
+    * 利用可能であればUTF-8ロケールに設定
+    * Windows10以降の環境では、事実上、UTF-8へ移行
+
+* 確認するには？
+    * Ｒのコンソールから`Sys.getlocale()`関数を実行し、LC変数の値が`Japanese_Japan.utf8`ならUTF-8
+
+* LinuxやmacOSでは（既に）UTF-8がデフォルト
+    * "Why are you using SJIS?"
+
+
+## ロケールが変更されると
+* ファイルを読み込む際にロケール（エンコーディング）指定が必要になる場合がでてくる
+    * Excelが書き出すCSVファイルはCP932(SJIS)
+        * R4.1までは全てのロケールが同じなため意識しなくても（明示的に指定しなくても）問題が発生していなかった
+    * R4.2からは明示的にロケール（エンコード）を指定しないとエラーになる場合がある
+        * ファイルに日本語が含まれている場合
+
+## 厄介なのはMicrosoft製品
+* Excelが書き出すCSVファイルはCP932
+* Excelが書き出すCSV（UTF-8）ファイルはBOM付きUTF-8
+    * BOM（Byte Oder Mark）とはエンコーディングがUnicodeであることをプログラムに知らせるためにファイルの先頭に埋め込まれる３バイトの目印
+    * BOMがないとExcelがエンコーディングを判別できない（仕様）
+* ＲではBOMが悪さをして文字化けする場合がある
+
+
+## 問題になるのはR Commander
+* R Commanderのデータインポートはエンコーディングが指定できない
+* エンコーディングが指定できるようになる（かもしれない）までの対策
+    1. クリップボード経由で読み込む（小池方式）
+        * 再現可能性の観点からは、おすゝめできない
+    1. Excel形式で読み込む(ネ申Excelには対応不可)
+    1. CSVファイルをUTF-8（BOMなし）に変換する
+    1. スクリプトにエンコーディング指定を追加する
+
+
+## 簡単なのはR4.2を使わないこと
+R4.2で「Why are you using SJIS?」からはとりあえず解放！  
+
+* エンコーディングに起因するバグは減るだろう
+    * 文字コード（特にマルチバイト文字）を意識しない１バイト文字圏の開発者は意外に多いというか大多数
+* スクリプトを書けない人はR4.1を使い続けるのが楽
+    * とりあえず今まで通りエンコーディングを意識せずに使える
+
+
+# Ｅｎｊｏｙ， Ｒ！
