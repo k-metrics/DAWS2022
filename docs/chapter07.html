@@ -4,10 +4,8 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-0.9.615">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="author" content="Sampo Suzuki, CC 4.0 BY-NC-SA">
-<meta name="dcterms.date" content="2022-06-29">
 <meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです。">
-<title>Rで学ぶ『完全独習 統計学入門』</title>
+<title>Rで学ぶ『完全独習 統計学入門』 - 7&nbsp; 身長、コイン投げなど最もよく見られる分布、正規分布</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -15,6 +13,69 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -24,7 +85,7 @@ ul.task-list{list-style: none;}
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./chapter00.html" rel="next">
+<link href="./chapter06.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -55,18 +116,22 @@ ul.task-list{list-style: none;}
   }
 }</script>
 </head>
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Rで学ぶ『完全独習 統計学入門』</h1>
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">身長、コイン投げなど最もよく見られる分布、正規分布</span>
+</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
     </div>
   </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title d-none d-lg-block">Rで学ぶ『完全独習 統計学入門』</h1>
+      <h1 class="title d-none d-lg-block">
+<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">身長、コイン投げなど最もよく見られる分布、正規分布</span>
+</h1>
                   <div>
         <div class="description">
           本書はデータ分析勉強会で学んだ成果をまとめたものです。
@@ -78,19 +143,7 @@ ul.task-list{list-style: none;}
   
   <div class="quarto-title-meta">
 
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Sampo Suzuki, CC 4.0 BY-NC-SA </p>
-            </div>
-    </div>
       
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">June 29, 2022</p>
-      </div>
-    </div>
       
     </div>
     
@@ -130,7 +183,7 @@ ul.task-list{list-style: none;}
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">はじめに</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">はじめに</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -170,7 +223,7 @@ ul.task-list{list-style: none;}
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapter07.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">身長、コイン投げなど最もよく見られる分布、正規分布</span></a>
+  <a href="./chapter07.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">身長、コイン投げなど最もよく見られる分布、正規分布</span></a>
   </div>
 </li>
     </ul>
@@ -179,80 +232,46 @@ ul.task-list{list-style: none;}
         <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li>
-<a href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB" id="toc-はじめに" class="nav-link active" data-scroll-target="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB">はじめに</a>
-  <ul class="collapse">
-<li><a href="#%E6%83%B3%E5%AE%9A%E8%AA%AD%E8%80%85" id="toc-想定読者" class="nav-link" data-scroll-target="#%E6%83%B3%E5%AE%9A%E8%AA%AD%E8%80%85">想定読者</a></li>
-  </ul>
-</li>
+<li><a href="#%E6%9C%80%E3%82%82%E3%82%88%E3%81%8F%E8%A6%8B%E3%81%8B%E3%81%91%E3%82%8B%E3%83%87%E3%83%BC%E3%82%BF%E5%88%86%E5%B8%83" id="toc-最もよく見かけるデータ分布" class="nav-link active" data-scroll-target="#%E6%9C%80%E3%82%82%E3%82%88%E3%81%8F%E8%A6%8B%E3%81%8B%E3%81%91%E3%82%8B%E3%83%87%E3%83%BC%E3%82%BF%E5%88%86%E5%B8%83"> <span class="header-section-number">7.1</span> 最もよく見かけるデータ分布</a></li>
+  <li><a href="#%E4%B8%80%E8%88%AC%E3%81%AE%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83%E3%81%AE%E7%9C%BA%E3%82%81%E6%96%B9" id="toc-一般の正規分布の眺め方" class="nav-link" data-scroll-target="#%E4%B8%80%E8%88%AC%E3%81%AE%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83%E3%81%AE%E7%9C%BA%E3%82%81%E6%96%B9"> <span class="header-section-number">7.2</span> 一般の正規分布の眺め方</a></li>
+  <li><a href="#%E8%BA%AB%E9%95%B7%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AF%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B" id="toc-身長のデータは正規分布している" class="nav-link" data-scroll-target="#%E8%BA%AB%E9%95%B7%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AF%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B"> <span class="header-section-number">7.3</span> 身長のデータは正規分布している</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/k-metrics/DAWS2022/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><section id="はじめに" class="level1 unnumbered page-columns page-full"><h1 class="unnumbered">はじめに</h1>
-<div class="page-columns page-full"><p>　本資料は<a href="https://www.diamond.co.jp/book/9784478820094.html">『完全独習 統計学入門』小島寛之著</a>（以降、テキスト）の内容をRで計算する方法を紹介しています<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。テキストに記載されているデータの一部をCSVファイルに起こして利用していますが、データ自体の著作権は原著作者にあります。また、CSVファイルは著作権を侵害する意図で作成したものではありません。</p><div class="no-row-height column-margin column-container"><li id="fn1" role="doc-endnote"><p><sup>1</sup>&nbsp;Rのインストール方法や基本文法などには触れません</p></li></div></div>
-<p>　</p>
-<section id="想定読者" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="想定読者">想定読者</h2>
-<p>　本書の想定読者は以下に該当する方です。</p>
-<ul>
-<li>Rに関する基本的な知識を有している方
-<ul>
-<li>データフレーム型や因子型などの変数型の知識</li>
-<li>変数の代入・参照方法</li>
-<li>
-<code>tidyverse</code>の基本的な知識（パイプ演算子など）</li>
-</ul>
-</li>
-<li>Rで統計量を求めてみたい方</li>
-</ul>
-<p>　</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<code>df_print()</code>関数について
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>　本書のコードに出てくる<code>df_pirnt()</code>関数はデータフレームを出力フォーマットごとに適切な形式で出力するために定義した関数です。<strong>R</strong>やCRANのパッケージで提供されている関数ではありません。ご自身の環境でコードを実行する際には<code>df_print()</code>関数とその直前のパイプ演算子（<code>%&gt;%</code>）を削除してから実行してください。<br>
-　例）<code>x %&gt;% df_print</code>となっている場合は<code>%&gt;% df_print()</code>を削除し<code>x</code>を実行してください。</p>
-</div>
-</div>
-<p>　</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Tip: Index
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>　左側に章単位のインデックス、右側に現在表示中のページ内のインデックスが表示されます。インデックスはウィンドウサイズなどにより表示位置が変わったり、自動的に縮小表示されたりします。</p>
-</div>
-</div>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Tip: Code Block Operation
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>　コードブロックの上にある▼マークをクリックするとコードの表示・非表示を切り替えることができます。また、コードブロック中のパッケージ名や関数名にマウスオーバーした際に下線が表示されるものは、クリックをすると説明ページ（英語）にジャンプできます。 　コードブロック右上にあるアイコンをクリックするとコードをクリップボードにコピーできます。</p>
-</div>
-</div>
-<div class="cell">
+<main class="content quarto-banner-title-block" id="quarto-document-content"><div class="cell">
 
 </div>
+<p>　</p>
+<section id="最もよく見かけるデータ分布" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="最もよく見かけるデータ分布">
+<span class="header-section-number">7.1</span> 最もよく見かけるデータ分布</h2>
+<div class="cell">
+<details><summary>図表7-1 標準正規分布のヒストグラム</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="co"># 「密度×階級幅=相対度数」の関係を用いて密度関数から相対度数を求める</span>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">0.1</span><span class="op">)</span>,
+                       y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="fl">0.0</span>, <span class="va">y</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">0.1</span><span class="op">)</span>,
+               y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>,
+                    fill <span class="op">=</span> <span class="st">"lightblue3"</span>, colour <span class="op">=</span> <span class="st">"lightblue4"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span>,
+                    stat <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="st">"gray30"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"相対度数"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2.4</span>, <span class="fl">2.4</span>, <span class="fl">0.3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.04</span>, <span class="fl">0.005</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="chapter07_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="一般の正規分布の眺め方" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="一般の正規分布の眺め方">
+<span class="header-section-number">7.2</span> 一般の正規分布の眺め方</h2>
+</section><section id="身長のデータは正規分布している" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="身長のデータは正規分布している">
+<span class="header-section-number">7.3</span> 身長のデータは正規分布している</h2>
 <hr>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const disableStylesheet = (stylesheets) => {
     for (let i=0; i < stylesheets.length; i++) {
@@ -428,11 +447,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./chapter06.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">標準偏差でハイリスク・ハイリターンも理解できる</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapter00.html" class="pagination-link">
-        <span class="nav-page-text">【序】なぜ、統計手法が必要か</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

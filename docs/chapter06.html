@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-0.9.440">
+<meta name="generator" content="quarto-0.9.615">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="本書はデータ分析勉強会で学んだ成果をまとめたものです。">
 <title>Rで学ぶ『完全独習 統計学入門』 - 6&nbsp; 標準偏差でハイリスク・ハイリターンも理解できる</title>
@@ -77,15 +77,27 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
-<script src="site_libs/quarto-nav/quarto-nav.js"></script><script src="site_libs/quarto-nav/headroom.min.js"></script><script src="site_libs/clipboard/clipboard.min.js"></script><meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><link href="./chapter05.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script><script src="site_libs/quarto-html/popper.min.js"></script><script src="site_libs/quarto-html/tippy.umd.min.js"></script><script src="site_libs/quarto-html/anchor.min.js"></script><link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link class="quarto-color-scheme" id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
-<link class="quarto-color-scheme quarto-color-alternate" rel="prefetch" id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script><link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link class="quarto-color-scheme" href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
-<link class="quarto-color-scheme quarto-color-alternate" rel="prefetch" href="site_libs/bootstrap/bootstrap-dark.min.css">
-<script id="quarto-search-options" type="application/json">{
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapter07.html" rel="next">
+<link href="./chapter05.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -211,6 +223,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./chapter06.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">標準偏差でハイリスク・ハイリターンも理解できる</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter07.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">身長、コイン投げなど最もよく見られる分布、正規分布</span></a>
+  </div>
+</li>
     </ul>
 </div>
 </nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -331,7 +348,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["基準日"],"name":[1],"type":["chr"],"align":["left"]},{"label":["1年"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2年"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3年"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["4年"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["5年"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["6年"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["7年"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["8年"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["9年"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["10年"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["15年"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["20年"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["25年"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["30年"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["40年"],"name":[16],"type":["dbl"],"align":["right"]}],"data":[{"1":"R4.6.1","2":"-0.085","3":"-0.075","4":"-0.059","5":"-0.033","6":"-0.001","7":"0.052","8":"0.114","9":"0.168","10":"0.208","11":"0.242","12":"0.526","13":"0.766","14":"0.918","15":"1.034","16":"1.110"},{"1":"R4.6.2","2":"-0.085","3":"-0.070","4":"-0.055","5":"-0.031","6":"0.006","7":"0.058","8":"0.122","9":"0.178","10":"0.217","11":"0.251","12":"0.535","13":"0.779","14":"0.931","15":"1.038","16":"1.122"},{"1":"R4.6.3","2":"-0.086","3":"-0.070","4":"-0.059","5":"-0.036","6":"-0.001","7":"0.048","8":"0.106","9":"0.163","10":"0.206","11":"0.241","12":"0.521","13":"0.756","14":"0.916","15":"1.025","16":"1.101"},{"1":"R4.6.6","2":"-0.086","3":"-0.065","4":"-0.055","5":"-0.030","6":"0.006","7":"0.058","8":"0.123","9":"0.179","10":"0.218","11":"0.252","12":"0.531","13":"0.766","14":"0.926","15":"1.029","16":"1.106"},{"1":"R4.6.7","2":"-0.087","3":"-0.070","4":"-0.055","5":"-0.030","6":"0.009","7":"0.068","8":"0.143","9":"0.199","10":"0.229","11":"0.257","12":"0.541","13":"0.781","14":"0.944","15":"1.052","16":"1.123"},{"1":"R4.6.8","2":"-0.087","3":"-0.070","4":"-0.059","5":"-0.035","6":"0.003","7":"0.063","8":"0.138","9":"0.199","10":"0.229","11":"0.257","12":"0.541","13":"0.775","14":"0.940","15":"1.055","16":"1.127"},{"1":"R4.6.9","2":"-0.087","3":"-0.075","4":"-0.065","5":"-0.040","6":"0.003","7":"0.058","8":"0.128","9":"0.199","10":"0.233","11":"0.255","12":"0.544","13":"0.785","14":"0.953","15":"1.074","16":"1.144"},{"1":"R4.6.10","2":"-0.088","3":"-0.081","4":"-0.069","5":"-0.041","6":"0.007","7":"0.073","8":"0.138","9":"0.213","10":"0.245","11":"0.261","12":"0.560","13":"0.798","14":"0.962","15":"1.079","16":"1.153"},{"1":"R4.6.13","2":"-0.085","3":"-0.051","4":"-0.039","5":"-0.006","6":"0.047","7":"0.119","8":"0.189","9":"0.253","10":"0.263","11":"0.264","12":"0.613","13":"0.862","14":"1.033","15":"1.163","16":"1.241"},{"1":"R4.6.14","2":"-0.085","3":"-0.050","4":"-0.020","5":"0.029","6":"0.092","7":"0.184","8":"0.271","9":"0.323","10":"0.310","11":"0.264","12":"0.639","13":"0.875","14":"1.042","15":"1.157","16":"1.237"},{"1":"R4.6.15","2":"-0.095","3":"-0.060","4":"-0.026","5":"0.024","6":"0.087","7":"0.174","8":"0.261","9":"0.314","10":"0.314","11":"0.271","12":"0.693","13":"0.930","14":"1.095","15":"1.211","16":"1.286"},{"1":"R4.6.16","2":"-0.114","3":"-0.084","4":"-0.053","5":"-0.010","6":"0.046","7":"0.131","8":"0.220","9":"0.280","10":"0.294","11":"0.269","12":"0.656","13":"0.872","14":"1.038","15":"1.148","16":"1.225"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["基準日"],"name":[1],"type":["chr"],"align":["left"]},{"label":["1年"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2年"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3年"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["4年"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["5年"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["6年"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["7年"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["8年"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["9年"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["10年"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["15年"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["20年"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["25年"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["30年"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["40年"],"name":[16],"type":["dbl"],"align":["right"]}],"data":[{"1":"R4.6.1","2":"-0.085","3":"-0.075","4":"-0.059","5":"-0.033","6":"-0.001","7":"0.052","8":"0.114","9":"0.168","10":"0.208","11":"0.242","12":"0.526","13":"0.766","14":"0.918","15":"1.034","16":"1.110"},{"1":"R4.6.2","2":"-0.085","3":"-0.070","4":"-0.055","5":"-0.031","6":"0.006","7":"0.058","8":"0.122","9":"0.178","10":"0.217","11":"0.251","12":"0.535","13":"0.779","14":"0.931","15":"1.038","16":"1.122"},{"1":"R4.6.3","2":"-0.086","3":"-0.070","4":"-0.059","5":"-0.036","6":"-0.001","7":"0.048","8":"0.106","9":"0.163","10":"0.206","11":"0.241","12":"0.521","13":"0.756","14":"0.916","15":"1.025","16":"1.101"},{"1":"R4.6.6","2":"-0.086","3":"-0.065","4":"-0.055","5":"-0.030","6":"0.006","7":"0.058","8":"0.123","9":"0.179","10":"0.218","11":"0.252","12":"0.531","13":"0.766","14":"0.926","15":"1.029","16":"1.106"},{"1":"R4.6.7","2":"-0.087","3":"-0.070","4":"-0.055","5":"-0.030","6":"0.009","7":"0.068","8":"0.143","9":"0.199","10":"0.229","11":"0.257","12":"0.541","13":"0.781","14":"0.944","15":"1.052","16":"1.123"},{"1":"R4.6.8","2":"-0.087","3":"-0.070","4":"-0.059","5":"-0.035","6":"0.003","7":"0.063","8":"0.138","9":"0.199","10":"0.229","11":"0.257","12":"0.541","13":"0.775","14":"0.940","15":"1.055","16":"1.127"},{"1":"R4.6.9","2":"-0.087","3":"-0.075","4":"-0.065","5":"-0.040","6":"0.003","7":"0.058","8":"0.128","9":"0.199","10":"0.233","11":"0.255","12":"0.544","13":"0.785","14":"0.953","15":"1.074","16":"1.144"},{"1":"R4.6.10","2":"-0.088","3":"-0.081","4":"-0.069","5":"-0.041","6":"0.007","7":"0.073","8":"0.138","9":"0.213","10":"0.245","11":"0.261","12":"0.560","13":"0.798","14":"0.962","15":"1.079","16":"1.153"},{"1":"R4.6.13","2":"-0.085","3":"-0.051","4":"-0.039","5":"-0.006","6":"0.047","7":"0.119","8":"0.189","9":"0.253","10":"0.263","11":"0.264","12":"0.613","13":"0.862","14":"1.033","15":"1.163","16":"1.241"},{"1":"R4.6.14","2":"-0.085","3":"-0.050","4":"-0.020","5":"0.029","6":"0.092","7":"0.184","8":"0.271","9":"0.323","10":"0.310","11":"0.264","12":"0.639","13":"0.875","14":"1.042","15":"1.157","16":"1.237"},{"1":"R4.6.15","2":"-0.095","3":"-0.060","4":"-0.026","5":"0.024","6":"0.087","7":"0.174","8":"0.261","9":"0.314","10":"0.314","11":"0.271","12":"0.693","13":"0.930","14":"1.095","15":"1.211","16":"1.286"},{"1":"R4.6.16","2":"-0.114","3":"-0.084","4":"-0.053","5":"-0.010","6":"0.046","7":"0.131","8":"0.220","9":"0.280","10":"0.294","11":"0.269","12":"0.656","13":"0.872","14":"1.038","15":"1.148","16":"1.225"},{"1":"R4.6.17","2":"-0.105","3":"-0.071","4":"-0.043","5":"0.000","6":"0.062","7":"0.135","8":"0.209","9":"0.259","10":"0.272","11":"0.239","12":"0.657","13":"0.886","14":"1.051","15":"1.152","16":"1.225"},{"1":"R4.6.20","2":"-0.101","3":"-0.059","4":"-0.030","5":"0.020","6":"0.082","7":"0.150","8":"0.209","9":"0.259","10":"0.269","11":"0.248","12":"0.667","13":"0.916","14":"1.086","15":"1.188","16":"1.254"},{"1":"R4.6.21","2":"-0.105","3":"-0.066","4":"-0.027","5":"0.020","6":"0.096","7":"0.155","8":"0.215","9":"0.268","10":"0.273","11":"0.252","12":"0.658","13":"0.918","14":"1.108","15":"1.217","16":"1.282"},{"1":"R4.6.22","2":"-0.122","3":"-0.079","4":"-0.037","5":"0.010","6":"0.087","7":"0.156","8":"0.220","9":"0.270","10":"0.273","11":"0.255","12":"0.644","13":"0.922","14":"1.113","15":"1.226","16":"1.291"},{"1":"R4.6.23","2":"-0.132","3":"-0.085","4":"-0.047","5":"-0.007","6":"0.066","7":"0.131","8":"0.191","9":"0.248","10":"0.258","11":"0.246","12":"0.628","13":"0.901","14":"1.091","15":"1.203","16":"1.275"},{"1":"R4.6.24","2":"-0.133","3":"-0.079","4":"-0.047","5":"-0.017","6":"0.049","7":"0.106","8":"0.157","9":"0.220","10":"0.244","11":"0.240","12":"0.634","13":"0.897","14":"1.099","15":"1.211","16":"1.284"},{"1":"R4.6.27","2":"-0.115","3":"-0.066","4":"-0.037","5":"-0.007","6":"0.061","7":"0.121","8":"0.176","9":"0.240","10":"0.258","11":"0.252","12":"0.659","13":"0.922","14":"1.130","15":"1.250","16":"1.320"},{"1":"R4.6.28","2":"-0.114","3":"-0.045","4":"-0.027","5":"0.003","6":"0.068","7":"0.126","8":"0.182","9":"0.245","10":"0.263","11":"0.252","12":"0.664","13":"0.929","14":"1.135","15":"1.257","16":"1.337"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -637,6 +654,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./chapter07.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">身長、コイン投げなど最もよく見られる分布、正規分布</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
