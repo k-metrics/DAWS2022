@@ -95,18 +95,17 @@ df_print <- function(df = NULL,             # 表示させたいデータをフ�
 
 ## 母分散を求める
 VAR <- function(x) {
-  sum((x - mean(x)) ^ 2) / length(x)
+  sum((x - mean(x, na.rm = TRUE)) ^ 2) / length(x)
 }
 
 var.p <- function(x) {
-  (length(x) - 1) / length(x) * var(x)
+  (length(x) - 1) / length(x) * var(x, na.rm = TRUE)
 }
 
 
-## 母標準偏差を求める
+## 母分散から標準偏差を求める
 SD <- function(x) {
-  # sqrt((length(x) - 1) / length(x)) * sd(x)
-  sqrt(sum((x - mean(x)) ^ 2) / length(x))
+  sqrt(VAR(x))
 }
 
 sd.p <- function(x) {
