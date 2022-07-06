@@ -22,23 +22,24 @@ data <- tibble::tibble(x = seq(-2.5, 2.5, 0.1),
 data %>% 
   dplyr::mutate(y = dplyr::if_else(x == 0.0, y, 0)) %>% 
   ggplot2::ggplot(ggplot2::aes(x = x, y = y)) + 
-  ggplot2::geom_bar(stat = "identity", data = data,
-                    fill = "lightblue3", colour = "lightblue4") + 
+  ggplot2::geom_bar(stat = "identity", data = data, alpha = 0.5,
+                    fill = "deepskyblue1", colour = "deepskyblue3") + 
   ggplot2::geom_bar(stat = "identity", fill = "gray30") +
   ggplot2::labs(x = "", y = "相対度数") + 
   ggplot2::scale_x_continuous(breaks = seq(-2.4, 2.4, 0.3)) + 
   ggplot2::scale_y_continuous(breaks = seq(0, 0.04, 0.005))
 ```
 
-相対度数は個々の柱（棒）の面積に等しいので、相対度数で描いたヒストグラムの総面積は$1$になります。ただ、通常は縦軸を密度にする方が一般的です。密度と相対度数との間には$\mbox{密度} = \frac{相対度数}{階級幅}$という関係があります。
+相対度数の総計は$1$ですので、相対度数を縦軸にして描いたヒストグラムの総面積は$1$になります。言い換えるヒストグラムの個々の柱（棒）の面積は相対度数と等しくなります。  
+一方、ヒストグラムは柱（棒）の面積が度数と等しくなるように描くのが一般的ですので、縦軸には相対度数でなく密度をとります。これにより$\mbox{階級幅（幅）} \times \mbox{密度（高さ）} = \mbox{相対度数（面積）}$の関係があることが分かります。
 ```{r}
 #| code-fold: true
 #| code-summary: "縦軸を密度にしたヒストグラム"
 tibble::tibble(x = seq(-2.5, 2.5, 0.1), y = dnorm(x)) %>% 
   ggplot2::ggplot(ggplot2::aes(x = x, y = y)) + 
   # ggplot2::geom_line(colour = "lightblue4") + 
-  ggplot2::geom_bar(stat = "identity",
-                    fill = "lightblue3", colour = "lightblue4") + 
+  ggplot2::geom_bar(stat = "identity", alpha = 0.5,
+                    fill = "deepskyblue1", colour = "deepskyblue3") + 
   ggplot2::labs(x = "", y = "密度") + 
   ggplot2::scale_x_continuous(breaks = seq(-2.4, 2.4, 0.3)) 
 ```
