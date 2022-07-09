@@ -1,6 +1,6 @@
 ---
-title: "金融商品の比較"
-subtitle: "リスクとリターンの関係を可視化する"
+title: "どれが儲かる？"
+subtitle: "〜つみたてNISAを可視化する〜"
 # author: "CC BY-NC-SA 4.0, Sampo Suzuki"
 date: "2022/6/24"
 # lang: ja
