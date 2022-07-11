@@ -8,12 +8,14 @@ format:
   revealjs: 
     chalkboard: true
     footer: "CC BY-NC-SA 4.0, Sampo Suzuki"
-    slide-number: false
+    slide-number: false # true
     # smaller: true
     transition: slide # none, fade, slide, convex, concave, zoom
     theme: moon # beige, blood, dark, default, league, moon, night, serif, simple, sky, solarized
 ---
 
+
+# はじめに
 ```{r}
 #| include: false
 source("../R/setup.R")
@@ -38,8 +40,6 @@ palette <- "Set1"
 ```
 
 
-# はじめに
-
 ## Ｄｉｓｃｌａｉｍｅｒ
 
 :::{.callout-important}
@@ -54,10 +54,11 @@ palette <- "Set1"
 :::
 
 
+# 対象データ
+
+
 ## 対象データ（インデックス別） {.smaller}
-::: {.notes}
-投信総合検索ライブラリーからスクレイピングで取得
-:::
+投信総合検索ライブラリーからスクレイピングで取得したデータ。
 ```{r}
 #| echo: false
 base_info %>% 
@@ -70,15 +71,11 @@ base_info %>%
 　  
 
 :::{.callout-note appearance="simple"}
-項目名などの詳細は投信総合検索ライブラリー（投資信託協会）で確認してください  
-以降、同様
+項目名などの詳細は投信総合検索ライブラリー（投資信託協会）で確認してください  以降、同様
 :::
 
 
-## 対象データ（運用期間別） {.smaller}
-::: {.notes}
-3年目を超えると運用実績が減っていく
-:::
+## 運用情報（運用期間別） {.smaller}
 ```{r}
 #| echo: false
 fund_data %>% 
@@ -89,19 +86,6 @@ fund_data %>%
   knitr::kable()
 ```
 
-
-## リターンの算出（おさらい）
-スクレイピングで得られる運用情報は、各期間の騰落率・リターンの標準偏差（リスク）・シャープレシオですので、  
-　  
-
-$\mbox{シャープレシオ} = \frac{\mbox{リターンの平均値} - \mbox{無リスク資産のリターン}}{\mbox{リターンの標準偏差}}$
-
-　  
-の関係を用いて、無リスク資産のリターン$= 0\%$として、リターンの平均値を算出、利用しています。
-
-:::{.callout-note appearance="simple"}
-運用情報は2022年6月中頃に取得したものです  
-:::
 
 # リスク
 
@@ -174,58 +158,52 @@ fund_data %>%
 ```
 
 
-## リスクの傾向（省略）
-
-
-# リターン
+# シャープレシオ
 
 ```{r}
 #| echo: false
-breaks <- seq(from = -20, to = 20, by = 5)
-# breaks <- pretty(fund_data$リターン)
+breaks <- seq(from = -6, to = 2, by = 0.5)
 ```
 
-## リターンの分布
-::: {.notes}
-階級幅は5
-:::
 
+## シャープレシオの分布
 ```{r}
 #| echo: false
 fund_data %>% 
-  dplyr::filter(!is.na(リターン)) %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リターン)) + 
+  dplyr::filter(!is.na(シャープレシオ)) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = シャープレシオ)) + 
+    ggplot2::geom_vline(xintercept = 0, linetype = "dotted", size = 0.5) + 
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
                             position = "identity", alpha = 0.5,
-                            breaks = breaks) + 
-    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
+                            breaks = breaks) +
     ggplot2::ylab("") + 
     ggplot2::scale_fill_brewer(palette = palette)
 ```
 
 
-## 運用期間ごとのリターン
+## 運用期間ごとのシャープレシオ
 ```{r}
 #| echo: false
 fund_data %>% 
-  dplyr::filter(!is.na(リターン)) %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リターン)) + 
+  dplyr::filter(!is.na(シャープレシオ)) %>%
+  ggplot2::ggplot(ggplot2::aes(x = シャープレシオ)) + 
+    ggplot2::geom_vline(xintercept = 0, linetype = "dotted", size = 0.5) + 
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
                             position = "identity", alpha = 0.5,
                             breaks = breaks) + 
-    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::ylab("") + 
     ggplot2::facet_wrap(~ 期間) + 
     ggplot2::scale_fill_brewer(palette = palette)
 ```
 
 
-## 市場ごとのリターン
+## 市場ごとのシャープレシオ
 ```{r}
 #| echo: false
 fund_data %>% 
-  dplyr::filter(!is.na(リターン)) %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リターン)) + 
+  dplyr::filter(!is.na(シャープレシオ)) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = シャープレシオ)) + 
+    ggplot2::geom_vline(xintercept = 0, linetype = "dotted", size = 0.5) + 
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
                             position = "identity", alpha = 0.5,
                             breaks = breaks) + 
@@ -236,211 +214,85 @@ fund_data %>%
 ```
 
 
-## インデックスによるリターン
+## インデックスによるシャープレシオ
 ```{r}
 #| echo: false
 fund_data %>% 
-  dplyr::filter(!is.na(リターン)) %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リターン)) + 
+  dplyr::filter(!is.na(シャープレシオ)) %>%
+  ggplot2::ggplot(ggplot2::aes(x = シャープレシオ)) + 
+    ggplot2::geom_vline(xintercept = 0, linetype = "dotted", size = 0.5) + 
     ggplot2::geom_histogram(ggplot2::aes(fill = タイプ),
                             position = "identity", alpha = 0.5,
                             breaks = breaks) + 
-    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::ylab("") + 
     ggplot2::facet_wrap(~ インデックス) + 
     ggplot2::scale_fill_brewer(palette = palette)
 ```
 
 
-## リターンの傾向（省略）
+# リスクとシャープレシオ
 
-
-# リスクとリターン
-
-
-## リスクとリターンの関係
-::: {.notes}
-斜めの点線はシャープレシオ=1の線
-:::
+## リスクとシャープレシオの関係
 ```{r}
 #| echo: false
 fund_data %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) + 
-    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = シャープレシオ)) + 
+    ggplot2::geom_abline(slope = c(0), intercept = 0,
                          size = 0.2, linetype = "dashed") +
     ggplot2::geom_point(ggplot2::aes(colour = タイプ), alpha = 0.5) + 
-    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
+    # ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::scale_colour_brewer(palette = palette)
 ```
 
 
-## 運用期間ごとのリスクとリターンの関係
-::: {.notes}
-運用期間が長い方ほど高シャープレシオになるが、3年から5年の間でゆる戻しが認められる
-:::
+## 運用期間毎のリスクとシャープレシオ
 ```{r}
 #| echo: false
 fund_data %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) + 
-    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = シャープレシオ)) + 
+    ggplot2::geom_abline(slope = c(0), intercept = 0,
                          size = 0.2, linetype = "dashed") +
     ggplot2::geom_point(ggplot2::aes(colour = タイプ), alpha = 0.5) + 
-    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
+    # ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::facet_wrap(~ 期間) + 
     ggplot2::scale_colour_brewer(palette = palette)
 ```
 
 
-## 市場ごとのリスクとリターンの関係
+## 市場毎のリスクとシャープレシオ
 ```{r}
 #| echo: false
 fund_data %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) + 
-    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = シャープレシオ)) + 
+    ggplot2::geom_abline(slope = c(0), intercept = 0,
                          size = 0.2, linetype = "dashed") +
     ggplot2::geom_point(ggplot2::aes(colour = タイプ), alpha = 0.5) + 
-    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
+    # ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::facet_wrap(~ 市場) + 
     ggplot2::scale_colour_brewer(palette = palette)
 ```
 
 
-## インデックスによるリスクとリターンの関係
+## インデックスによるリスクとシャープレシオ
 ```{r}
 #| echo: false
 fund_data %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン)) + 
-    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
+  ggplot2::ggplot(ggplot2::aes(x = リスク, y = シャープレシオ)) + 
+    ggplot2::geom_abline(slope = c(0), intercept = 0,
                          size = 0.2, linetype = "dashed") +
     ggplot2::geom_point(ggplot2::aes(colour = タイプ), alpha = 0.5) + 
-    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
+    # ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
     ggplot2::facet_wrap(~ インデックス) + 
     ggplot2::scale_colour_brewer(palette = palette)
-```
-
-
-## リスクとリターンの関係（省略）
-
-
-# 商品分類ごとの比較
-
-## 平均値の算出
-
-* 市場・タイプ・インデックスの組合せを商品分類とします
-* 各商品分類の期間ごとにリスクとリターン、シャープレシオの単純平均を求めます
-* 求めた単純平均を用いて商品分類ごとの比較を行います
-
-```{r}
-#| echo: false
-fund_mean <- fund_data %>% 
-  dplyr::group_by(市場, タイプ, インデックス, 期間) %>% 
-  dplyr::summarise(リスク平均 = mean(リスク, na.rm = TRUE),
-                   リターン平均 = mean(リターン, na.rm = TRUE),
-                   シャープレシオ平均 = mean(シャープレシオ, na.rm = TRUE)) 
-```
-
-
-## 平均値による比較
-::: {.notes}
-商品分類ごとに平均値を計算して期間による変動を可視化
-:::
-```{r}
-#| echo: false
-fund_mean %>% 
-  dplyr::mutate(シャープレシオ平均 = round(シャープレシオ平均, 2),
-                label = paste(期間, シャープレシオ平均, sep = "/"),
-                商品分類 = paste(市場, タイプ, sep ="/")) %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リスク平均, y = リターン平均,
-                               colour = 商品分類, label = label)) + 
-    ggplot2::geom_abline(slope = c(0, 1), intercept = 0,
-                         size = 0.2, linetype = "dashed") +
-    ggplot2::geom_point(ggplot2::aes(shape = タイプ)) + 
-    ggplot2::geom_path(linetype = "dotted") + 
-    ggrepel::geom_text_repel() + 
-    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
-    ggplot2::facet_wrap(~ インデックス) + 
-    ggplot2::scale_color_brewer(palette = "Dark2")
-```
-
-
-## 商品（国内/資産複合）単位の比較
-```{r}
-#| echo: false
-fund_data %>% 
-  dplyr::mutate(シャープレシオ = round(シャープレシオ, 2),
-                label = paste(期間, シャープレシオ, sep = "/"),
-                商品分類 = paste(市場, タイプ, sep ="/")) %>% 
-  dplyr::filter(商品分類 == "国内/資産複合") %>% 
-  ggplot2::ggplot(ggplot2::aes(x = リスク, y = リターン,
-                               colour = code, label = label)) + 
-    ggplot2::geom_abline(slope = c(0, 0.6), intercept = 0,
-                         size = 0.2, linetype = "dashed") +
-    ggplot2::geom_point(ggplot2::aes(shape = タイプ)) + 
-    ggplot2::geom_path(linetype = "dotted") + 
-    ggrepel::geom_text_repel() + 
-    ggplot2::labs(caption = "無リスク資産のリターンを0%とした場合") + 
-    ggplot2::facet_wrap(~ インデックス) + 
-    ggplot2::scale_color_brewer(palette = "Dark2")
 ```
 
 
 # まとめ
 
-## 全体を通して（省略）
-
-
-# 参考資料
-
-## 購入時手数料の平均値［％］ {.smaller}
-```{r}
-#| echo: false
-base_info %>% 
-  dplyr::select(市場, タイプ, インデックス型,
-                購入時手数料 = `購入時手数料.上限.`,
-                運用管理費用 = `運用管理費用.信託報酬.`) %>% 
-  dplyr::mutate(購入時手数料 = stringr::str_remove(購入時手数料, "%"),
-                購入時手数料 = stringr::str_remove(購入時手数料, "以内"),
-                運用管理費用 = stringr::str_remove(運用管理費用, "%")) %>% 
-  dplyr::mutate(購入時手数料 = as.numeric(購入時手数料),
-                運用管理費用 = as.numeric(運用管理費用)) %>% 
-  dplyr::group_by(市場, タイプ, インデックス型) %>% 
-  dplyr::summarise(dplyr::across(.cols = where(is.numeric),
-                                 .fns = mean, na.rm = TRUE)) %>% 
-  dplyr::mutate(dplyr::across(.cols = where(is.numeric),
-                              .fns = round, 2)) %>% 
-  dplyr::select(-運用管理費用) %>% 
-  tidyr::pivot_wider(names_from = インデックス型, values_from = 購入時手数料) %>% 
-  knitr::kable()
-```
-
-　  
-
-:::{.callout-note appearance="simple"}
-一部のデータは上限値を使用しています
-:::
-
-
-## 運用管理費用の平均値［％］ {.smaller}
-```{r}
-#| echo: false
-base_info %>% 
-  dplyr::select(市場, タイプ, インデックス型,
-                購入時手数料 = `購入時手数料.上限.`,
-                運用管理費用 = `運用管理費用.信託報酬.`) %>% 
-  dplyr::mutate(購入時手数料 = stringr::str_remove(購入時手数料, "%"),
-                購入時手数料 = stringr::str_remove(購入時手数料, "以内"),
-                運用管理費用 = stringr::str_remove(運用管理費用, "%")) %>% 
-  dplyr::mutate(購入時手数料 = as.numeric(購入時手数料),
-                運用管理費用 = as.numeric(運用管理費用)) %>% 
-  dplyr::group_by(市場, タイプ, インデックス型) %>% 
-  dplyr::summarise(dplyr::across(.cols = where(is.numeric),
-                                 .fns = mean, na.rm = TRUE)) %>% 
-  dplyr::mutate(dplyr::across(.cols = where(is.numeric),
-                              .fns = round, 2)) %>% 
-  dplyr::select(-購入時手数料) %>% 
-  tidyr::pivot_wider(names_from = インデックス型, values_from = 運用管理費用) %>% 
-  knitr::kable()
-```
+## 全体を通して
+* 数値を眺めていても分からないことは可視化することで理解しやすくなることもある
+    * 可視化するにも統計の基本的知識は必要
+    * 加えて統計分析ツールの知識も必要
 
 
 ## 国債の金利［％］ {.smaller}
@@ -449,7 +301,7 @@ base_info %>%
 "../data/sample/JGBCM.csv" %>% 
   readr::read_csv(locale = readr::locale(encoding = "CP932"), skip = 1) %>% 
   dplyr::summarise(dplyr::across(.cols = where(is.numeric), .fns = mean)) %>% 
-  dplyr::select(`1年`, `3年`, `5年`, `10年`, `20年`, `30年`) %>% 
+  dplyr::select(`1年`, `3年`, `5年`, `10年`, `20年`, `30年`, `40年`) %>%
   dplyr::mutate(dplyr::across(.cols = dplyr::everything(),
                               .fns = round, digits = 3)) %>% 
   knitr::kable()
